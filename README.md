@@ -1,0 +1,6 @@
+
+# Publish 
+
+    npm run publish
+
+

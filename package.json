@@ -3,12 +3,22 @@
   "description": "An Aurelia plugin that integrates with OpenIddict.",
   "version": "0.1.0",
   "author": "Shaun Luttin <shaun@bigfont.ca>",
-  "main": "./scripts/open-id/index.js",
-  "typings": "./scripts/open-id/index.d.ts",
-  "registry": "npm",
+  "main": "dist/amd/open-id/open-id.js",
+  "typings": "dist/amd/open-id/open-id.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/openiddict/openiddict-samples.git"
+  },
+  "scripts": {
+    "prepublish": "rimraf dist",
+    "publish": "tsc --outDir dist/amd"
+  },
+  "jspm": {
+    "main": "dist/amd/open-id/open-id",
+    "registry": "npm",
+    "jspmPackage": true,
+    "format": "amd",
+    "files": [ "src", "dist" ]
   },
   "license": "MIT",
   "dependencies": {
@@ -44,7 +54,7 @@
     "jwt-decode": "^2.1.0",
     "oidc-client": "^1.1.0",
     "requirejs": "^2.2.0",
-    "text": "requirejs/text",
+    "requirejs-text": "^2.0.12",
     "whatwg-fetch": "^1.0.0"
   },
   "peerDependencies": {},
@@ -63,6 +73,7 @@
     "gulp-tslint": "^5.0.0",
     "gulp-typescript": "^2.13.6",
     "jasmine-core": "^2.4.1",
+    "jspm": "^0.16.45",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^1.0.1",
     "karma-coverage": "^1.1.1",

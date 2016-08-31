@@ -67,10 +67,9 @@
     },
     "bundles": [
       {
-        "name": "app-bundle.js",
+        "name": "open-id-bundle.js",
         "source": [
-          "[**/*.js]",
-          "**/*.{css,html}"
+          "**/src/open-id/*.js"
         ],
         "dependencies": [
           "oidc-client",
@@ -79,6 +78,12 @@
             "path": "../node_modules/jwt-decode/lib",
             "main": "index"
           }
+        ]
+      },
+      {
+        "name": "app-bundle.js",
+        "source": [
+          "**/src/*.{js,html}"
         ]
       },
       {

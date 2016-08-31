@@ -16,12 +16,10 @@
         ]
     },
     "exclude": [
-        "node_modules"
-    ],
-    "filesGlob": [
-        "src/**/*.ts",
-        "test/**/*.ts",
-        "aurelia_project/**/*.ts",
-        "typings/index.d.ts"
+        "node_modules", 
+        "test",
+        "dist",
+        "aurelia_project",
+        "scripts"
     ]
 }
