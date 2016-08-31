@@ -5,6 +5,7 @@
   "author": "Shaun Luttin <shaun@bigfont.ca>",
   "main": "./scripts/open-id/index.js",
   "typings": "./scripts/open-id/index.d.ts",
+  "registry": "npm",
   "repository": {
     "type": "git",
     "url": "https://github.com/openiddict/openiddict-samples.git"
