@@ -16,53 +16,55 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-rou
     exports.OpenIdConfiguration = open_id_configuration_1.OpenIdConfiguration;
     exports.OpenIdLogger = open_id_logger_1.OpenIdLogger;
     function configure(aurelia, callback) {
-        var logger = aurelia.container.get(open_id_logger_1.OpenIdLogger);
+        let logger = aurelia.container.get(open_id_logger_1.OpenIdLogger);
         callback(function (oidcConfig) {
             logger.Debug("Configuring the OpenId Connect Client");
-            var userManagerSettings = oidcConfig.UserManagerSettings;
+            let userManagerSettings = oidcConfig.UserManagerSettings;
             aurelia.container.registerInstance(oidc_client_1.UserManager, new oidc_client_1.UserManager(userManagerSettings));
             aurelia.container.registerInstance(open_id_configuration_1.OpenIdConfiguration, oidcConfig);
         });
     }
     exports.configure = configure;
-    var OpenId = (function () {
-        function OpenId(routerConfigurationService, logger, UserManager) {
-            var _this = this;
+    let OpenId = class OpenId {
+        constructor(routerConfigurationService, logger, UserManager) {
             this.routerConfigurationService = routerConfigurationService;
             this.logger = logger;
             this.UserManager = UserManager;
-            this.LoginRedirectHandler = function () {
-                _this.logger.Debug("LoginRedirectHandler");
-                return _this.UserManager.getUser().then(function (user) {
+            this.LoginRedirectHandler = () => {
+                this.logger.Debug("LoginRedirectHandler");
+                return this.UserManager.getUser().then((user) => {
                     if (user === null || user === undefined) {
-                        _this.logger.Debug("user: " + user);
-                        _this.logger.Debug("window.location.href: " + window.location.href);
-                        return _this.UserManager.signinRedirectCallback(null);
+                        this.logger.Debug(`user: ${user}`);
+                        this.logger.Debug(`window.location.href: ${window.location.href}`);
+                        return this.UserManager.signinRedirectCallback(null);
                     }
                 });
             };
-            this.PostLogoutRedirectHandler = function () {
-                _this.logger.Debug("PostLogoutRedirectHandler");
-                return _this.UserManager.signoutRedirectCallback(null);
+            this.PostLogoutRedirectHandler = () => {
+                this.logger.Debug("PostLogoutRedirectHandler");
+                return this.UserManager.signoutRedirectCallback(null);
             };
         }
-        OpenId.prototype.Configure = function (routerConfiguration) {
+        Configure(routerConfiguration) {
             this.routerConfigurationService.ConfigureRouter(routerConfiguration, this.LoginRedirectHandler, this.PostLogoutRedirectHandler);
-        };
-        OpenId.prototype.Login = function () {
+        }
+        Login() {
             this.logger.Debug("Login");
-            this.UserManager.signinRedirect({});
-        };
-        OpenId.prototype.Logout = function () {
+            let stateStore = null;
+            this.UserManager.clearStaleState(stateStore).then(() => {
+                let args = {};
+                this.UserManager.signinRedirect(args);
+            });
+        }
+        Logout() {
             this.logger.Debug("Logout");
             this.UserManager.signoutRedirect({});
-        };
-        OpenId = __decorate([
-            aurelia_framework_1.autoinject, 
-            __metadata('design:paramtypes', [open_id_router_configuration_service_1.OpenIdRouterConfigurationService, open_id_logger_1.OpenIdLogger, oidc_client_1.UserManager])
-        ], OpenId);
-        return OpenId;
-    }());
+        }
+    };
+    OpenId = __decorate([
+        aurelia_framework_1.autoinject, 
+        __metadata('design:paramtypes', [open_id_router_configuration_service_1.OpenIdRouterConfigurationService, open_id_logger_1.OpenIdLogger, oidc_client_1.UserManager])
+    ], OpenId);
     exports.OpenId = OpenId;
 });
 //# sourceMappingURL=open-id.js.map

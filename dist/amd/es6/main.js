@@ -8,10 +8,10 @@ define(["require", "exports", "./oidc-config"], function (require, exports, oidc
     function configure(aurelia) {
         aurelia.use
             .standardConfiguration()
-            .plugin("./open-id/open-id", function (callback) { return callback(oidc_config_1.default); });
+            .plugin("./open-id/open-id", (callback) => callback(oidc_config_1.default));
         aurelia.use.developmentLogging();
         aurelia.use.plugin("aurelia-testing");
-        aurelia.start().then(function () { return aurelia.setRoot(); });
+        aurelia.start().then(() => aurelia.setRoot());
     }
     exports.configure = configure;
 });

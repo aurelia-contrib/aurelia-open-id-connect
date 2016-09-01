@@ -9,27 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 define(["require", "exports", "aurelia-framework", "./open-id-configuration"], function (require, exports, aurelia_framework_1, open_id_configuration_1) {
     "use strict";
-    var OpenIdRouterConfigurationService = (function () {
-        function OpenIdRouterConfigurationService(openIdConfiguration) {
+    let OpenIdRouterConfigurationService = class OpenIdRouterConfigurationService {
+        constructor(openIdConfiguration) {
             this.openIdConfiguration = openIdConfiguration;
         }
-        OpenIdRouterConfigurationService.prototype.ConfigureRouter = function (routerConfiguration, loginRedirectHandler, logoutRedirectHandler) {
+        ConfigureRouter(routerConfiguration, loginRedirectHandler, logoutRedirectHandler) {
             this.loginRedirectHandler = loginRedirectHandler;
             this.logoutRedirectHandler = logoutRedirectHandler;
             this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler);
             this.addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
-        };
-        OpenIdRouterConfigurationService.prototype.addLogoutRedirectRoute = function (routerConfiguration, handler) {
-            var _this = this;
-            var logoutRedirectRoute = {
+        }
+        addLogoutRedirectRoute(routerConfiguration, handler) {
+            let logoutRedirectRoute = {
                 name: "openIdPostLogoutRedirectRoute",
-                navigationStrategy: function (instruction) {
-                    var redirect = function () {
-                        instruction.config.moduleId = _this.openIdConfiguration.LogoutRedirectModuleId;
+                navigationStrategy: (instruction) => {
+                    let redirect = () => {
+                        instruction.config.moduleId = this.openIdConfiguration.LogoutRedirectModuleId;
                     };
                     return handler()
                         .then(redirect)
-                        .catch(function (err) {
+                        .catch((err) => {
                         redirect();
                         throw err;
                     });
@@ -37,18 +36,17 @@ define(["require", "exports", "aurelia-framework", "./open-id-configuration"], f
                 route: this.getPath(this.openIdConfiguration.UserManagerSettings.post_logout_redirect_uri),
             };
             routerConfiguration.mapRoute(logoutRedirectRoute);
-        };
-        OpenIdRouterConfigurationService.prototype.addLoginRedirectRoute = function (routerConfiguration, handler) {
-            var _this = this;
-            var loginRedirectRoute = {
+        }
+        addLoginRedirectRoute(routerConfiguration, handler) {
+            let loginRedirectRoute = {
                 name: "openIdRedirectRoute",
-                navigationStrategy: function (instruction) {
-                    var redirect = function () {
-                        instruction.config.moduleId = _this.openIdConfiguration.LoginRedirectModuleId;
+                navigationStrategy: (instruction) => {
+                    let redirect = () => {
+                        instruction.config.moduleId = this.openIdConfiguration.LoginRedirectModuleId;
                     };
                     return handler()
                         .then(redirect)
-                        .catch(function (err) {
+                        .catch((err) => {
                         redirect();
                         throw err;
                     });
@@ -56,25 +54,24 @@ define(["require", "exports", "aurelia-framework", "./open-id-configuration"], f
                 route: this.getPath(this.openIdConfiguration.UserManagerSettings.redirect_uri),
             };
             routerConfiguration.mapRoute(loginRedirectRoute);
-        };
-        OpenIdRouterConfigurationService.prototype.getPath = function (uri) {
+        }
+        getPath(uri) {
             return this.convertUriToAnchor(uri).pathname;
-        };
+        }
         ;
-        OpenIdRouterConfigurationService.prototype.getHash = function (uri) {
+        getHash(uri) {
             return this.convertUriToAnchor(uri).hash;
-        };
-        OpenIdRouterConfigurationService.prototype.convertUriToAnchor = function (uri) {
-            var anchor = document.createElement("a");
+        }
+        convertUriToAnchor(uri) {
+            let anchor = document.createElement("a");
             anchor.href = uri;
             return anchor;
-        };
-        OpenIdRouterConfigurationService = __decorate([
-            aurelia_framework_1.autoinject, 
-            __metadata('design:paramtypes', [open_id_configuration_1.OpenIdConfiguration])
-        ], OpenIdRouterConfigurationService);
-        return OpenIdRouterConfigurationService;
-    }());
+        }
+    };
+    OpenIdRouterConfigurationService = __decorate([
+        aurelia_framework_1.autoinject, 
+        __metadata('design:paramtypes', [open_id_configuration_1.OpenIdConfiguration])
+    ], OpenIdRouterConfigurationService);
     exports.OpenIdRouterConfigurationService = OpenIdRouterConfigurationService;
 });
 //# sourceMappingURL=open-id-router-configuration-service.js.map

@@ -9,42 +9,40 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 define(["require", "exports", "aurelia-framework", "./open-id/open-id", "aurelia-fetch-client"], function (require, exports, aurelia_framework_1, open_id_1, aurelia_fetch_client_1) {
     "use strict";
-    var Login = (function () {
-        function Login(openId, httpClient) {
-            var _this = this;
+    let Login = class Login {
+        constructor(openId, httpClient) {
             this.openId = openId;
             this.httpClient = httpClient;
             this.isLoggedIn = false;
-            this.openId.UserManager.getUser().then(function (user) {
+            this.openId.UserManager.getUser().then((user) => {
                 console.log(user);
                 if (user === null || user === undefined) {
                     return;
                 }
                 console.log("logged in");
-                _this.isLoggedIn = true;
-                _this.authorizationServerMessage = JSON.stringify(user, null, 4);
+                this.isLoggedIn = true;
+                this.authorizationServerMessage = JSON.stringify(user, null, 4);
                 console.log("login constructor done");
             });
         }
-        Login.prototype.login = function () {
+        login() {
             this.openId.Login();
-        };
-        Login.prototype.logout = function () {
+        }
+        logout() {
             this.openId.Logout();
-        };
-        Login.prototype.queryResourceServer = function (serverNum, isPrivate) {
-            var _this = this;
-            this.openId.UserManager.getUser().then(function (user) {
-                var url = _this.getUrl(serverNum, isPrivate);
-                _this.resourceServerMessage = "Fetching " + url;
-                var fetchInit = {
+        }
+        queryResourceServer(serverNum, isPrivate) {
+            this.openId.UserManager.getUser().then((user) => {
+                let url = this.getUrl(serverNum, isPrivate);
+                this.resourceServerMessage = `Fetching ${url}`;
+                let fetchInit = {
                     headers: new Headers(),
                 };
                 if (user !== null && user !== undefined) {
-                    fetchInit.headers.append("Authorization", "Bearer " + user.access_token);
+                    fetchInit.headers.append("Authorization", `Bearer ${user.access_token}`);
                 }
-                _this.httpClient.fetch(url, fetchInit)
-                    .then(function (response) {
+                this.httpClient.fetch(url, fetchInit)
+                    .then((response) => {
                     if (response.ok) {
                         return response.text();
                     }
@@ -52,17 +50,17 @@ define(["require", "exports", "aurelia-framework", "./open-id/open-id", "aurelia
                         return response.statusText;
                     }
                 })
-                    .then(function (data) {
-                    _this.resourceServerMessage = serverNum + ": " + data;
+                    .then((data) => {
+                    this.resourceServerMessage = `${serverNum}: ${data}`;
                 })
-                    .catch(function (err) {
-                    _this.resourceServerMessage = serverNum + ": " + err.message;
+                    .catch((err) => {
+                    this.resourceServerMessage = `${serverNum}: ${err.message}`;
                 });
             });
-        };
-        Login.prototype.getUrl = function (serverNum, isPrivate) {
-            var leftPart;
-            var path;
+        }
+        getUrl(serverNum, isPrivate) {
+            let leftPart;
+            let path;
             if (window.location.hostname.startsWith("localhost")) {
                 leftPart = serverNum === 1
                     ? "http://localhost:5001"
@@ -74,14 +72,13 @@ define(["require", "exports", "aurelia-framework", "./open-id/open-id", "aurelia
                     : "https://zamboni-resource-02.azurewebsites.net";
             }
             path = isPrivate ? "private" : "public";
-            return leftPart + "/api/" + path;
-        };
-        Login = __decorate([
-            aurelia_framework_1.autoinject, 
-            __metadata('design:paramtypes', [open_id_1.OpenId, aurelia_fetch_client_1.HttpClient])
-        ], Login);
-        return Login;
-    }());
+            return `${leftPart}/api/${path}`;
+        }
+    };
+    Login = __decorate([
+        aurelia_framework_1.autoinject, 
+        __metadata('design:paramtypes', [open_id_1.OpenId, aurelia_fetch_client_1.HttpClient])
+    ], Login);
     exports.Login = Login;
 });
 //# sourceMappingURL=login.js.map

@@ -9,23 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 define(["require", "exports", "aurelia-framework", "./open-id/open-id"], function (require, exports, aurelia_framework_1, open_id_1) {
     "use strict";
-    var App = (function () {
-        function App(openId) {
+    let App = class App {
+        constructor(openId) {
             this.openId = openId;
         }
-        App.prototype.configureRouter = function (routerConfiguration, router) {
+        configureRouter(routerConfiguration, router) {
             routerConfiguration.options.pushState = true;
             routerConfiguration.map([
                 { moduleId: "login", route: ["", "login"] },
             ]);
             this.openId.Configure(routerConfiguration);
-        };
-        App = __decorate([
-            aurelia_framework_1.autoinject, 
-            __metadata('design:paramtypes', [open_id_1.OpenId])
-        ], App);
-        return App;
-    }());
+        }
+    };
+    App = __decorate([
+        aurelia_framework_1.autoinject, 
+        __metadata('design:paramtypes', [open_id_1.OpenId])
+    ], App);
     exports.App = App;
 });
 //# sourceMappingURL=app.js.map

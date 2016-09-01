@@ -1,4 +1,4 @@
-import { autoinject, Aurelia} from "aurelia-framework";
+import { autoinject, Aurelia } from "aurelia-framework";
 import { RouterConfiguration } from "aurelia-router";
 import { User, UserManager, UserManagerSettings } from "oidc-client";
 import { OpenIdRouterConfigurationService } from "./open-id-router-configuration-service";
@@ -39,8 +39,13 @@ class OpenId {
     public Login() {
         this.logger.Debug("Login");
 
-        // signinRedirect throws with empty/null data.
-        this.UserManager.signinRedirect({});
+        // prevent Error: No matching state found in storage, 
+        // possibly from duplicate state entries
+        let stateStore: any = null;
+        this.UserManager.clearStaleState(stateStore).then(() => {
+            let args: any = {};
+            this.UserManager.signinRedirect(args);
+        });
     }
 
     public Logout() {
