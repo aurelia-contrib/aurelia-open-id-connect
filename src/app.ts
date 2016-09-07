@@ -65,7 +65,7 @@ class AuthorizeStep {
     run(navigationInstruction: NavigationInstruction, next: any): Promise<any> {
 
         // check authorized
-        if (navigationInstruction.getAllInstructions().some(i => i.config.settings.roles.indexOf('authorized') !== -1)) {
+        if (navigationInstruction.getAllInstructions().some(i => i.config.settings.roles !== undefined && i.config.settings.roles.indexOf('authorized') !== -1)) {
             return this.openId.UserManager.getUser().then((user) => {
                 let isAuthorized: boolean = user !== null;
                 if (!isAuthorized) {
