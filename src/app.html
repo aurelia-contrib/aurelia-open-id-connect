@@ -1,5 +1,9 @@
 <template>
+  <require from="navbar.html"></require>
   <require from="open-id-user-block"></require>
+  
+  <navbar router.bind="router"></navbar>
   <open-id-user-block></open-id-user-block>
+  
   <router-view></router-view>
 </template>
