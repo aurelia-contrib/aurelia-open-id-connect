@@ -3,20 +3,17 @@ import { OpenId, User } from "./open-id/open-id";
 import { HttpClient } from "aurelia-fetch-client";
 
 @autoinject
-export class Login {
+export class Home {
 
     private authorizationServerMessage: string;
     private resourceServerMessage: string;
     private isLoggedIn: boolean = false;
 
-    constructor(private openId: OpenId, private httpClient: HttpClient) {
+    constructor(private openId: OpenId, private httpClient: HttpClient) { }
+
+    attached() {
         this.openId.UserManager.getUser().then((user: User) => {
-
-            if (user === null || user === undefined) {
-                return;
-            }
-
-            this.isLoggedIn = true;
+            this.isLoggedIn = user !== null;
             this.authorizationServerMessage = JSON.stringify(user, null, 4);
         });
     }
@@ -33,7 +30,7 @@ export class Login {
                 headers: new Headers(),
             };
 
-            if (user !== null && user !== undefined) {
+            if (user !== null) {
                 fetchInit.headers.append("Authorization", `Bearer ${user.access_token}`);
             }
 

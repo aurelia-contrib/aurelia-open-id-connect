@@ -26,7 +26,7 @@ export class OpenIdRouterConfigurationService {
 
     private addLogoutRedirectRoute(
         routerConfiguration: RouterConfiguration,
-        handler: Function) {
+        logoutRedirectHandler: Function) {
 
         let logoutRedirectRoute: RouteConfig = {
             name: "openIdPostLogoutRedirectRoute",
@@ -36,7 +36,7 @@ export class OpenIdRouterConfigurationService {
                     instruction.config.moduleId = this.openIdConfiguration.LogoutRedirectModuleId;
                 };
 
-                return handler()
+                return logoutRedirectHandler()
                     .then(redirect)
                     .catch((err) => {
                         redirect();
@@ -51,7 +51,7 @@ export class OpenIdRouterConfigurationService {
 
     private addLoginRedirectRoute(
         routerConfiguration: RouterConfiguration,
-        handler: Function) {
+        loginRedirectHandler: Function) {
 
         let loginRedirectRoute: RouteConfig = {
             name: "openIdRedirectRoute",
@@ -61,7 +61,7 @@ export class OpenIdRouterConfigurationService {
                     instruction.config.moduleId = this.openIdConfiguration.LoginRedirectModuleId;
                 };
 
-                return handler()
+                return loginRedirectHandler()
                     .then(redirect)
                     .catch((err) => {
                         redirect();
