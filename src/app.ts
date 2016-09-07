@@ -1,7 +1,8 @@
 import { autoinject } from "aurelia-framework";
-import { Redirect, NavigationInstruction, RouterConfiguration, Router } from "aurelia-router";
+import { RouterConfiguration, Router } from "aurelia-router";
 import { OpenId, User } from "./open-id/open-id";
 import { Roles } from "./open-id-roles";
+import { AuthorizeStep } from "./open-id-authorize-step";
 
 @autoinject
 export class App {
@@ -46,33 +47,11 @@ export class App {
             },
             {
                 route: 'admin', name: 'admin', nav: true, moduleId: 'admin', title: 'admin',
-                settings: { roles: [Roles.Administrator]}
+                settings: { roles: [Roles.Administrator] }
             },
         ]);
 
         this.openId.Configure(routerConfiguration);
         this.router = router;
-    }
-}
-
-@autoinject
-class AuthorizeStep {
-
-    constructor(private openId: OpenId) {
-        this.openId = openId;
-    }
-
-    run(navigationInstruction: NavigationInstruction, next: any): Promise<any> {
-
-        // check authorized
-        if (navigationInstruction.getAllInstructions().some(i => i.config.settings.roles !== undefined && i.config.settings.roles.indexOf('authorized') !== -1)) {
-            return this.openId.UserManager.getUser().then((user) => {
-                let isAuthorized: boolean = user !== null;
-                if (!isAuthorized) {
-                    return next.cancel(new Redirect("login"));
-                }
-            });
-        }
-        return next();
     }
 }
