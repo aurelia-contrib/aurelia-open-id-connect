@@ -11,8 +11,8 @@ let host: string = isDevelopment
     : "https://zamboni-app.azurewebsites.net";
 
 const oidcConfig: OpenIdConfiguration = {
-    LoginRedirectModuleId: "login",
-    LogoutRedirectModuleId: "login",
+    LoginRedirectModuleId: "home",
+    LogoutRedirectModuleId: "home",
     UserManagerSettings: <UserManagerSettings>{
         authority: authority,
         client_id: "Aurelia.OidcClientJs",

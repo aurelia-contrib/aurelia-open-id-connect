@@ -12,25 +12,13 @@ export class Login {
     constructor(private openId: OpenId, private httpClient: HttpClient) {
         this.openId.UserManager.getUser().then((user: User) => {
 
-            console.log(user);
             if (user === null || user === undefined) {
                 return;
             }
 
-            console.log("logged in");
             this.isLoggedIn = true;
             this.authorizationServerMessage = JSON.stringify(user, null, 4);
-
-            console.log("login constructor done");
         });
-    }
-
-    private login() {
-        this.openId.Login();
-    }
-
-    private logout() {
-        this.openId.Logout();
     }
 
     private queryResourceServer(serverNum: number, isPrivate: boolean) {

@@ -8,9 +8,6 @@
   </style>
 
   <p>
-    <button show.bind='!isLoggedIn' click.trigger="login()">Log in</button>
-  </p>
-  <p>
     <button click.trigger="queryResourceServer(01, true)">Resource Server 01 - Private</button>
     <button click.trigger="queryResourceServer(01, false)">Resource Server 01 - Public</button>
     <button click.trigger="queryResourceServer(02, true)">Resource Server 02 - Private</button>
@@ -19,7 +16,6 @@
   </p>
   <div show.bind="isLoggedIn">
     <p>
-      <button click.trigger="logout()">Log out</button>
       <pre>${authorizationServerMessage}</pre>
     </p>
   </div>
