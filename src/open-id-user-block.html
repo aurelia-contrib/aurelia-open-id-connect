@@ -1,16 +1,4 @@
 <template>
-    <style type="text/css">
-        ul.user-block {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .user-block li {
-            display:inline;
-            margin-right:4px;
-        }
-    </style>
     <ul class="user-block">
         <li show.bind="!isLoggedIn"><a href="login">login / signup</a></li>
         <li show.bind="isLoggedIn"><a href="logout">logout</a></li>
