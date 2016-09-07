@@ -2,7 +2,7 @@ import { autoinject } from "aurelia-framework";
 import { OpenId, User } from "./open-id/open-id";
 
 @autoinject
-export class UserBlock {
+export class OpenIdUserBlock {
 
     private isLoggedIn: boolean = false;
     private user: User = null;

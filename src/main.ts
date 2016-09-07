@@ -1,5 +1,5 @@
 import { Aurelia } from "aurelia-framework";
-import oidcConfig from "./oidc-config";
+import oidcConfig from "./open-id-config";
 
 // Configure Bluebird Promises.
 // Note: You may want to use environment-specific configuration.
