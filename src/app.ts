@@ -1,14 +1,18 @@
 import { autoinject } from "aurelia-framework";
 import { Redirect, NavigationInstruction, RouterConfiguration, Router } from "aurelia-router";
-import { OpenId } from "./open-id/open-id";
+import { OpenId, User } from "./open-id/open-id";
+import { Roles } from "./open-id-roles";
 
 @autoinject
 export class App {
 
     private router: Router;
+    private user: User;
 
     constructor(private openId: OpenId) {
-        this.openId = openId;
+        this.openId.UserManager.getUser().then((user) => {
+            this.user = user;
+        });
     }
 
     public configureRouter(routerConfiguration: RouterConfiguration, router: Router) {
@@ -25,20 +29,24 @@ export class App {
             // OpenId
             {
                 route: 'login', name: 'login', nav: false, navigationStrategy: () => this.openId.Login(),
-                settings: { roles: ['anonymous'] }
+                settings: { roles: [Roles.Anonymous] }
             },
             {
                 route: 'logout', name: 'logout', nav: false, navigationStrategy: () => this.openId.Logout(),
-                settings: { roles: ['authorized'] }
+                settings: { roles: [Roles.Authorized] }
             },
             // App
             {
                 route: ['', 'home'], name: 'home', nav: true, moduleId: 'home', title: 'home',
-                settings: { roles: ['everyone'] }
+                settings: { roles: [Roles.Everyone] }
             },
             {
                 route: 'profile', name: 'profile', nav: true, moduleId: 'open-id-profile', title: 'profile',
-                settings: { roles: ['authorized'] }
+                settings: { roles: [Roles.Authorized] }
+            },
+            {
+                route: 'admin', name: 'admin', nav: true, moduleId: 'admin', title: 'admin',
+                settings: { roles: [Roles.Administrator]}
             },
         ]);
 
