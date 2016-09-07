@@ -6,11 +6,14 @@
             margin: 0;
         }
         
-        .user-block li {}
+        .user-block li {
+            display:inline;
+            margin-right:4px;
+        }
     </style>
     <ul class="user-block">
-        <li show.bind="!isLoggedIn"><a href="login">Login / Signup</a></li>
+        <li show.bind="!isLoggedIn"><a href="login">login / signup</a></li>
+        <li show.bind="isLoggedIn"><a href="logout">logout</a></li>
         <li show.bind="isLoggedIn"><a href="profile">${user.profile.unique_name}</a></li>
-        <li show.bind="isLoggedIn"><a href="logout">Logout</a></li>
     </ul>
 </template>

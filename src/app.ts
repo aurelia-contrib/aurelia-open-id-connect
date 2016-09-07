@@ -20,15 +20,14 @@ export class App {
         routerConfiguration.map([
             { moduleId: "home", route: [""] },
             {
-                route: 'login', name: 'login', nav: true, title: 'log in', navigationStrategy: (instruction) => {
-                    this.openId.Login();
-                },
+                route: 'login', name: 'login', nav: false, navigationStrategy: () => this.openId.Login()
             },
             {
-                route: 'logout', name: 'logout', nav: true, title: 'log out', navigationStrategy: (instruction) => {
-                    this.openId.Logout();
-                },
+                route: 'logout', name: 'logout', nav: false, navigationStrategy: () => this.openId.Logout()
             },
+            {
+                route: 'profile', name: 'profile', nav: false, moduleId: 'profile'
+            }
         ]);
 
         this.openId.Configure(routerConfiguration);
