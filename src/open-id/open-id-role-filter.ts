@@ -1,7 +1,6 @@
 import { NavModel } from 'aurelia-router';
 import { autoinject } from 'aurelia-framework';
-import { User } from './open-id/index';
-import { Roles } from './open-id-roles';
+import { User, Roles } from './index';
 
 @autoinject
 export class OpenIdRoleFilterValueConverter {
