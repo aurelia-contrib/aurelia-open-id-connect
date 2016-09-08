@@ -1,4 +1,4 @@
-import { OpenIdConfiguration, UserManagerSettings } from "open-id";
+import { OpenIdConfiguration, UserManagerSettings } from "./open-id/index";
 
 let isDevelopment = window.location.host.startsWith("localhost");
 

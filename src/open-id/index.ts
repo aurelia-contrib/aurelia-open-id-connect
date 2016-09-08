@@ -10,7 +10,7 @@ function configure(config: FrameworkConfiguration, callback: Function) {
 
     let logger: OpenIdLogger = config.container.get(OpenIdLogger);
     
-    config.globalResources('./foo');
+    config.globalResources('./open-id-user-block');
 
     callback(function (oidcConfig: OpenIdConfiguration) {
         logger.Debug("Configuring the OpenId Connect Client");
