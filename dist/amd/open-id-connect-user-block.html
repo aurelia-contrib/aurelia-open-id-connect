@@ -1,0 +1,7 @@
+<template>
+    <ul class="user-block">
+        <li show.bind="!isLoggedIn"><a href="login">login / signup</a></li>
+        <li show.bind="isLoggedIn"><a href="logout">logout</a></li>
+        <li show.bind="isLoggedIn"><a href="profile">${user.profile.unique_name}</a></li>
+    </ul>
+</template>

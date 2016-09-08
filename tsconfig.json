@@ -11,11 +11,8 @@
         "emitDecoratorMetadata": true,
         "moduleResolution": "node"
     },
-    "exclude": [
-        "node_modules", 
-        "test",
-        "dist",
-        "aurelia_project",
-        "scripts"
+    "include": [
+        "src/open-id-connect/*",
+        "index.d.ts"
     ]
 }
