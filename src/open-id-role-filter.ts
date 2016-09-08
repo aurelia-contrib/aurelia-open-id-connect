@@ -1,6 +1,6 @@
 import { NavModel } from 'aurelia-router';
 import { autoinject } from 'aurelia-framework';
-import { User } from 'open-id';
+import { User } from './open-id/index';
 import { Roles } from './open-id-roles';
 
 @autoinject
