@@ -77,6 +77,11 @@
             "name": "jwt-decode",
             "path": "../node_modules/jwt-decode/lib",
             "main": "index"
+          },
+          {
+            "name": "open-id",
+            "path": "../src/open-id", 
+            "main": "open-id"
           }
         ]
       },

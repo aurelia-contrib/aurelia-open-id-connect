@@ -12,7 +12,7 @@ import oidcConfig from "./open-id-config";
 export function configure(aurelia: Aurelia) {
   aurelia.use
     .standardConfiguration()
-    .plugin("./open-id/open-id", (callback) => callback(oidcConfig));
+    .plugin("./open-id", (callback) => callback(oidcConfig));
 
   aurelia.use.developmentLogging();
   aurelia.use.plugin("aurelia-testing");
