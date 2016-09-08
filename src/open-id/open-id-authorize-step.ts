@@ -13,7 +13,7 @@ export class OpenIdAuthorizeStep {
         return this.userManager.getUser().then((user) => {
 
             if (this.RequiresRole(navigationInstruction, OpenIdRoles.Authorized)) {
-                if (user !== null) {
+                if (user === null) {
                     return next.cancel(new Redirect("login"));
                 }
             }

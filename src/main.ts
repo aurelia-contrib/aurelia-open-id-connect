@@ -14,6 +14,8 @@ export function configure(aurelia: Aurelia) {
     .standardConfiguration()
     .plugin("./open-id", (callback) => callback(oidcConfig));
 
+  aurelia.use.globalResources('./navbar.html');
+
   aurelia.use.developmentLogging();
   aurelia.use.plugin("aurelia-testing");
 

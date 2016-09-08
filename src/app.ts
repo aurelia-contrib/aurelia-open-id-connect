@@ -38,7 +38,7 @@ export class App {
                 settings: { roles: [OpenIdRoles.Everyone] }
             },
             {
-                route: 'profile', name: 'profile', nav: true, moduleId: 'open-id-profile', title: 'profile',
+                route: 'profile', name: 'profile', nav: true, moduleId: 'user-profile', title: 'profile',
                 settings: { roles: [OpenIdRoles.Authorized] }
             },
             {
