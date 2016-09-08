@@ -69,7 +69,7 @@
       {
         "name": "open-id-bundle.js",
         "source": [
-          "**/src/open-id/*.js"
+          "**/src/open-id/*.{js,html}"
         ],
         "dependencies": [
           "oidc-client",
