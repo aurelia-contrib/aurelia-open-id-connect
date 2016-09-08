@@ -81,7 +81,7 @@
           {
             "name": "open-id",
             "path": "../src/open-id", 
-            "main": "open-id"
+            "main": "index"
           }
         ]
       },

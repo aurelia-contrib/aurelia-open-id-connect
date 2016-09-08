@@ -5,23 +5,8 @@ import { OpenIdRouterConfigurationService } from "./open-id-router-configuration
 import { OpenIdConfiguration } from "./open-id-configuration";
 import { OpenIdLogger } from "./open-id-logger";
 
-function configure(config: FrameworkConfiguration, callback: Function) {
-
-    let logger: OpenIdLogger = config.container.get(OpenIdLogger);
-    
-    // config.globalResources('./foo');
-
-    callback(function (oidcConfig: OpenIdConfiguration) {
-        logger.Debug("Configuring the OpenId Connect Client");
-
-        let userManagerSettings = oidcConfig.UserManagerSettings;
-        config.container.registerInstance(UserManager, new UserManager(userManagerSettings));
-        config.container.registerInstance(OpenIdConfiguration, oidcConfig);
-    });
-}
-
 @autoinject
-class OpenId {
+export class OpenId {
 
     constructor(
         private routerConfigurationService: OpenIdRouterConfigurationService,
@@ -77,15 +62,4 @@ class OpenId {
         this.logger.Debug("PostLogoutRedirectHandler");
         return this.UserManager.signoutRedirectCallback(null);
     }
-}
-
-export {
-    configure,
-    OpenId,
-    OpenIdConfiguration,
-    OpenIdLogger,
-    OpenIdRouterConfigurationService,
-    User,
-    UserManager,
-    UserManagerSettings
 }

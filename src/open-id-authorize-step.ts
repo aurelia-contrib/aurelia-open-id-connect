@@ -1,6 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { Redirect, NavigationInstruction, } from "aurelia-router";
-import { OpenId, User } from "open-id";
+import { OpenId, User } from "./open-id/index";
 import { Roles } from "./open-id-roles";
 
 @autoinject
