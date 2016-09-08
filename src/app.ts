@@ -1,7 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { RouterConfiguration, Router } from "aurelia-router";
-import { OpenId, User, Roles } from "./open-id/index";
-import { AuthorizeStep } from "./open-id-authorize-step";
+import { OpenId, User, OpenIdRoles } from "./open-id/index";
 
 @autoinject
 export class App {
@@ -22,31 +21,29 @@ export class App {
 
         routerConfiguration.title = "Demo";
 
-        routerConfiguration.addPipelineStep('authorize', AuthorizeStep);
-
         // configure routes
         routerConfiguration.map([
             // OpenId
             {
                 route: 'login', name: 'login', nav: false, navigationStrategy: () => this.openId.Login(),
-                settings: { roles: [Roles.Anonymous] }
+                settings: { roles: [OpenIdRoles.Anonymous] }
             },
             {
                 route: 'logout', name: 'logout', nav: false, navigationStrategy: () => this.openId.Logout(),
-                settings: { roles: [Roles.Authorized] }
+                settings: { roles: [OpenIdRoles.Authorized] }
             },
             // App
             {
                 route: ['', 'home'], name: 'home', nav: true, moduleId: 'home', title: 'home',
-                settings: { roles: [Roles.Everyone] }
+                settings: { roles: [OpenIdRoles.Everyone] }
             },
             {
                 route: 'profile', name: 'profile', nav: true, moduleId: 'open-id-profile', title: 'profile',
-                settings: { roles: [Roles.Authorized] }
+                settings: { roles: [OpenIdRoles.Authorized] }
             },
             {
                 route: 'admin', name: 'admin', nav: true, moduleId: 'admin', title: 'admin',
-                settings: { roles: [Roles.Administrator] }
+                settings: { roles: [OpenIdRoles.Administrator] }
             },
         ]);
 

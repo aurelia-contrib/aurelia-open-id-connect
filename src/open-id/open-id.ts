@@ -1,7 +1,7 @@
 import { autoinject, FrameworkConfiguration } from "aurelia-framework";
 import { RouterConfiguration } from "aurelia-router";
 import { User, UserManager, UserManagerSettings } from "oidc-client";
-import { OpenIdRouterConfigurationService } from "./open-id-router-configuration-service";
+import { OpenIdRouting } from "./open-id-routing"; 
 import { OpenIdConfiguration } from "./open-id-configuration";
 import { OpenIdLogger } from "./open-id-logger";
 
@@ -9,7 +9,7 @@ import { OpenIdLogger } from "./open-id-logger";
 export class OpenId {
 
     constructor(
-        private routerConfigurationService: OpenIdRouterConfigurationService,
+        private routerConfigurationService: OpenIdRouting,
         private logger: OpenIdLogger,
         public UserManager: UserManager) { }
 

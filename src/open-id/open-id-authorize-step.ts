@@ -1,25 +1,24 @@
 import { autoinject } from "aurelia-framework";
 import { Redirect, NavigationInstruction, } from "aurelia-router";
-import { OpenId, User, Roles } from "./open-id/index";
+import { UserManager } from "oidc-client";
+import { OpenIdRoles } from './open-id-roles';
 
 @autoinject
-export class AuthorizeStep {
+export class OpenIdAuthorizeStep {
 
-    constructor(private openId: OpenId) {
-        this.openId = openId;
-    }
+    constructor(private userManager: UserManager) { }
 
     run(navigationInstruction: NavigationInstruction, next: any): Promise<any> {
 
-        return this.openId.UserManager.getUser().then((user) => {
+        return this.userManager.getUser().then((user) => {
 
-            if (this.RequiresRole(navigationInstruction, Roles.Authorized)) {
+            if (this.RequiresRole(navigationInstruction, OpenIdRoles.Authorized)) {
                 if (user !== null) {
                     return next.cancel(new Redirect("login"));
                 }
             }
 
-            if (this.RequiresRole(navigationInstruction, Roles.Administrator)) {
+            if (this.RequiresRole(navigationInstruction, OpenIdRoles.Administrator)) {
                 // TODO Check for admin role.
             }
 
@@ -27,7 +26,7 @@ export class AuthorizeStep {
         });
     }
 
-    private RequiresRole(navigationInstruction: NavigationInstruction, role: Roles): boolean {
+    private RequiresRole(navigationInstruction: NavigationInstruction, role: OpenIdRoles): boolean {
         return navigationInstruction.getAllInstructions().some((instruction) => {
             return instruction.config.settings.roles !== undefined &&
                 instruction.config.settings.roles.indexOf(role) >= 0

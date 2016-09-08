@@ -1,16 +1,17 @@
 import { autoinject } from "aurelia-framework";
 import { RouterConfiguration, RouteConfig, NavigationInstruction } from "aurelia-router";
 import { OpenIdConfiguration } from "./open-id-configuration";
+import { OpenIdAuthorizeStep } from "./open-id-authorize-step";
 
 @autoinject
-export class OpenIdRouterConfigurationService {
+export class OpenIdRouting {
 
     private loginRedirectHandler: Function;
     private logoutRedirectHandler: Function;
 
     constructor(private openIdConfiguration: OpenIdConfiguration) { }
 
-    public ConfigureRouter(
+    public ConfigureRouter( 
         routerConfiguration: RouterConfiguration,
         loginRedirectHandler: Function,
         logoutRedirectHandler: Function) {
@@ -22,6 +23,8 @@ export class OpenIdRouterConfigurationService {
 
         this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler);
         this.addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
+
+        routerConfiguration.addPipelineStep('authorize', OpenIdAuthorizeStep);
     }
 
     private addLogoutRedirectRoute(

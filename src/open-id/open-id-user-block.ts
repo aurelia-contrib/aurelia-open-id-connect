@@ -1,5 +1,6 @@
 import { autoinject } from "aurelia-framework";
-import { OpenId, User } from "./index";
+import { User } from "oidc-client";
+import { OpenId } from "./open-id";
 
 @autoinject
 export class OpenIdUserBlock {

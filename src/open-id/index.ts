@@ -1,11 +1,12 @@
 import { autoinject, FrameworkConfiguration } from "aurelia-framework";
 import { RouterConfiguration } from "aurelia-router";
 import { User, UserManager, UserManagerSettings } from "oidc-client";
-import { OpenIdRouterConfigurationService } from "./open-id-router-configuration-service";
+import { OpenIdRoles } from './open-id-roles';
+import { OpenIdRouting } from "./open-id-routing";
 import { OpenIdConfiguration } from "./open-id-configuration";
+import { OpenIdAuthorizeStep } from "./open-id-authorize-step";
 import { OpenIdLogger } from "./open-id-logger";
 import { OpenId } from './open-id';
-import { Roles } from './open-id-roles';
 
 function configure(config: FrameworkConfiguration, callback: Function) {
 
@@ -28,8 +29,9 @@ export {
     OpenId,
     OpenIdConfiguration,
     OpenIdLogger,
-    OpenIdRouterConfigurationService,
-    Roles,
+    OpenIdRouting,
+    OpenIdAuthorizeStep,
+    OpenIdRoles,
     User,
     UserManager,
     UserManagerSettings
