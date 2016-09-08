@@ -1,6 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { RouterConfiguration, Router } from "aurelia-router";
-import { OpenId, User, OpenIdRoles } from "./open-id/index";
+import { OpenIdConnect, User, OpenIdConnectRoles } from "./open-id-connect/index";
 
 @autoinject
 export class App {
@@ -8,8 +8,8 @@ export class App {
     private router: Router;
     private user: User;
 
-    constructor(private openId: OpenId) {
-        this.openId.UserManager.getUser().then((user) => {
+    constructor(private openIdConnect: OpenIdConnect) {
+        this.openIdConnect.UserManager.getUser().then((user) => {
             this.user = user;
         });
     }
@@ -25,29 +25,29 @@ export class App {
         routerConfiguration.map([
             // OpenId
             {
-                route: 'login', name: 'login', nav: false, navigationStrategy: () => this.openId.Login(),
-                settings: { roles: [OpenIdRoles.Anonymous] }
+                name: "login", nav: false, navigationStrategy: () => this.openIdConnect.Login(), route: "login",
+                settings: { roles: [OpenIdConnectRoles.Anonymous] },
             },
             {
-                route: 'logout', name: 'logout', nav: false, navigationStrategy: () => this.openId.Logout(),
-                settings: { roles: [OpenIdRoles.Authorized] }
+                name: "logout", nav: false, navigationStrategy: () => this.openIdConnect.Logout(), route: "logout",
+                settings: { roles: [OpenIdConnectRoles.Authorized] },
             },
             // App
             {
-                route: ['', 'home'], name: 'home', nav: true, moduleId: 'home', title: 'home',
-                settings: { roles: [OpenIdRoles.Everyone] }
+                moduleId: "home", name: "home", nav: true, route: ["", "home"],
+                settings: { roles: [OpenIdConnectRoles.Everyone] }, title: "home",
             },
             {
-                route: 'profile', name: 'profile', nav: true, moduleId: 'user-profile', title: 'profile',
-                settings: { roles: [OpenIdRoles.Authorized] }
+                moduleId: "user-profile", name: "profile", nav: true, route: "profile",
+                settings: { roles: [OpenIdConnectRoles.Authorized] }, title: "profile",
             },
             {
-                route: 'admin', name: 'admin', nav: true, moduleId: 'admin', title: 'admin',
-                settings: { roles: [OpenIdRoles.Administrator] }
+                moduleId: "admin", name: "admin", nav: true, route: "admin",
+                settings: { roles: [OpenIdConnectRoles.Administrator] }, title: "admin",
             },
         ]);
 
-        this.openId.Configure(routerConfiguration);
+        this.openIdConnect.Configure(routerConfiguration);
         this.router = router;
     }
 }

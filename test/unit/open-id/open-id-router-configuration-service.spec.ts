@@ -1,4 +1,4 @@
-import { OpenIdRouterConfigurationService } from "../../../src/open-id/open-id";
+import { OpenIdConnectRouting } from "../../../src/open-id-connect/index";
 import { RouteConfig, NavigationInstruction } from "aurelia-router";
 import * as TestObj from "./_test-objects.js";
 
@@ -6,10 +6,10 @@ describe("the OpenIdRouterConfigurationService", function () {
 
     describe("the ConfigureRouter method", function () {
 
-        let openIdRouterConfigurationService: OpenIdRouterConfigurationService;
+        let openIdConnectRouting: OpenIdConnectRouting;
 
-        let redirectRouteName: string = "openIdRedirectRoute";
-        let postLogoutRedirectRouteName: string = "openIdPostLogoutRedirectRoute";
+        let redirectRouteName: string = "redirectRoute";
+        let postLogoutRedirectRouteName: string = "postLogoutRedirectRoute";
 
         let loginRedirectHandler: Function = (): Promise<any> => TestObj.EmptyPromise;
         let logoutRedirectHandler: Function = (): Promise<any> => TestObj.EmptyPromise;
@@ -18,13 +18,13 @@ describe("the OpenIdRouterConfigurationService", function () {
 
         beforeEach(function () {
 
-            openIdRouterConfigurationService = new OpenIdRouterConfigurationService(TestObj.openIdConfiguration);
+            openIdConnectRouting = new OpenIdConnectRouting(TestObj.openIdConnectConfiguration);
 
             spyOn(TestObj.routerConfiguration, "mapRoute").and.callFake((config) => {
                 routeCollection.push(config);
             });
 
-            openIdRouterConfigurationService.ConfigureRouter(
+            openIdConnectRouting.ConfigureRouter(
                 TestObj.routerConfiguration,
                 loginRedirectHandler,
                 logoutRedirectHandler);
@@ -50,7 +50,7 @@ describe("the OpenIdRouterConfigurationService", function () {
 
             TestObj.wrapVoidPromise(() => route.navigationStrategy(instruction))
                 .then(() => {
-                    expect(instruction.config.moduleId).toBe(TestObj.openIdConfiguration.LoginRedirectModuleId);
+                    expect(instruction.config.moduleId).toBe(TestObj.openIdConnectConfiguration.LoginRedirectModuleId);
                     done();
                 });
         });
@@ -71,7 +71,7 @@ describe("the OpenIdRouterConfigurationService", function () {
 
             TestObj.wrapVoidPromise(() => route.navigationStrategy(instruction))
                 .then(() => {
-                    expect(instruction.config.moduleId).toBe(TestObj.openIdConfiguration.LogoutRedirectModuleId);
+                    expect(instruction.config.moduleId).toBe(TestObj.openIdConnectConfiguration.LogoutRedirectModuleId);
                     done();
                 });
         });

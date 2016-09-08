@@ -67,9 +67,9 @@
     },
     "bundles": [
       {
-        "name": "open-id-bundle.js",
+        "name": "open-id-connect-bundle.js",
         "source": [
-          "**/src/open-id/*.{js,html}"
+          "**/src/open-id-connect/*.{js,html}"
         ],
         "dependencies": [
           "oidc-client",
@@ -79,8 +79,8 @@
             "main": "index"
           },
           {
-            "name": "open-id",
-            "path": "../src/open-id", 
+            "name": "open-id-connect",
+            "path": "../src/open-id-connect",
             "main": "index"
           }
         ]

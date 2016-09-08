@@ -1,0 +1,35 @@
+import { autoinject } from "aurelia-framework";
+import { Redirect, NavigationInstruction } from "aurelia-router";
+import { UserManager } from "oidc-client";
+import { OpenIdConnectRoles } from "./open-id-connect-roles";
+
+@autoinject
+export class OpenIdConnectAuthorizeStep {
+
+    constructor(private userManager: UserManager) { }
+
+    public run(navigationInstruction: NavigationInstruction, next: any): Promise<any> {
+
+        return this.userManager.getUser().then((user) => {
+
+            if (this.RequiresRole(navigationInstruction, OpenIdConnectRoles.Authorized)) {
+                if (user === null) {
+                    return next.cancel(new Redirect("login"));
+                }
+            }
+
+            if (this.RequiresRole(navigationInstruction, OpenIdConnectRoles.Administrator)) {
+                // TODO Check for admin role.
+            }
+
+            return next();
+        });
+    }
+
+    private RequiresRole(navigationInstruction: NavigationInstruction, role: OpenIdConnectRoles): boolean {
+        return navigationInstruction.getAllInstructions().some((instruction) => {
+            return instruction.config.settings.roles !== undefined &&
+                instruction.config.settings.roles.indexOf(role) >= 0;
+        });
+    }
+}

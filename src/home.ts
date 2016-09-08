@@ -1,5 +1,5 @@
 import { autoinject } from "aurelia-framework";
-import { OpenId, User } from "./open-id/index";
+import { OpenIdConnect, User } from "./open-id-connect/index";
 import { HttpClient } from "aurelia-fetch-client";
 
 @autoinject
@@ -9,10 +9,10 @@ export class Home {
     private resourceServerMessage: string;
     private isLoggedIn: boolean = false;
 
-    constructor(private openId: OpenId, private httpClient: HttpClient) { }
+    constructor(private openIdConnect: OpenIdConnect, private httpClient: HttpClient) { }
 
-    attached() {
-        this.openId.UserManager.getUser().then((user: User) => {
+    public attached() {
+        this.openIdConnect.UserManager.getUser().then((user: User) => {
             this.isLoggedIn = user !== null;
             this.authorizationServerMessage = JSON.stringify(user, null, 4);
         });
@@ -20,7 +20,7 @@ export class Home {
 
     private queryResourceServer(serverNum: number, isPrivate: boolean) {
 
-        this.openId.UserManager.getUser().then((user: User) => {
+        this.openIdConnect.UserManager.getUser().then((user: User) => {
 
             let url = this.getUrl(serverNum, isPrivate);
 

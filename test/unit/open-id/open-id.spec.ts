@@ -1,20 +1,20 @@
-import { OpenId } from "../../../src/open-id/open-id";
+import { OpenIdConnect } from "../../../src/open-id-connect/index";
 import * as TestObj from "./_test-objects.js";
 
 describe("the OpenId class", function () {
 
-    let openId = new OpenId(TestObj.openIdRouterConfigurationService, TestObj.openIdLogger, TestObj.userManager);
+    let openIdConnect = new OpenIdConnect(TestObj.openIdConnectRouting, TestObj.openIdConnectLogger, TestObj.userManager);
 
     describe("the Configure method", function () {
 
         beforeEach(function () {
-            spyOn(TestObj.openIdRouterConfigurationService, "ConfigureRouter");
+            spyOn(TestObj.openIdConnectRouting, "ConfigureRouter");
         });
 
         it("configures the Aurelia router via the RouterConfigurationService", function () {
             let routerConfiguration = null;
-            openId.Configure(routerConfiguration);
-            expect(TestObj.openIdRouterConfigurationService.ConfigureRouter).toHaveBeenCalled();
+            openIdConnect.Configure(routerConfiguration);
+            expect(TestObj.openIdConnectRouting.ConfigureRouter).toHaveBeenCalled();
         });
     });
 
@@ -25,7 +25,7 @@ describe("the OpenId class", function () {
         });
 
         it("calls UserManager.signinRedirect", function () {
-            openId.Login();
+            openIdConnect.Login();
             expect(TestObj.userManager.signinRedirect).toHaveBeenCalled();
         });
     });
@@ -37,7 +37,7 @@ describe("the OpenId class", function () {
         });
 
         it("calls UserManager.signoutRedirect", function () {
-            openId.Logout();
+            openIdConnect.Logout();
             expect(TestObj.userManager.signoutRedirect).toHaveBeenCalled();
         });
     });
@@ -53,7 +53,7 @@ describe("the OpenId class", function () {
             spyOn(TestObj.userManager, "getUser").and
                 .returnValue(TestObj.EmptyPromise);
 
-            openId.LoginRedirectHandler().then(() => {
+            openIdConnect.LoginRedirectHandler().then(() => {
                 expect(TestObj.userManager.getUser).toHaveBeenCalled();
                 expect(TestObj.userManager.signinRedirectCallback).toHaveBeenCalled();
                 done();
@@ -65,7 +65,7 @@ describe("the OpenId class", function () {
             spyOn(TestObj.userManager, "getUser").and
                 .returnValue(TestObj.MockUser);
 
-            openId.LoginRedirectHandler().then(() => {
+            openIdConnect.LoginRedirectHandler().then(() => {
 
                 expect(TestObj.userManager.getUser).toHaveBeenCalled();
                 expect(TestObj.userManager.signinRedirectCallback).toHaveBeenCalled();
@@ -81,7 +81,7 @@ describe("the OpenId class", function () {
         });
 
         it("calls UserManager.signoutRedirectCallback", function () {
-            openId.PostLogoutRedirectHandler();
+            openIdConnect.PostLogoutRedirectHandler();
             expect(TestObj.userManager.signoutRedirectCallback).toHaveBeenCalled();
         });
     });

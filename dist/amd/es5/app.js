@@ -17,28 +17,56 @@ var __decorate = undefined && undefined.__decorate || function (decorators, targ
 var __metadata = undefined && undefined.__metadata || function (k, v) {
     if ((typeof Reflect === "undefined" ? "undefined" : _typeof(Reflect)) === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-define(["require", "exports", "aurelia-framework", "./open-id/open-id"], function (require, exports, aurelia_framework_1, open_id_1) {
+define(["require", "exports", "aurelia-framework", "./open-id-connect/index"], function (require, exports, aurelia_framework_1, index_1) {
     "use strict";
 
     var App = function () {
-        function App(openId) {
+        function App(openIdConnect) {
+            var _this = this;
+
             _classCallCheck(this, App);
 
-            this.openId = openId;
+            this.openIdConnect = openIdConnect;
+            this.openIdConnect.UserManager.getUser().then(function (user) {
+                _this.user = user;
+            });
         }
 
         _createClass(App, [{
             key: "configureRouter",
             value: function configureRouter(routerConfiguration, router) {
+                var _this2 = this;
+
                 routerConfiguration.options.pushState = true;
-                routerConfiguration.map([{ moduleId: "login", route: ["", "login"] }]);
-                this.openId.Configure(routerConfiguration);
+                routerConfiguration.title = "Demo";
+                routerConfiguration.map([{
+                    name: "login", nav: false, navigationStrategy: function navigationStrategy() {
+                        return _this2.openIdConnect.Login();
+                    }, route: "login",
+                    settings: { roles: [index_1.OpenIdConnectRoles.Anonymous] }
+                }, {
+                    name: "logout", nav: false, navigationStrategy: function navigationStrategy() {
+                        return _this2.openIdConnect.Logout();
+                    }, route: "logout",
+                    settings: { roles: [index_1.OpenIdConnectRoles.Authorized] }
+                }, {
+                    moduleId: "home", name: "home", nav: true, route: ["", "home"],
+                    settings: { roles: [index_1.OpenIdConnectRoles.Everyone] }, title: "home"
+                }, {
+                    moduleId: "user-profile", name: "profile", nav: true, route: "profile",
+                    settings: { roles: [index_1.OpenIdConnectRoles.Authorized] }, title: "profile"
+                }, {
+                    moduleId: "admin", name: "admin", nav: true, route: "admin",
+                    settings: { roles: [index_1.OpenIdConnectRoles.Administrator] }, title: "admin"
+                }]);
+                this.openIdConnect.Configure(routerConfiguration);
+                this.router = router;
             }
         }]);
 
         return App;
     }();
-    App = __decorate([aurelia_framework_1.autoinject, __metadata('design:paramtypes', [open_id_1.OpenId])], App);
+    App = __decorate([aurelia_framework_1.autoinject, __metadata('design:paramtypes', [index_1.OpenIdConnect])], App);
     exports.App = App;
 });
 //# sourceMappingURL=app.js.map

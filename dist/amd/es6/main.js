@@ -1,4 +1,4 @@
-define(["require", "exports", "./oidc-config"], function (require, exports, oidc_config_1) {
+define(["require", "exports", "./open-id-connect-configuration"], function (require, exports, open_id_connect_configuration_1) {
     "use strict";
     Promise.config({
         warnings: {
@@ -8,7 +8,8 @@ define(["require", "exports", "./oidc-config"], function (require, exports, oidc
     function configure(aurelia) {
         aurelia.use
             .standardConfiguration()
-            .plugin("./open-id/open-id", (callback) => callback(oidc_config_1.default));
+            .plugin("./open-id-connect", (callback) => callback(open_id_connect_configuration_1.default));
+        aurelia.use.globalResources("./navbar.html");
         aurelia.use.developmentLogging();
         aurelia.use.plugin("aurelia-testing");
         aurelia.start().then(() => aurelia.setRoot());

@@ -8,11 +8,11 @@ import {
 import {
     UserManager,
     UserManagerSettings,
-    OpenId,
-    OpenIdConfiguration,
-    OpenIdRouterConfigurationService,
-    OpenIdLogger,
-} from "../../../src/open-id/open-id";
+    OpenIdConnect,
+    OpenIdConnectConfiguration,
+    OpenIdConnectRouting,
+    OpenIdConnectLogger,
+} from "../../../src/open-id-connect/index";
 
 export const routerConfiguration = new RouterConfiguration();
 
@@ -20,12 +20,12 @@ export const navigationInstruction = <NavigationInstruction>{
     config: {}
 };
 
-export const openIdConfiguration: OpenIdConfiguration = <OpenIdConfiguration>{
+export const openIdConnectConfiguration: OpenIdConnectConfiguration = <OpenIdConnectConfiguration>{
     LoginRedirectModuleId: "login",
     LogoutRedirectModuleId: "login",
     UserManagerSettings: <UserManagerSettings>{
         authority: "http://localhost:12345",
-        client_id: "Aurelia.OidcClientJs",
+        client_id: "Aurelia.OpenIdConnect",
         post_logout_redirect_uri: "http://localhost:9000/foobar-signout-oidc",
         redirect_uri: "http://localhost:9000/foobar-signin-oidc",
         response_type: "id_token token",
@@ -35,9 +35,9 @@ export const openIdConfiguration: OpenIdConfiguration = <OpenIdConfiguration>{
     }
 };
 
-export const openIdRouterConfigurationService = new OpenIdRouterConfigurationService(openIdConfiguration);
+export const openIdConnectRouting = new OpenIdConnectRouting(openIdConnectConfiguration);
 
-export const openIdLogger = new OpenIdLogger();
+export const openIdConnectLogger = new OpenIdConnectLogger();
 
 export const userManager = new UserManager();
 
