@@ -7,4 +7,7 @@
 
     npm run publish
 
+# Install 
+
+    npm install shaunluttin/aurelia-open-id-connect
 
