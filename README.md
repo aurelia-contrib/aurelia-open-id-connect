@@ -9,5 +9,5 @@
 
 # Install 
 
-    npm install --save shaunluttin/aurelia-open-id-connect
+    npm install --save shaunluttin/aurelia-open-id-connect#0.7.4
 
