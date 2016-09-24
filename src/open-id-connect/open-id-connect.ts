@@ -55,7 +55,7 @@ export class OpenIdConnect {
     }
 
     // This is public only to facilitate unit testing.
-    public PostLogoutRedirectHandler (userManager: UserManager, logger: OpenIdConnectLogger): Promise<any> {
+    public PostLogoutRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any> {
         logger.Debug("PostLogoutRedirectHandler");
         return userManager.signoutRedirectCallback(null);
     }

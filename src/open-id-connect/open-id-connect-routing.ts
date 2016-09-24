@@ -5,6 +5,10 @@ import { OpenIdConnectConfiguration } from "./open-id-connect-configuration";
 import { OpenIdConnectAuthorizeStep } from "./open-id-connect-authorize-step";
 import { OpenIdConnectLogger } from "./open-id-connect-logger";
 
+export interface IRedirectHandler {
+    (userManager: UserManager, logger: OpenIdConnectLogger): Promise<any>;
+}
+
 @autoinject
 export class OpenIdConnectRouting {
 
@@ -15,8 +19,8 @@ export class OpenIdConnectRouting {
 
     public ConfigureRouter(
         routerConfiguration: RouterConfiguration,
-        loginRedirectHandler: Function,
-        logoutRedirectHandler: Function) {
+        loginRedirectHandler: IRedirectHandler,
+        logoutRedirectHandler: IRedirectHandler) {
 
         this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler);
         this.addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
@@ -26,7 +30,7 @@ export class OpenIdConnectRouting {
 
     private addLogoutRedirectRoute(
         routerConfiguration: RouterConfiguration,
-        logoutRedirectHandler: Function) {
+        logoutRedirectHandler: IRedirectHandler) {
 
         let logoutRedirectRoute: RouteConfig = {
             name: "postLogoutRedirectRoute",
@@ -37,7 +41,7 @@ export class OpenIdConnectRouting {
                 };
 
                 return logoutRedirectHandler(this.userManager, this.logger)
-                    .then(redirect)
+                    .then(() => redirect())
                     .catch((err) => {
                         redirect();
                         throw err;
@@ -51,7 +55,7 @@ export class OpenIdConnectRouting {
 
     private addLoginRedirectRoute(
         routerConfiguration: RouterConfiguration,
-        loginRedirectHandler: Function) {
+        loginRedirectHandler: IRedirectHandler) {
 
         let loginRedirectRoute: RouteConfig = {
             name: "redirectRoute",
@@ -62,7 +66,7 @@ export class OpenIdConnectRouting {
                 };
 
                 return loginRedirectHandler(this.userManager, this.logger)
-                    .then(redirect)
+                    .then(() => redirect())
                     .catch((err) => {
                         redirect();
                         throw err;
