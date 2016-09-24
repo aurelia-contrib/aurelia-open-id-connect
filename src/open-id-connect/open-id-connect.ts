@@ -1,7 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { RouterConfiguration } from "aurelia-router";
 import { UserManager } from "oidc-client";
-import { OpenIdConnectRouting } from "./open-id-connect-routing"; 
+import { OpenIdConnectRouting } from "./open-id-connect-routing";
 import { OpenIdConnectLogger } from "./open-id-connect-logger";
 
 @autoinject
@@ -42,23 +42,21 @@ export class OpenIdConnect {
     }
 
     // This is public only to facilitate unit testing.
-    // And is a lamda to capture the object in `this`.
-    public LoginRedirectHandler = (): Promise<any> => {
-        this.logger.Debug("LoginRedirectHandler");
-        return this.UserManager.getUser().then((user) => {
+    public LoginRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any> {
+        logger.Debug("LoginRedirectHandler");
+        return userManager.getUser().then((user) => {
             // avoid page refresh errors
             if (user === null || user === undefined) {
-                this.logger.Debug(`user: ${user}`);
-                this.logger.Debug(`window.location.href: ${window.location.href}`);
-                return this.UserManager.signinRedirectCallback(null);
+                logger.Debug(`user: ${user}`);
+                logger.Debug(`window.location.href: ${window.location.href}`);
+                return userManager.signinRedirectCallback(null);
             }
         });
     }
 
     // This is public only to facilitate unit testing.
-    // And is a lamda to capture the object in `this`.
-    public PostLogoutRedirectHandler = (): Promise<any> => {
-        this.logger.Debug("PostLogoutRedirectHandler");
-        return this.UserManager.signoutRedirectCallback(null);
+    public PostLogoutRedirectHandler (userManager: UserManager, logger: OpenIdConnectLogger): Promise<any> {
+        logger.Debug("PostLogoutRedirectHandler");
+        return userManager.signoutRedirectCallback(null);
     }
 }

@@ -1,25 +1,22 @@
 import { autoinject } from "aurelia-framework";
 import { RouterConfiguration, RouteConfig, NavigationInstruction } from "aurelia-router";
+import { UserManager } from "oidc-client";
 import { OpenIdConnectConfiguration } from "./open-id-connect-configuration";
 import { OpenIdConnectAuthorizeStep } from "./open-id-connect-authorize-step";
+import { OpenIdConnectLogger } from "./open-id-connect-logger";
 
 @autoinject
 export class OpenIdConnectRouting {
 
-    private loginRedirectHandler: Function;
-    private logoutRedirectHandler: Function;
-
-    constructor(private openIdConnectConfiguration: OpenIdConnectConfiguration) { }
+    constructor(
+        private openIdConnectConfiguration: OpenIdConnectConfiguration,
+        private logger: OpenIdConnectLogger,
+        private userManager: UserManager) { }
 
     public ConfigureRouter(
         routerConfiguration: RouterConfiguration,
         loginRedirectHandler: Function,
         logoutRedirectHandler: Function) {
-
-        // TODO Check whether assigning to this. is necessary for lifetime maintenance.
-        this.loginRedirectHandler = loginRedirectHandler;
-        this.logoutRedirectHandler = logoutRedirectHandler;
-        // END TODO
 
         this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler);
         this.addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
@@ -39,7 +36,7 @@ export class OpenIdConnectRouting {
                     instruction.config.moduleId = this.openIdConnectConfiguration.LogoutRedirectModuleId;
                 };
 
-                return logoutRedirectHandler()
+                return logoutRedirectHandler(this.userManager, this.logger)
                     .then(redirect)
                     .catch((err) => {
                         redirect();
@@ -64,7 +61,7 @@ export class OpenIdConnectRouting {
                     instruction.config.moduleId = this.openIdConnectConfiguration.LoginRedirectModuleId;
                 };
 
-                return loginRedirectHandler()
+                return loginRedirectHandler(this.userManager, this.logger)
                     .then(redirect)
                     .catch((err) => {
                         redirect();
