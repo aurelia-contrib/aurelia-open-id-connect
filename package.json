@@ -19,10 +19,9 @@
     "demo": "node_modules/.bin/au run --watch"
   },
   "jspm": {
-    "main": "dist/amd/es5/open-id-connect/index.js",
-    "registry": "npm",
-    "jspmPackage": true,
+    "main": "dist/amd/index.js",
     "format": "amd",
+    "registry": "npm",
     "files": [
       "src",
       "dist"
