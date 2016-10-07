@@ -7,15 +7,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-define(["require", "exports", "aurelia-framework", "./open-id-connect-configuration", "./open-id-connect-authorize-step"], function (require, exports, aurelia_framework_1, open_id_connect_configuration_1, open_id_connect_authorize_step_1) {
+define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-configuration", "./open-id-connect-authorize-step", "./open-id-connect-logger"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_configuration_1, open_id_connect_authorize_step_1, open_id_connect_logger_1) {
     "use strict";
     let OpenIdConnectRouting = class OpenIdConnectRouting {
-        constructor(openIdConnectConfiguration) {
+        constructor(openIdConnectConfiguration, logger, userManager) {
             this.openIdConnectConfiguration = openIdConnectConfiguration;
+            this.logger = logger;
+            this.userManager = userManager;
         }
         ConfigureRouter(routerConfiguration, loginRedirectHandler, logoutRedirectHandler) {
-            this.loginRedirectHandler = loginRedirectHandler;
-            this.logoutRedirectHandler = logoutRedirectHandler;
             this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler);
             this.addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
             routerConfiguration.addPipelineStep("authorize", open_id_connect_authorize_step_1.OpenIdConnectAuthorizeStep);
@@ -27,8 +27,8 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-configurat
                     let redirect = () => {
                         instruction.config.moduleId = this.openIdConnectConfiguration.LogoutRedirectModuleId;
                     };
-                    return logoutRedirectHandler()
-                        .then(redirect)
+                    return logoutRedirectHandler(this.userManager, this.logger)
+                        .then(() => redirect())
                         .catch((err) => {
                         redirect();
                         throw err;
@@ -45,8 +45,8 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-configurat
                     let redirect = () => {
                         instruction.config.moduleId = this.openIdConnectConfiguration.LoginRedirectModuleId;
                     };
-                    return loginRedirectHandler()
-                        .then(redirect)
+                    return loginRedirectHandler(this.userManager, this.logger)
+                        .then(() => redirect())
                         .catch((err) => {
                         redirect();
                         throw err;
@@ -71,7 +71,7 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-configurat
     };
     OpenIdConnectRouting = __decorate([
         aurelia_framework_1.autoinject, 
-        __metadata('design:paramtypes', [open_id_connect_configuration_1.OpenIdConnectConfiguration])
+        __metadata('design:paramtypes', [open_id_connect_configuration_1.OpenIdConnectConfiguration, open_id_connect_logger_1.OpenIdConnectLogger, oidc_client_1.UserManager])
     ], OpenIdConnectRouting);
     exports.OpenIdConnectRouting = OpenIdConnectRouting;
 });

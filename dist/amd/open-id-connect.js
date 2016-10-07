@@ -22,27 +22,11 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
 
     var OpenIdConnect = function () {
         function OpenIdConnect(routerConfigurationService, logger, UserManager) {
-            var _this = this;
-
             _classCallCheck(this, OpenIdConnect);
 
             this.routerConfigurationService = routerConfigurationService;
             this.logger = logger;
             this.UserManager = UserManager;
-            this.LoginRedirectHandler = function () {
-                _this.logger.Debug("LoginRedirectHandler");
-                return _this.UserManager.getUser().then(function (user) {
-                    if (user === null || user === undefined) {
-                        _this.logger.Debug("user: " + user);
-                        _this.logger.Debug("window.location.href: " + window.location.href);
-                        return _this.UserManager.signinRedirectCallback(null);
-                    }
-                });
-            };
-            this.PostLogoutRedirectHandler = function () {
-                _this.logger.Debug("PostLogoutRedirectHandler");
-                return _this.UserManager.signoutRedirectCallback(null);
-            };
         }
 
         _createClass(OpenIdConnect, [{
@@ -53,13 +37,13 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
         }, {
             key: "Login",
             value: function Login() {
-                var _this2 = this;
+                var _this = this;
 
                 this.logger.Debug("Login");
                 var stateStore = null;
                 this.UserManager.clearStaleState(stateStore).then(function () {
                     var args = {};
-                    _this2.UserManager.signinRedirect(args);
+                    _this.UserManager.signinRedirect(args);
                 });
             }
         }, {
@@ -67,6 +51,24 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             value: function Logout() {
                 this.logger.Debug("Logout");
                 this.UserManager.signoutRedirect({});
+            }
+        }, {
+            key: "LoginRedirectHandler",
+            value: function LoginRedirectHandler(userManager, logger) {
+                logger.Debug("LoginRedirectHandler");
+                return userManager.getUser().then(function (user) {
+                    if (user === null || user === undefined) {
+                        logger.Debug("user: " + user);
+                        logger.Debug("window.location.href: " + window.location.href);
+                        return userManager.signinRedirectCallback(null);
+                    }
+                });
+            }
+        }, {
+            key: "PostLogoutRedirectHandler",
+            value: function PostLogoutRedirectHandler(userManager, logger) {
+                logger.Debug("PostLogoutRedirectHandler");
+                return userManager.signoutRedirectCallback(null);
             }
         }]);
 

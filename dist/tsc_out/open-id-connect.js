@@ -14,20 +14,6 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             this.routerConfigurationService = routerConfigurationService;
             this.logger = logger;
             this.UserManager = UserManager;
-            this.LoginRedirectHandler = () => {
-                this.logger.Debug("LoginRedirectHandler");
-                return this.UserManager.getUser().then((user) => {
-                    if (user === null || user === undefined) {
-                        this.logger.Debug(`user: ${user}`);
-                        this.logger.Debug(`window.location.href: ${window.location.href}`);
-                        return this.UserManager.signinRedirectCallback(null);
-                    }
-                });
-            };
-            this.PostLogoutRedirectHandler = () => {
-                this.logger.Debug("PostLogoutRedirectHandler");
-                return this.UserManager.signoutRedirectCallback(null);
-            };
         }
         Configure(routerConfiguration) {
             this.routerConfigurationService.ConfigureRouter(routerConfiguration, this.LoginRedirectHandler, this.PostLogoutRedirectHandler);
@@ -43,6 +29,20 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
         Logout() {
             this.logger.Debug("Logout");
             this.UserManager.signoutRedirect({});
+        }
+        LoginRedirectHandler(userManager, logger) {
+            logger.Debug("LoginRedirectHandler");
+            return userManager.getUser().then((user) => {
+                if (user === null || user === undefined) {
+                    logger.Debug(`user: ${user}`);
+                    logger.Debug(`window.location.href: ${window.location.href}`);
+                    return userManager.signinRedirectCallback(null);
+                }
+            });
+        }
+        PostLogoutRedirectHandler(userManager, logger) {
+            logger.Debug("PostLogoutRedirectHandler");
+            return userManager.signoutRedirectCallback(null);
         }
     };
     OpenIdConnect = __decorate([

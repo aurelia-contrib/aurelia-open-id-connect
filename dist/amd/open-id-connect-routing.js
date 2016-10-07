@@ -17,21 +17,21 @@ var __decorate = undefined && undefined.__decorate || function (decorators, targ
 var __metadata = undefined && undefined.__metadata || function (k, v) {
     if ((typeof Reflect === "undefined" ? "undefined" : _typeof(Reflect)) === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-define(["require", "exports", "aurelia-framework", "./open-id-connect-configuration", "./open-id-connect-authorize-step"], function (require, exports, aurelia_framework_1, open_id_connect_configuration_1, open_id_connect_authorize_step_1) {
+define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-configuration", "./open-id-connect-authorize-step", "./open-id-connect-logger"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_configuration_1, open_id_connect_authorize_step_1, open_id_connect_logger_1) {
     "use strict";
 
     var OpenIdConnectRouting = function () {
-        function OpenIdConnectRouting(openIdConnectConfiguration) {
+        function OpenIdConnectRouting(openIdConnectConfiguration, logger, userManager) {
             _classCallCheck(this, OpenIdConnectRouting);
 
             this.openIdConnectConfiguration = openIdConnectConfiguration;
+            this.logger = logger;
+            this.userManager = userManager;
         }
 
         _createClass(OpenIdConnectRouting, [{
             key: "ConfigureRouter",
             value: function ConfigureRouter(routerConfiguration, loginRedirectHandler, logoutRedirectHandler) {
-                this.loginRedirectHandler = loginRedirectHandler;
-                this.logoutRedirectHandler = logoutRedirectHandler;
                 this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler);
                 this.addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
                 routerConfiguration.addPipelineStep("authorize", open_id_connect_authorize_step_1.OpenIdConnectAuthorizeStep);
@@ -47,7 +47,9 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-configurat
                         var redirect = function redirect() {
                             instruction.config.moduleId = _this.openIdConnectConfiguration.LogoutRedirectModuleId;
                         };
-                        return logoutRedirectHandler().then(redirect).catch(function (err) {
+                        return logoutRedirectHandler(_this.userManager, _this.logger).then(function () {
+                            return redirect();
+                        }).catch(function (err) {
                             redirect();
                             throw err;
                         });
@@ -67,7 +69,9 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-configurat
                         var redirect = function redirect() {
                             instruction.config.moduleId = _this2.openIdConnectConfiguration.LoginRedirectModuleId;
                         };
-                        return loginRedirectHandler().then(redirect).catch(function (err) {
+                        return loginRedirectHandler(_this2.userManager, _this2.logger).then(function () {
+                            return redirect();
+                        }).catch(function (err) {
                             redirect();
                             throw err;
                         });
@@ -97,7 +101,7 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-configurat
 
         return OpenIdConnectRouting;
     }();
-    OpenIdConnectRouting = __decorate([aurelia_framework_1.autoinject, __metadata('design:paramtypes', [open_id_connect_configuration_1.OpenIdConnectConfiguration])], OpenIdConnectRouting);
+    OpenIdConnectRouting = __decorate([aurelia_framework_1.autoinject, __metadata('design:paramtypes', [open_id_connect_configuration_1.OpenIdConnectConfiguration, open_id_connect_logger_1.OpenIdConnectLogger, oidc_client_1.UserManager])], OpenIdConnectRouting);
     exports.OpenIdConnectRouting = OpenIdConnectRouting;
 });
 //# sourceMappingURL=open-id-connect-routing.js.map

@@ -3,8 +3,8 @@
   "description": "An Aurelia adapter for the IdentityModel/oidc-client-js.",
   "version": "0.9.0",
   "author": "Shaun Luttin <shaun@bigfont.ca>",
-  "main": "dist/amd/es5/open-id-connect/index.js",
-  "typings": "index.d.ts",
+  "main": "dist/amd/index.js",
+  "typings": "dist/tsc_out/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/shaunluttin/aurelia-open-id-connect.git"

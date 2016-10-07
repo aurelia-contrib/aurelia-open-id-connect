@@ -10,6 +10,6 @@ export declare class OpenIdConnect {
     Configure(routerConfiguration: RouterConfiguration): void;
     Login(): void;
     Logout(): void;
-    LoginRedirectHandler: () => Promise<any>;
-    PostLogoutRedirectHandler: () => Promise<any>;
+    LoginRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any>;
+    PostLogoutRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any>;
 }
