@@ -19,13 +19,12 @@
     "demo": "node_modules/.bin/au run --watch"
   },
   "jspm": {
-    "main": "dist/amd/index.js",
+    "main": "index.js",
+    "directories": {
+      "lib": "dist/amd"
+    },
     "format": "amd",
-    "registry": "npm",
-    "files": [
-      "src",
-      "dist"
-    ]
+    "registry": "npm"
   },
   "license": "MIT",
   "devDependencies": {
