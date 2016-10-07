@@ -1,6 +1,8 @@
 # Install 
 
-    npm install --save shaunluttin/aurelia-open-id-connect#0.7.4
+    npm install --save shaunluttin/aurelia-open-id-connect#0.9.0
+    
+    jspm install github:shaunluttin/aurelia-open-id-connect@0.9.0
 
 # Clone and Demo 
    
