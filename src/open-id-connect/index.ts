@@ -1,5 +1,5 @@
 import { FrameworkConfiguration } from "aurelia-framework";
-import { User, UserManager, UserManagerSettings } from "oidc-client";
+import { User, UserManager, UserManagerSettings, WebStorageStateStore } from "oidc-client";
 import { OpenIdConnectRoles } from "./open-id-connect-roles";
 import { OpenIdConnectRouting } from "./open-id-connect-routing";
 import { OpenIdConnectConfiguration } from "./open-id-connect-configuration";
@@ -34,5 +34,6 @@ export {
     OpenIdConnect,
     User,
     UserManager,
-    UserManagerSettings
+    UserManagerSettings,
+    WebStorageStateStore
 }
