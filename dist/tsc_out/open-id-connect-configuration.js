@@ -7,21 +7,22 @@ define(["require", "exports"], function (require, exports) {
     let host = isDevelopment
         ? "http://localhost:9000"
         : "https://zamboni-app.azurewebsites.net";
-    const oidcConfig = {
-        LoginRedirectModuleId: "home",
-        LogoutRedirectModuleId: "home",
-        UserManagerSettings: {
-            authority: authority,
-            client_id: "Aurelia.OpenIdConnect",
-            filterProtocolClaims: true,
-            loadUserInfo: true,
-            post_logout_redirect_uri: `${host}/signout-oidc`,
-            redirect_uri: `${host}/signin-oidc`,
-            response_type: "id_token token",
-            scope: "openid email roles profile",
-        },
-    };
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.default = oidcConfig;
+    class OpenIdConnectConfiguration {
+        constructor() {
+            this.LoginRedirectModuleId = "home";
+            this.LogoutRedirectModuleId = "home";
+            this.UserManagerSettings = {
+                authority: authority,
+                client_id: "Aurelia.OpenIdConnect",
+                filterProtocolClaims: true,
+                loadUserInfo: true,
+                post_logout_redirect_uri: `${host}/signout-oidc`,
+                redirect_uri: `${host}/signin-oidc`,
+                response_type: "id_token token",
+                scope: "openid email roles profile",
+            };
+        }
+    }
+    exports.OpenIdConnectConfiguration = OpenIdConnectConfiguration;
 });
 //# sourceMappingURL=open-id-connect-configuration.js.map

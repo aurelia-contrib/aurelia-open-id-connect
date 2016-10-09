@@ -7,7 +7,7 @@
 # Clone and Demo 
    
     git clone https://github.com/shaunluttin/aurelia-open-id-connect.git
-    cd aurelia-open-id-connect
+    cd aurelia-open-id-connect/demo
     npm install -y
     npm run demo
 
@@ -26,3 +26,19 @@ Find examples of those here:
 
     npm run publish
 
+# Usage (in progress)
+
+See the demo project for a usage example. Here are some gotchas.
+
+Add the following two dependencies in aurelia.json to use the package.
+
+```
+{
+  "name": "aurelia-open-id-connect",
+  "path": "../node_modules/aurelia-open-id-connect/dist/amd",
+  "main": "index"
+},
+"oidc-client"
+```
+
+Set `build.loader.plugs.stub = false` in aurelia.json to load HTML from the package.

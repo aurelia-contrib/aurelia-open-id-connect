@@ -1,4 +1,4 @@
-import { UserManagerSettings } from "./index";
+import { OpenIdConnectConfiguration, UserManagerSettings } from "aurelia-open-id-connect";
 
 let isDevelopment = window.location.host.startsWith("localhost");
 
@@ -10,10 +10,10 @@ let host: string = isDevelopment
     ? "http://localhost:9000"
     : "https://zamboni-app.azurewebsites.net";
 
-export class OpenIdConnectConfiguration {
-    public LoginRedirectModuleId: string = "home";
-    public LogoutRedirectModuleId: string = "home";
-    public UserManagerSettings: UserManagerSettings = {
+const oidcConfig: OpenIdConnectConfiguration = {
+    LoginRedirectModuleId: "home",
+    LogoutRedirectModuleId: "home",
+    UserManagerSettings: <UserManagerSettings> {
         authority: authority,
         client_id: "Aurelia.OpenIdConnect",
         filterProtocolClaims: true, // TODO What is this?
@@ -22,5 +22,7 @@ export class OpenIdConnectConfiguration {
         redirect_uri: `${host}/signin-oidc`,
         response_type: "id_token token",
         scope: "openid email roles profile",
-    };
-}
+    },
+};
+
+export default oidcConfig;

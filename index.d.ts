@@ -1,4 +1,4 @@
 /// <reference path="custom_typings/workarounds.d.ts" />
 /// <reference path="custom_typings/jwt-decode.d.ts" />
 
-export * from "./src/open-id-connect/index";
+export * from "./src/index";
