@@ -1,8 +1,0 @@
-{
-  "name": "aurelia-app",
-  "dependencies": {},
-  "globalDevDependencies": {},
-  "globalDependencies": {
-    "whatwg-fetch": "registry:dt/whatwg-fetch#0.0.0+20160829180742"
-  }
-}

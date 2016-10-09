@@ -40,8 +40,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 var _this = this;
 
                 this.logger.Debug("Login");
-                var stateStore = null;
-                this.UserManager.clearStaleState(stateStore).then(function () {
+                this.UserManager.clearStaleState().then(function () {
                     var args = {};
                     _this.UserManager.signinRedirect(args);
                 });

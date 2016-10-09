@@ -13,16 +13,16 @@ let host: string = isDevelopment
 const oidcConfig: OpenIdConnectConfiguration = {
     LoginRedirectModuleId: "home",
     LogoutRedirectModuleId: "home",
-    UserManagerSettings: <UserManagerSettings>{
+    UserManagerSettings: <UserManagerSettings> {
         authority: authority,
         client_id: "Aurelia.OpenIdConnect",
+        filterProtocolClaims: true, // TODO What is this?
+        loadUserInfo: true,
         post_logout_redirect_uri: `${host}/signout-oidc`,
         redirect_uri: `${host}/signin-oidc`,
         response_type: "id_token token",
         scope: "openid email roles profile",
-        filterProtocolClaims: true, // TODO What is this?
-        loadUserInfo: true,
-    }
+    },
 };
 
 export default oidcConfig;

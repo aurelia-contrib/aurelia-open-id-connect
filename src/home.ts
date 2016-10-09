@@ -18,7 +18,7 @@ export class Home {
         });
     }
 
-    private queryResourceServer(serverNum: number, isPrivate: boolean) {
+    public queryResourceServer(serverNum: number, isPrivate: boolean) {
 
         this.openIdConnect.UserManager.getUser().then((user: User) => {
 

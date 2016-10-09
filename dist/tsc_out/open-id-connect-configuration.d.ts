@@ -1,6 +1,3 @@
-import { UserManagerSettings } from "oidc-client";
-export declare class OpenIdConnectConfiguration {
-    LoginRedirectModuleId: string;
-    LogoutRedirectModuleId: string;
-    UserManagerSettings: UserManagerSettings;
-}
+import { OpenIdConnectConfiguration } from "./open-id-connect/index";
+declare const oidcConfig: OpenIdConnectConfiguration;
+export default oidcConfig;

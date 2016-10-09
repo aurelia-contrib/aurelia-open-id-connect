@@ -27,8 +27,7 @@ export class OpenIdConnect {
 
         // prevent Error: No matching state found in storage, 
         // possibly from duplicate state entries
-        let stateStore: any = null;
-        this.UserManager.clearStaleState(stateStore).then(() => {
+        this.UserManager.clearStaleState().then(() => {
             let args: any = {};
             this.UserManager.signinRedirect(args);
         });
