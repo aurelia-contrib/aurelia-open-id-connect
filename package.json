@@ -1,7 +1,7 @@
 {
   "name": "aurelia-open-id-connect",
   "description": "An Aurelia adapter for the IdentityModel/oidc-client-js.",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "author": "Shaun Luttin <shaun@bigfont.ca>",
   "main": "dist/amd/index.js",
   "types": "dist/tsc_out/index.d.ts",
@@ -38,6 +38,6 @@
     "aurelia-router": "^1.0.6",
     "cpx": "^1.5.0",
     "jwt-decode": "^2.1.0",
-    "oidc-client": "^1.2.0"
+    "oidc-client": "github:shaunluttin/oidc-client-js#master"
   }
 }

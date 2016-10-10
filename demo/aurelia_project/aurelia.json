@@ -91,7 +91,7 @@
         "name": "vendor-bundle.js",
         "prepend": [
           "node_modules/bluebird/js/browser/bluebird.core.js",
-          "scripts/require.js"
+          "node_modules/requirejs/require.js"
         ],
         "dependencies": [
           "aurelia-binding",
@@ -116,10 +116,7 @@
           "aurelia-task-queue",
           "aurelia-templating",
           "aurelia-templating-binding",
-          {
-            "name": "text",
-            "path": "../scripts/text"
-          },
+          "text",
           {
             "name": "aurelia-templating-resources",
             "path": "../node_modules/aurelia-templating-resources/dist/amd",

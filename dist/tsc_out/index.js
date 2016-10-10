@@ -1,6 +1,7 @@
 define(["require", "exports", "oidc-client", "./open-id-connect-roles", "./open-id-connect-routing", "./open-id-connect-configuration", "./open-id-connect-authorize-step", "./open-id-connect-logger", "./open-id-connect"], function (require, exports, oidc_client_1, open_id_connect_roles_1, open_id_connect_routing_1, open_id_connect_configuration_1, open_id_connect_authorize_step_1, open_id_connect_logger_1, open_id_connect_1) {
     "use strict";
     exports.UserManager = oidc_client_1.UserManager;
+    exports.WebStorageStateStore = oidc_client_1.WebStorageStateStore;
     exports.OpenIdConnectRoles = open_id_connect_roles_1.OpenIdConnectRoles;
     exports.OpenIdConnectRouting = open_id_connect_routing_1.OpenIdConnectRouting;
     exports.OpenIdConnectConfiguration = open_id_connect_configuration_1.OpenIdConnectConfiguration;

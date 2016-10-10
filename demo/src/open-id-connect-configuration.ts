@@ -1,4 +1,4 @@
-import { OpenIdConnectConfiguration, UserManagerSettings } from "aurelia-open-id-connect";
+import { OpenIdConnectConfiguration, UserManagerSettings, WebStorageStateStore } from "aurelia-open-id-connect";
 
 let isDevelopment = window.location.host.startsWith("localhost");
 
@@ -22,6 +22,7 @@ const oidcConfig: OpenIdConnectConfiguration = {
         redirect_uri: `${host}/signin-oidc`,
         response_type: "id_token token",
         scope: "openid email roles profile",
+        userStore: new WebStorageStateStore("oidc", window.localStorage),
     },
 };
 

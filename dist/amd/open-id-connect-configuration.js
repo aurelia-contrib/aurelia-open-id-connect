@@ -2,7 +2,7 @@
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "./index"], function (require, exports, index_1) {
     "use strict";
 
     var isDevelopment = window.location.host.startsWith("localhost");
@@ -22,7 +22,8 @@ define(["require", "exports"], function (require, exports) {
             post_logout_redirect_uri: host + "/signout-oidc",
             redirect_uri: host + "/signin-oidc",
             response_type: "id_token token",
-            scope: "openid email roles profile"
+            scope: "openid email roles profile",
+            userStore: new index_1.WebStorageStateStore("oidc", window.localStorage)
         };
     };
 

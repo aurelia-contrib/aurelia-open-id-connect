@@ -1,5 +1,5 @@
 import { FrameworkConfiguration } from "aurelia-framework";
-import { User, UserManager, UserManagerSettings } from "oidc-client";
+import { User, UserManager, UserManagerSettings, WebStorageStateStore } from "oidc-client";
 import { OpenIdConnectRoles } from "./open-id-connect-roles";
 import { OpenIdConnectRouting } from "./open-id-connect-routing";
 import { OpenIdConnectConfiguration } from "./open-id-connect-configuration";
@@ -7,4 +7,4 @@ import { OpenIdConnectAuthorizeStep } from "./open-id-connect-authorize-step";
 import { OpenIdConnectLogger } from "./open-id-connect-logger";
 import { OpenIdConnect } from "./open-id-connect";
 declare function configure(config: FrameworkConfiguration, callback: Function): void;
-export { configure, OpenIdConnectRoles, OpenIdConnectConfiguration, OpenIdConnectLogger, OpenIdConnectRouting, OpenIdConnectAuthorizeStep, OpenIdConnect, User, UserManager, UserManagerSettings };
+export { configure, OpenIdConnectRoles, OpenIdConnectConfiguration, OpenIdConnectLogger, OpenIdConnectRouting, OpenIdConnectAuthorizeStep, OpenIdConnect, User, UserManager, UserManagerSettings, WebStorageStateStore };

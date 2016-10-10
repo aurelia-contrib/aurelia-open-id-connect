@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "./index"], function (require, exports, index_1) {
     "use strict";
     let isDevelopment = window.location.host.startsWith("localhost");
     let authority = isDevelopment
@@ -20,6 +20,7 @@ define(["require", "exports"], function (require, exports) {
                 redirect_uri: `${host}/signin-oidc`,
                 response_type: "id_token token",
                 scope: "openid email roles profile",
+                userStore: new index_1.WebStorageStateStore("oidc", window.localStorage),
             };
         }
     }
