@@ -14,7 +14,7 @@
     "aurelia-animator-css": "^1.0.0",
     "aurelia-bootstrapper": "^1.0.0",
     "aurelia-fetch-client": "^1.0.0",
-    "aurelia-open-id-connect": "file:///C:\\Users\\bigfo\\GitHub\\_shaunluttin\\aurelia-open-id-connect",
+    "aurelia-open-id-connect": "file:..//..//aurelia-open-id-connect",
     "babel-polyfill": "^6.16.0",
     "bluebird": "^3.4.1",
     "requirejs": "^2.3.2",
