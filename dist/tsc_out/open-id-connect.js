@@ -16,7 +16,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             this.userManager = userManager;
         }
         Configure(routerConfiguration) {
-            this.routerConfigurationService.ConfigureRouter(routerConfiguration, this.LoginRedirectHandler, this.PostLogoutRedirectHandler);
+            this.routerConfigurationService.ConfigureRouter(routerConfiguration, this.LoginRedirectHandler, this.LoginSilentRedirectHandler, this.PostLogoutRedirectHandler);
         }
         Login() {
             this.logger.Debug("Login");
@@ -25,19 +25,29 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 this.userManager.signinRedirect(args);
             });
         }
+        LoginSilent() {
+            this.logger.Debug("LoginSilent starting");
+            return this.userManager.clearStaleState().then(() => {
+                let args = {};
+                return this.userManager.signinSilent(args);
+            });
+        }
         Logout() {
             this.logger.Debug("Logout");
-            this.userManager.signoutRedirect({});
+            let args = {};
+            this.userManager.signoutRedirect(args);
         }
         LoginRedirectHandler(userManager, logger) {
             logger.Debug("LoginRedirectHandler");
             return userManager.getUser().then((user) => {
                 if (user === null || user === undefined) {
-                    logger.Debug(`user: ${user}`);
-                    logger.Debug(`window.location.href: ${window.location.href}`);
                     return userManager.signinRedirectCallback(null);
                 }
             });
+        }
+        LoginSilentRedirectHandler(userManager, logger) {
+            logger.Debug("SilentLoginRedirectHandler");
+            return userManager.signinSilentCallback(null);
         }
         PostLogoutRedirectHandler(userManager, logger) {
             logger.Debug("PostLogoutRedirectHandler");

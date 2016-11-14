@@ -15,8 +15,8 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             this.logger = logger;
             this.userManager = userManager;
         }
-        ConfigureRouter(routerConfiguration, loginRedirectHandler, logoutRedirectHandler) {
-            this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler);
+        ConfigureRouter(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler, logoutRedirectHandler) {
+            this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler);
             this.addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
             routerConfiguration.addPipelineStep("authorize", open_id_connect_authorize_step_1.OpenIdConnectAuthorizeStep);
         }
@@ -38,14 +38,20 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             };
             routerConfiguration.mapRoute(logoutRedirectRoute);
         }
-        addLoginRedirectRoute(routerConfiguration, loginRedirectHandler) {
+        isSilentLogin() {
+            return true;
+        }
+        addLoginRedirectRoute(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler) {
             let loginRedirectRoute = {
                 name: "redirectRoute",
                 navigationStrategy: (instruction) => {
                     let redirect = () => {
                         instruction.config.moduleId = this.openIdConnectConfiguration.loginRedirectModuleId;
                     };
-                    return loginRedirectHandler(this.userManager, this.logger)
+                    let handler = this.isSilentLogin()
+                        ? loginSilentRedirectHandler
+                        : loginRedirectHandler;
+                    return handler(this.userManager, this.logger)
                         .then(() => redirect())
                         .catch((err) => {
                         redirect();

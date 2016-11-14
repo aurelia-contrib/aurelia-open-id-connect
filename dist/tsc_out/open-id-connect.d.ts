@@ -1,5 +1,5 @@
 import { RouterConfiguration } from "aurelia-router";
-import { UserManager } from "oidc-client";
+import { UserManager, User } from "oidc-client";
 import { OpenIdConnectRouting } from "./open-id-connect-routing";
 import { OpenIdConnectLogger } from "./open-id-connect-logger";
 export declare class OpenIdConnect {
@@ -9,7 +9,9 @@ export declare class OpenIdConnect {
     constructor(routerConfigurationService: OpenIdConnectRouting, logger: OpenIdConnectLogger, userManager: UserManager);
     Configure(routerConfiguration: RouterConfiguration): void;
     Login(): void;
+    LoginSilent(): Promise<User>;
     Logout(): void;
     LoginRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any>;
+    LoginSilentRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any>;
     PostLogoutRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any>;
 }

@@ -16,7 +16,7 @@ export class OpenIdConnectConfiguration {
     public userManagerSettings: UserManagerSettings = {
         authority: authority,
         client_id: "Aurelia.OpenIdConnect",
-        filterProtocolClaims: true, // TODO What is this?
+        filterProtocolClaims: true, // todo: What is this?
         loadUserInfo: true,
         post_logout_redirect_uri: `${host}/signout-oidc`,
         redirect_uri: `${host}/signin-oidc`,

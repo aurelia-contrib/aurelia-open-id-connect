@@ -18,6 +18,13 @@ export class Home {
         });
     }
 
+    public loginSilent() {
+        this.openIdConnect.LoginSilent()
+            .then((user) => {
+                this.authorizationServerMessage = JSON.stringify(user, null, 4);
+            });
+    }
+
     public queryResourceServer(serverNum: number, isPrivate: boolean) {
 
         this.openIdConnect.userManager.getUser().then((user: User) => {

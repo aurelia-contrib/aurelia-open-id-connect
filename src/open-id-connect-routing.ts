@@ -20,9 +20,10 @@ export class OpenIdConnectRouting {
     public ConfigureRouter(
         routerConfiguration: RouterConfiguration,
         loginRedirectHandler: IRedirectHandler,
+        loginSilentRedirectHandler: IRedirectHandler,
         logoutRedirectHandler: IRedirectHandler) {
 
-        this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler);
+        this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler);
         this.addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
 
         routerConfiguration.addPipelineStep("authorize", OpenIdConnectAuthorizeStep);
@@ -53,9 +54,14 @@ export class OpenIdConnectRouting {
         routerConfiguration.mapRoute(logoutRedirectRoute);
     }
 
+    private isSilentLogin() {
+        return true;
+    }
+
     private addLoginRedirectRoute(
         routerConfiguration: RouterConfiguration,
-        loginRedirectHandler: IRedirectHandler) {
+        loginRedirectHandler: IRedirectHandler,
+        loginSilentRedirectHandler: IRedirectHandler) {
 
         let loginRedirectRoute: RouteConfig = {
             name: "redirectRoute",
@@ -65,7 +71,11 @@ export class OpenIdConnectRouting {
                     instruction.config.moduleId = this.openIdConnectConfiguration.loginRedirectModuleId;
                 };
 
-                return loginRedirectHandler(this.userManager, this.logger)
+                let handler: IRedirectHandler = this.isSilentLogin()
+                    ? loginSilentRedirectHandler
+                    : loginRedirectHandler;
+
+                return handler(this.userManager, this.logger)
                     .then(() => redirect())
                     .catch((err) => {
                         redirect();

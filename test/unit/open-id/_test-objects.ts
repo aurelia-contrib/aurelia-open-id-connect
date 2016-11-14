@@ -30,7 +30,7 @@ export const openIdConnectConfiguration: OpenIdConnectConfiguration = <OpenIdCon
         redirect_uri: "http://localhost:9000/foobar-signin-oidc",
         response_type: "id_token token",
         scope: "openid email roles",
-        filterProtocolClaims: true, // TODO What is this?
+        filterProtocolClaims: true, // todo: What is this?
         loadUserInfo: true,
     }
 };

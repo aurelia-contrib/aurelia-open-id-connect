@@ -32,7 +32,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
         _createClass(OpenIdConnect, [{
             key: "Configure",
             value: function Configure(routerConfiguration) {
-                this.routerConfigurationService.ConfigureRouter(routerConfiguration, this.LoginRedirectHandler, this.PostLogoutRedirectHandler);
+                this.routerConfigurationService.ConfigureRouter(routerConfiguration, this.LoginRedirectHandler, this.LoginSilentRedirectHandler, this.PostLogoutRedirectHandler);
             }
         }, {
             key: "Login",
@@ -46,10 +46,22 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 });
             }
         }, {
+            key: "LoginSilent",
+            value: function LoginSilent() {
+                var _this2 = this;
+
+                this.logger.Debug("LoginSilent starting");
+                return this.userManager.clearStaleState().then(function () {
+                    var args = {};
+                    return _this2.userManager.signinSilent(args);
+                });
+            }
+        }, {
             key: "Logout",
             value: function Logout() {
                 this.logger.Debug("Logout");
-                this.userManager.signoutRedirect({});
+                var args = {};
+                this.userManager.signoutRedirect(args);
             }
         }, {
             key: "LoginRedirectHandler",
@@ -57,11 +69,15 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 logger.Debug("LoginRedirectHandler");
                 return userManager.getUser().then(function (user) {
                     if (user === null || user === undefined) {
-                        logger.Debug("user: " + user);
-                        logger.Debug("window.location.href: " + window.location.href);
                         return userManager.signinRedirectCallback(null);
                     }
                 });
+            }
+        }, {
+            key: "LoginSilentRedirectHandler",
+            value: function LoginSilentRedirectHandler(userManager, logger) {
+                logger.Debug("SilentLoginRedirectHandler");
+                return userManager.signinSilentCallback(null);
             }
         }, {
             key: "PostLogoutRedirectHandler",

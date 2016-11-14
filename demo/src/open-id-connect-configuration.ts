@@ -15,13 +15,16 @@ const oidcConfig: OpenIdConnectConfiguration = {
     logoutRedirectModuleId: "home",
     userManagerSettings: <UserManagerSettings> {
         authority: authority,
+        automaticSilentRenew: true,
         client_id: "Aurelia.OpenIdConnect",
-        filterProtocolClaims: true, // TODO What is this?
+        filterProtocolClaims: true, // todo: What is this?
         loadUserInfo: true,
         post_logout_redirect_uri: `${host}/signout-oidc`,
         redirect_uri: `${host}/signin-oidc`,
         response_type: "id_token token",
         scope: "openid email roles profile",
+        silent_redirect_uri: `${host}/signin-oidc`,
+        // silentRequestTimeout: 1000,
         userStore: new WebStorageStateStore("oidc", window.localStorage),
     },
 };

@@ -31,8 +31,8 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
 
         _createClass(OpenIdConnectRouting, [{
             key: "ConfigureRouter",
-            value: function ConfigureRouter(routerConfiguration, loginRedirectHandler, logoutRedirectHandler) {
-                this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler);
+            value: function ConfigureRouter(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler, logoutRedirectHandler) {
+                this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler);
                 this.addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
                 routerConfiguration.addPipelineStep("authorize", open_id_connect_authorize_step_1.OpenIdConnectAuthorizeStep);
             }
@@ -59,8 +59,13 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 routerConfiguration.mapRoute(logoutRedirectRoute);
             }
         }, {
+            key: "isSilentLogin",
+            value: function isSilentLogin() {
+                return true;
+            }
+        }, {
             key: "addLoginRedirectRoute",
-            value: function addLoginRedirectRoute(routerConfiguration, loginRedirectHandler) {
+            value: function addLoginRedirectRoute(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler) {
                 var _this2 = this;
 
                 var loginRedirectRoute = {
@@ -69,7 +74,8 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                         var redirect = function redirect() {
                             instruction.config.moduleId = _this2.openIdConnectConfiguration.loginRedirectModuleId;
                         };
-                        return loginRedirectHandler(_this2.userManager, _this2.logger).then(function () {
+                        var handler = _this2.isSilentLogin() ? loginSilentRedirectHandler : loginRedirectHandler;
+                        return handler(_this2.userManager, _this2.logger).then(function () {
                             return redirect();
                         }).catch(function (err) {
                             redirect();
