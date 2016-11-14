@@ -12,7 +12,7 @@ export class Home {
     constructor(private openIdConnect: OpenIdConnect, private httpClient: HttpClient) { }
 
     public attached() {
-        this.openIdConnect.UserManager.getUser().then((user: User) => {
+        this.openIdConnect.userManager.getUser().then((user: User) => {
             this.isLoggedIn = user !== null;
             this.authorizationServerMessage = JSON.stringify(user, null, 4);
         });
@@ -20,7 +20,7 @@ export class Home {
 
     public queryResourceServer(serverNum: number, isPrivate: boolean) {
 
-        this.openIdConnect.UserManager.getUser().then((user: User) => {
+        this.openIdConnect.userManager.getUser().then((user: User) => {
 
             let url = this.getUrl(serverNum, isPrivate);
 
