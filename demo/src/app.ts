@@ -23,6 +23,10 @@ export class App {
 
         // configure routes
         routerConfiguration.map([
+            {
+                moduleId: "home", name: "home", nav: true, route: [""],
+                settings: { roles: [OpenIdConnectRoles.Everyone] }, title: "home",
+            },
             // OpenId
             {
                 name: "login", nav: false, navigationStrategy: () => this.openIdConnect.Login(), route: "login",
@@ -32,15 +36,12 @@ export class App {
                 name: "logout", nav: false, navigationStrategy: () => this.openIdConnect.Logout(), route: "logout",
                 settings: { roles: [OpenIdConnectRoles.Authorized] },
             },
-            // App
-            {
-                moduleId: "home", name: "home", nav: true, route: ["", "home"],
-                settings: { roles: [OpenIdConnectRoles.Everyone] }, title: "home",
-            },
             {
                 moduleId: "user-profile", name: "profile", nav: true, route: "profile",
                 settings: { roles: [OpenIdConnectRoles.Authorized] }, title: "profile",
             },
+            // todo: Add an admin module and admin role for the demo
+            // todo: because this is currently a non-functional stub route.
             {
                 moduleId: "admin", name: "admin", nav: true, route: "admin",
                 settings: { roles: [OpenIdConnectRoles.Administrator] }, title: "admin",
