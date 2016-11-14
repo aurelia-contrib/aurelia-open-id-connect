@@ -19,7 +19,7 @@ export class OpenIdConnectAuthorizeStep {
             }
 
             if (this.RequiresRole(navigationInstruction, OpenIdConnectRoles.Administrator)) {
-                // TODO Check for admin role.
+                // todo: Check for admin role.
             }
 
             return next();

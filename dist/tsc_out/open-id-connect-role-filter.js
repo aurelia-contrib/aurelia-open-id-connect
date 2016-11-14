@@ -14,15 +14,12 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-roles"], f
             return navigation.filter((element) => {
                 let roles = element.settings.roles;
                 if (roles.indexOf(open_id_connect_roles_1.OpenIdConnectRoles.Everyone) >= 0) {
-                    console.log("Everyone");
                     return true;
                 }
                 if (roles.indexOf(open_id_connect_roles_1.OpenIdConnectRoles.Authorized) >= 0) {
-                    console.log("Authorized");
                     return user !== null;
                 }
                 if (roles.indexOf(open_id_connect_roles_1.OpenIdConnectRoles.Administrator) >= 0) {
-                    console.log("Administrator");
                 }
             });
         }

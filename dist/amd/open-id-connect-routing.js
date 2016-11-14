@@ -45,7 +45,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                     name: "postLogoutRedirectRoute",
                     navigationStrategy: function navigationStrategy(instruction) {
                         var redirect = function redirect() {
-                            instruction.config.moduleId = _this.openIdConnectConfiguration.LogoutRedirectModuleId;
+                            instruction.config.moduleId = _this.openIdConnectConfiguration.logoutRedirectModuleId;
                         };
                         return logoutRedirectHandler(_this.userManager, _this.logger).then(function () {
                             return redirect();
@@ -54,7 +54,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                             throw err;
                         });
                     },
-                    route: this.getPath(this.openIdConnectConfiguration.UserManagerSettings.post_logout_redirect_uri)
+                    route: this.getPath(this.openIdConnectConfiguration.userManagerSettings.post_logout_redirect_uri)
                 };
                 routerConfiguration.mapRoute(logoutRedirectRoute);
             }
@@ -67,7 +67,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                     name: "redirectRoute",
                     navigationStrategy: function navigationStrategy(instruction) {
                         var redirect = function redirect() {
-                            instruction.config.moduleId = _this2.openIdConnectConfiguration.LoginRedirectModuleId;
+                            instruction.config.moduleId = _this2.openIdConnectConfiguration.loginRedirectModuleId;
                         };
                         return loginRedirectHandler(_this2.userManager, _this2.logger).then(function () {
                             return redirect();
@@ -76,7 +76,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                             throw err;
                         });
                     },
-                    route: this.getPath(this.openIdConnectConfiguration.UserManagerSettings.redirect_uri)
+                    route: this.getPath(this.openIdConnectConfiguration.userManagerSettings.redirect_uri)
                 };
                 routerConfiguration.mapRoute(loginRedirectRoute);
             }

@@ -21,12 +21,12 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
     "use strict";
 
     var OpenIdConnect = function () {
-        function OpenIdConnect(routerConfigurationService, logger, UserManager) {
+        function OpenIdConnect(routerConfigurationService, logger, userManager) {
             _classCallCheck(this, OpenIdConnect);
 
             this.routerConfigurationService = routerConfigurationService;
             this.logger = logger;
-            this.UserManager = UserManager;
+            this.userManager = userManager;
         }
 
         _createClass(OpenIdConnect, [{
@@ -40,16 +40,16 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 var _this = this;
 
                 this.logger.Debug("Login");
-                this.UserManager.clearStaleState().then(function () {
+                this.userManager.clearStaleState().then(function () {
                     var args = {};
-                    _this.UserManager.signinRedirect(args);
+                    _this.userManager.signinRedirect(args);
                 });
             }
         }, {
             key: "Logout",
             value: function Logout() {
                 this.logger.Debug("Logout");
-                this.UserManager.signoutRedirect({});
+                this.userManager.signoutRedirect({});
             }
         }, {
             key: "LoginRedirectHandler",

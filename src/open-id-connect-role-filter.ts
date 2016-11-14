@@ -12,18 +12,15 @@ export class OpenIdConnectRoleFilterValueConverter {
             let roles: OpenIdConnectRoles[] = element.settings.roles;
 
             if (roles.indexOf(OpenIdConnectRoles.Everyone) >= 0) {
-                console.log("Everyone");
                 return true;
             }
 
             if (roles.indexOf(OpenIdConnectRoles.Authorized) >= 0) {
-                console.log("Authorized");
                 return user !== null;
             }
 
             if (roles.indexOf(OpenIdConnectRoles.Administrator) >= 0) {
-                console.log("Administrator");
-                // TODO Check for admin role.
+                // todo: Check for admin role.
             }
         });
     }

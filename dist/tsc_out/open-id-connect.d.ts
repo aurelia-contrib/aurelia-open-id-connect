@@ -5,8 +5,8 @@ import { OpenIdConnectLogger } from "./open-id-connect-logger";
 export declare class OpenIdConnect {
     private routerConfigurationService;
     private logger;
-    UserManager: UserManager;
-    constructor(routerConfigurationService: OpenIdConnectRouting, logger: OpenIdConnectLogger, UserManager: UserManager);
+    userManager: UserManager;
+    constructor(routerConfigurationService: OpenIdConnectRouting, logger: OpenIdConnectLogger, userManager: UserManager);
     Configure(routerConfiguration: RouterConfiguration): void;
     Login(): void;
     Logout(): void;

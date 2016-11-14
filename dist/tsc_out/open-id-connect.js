@@ -10,24 +10,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-routing", "./open-id-connect-logger"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_routing_1, open_id_connect_logger_1) {
     "use strict";
     let OpenIdConnect = class OpenIdConnect {
-        constructor(routerConfigurationService, logger, UserManager) {
+        constructor(routerConfigurationService, logger, userManager) {
             this.routerConfigurationService = routerConfigurationService;
             this.logger = logger;
-            this.UserManager = UserManager;
+            this.userManager = userManager;
         }
         Configure(routerConfiguration) {
             this.routerConfigurationService.ConfigureRouter(routerConfiguration, this.LoginRedirectHandler, this.PostLogoutRedirectHandler);
         }
         Login() {
             this.logger.Debug("Login");
-            this.UserManager.clearStaleState().then(() => {
+            this.userManager.clearStaleState().then(() => {
                 let args = {};
-                this.UserManager.signinRedirect(args);
+                this.userManager.signinRedirect(args);
             });
         }
         Logout() {
             this.logger.Debug("Logout");
-            this.UserManager.signoutRedirect({});
+            this.userManager.signoutRedirect({});
         }
         LoginRedirectHandler(userManager, logger) {
             logger.Debug("LoginRedirectHandler");

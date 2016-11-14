@@ -16,7 +16,7 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect"], functio
             this.user = null;
         }
         attached() {
-            this.openIdConnect.UserManager.getUser().then((user) => {
+            this.openIdConnect.userManager.getUser().then((user) => {
                 this.user = user;
                 this.isLoggedIn = user !== null;
             });

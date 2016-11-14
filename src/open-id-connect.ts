@@ -10,7 +10,7 @@ export class OpenIdConnect {
     constructor(
         private routerConfigurationService: OpenIdConnectRouting,
         private logger: OpenIdConnectLogger,
-        public UserManager: UserManager) { }
+        public userManager: UserManager) { }
 
     public Configure(routerConfiguration: RouterConfiguration) {
 
@@ -27,9 +27,9 @@ export class OpenIdConnect {
 
         // prevent Error: No matching state found in storage, 
         // possibly from duplicate state entries
-        this.UserManager.clearStaleState().then(() => {
+        this.userManager.clearStaleState().then(() => {
             let args: any = {};
-            this.UserManager.signinRedirect(args);
+            this.userManager.signinRedirect(args);
         });
     }
 
@@ -37,7 +37,7 @@ export class OpenIdConnect {
         this.logger.Debug("Logout");
 
         // signoutRedirect throws with empty/null data.
-        this.UserManager.signoutRedirect({});
+        this.userManager.signoutRedirect({});
     }
 
     // This is public only to facilitate unit testing.

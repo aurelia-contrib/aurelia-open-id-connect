@@ -11,7 +11,7 @@ export class OpenIdConnectUserBlock {
     constructor(private openIdConnect: OpenIdConnect) { }
 
     public attached() {
-        this.openIdConnect.UserManager.getUser().then((user: User) => {
+        this.openIdConnect.userManager.getUser().then((user: User) => {
             this.user = user;
             this.isLoggedIn = user !== null;
         });

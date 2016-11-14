@@ -11,9 +11,9 @@ let host: string = isDevelopment
     : "https://zamboni-app.azurewebsites.net";
 
 const oidcConfig: OpenIdConnectConfiguration = {
-    LoginRedirectModuleId: "home",
-    LogoutRedirectModuleId: "home",
-    UserManagerSettings: <UserManagerSettings> {
+    loginRedirectModuleId: "home",
+    logoutRedirectModuleId: "home",
+    userManagerSettings: <UserManagerSettings> {
         authority: authority,
         client_id: "Aurelia.OpenIdConnect",
         filterProtocolClaims: true, // TODO What is this?

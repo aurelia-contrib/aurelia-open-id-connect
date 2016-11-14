@@ -12,9 +12,9 @@ define(["require", "exports", "./index"], function (require, exports, index_1) {
     var OpenIdConnectConfiguration = function OpenIdConnectConfiguration() {
         _classCallCheck(this, OpenIdConnectConfiguration);
 
-        this.LoginRedirectModuleId = "home";
-        this.LogoutRedirectModuleId = "home";
-        this.UserManagerSettings = {
+        this.loginRedirectModuleId = "home";
+        this.logoutRedirectModuleId = "home";
+        this.userManagerSettings = {
             authority: authority,
             client_id: "Aurelia.OpenIdConnect",
             filterProtocolClaims: true,

@@ -34,7 +34,7 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect"], functio
             value: function attached() {
                 var _this = this;
 
-                this.openIdConnect.UserManager.getUser().then(function (user) {
+                this.openIdConnect.userManager.getUser().then(function (user) {
                     _this.user = user;
                     _this.isLoggedIn = user !== null;
                 });

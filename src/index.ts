@@ -17,7 +17,7 @@ function configure(config: FrameworkConfiguration, callback: Function) {
     callback(function (oidcConfig: OpenIdConnectConfiguration) {
         logger.Debug("Configuring the OpenId Connect Client");
 
-        let userManagerSettings = oidcConfig.UserManagerSettings;
+        let userManagerSettings = oidcConfig.userManagerSettings;
 
         config.container.registerInstance(UserManager, new UserManager(userManagerSettings));
         config.container.registerInstance(OpenIdConnectConfiguration, oidcConfig);
