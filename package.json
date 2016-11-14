@@ -10,6 +10,7 @@
     "url": "https://github.com/shaunluttin/aurelia-open-id-connect.git"
   },
   "scripts": {
+    "tslint": "node_modules/.bin/tslint --config tslint.json --project tsconfig.json",
     "package:clean": "node_modules/.bin/rimraf dist",
     "package:tsc": "node_modules/.bin/tsc --outDir dist/tsc_out",
     "package:babel": "node_modules/.bin/babel dist/tsc_out -d dist/amd",

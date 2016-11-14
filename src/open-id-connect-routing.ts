@@ -83,6 +83,7 @@ export class OpenIdConnectRouting {
     };
 
     // This is here for when we decide also to support hash navigation
+    // tslint:disable-next-line no-unused-variable
     private getHash(uri: string): string {
         return this.convertUriToAnchor(uri).hash;
     }

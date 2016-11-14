@@ -7,6 +7,7 @@
     "url": "???"
   },
   "scripts": {
+    "tslint": "node_modules/.bin/tslint --config tslint.json --project tsconfig.json",
     "demo": "node_modules/.bin/au run --watch"
   },
   "license": "MIT",
