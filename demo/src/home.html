@@ -5,6 +5,10 @@
       padding: 1em;
       overflow: auto;
     }
+    
+    pre#resources {
+      height: 75px;
+    }
   </style>
 
   <div>
@@ -15,14 +19,17 @@
       <button click.trigger="queryResourceServer(01, false)">Resource Server 01 - Public</button>
       <button click.trigger="queryResourceServer(02, true)">Resource Server 02 - Private</button>
       <button click.trigger="queryResourceServer(02, false)">Resource Server 02 - Public</button>
-      <pre>${resourceServerMessage}</pre>
+      <pre id="resources">
+<template repeat.for="msg of resourceServerMessage">${msg}</template>
+      </pre>
     </p>
   </div>
   <div show.bind="isLoggedIn">
     <h1>Authorization Server Response</h2>
-    <p>Current Time: ${currentTime}</p>
+      <p>Current Time: ${currentTime}</p>
+      <p>Access Token Expires In: ${expiresIn}</p>
       <p>
-        <pre>${authorizationServerMessage}</pre>
+        <pre>${userJson}</pre>
       </p>
   </div>
 </template>

@@ -5,23 +5,31 @@ import { HttpClient } from "aurelia-fetch-client";
 @autoinject
 export class Home {
 
-    private authorizationServerMessage: string;
     private currentTime: number;
-    private resourceServerMessage: string;
+    private resourceServerMessage: Array<string> = new Array<string>();
+    private user: User;
     private isLoggedIn: boolean = false;
 
+    public get userJson(): string {
+        return JSON.stringify(this.user, null, 4);
+    }
+
     constructor(private openIdConnect: OpenIdConnect, private httpClient: HttpClient) {
+
+        // update the user field wheneven it reloads
         this.openIdConnect.userManager.events.addUserLoaded(() => {
-            this.displayUserInfo();
+            this.setUser();
         });
 
+        // show how much time remains until the access_token expires
         setInterval(() => {
+            this.expiresIn = this.user.expires_in;
             this.currentTime = Math.round((new Date()).getTime() / 1000);
         }, 1000);
     }
 
     public attached() {
-        this.displayUserInfo();
+        this.setUser();
     }
 
     public loginSilent() {
@@ -32,9 +40,9 @@ export class Home {
 
         this.openIdConnect.userManager.getUser().then((user: User) => {
 
-            let url = this.getUrl(serverNum, isPrivate);
+            let url = this.getResourceServerUrl(serverNum, isPrivate);
 
-            this.resourceServerMessage = `Fetching ${url}`;
+            this.resourceServerMessage.splice(0, 0, `Fetching ${url}\n`);
 
             let fetchInit = {
                 headers: new Headers(),
@@ -53,22 +61,22 @@ export class Home {
                     }
                 })
                 .then((data) => {
-                    this.resourceServerMessage = `${serverNum}: ${data}`;
+                    this.resourceServerMessage.splice(1, 0, `${data}\n\n`);
                 })
                 .catch((err) => {
-                    this.resourceServerMessage = `${serverNum}: ${err.message}`;
+                    this.resourceServerMessage.splice(1, 0, `${err.message}\n\n`);
                 });
         });
     }
 
-    private displayUserInfo() {
+    private setUser() {
         this.openIdConnect.userManager.getUser().then((user) => {
             this.isLoggedIn = user !== null;
-            this.authorizationServerMessage = JSON.stringify(user, null, 4);
+            this.user = user;
         });
     }
 
-    private getUrl(serverNum: number, isPrivate: boolean) {
+    private getResourceServerUrl(serverNum: number, isPrivate: boolean) {
 
         let leftPart: string;
         let path: string;
