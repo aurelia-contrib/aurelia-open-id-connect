@@ -12,6 +12,16 @@ export interface IRedirectHandler {
 @autoinject
 export class OpenIdConnectRouting {
 
+    private get IsSilentLogin(): boolean {
+        let data: string = sessionStorage.getItem("isSilentLogin");
+        return data === "true";
+    }
+
+    private set IsSilentLogin(val: boolean) {
+        let data: string = String(val);
+        sessionStorage.setItem("isSilentLogin", data);
+    }
+
     constructor(
         private openIdConnectConfiguration: OpenIdConnectConfiguration,
         private logger: OpenIdConnectLogger,
@@ -27,6 +37,14 @@ export class OpenIdConnectRouting {
         this.addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
 
         routerConfiguration.addPipelineStep("authorize", OpenIdConnectAuthorizeStep);
+    }
+
+    public StartSilentLogin() {
+        this.IsSilentLogin = true;
+    }
+
+    private FinishSilentLogin() {
+        this.IsSilentLogin = false;
     }
 
     private addLogoutRedirectRoute(
@@ -54,10 +72,6 @@ export class OpenIdConnectRouting {
         routerConfiguration.mapRoute(logoutRedirectRoute);
     }
 
-    private isSilentLogin() {
-        return true;
-    }
-
     private addLoginRedirectRoute(
         routerConfiguration: RouterConfiguration,
         loginRedirectHandler: IRedirectHandler,
@@ -67,15 +81,22 @@ export class OpenIdConnectRouting {
             name: "redirectRoute",
             navigationStrategy: (instruction: NavigationInstruction): Promise<any> => {
 
-                let redirect: Function = () => {
-                    instruction.config.moduleId = this.openIdConnectConfiguration.loginRedirectModuleId;
-                };
+                let redirect: Function;
+                let handler: IRedirectHandler;
 
-                let handler: IRedirectHandler = this.isSilentLogin()
-                    ? loginSilentRedirectHandler
-                    : loginRedirectHandler;
+                if (this.IsSilentLogin) {
+                    redirect = () => instruction.config.moduleId = "THIS_HAPPENS_IN_A_CHILD_I_FRAME";
+                    handler = loginSilentRedirectHandler;
+                    this.FinishSilentLogin();
+                } else {
+                    redirect = () =>
+                        instruction.config.moduleId = this.openIdConnectConfiguration.loginRedirectModuleId;
+                    handler = loginRedirectHandler;
+                }
 
                 return handler(this.userManager, this.logger)
+                    // we need to redirect
+                    // otherwise the router complains
                     .then(() => redirect())
                     .catch((err) => {
                         redirect();

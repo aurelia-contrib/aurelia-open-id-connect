@@ -34,6 +34,7 @@ export class OpenIdConnect {
 
     public LoginSilent(): Promise<User> {
         this.logger.Debug("LoginSilent starting");
+        this.routerConfigurationService.StartSilentLogin();
 
         return this.userManager.clearStaleState().then(() => {
             let args: any = {};
