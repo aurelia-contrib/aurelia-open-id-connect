@@ -37,6 +37,16 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 routerConfiguration.addPipelineStep("authorize", open_id_connect_authorize_step_1.OpenIdConnectAuthorizeStep);
             }
         }, {
+            key: "StartSilentLogin",
+            value: function StartSilentLogin() {
+                this.IsSilentLogin = true;
+            }
+        }, {
+            key: "FinishSilentLogin",
+            value: function FinishSilentLogin() {
+                this.IsSilentLogin = false;
+            }
+        }, {
             key: "addLogoutRedirectRoute",
             value: function addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler) {
                 var _this = this;
@@ -59,11 +69,6 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 routerConfiguration.mapRoute(logoutRedirectRoute);
             }
         }, {
-            key: "isSilentLogin",
-            value: function isSilentLogin() {
-                return true;
-            }
-        }, {
             key: "addLoginRedirectRoute",
             value: function addLoginRedirectRoute(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler) {
                 var _this2 = this;
@@ -71,10 +76,20 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 var loginRedirectRoute = {
                     name: "redirectRoute",
                     navigationStrategy: function navigationStrategy(instruction) {
-                        var redirect = function redirect() {
-                            instruction.config.moduleId = _this2.openIdConnectConfiguration.loginRedirectModuleId;
-                        };
-                        var handler = _this2.isSilentLogin() ? loginSilentRedirectHandler : loginRedirectHandler;
+                        var redirect = void 0;
+                        var handler = void 0;
+                        if (_this2.IsSilentLogin) {
+                            redirect = function redirect() {
+                                return instruction.config.moduleId = "Foobar";
+                            };
+                            handler = loginSilentRedirectHandler;
+                            _this2.FinishSilentLogin();
+                        } else {
+                            redirect = function redirect() {
+                                return instruction.config.moduleId = _this2.openIdConnectConfiguration.loginRedirectModuleId;
+                            };
+                            handler = loginRedirectHandler;
+                        }
                         return handler(_this2.userManager, _this2.logger).then(function () {
                             return redirect();
                         }).catch(function (err) {
@@ -102,6 +117,16 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 var anchor = document.createElement("a");
                 anchor.href = uri;
                 return anchor;
+            }
+        }, {
+            key: "IsSilentLogin",
+            get: function get() {
+                var data = sessionStorage.getItem("isSilentLogin");
+                return data === "true";
+            },
+            set: function set(val) {
+                var data = String(val);
+                sessionStorage.setItem("isSilentLogin", data);
             }
         }]);
 

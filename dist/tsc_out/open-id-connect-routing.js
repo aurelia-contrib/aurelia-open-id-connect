@@ -15,10 +15,24 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             this.logger = logger;
             this.userManager = userManager;
         }
+        get IsSilentLogin() {
+            let data = sessionStorage.getItem("isSilentLogin");
+            return data === "true";
+        }
+        set IsSilentLogin(val) {
+            let data = String(val);
+            sessionStorage.setItem("isSilentLogin", data);
+        }
         ConfigureRouter(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler, logoutRedirectHandler) {
             this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler);
             this.addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
             routerConfiguration.addPipelineStep("authorize", open_id_connect_authorize_step_1.OpenIdConnectAuthorizeStep);
+        }
+        StartSilentLogin() {
+            this.IsSilentLogin = true;
+        }
+        FinishSilentLogin() {
+            this.IsSilentLogin = false;
         }
         addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler) {
             let logoutRedirectRoute = {
@@ -38,19 +52,21 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             };
             routerConfiguration.mapRoute(logoutRedirectRoute);
         }
-        isSilentLogin() {
-            return true;
-        }
         addLoginRedirectRoute(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler) {
             let loginRedirectRoute = {
                 name: "redirectRoute",
                 navigationStrategy: (instruction) => {
-                    let redirect = () => {
-                        instruction.config.moduleId = this.openIdConnectConfiguration.loginRedirectModuleId;
-                    };
-                    let handler = this.isSilentLogin()
-                        ? loginSilentRedirectHandler
-                        : loginRedirectHandler;
+                    let redirect;
+                    let handler;
+                    if (this.IsSilentLogin) {
+                        redirect = () => instruction.config.moduleId = "Foobar";
+                        handler = loginSilentRedirectHandler;
+                        this.FinishSilentLogin();
+                    }
+                    else {
+                        redirect = () => instruction.config.moduleId = this.openIdConnectConfiguration.loginRedirectModuleId;
+                        handler = loginRedirectHandler;
+                    }
                     return handler(this.userManager, this.logger)
                         .then(() => redirect())
                         .catch((err) => {
