@@ -23,20 +23,9 @@
     "fileExtension": ".html",
     "source": "src\\**\\*.html"
   },
-  "cssProcessor": {
-    "id": "none",
-    "displayName": "None",
-    "fileExtension": ".css",
-    "source": "src\\**\\*.css"
-  },
   "editor": {
     "id": "vscode",
     "displayName": "Visual Studio Code"
-  },
-  "unitTestRunner": {
-    "id": "karma",
-    "displayName": "Karma",
-    "source": "test\\unit\\**\\*.ts"
   },
   "paths": {
     "root": "src",
@@ -45,10 +34,6 @@
     "attributes": "src\\resources\\attributes",
     "valueConverters": "src\\resources\\value-converters",
     "bindingBehaviors": "src\\resources\\binding-behaviors"
-  },
-  "testFramework": {
-    "id": "jasmine",
-    "displayName": "Jasmine"
   },
   "build": {
     "targets": [
@@ -125,12 +110,6 @@
             "name": "aurelia-templating-router",
             "path": "../node_modules/aurelia-templating-router/dist/amd",
             "main": "aurelia-templating-router"
-          },
-          {
-            "name": "aurelia-testing",
-            "path": "../node_modules/aurelia-testing/dist/amd",
-            "main": "aurelia-testing",
-            "env": "dev"
           },
           {
             "name": "aurelia-open-id-connect",

@@ -1,14 +1,7 @@
 import { OpenIdConnectConfiguration, UserManagerSettings, WebStorageStateStore } from "aurelia-open-id-connect";
 
-let isDevelopment = window.location.host.startsWith("localhost");
-
-let authority: string = isDevelopment
-    ? "http://localhost:12345"
-    : "https://zamboni-auth.azurewebsites.net";
-
-let host: string = isDevelopment
-    ? "http://localhost:9000"
-    : "https://zamboni-app.azurewebsites.net";
+let authority: string = "http://localhost:12345";
+let host: string = "http://localhost:9000";
 
 const oidcConfig: OpenIdConnectConfiguration = {
     loginRedirectModuleId: "home",

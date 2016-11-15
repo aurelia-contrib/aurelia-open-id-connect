@@ -68,20 +68,14 @@ export class Home {
         });
     }
 
-    // HACK: Handle different environments and servers
     private getUrl(serverNum: number, isPrivate: boolean) {
+
         let leftPart: string;
         let path: string;
 
-        if (window.location.hostname.startsWith("localhost")) {
-            leftPart = serverNum === 1
-                ? "http://localhost:5001"
-                : "http://localhost:5002";
-        } else {
-            leftPart = serverNum === 1
-                ? "https://zamboni-resource-01.azurewebsites.net"
-                : "https://zamboni-resource-02.azurewebsites.net";
-        }
+        leftPart = serverNum === 1
+            ? "http://localhost:5001"
+            : "http://localhost:5002";
 
         path = isPrivate ? "private" : "public";
 

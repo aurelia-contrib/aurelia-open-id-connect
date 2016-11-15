@@ -17,7 +17,6 @@ export function configure(aurelia: Aurelia) {
   aurelia.use.globalResources("./navbar.html");
 
   aurelia.use.developmentLogging();
-  aurelia.use.plugin("aurelia-testing");
 
   aurelia.start().then(() => aurelia.setRoot());
 }

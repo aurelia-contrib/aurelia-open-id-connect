@@ -1,18 +1,18 @@
 {
-  "name": "demo",
-  "description": "An Aurelia client application.",
-  "version": "0.1.0",
+  "name": "aurelia-open-id-connect-demo",
+  "description": "A demo to shows aurelia-open-id-connect working with an OpenID Connect Server.",
+  "version": "0.2.0",
   "repository": {
-    "type": "???",
-    "url": "???"
+    "type": "git",
+    "url": "https://github.com/shaunluttin/aurelia-open-id-connect"
   },
+  "author": "Shaun Luttin <shaun@bigfont.ca>",
+  "license": "MIT",
   "scripts": {
     "tslint": "node_modules/.bin/tslint --config tslint.json --project tsconfig.json",
     "demo": "node_modules/.bin/au run --watch"
   },
-  "license": "MIT",
   "dependencies": {
-    "aurelia-animator-css": "^1.0.0",
     "aurelia-bootstrapper": "^1.0.0",
     "aurelia-fetch-client": "^1.0.0",
     "aurelia-open-id-connect": "file:..//..//aurelia-open-id-connect",
@@ -24,7 +24,6 @@
   "peerDependencies": {},
   "devDependencies": {
     "aurelia-cli": "^0.20.2",
-    "aurelia-testing": "^1.0.0-beta.2.0.0",
     "aurelia-tools": "^0.2.2",
     "browser-sync": "^2.13.0",
     "connect-history-api-fallback": "^1.2.0",
@@ -42,11 +41,6 @@
     "gulp-typescript": "^2.13.6",
     "gulp-tslint": "^5.0.0",
     "tslint": "^3.11.0",
-    "typescript": "^2.0.0",
-    "jasmine-core": "^2.4.1",
-    "karma": "^0.13.22",
-    "karma-chrome-launcher": "^1.0.1",
-    "karma-jasmine": "^1.0.2",
-    "karma-typescript-preprocessor": "^0.2.1"
+    "typescript": "^2.0.0"
   }
 }
