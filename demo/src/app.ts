@@ -9,6 +9,7 @@ export class App {
     private user: User;
 
     constructor(private openIdConnect: OpenIdConnect) {
+
         this.openIdConnect.userManager.getUser().then((user) => {
             this.user = user;
         });

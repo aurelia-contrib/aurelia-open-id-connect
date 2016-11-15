@@ -15,24 +15,18 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             this.logger = logger;
             this.userManager = userManager;
         }
-        get IsSilentLogin() {
-            let data = sessionStorage.getItem("isSilentLogin");
-            return data === "true";
-        }
-        set IsSilentLogin(val) {
-            let data = String(val);
-            sessionStorage.setItem("isSilentLogin", data);
-        }
         ConfigureRouter(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler, logoutRedirectHandler) {
             this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler);
             this.addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
             routerConfiguration.addPipelineStep("authorize", open_id_connect_authorize_step_1.OpenIdConnectAuthorizeStep);
         }
-        StartSilentLogin() {
-            this.IsSilentLogin = true;
-        }
-        FinishSilentLogin() {
-            this.IsSilentLogin = false;
+        IsSilentLogin() {
+            try {
+                return window.self !== window.top;
+            }
+            catch (e) {
+                return true;
+            }
         }
         addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler) {
             let logoutRedirectRoute = {
@@ -58,10 +52,9 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 navigationStrategy: (instruction) => {
                     let redirect;
                     let handler;
-                    if (this.IsSilentLogin) {
+                    if (this.IsSilentLogin()) {
                         redirect = () => instruction.config.moduleId = "THIS_HAPPENS_IN_A_CHILD_I_FRAME";
                         handler = loginSilentRedirectHandler;
-                        this.FinishSilentLogin();
                     }
                     else {
                         redirect = () => instruction.config.moduleId = this.openIdConnectConfiguration.loginRedirectModuleId;

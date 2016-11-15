@@ -37,14 +37,13 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 routerConfiguration.addPipelineStep("authorize", open_id_connect_authorize_step_1.OpenIdConnectAuthorizeStep);
             }
         }, {
-            key: "StartSilentLogin",
-            value: function StartSilentLogin() {
-                this.IsSilentLogin = true;
-            }
-        }, {
-            key: "FinishSilentLogin",
-            value: function FinishSilentLogin() {
-                this.IsSilentLogin = false;
+            key: "IsSilentLogin",
+            value: function IsSilentLogin() {
+                try {
+                    return window.self !== window.top;
+                } catch (e) {
+                    return true;
+                }
             }
         }, {
             key: "addLogoutRedirectRoute",
@@ -78,12 +77,11 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                     navigationStrategy: function navigationStrategy(instruction) {
                         var redirect = void 0;
                         var handler = void 0;
-                        if (_this2.IsSilentLogin) {
+                        if (_this2.IsSilentLogin()) {
                             redirect = function redirect() {
                                 return instruction.config.moduleId = "THIS_HAPPENS_IN_A_CHILD_I_FRAME";
                             };
                             handler = loginSilentRedirectHandler;
-                            _this2.FinishSilentLogin();
                         } else {
                             redirect = function redirect() {
                                 return instruction.config.moduleId = _this2.openIdConnectConfiguration.loginRedirectModuleId;
@@ -117,16 +115,6 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 var anchor = document.createElement("a");
                 anchor.href = uri;
                 return anchor;
-            }
-        }, {
-            key: "IsSilentLogin",
-            get: function get() {
-                var data = sessionStorage.getItem("isSilentLogin");
-                return data === "true";
-            },
-            set: function set(val) {
-                var data = String(val);
-                sessionStorage.setItem("isSilentLogin", data);
             }
         }]);
 

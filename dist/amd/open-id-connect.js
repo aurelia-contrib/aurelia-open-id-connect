@@ -51,7 +51,6 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 var _this2 = this;
 
                 this.logger.Debug("LoginSilent starting");
-                this.routerConfigurationService.StartSilentLogin();
                 return this.userManager.clearStaleState().then(function () {
                     var args = {};
                     return _this2.userManager.signinSilent(args);

@@ -6,28 +6,26 @@ import { HttpClient } from "aurelia-fetch-client";
 export class Home {
 
     private authorizationServerMessage: string;
+    private currentTime: number;
     private resourceServerMessage: string;
     private isLoggedIn: boolean = false;
 
-    constructor(private openIdConnect: OpenIdConnect, private httpClient: HttpClient) { }
+    constructor(private openIdConnect: OpenIdConnect, private httpClient: HttpClient) {
+        this.openIdConnect.userManager.events.addUserLoaded(() => {
+            this.displayUserInfo();
+        });
+
+        setInterval(() => {
+            this.currentTime = Math.round((new Date()).getTime() / 1000);
+        }, 1000);
+    }
 
     public attached() {
-        this.openIdConnect.userManager.getUser().then((user: User) => {
-            this.isLoggedIn = user !== null;
-            this.authorizationServerMessage = JSON.stringify(user, null, 4);
-        });
+        this.displayUserInfo();
     }
 
     public loginSilent() {
-        this.openIdConnect.LoginSilent()
-            .then((/*user*/) => {
-                // we could read the user that `LoginSilent` passes
-                // this is testing though to ensure that storage is up to date
-                this.openIdConnect.userManager.getUser().then((user: User) => {
-                    this.isLoggedIn = user !== null;
-                    this.authorizationServerMessage = JSON.stringify(user, null, 4);
-                });
-            });
+        this.openIdConnect.LoginSilent();
     }
 
     public queryResourceServer(serverNum: number, isPrivate: boolean) {
@@ -60,6 +58,13 @@ export class Home {
                 .catch((err) => {
                     this.resourceServerMessage = `${serverNum}: ${err.message}`;
                 });
+        });
+    }
+
+    private displayUserInfo() {
+        this.openIdConnect.userManager.getUser().then((user) => {
+            this.isLoggedIn = user !== null;
+            this.authorizationServerMessage = JSON.stringify(user, null, 4);
         });
     }
 

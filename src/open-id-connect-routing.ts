@@ -12,16 +12,6 @@ export interface IRedirectHandler {
 @autoinject
 export class OpenIdConnectRouting {
 
-    private get IsSilentLogin(): boolean {
-        let data: string = sessionStorage.getItem("isSilentLogin");
-        return data === "true";
-    }
-
-    private set IsSilentLogin(val: boolean) {
-        let data: string = String(val);
-        sessionStorage.setItem("isSilentLogin", data);
-    }
-
     constructor(
         private openIdConnectConfiguration: OpenIdConnectConfiguration,
         private logger: OpenIdConnectLogger,
@@ -39,12 +29,12 @@ export class OpenIdConnectRouting {
         routerConfiguration.addPipelineStep("authorize", OpenIdConnectAuthorizeStep);
     }
 
-    public StartSilentLogin() {
-        this.IsSilentLogin = true;
-    }
-
-    private FinishSilentLogin() {
-        this.IsSilentLogin = false;
+    private IsSilentLogin(): boolean {
+        try {
+            return window.self !== window.top;
+        } catch (e) {
+            return true;
+        }
     }
 
     private addLogoutRedirectRoute(
@@ -84,10 +74,9 @@ export class OpenIdConnectRouting {
                 let redirect: Function;
                 let handler: IRedirectHandler;
 
-                if (this.IsSilentLogin) {
+                if (this.IsSilentLogin()) {
                     redirect = () => instruction.config.moduleId = "THIS_HAPPENS_IN_A_CHILD_I_FRAME";
                     handler = loginSilentRedirectHandler;
-                    this.FinishSilentLogin();
                 } else {
                     redirect = () =>
                         instruction.config.moduleId = this.openIdConnectConfiguration.loginRedirectModuleId;
