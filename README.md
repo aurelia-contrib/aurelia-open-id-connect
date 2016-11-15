@@ -4,6 +4,14 @@
     
     jspm install github:shaunluttin/aurelia-open-id-connect@0.9.0
 
+# Implicit Flow Implementor Guide
+
+The OpenID Connect Implicit Client Implementer's Guide 1.0 contains a subset of the OpenID Connect Core 1.0 specification. 
+
+It is designed to be easy to read and implement for basic Web-based Relying Parties using the OAuth 2.0 Implicit Flow.
+
+http://openid.net/specs/openid-connect-implicit-1_0.html
+
 # Clone and Demo 
    
     git clone https://github.com/shaunluttin/aurelia-open-id-connect.git
