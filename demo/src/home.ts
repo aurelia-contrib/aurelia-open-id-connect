@@ -20,8 +20,13 @@ export class Home {
 
     public loginSilent() {
         this.openIdConnect.LoginSilent()
-            .then((user) => {
-                this.authorizationServerMessage = JSON.stringify(user, null, 4);
+            .then((/*user*/) => {
+                // we could read the user that `LoginSilent` passes
+                // this is testing though to ensure that storage is up to date
+                this.openIdConnect.userManager.getUser().then((user: User) => {
+                    this.isLoggedIn = user !== null;
+                    this.authorizationServerMessage = JSON.stringify(user, null, 4);
+                });
             });
     }
 
