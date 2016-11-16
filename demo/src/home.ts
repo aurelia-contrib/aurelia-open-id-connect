@@ -23,6 +23,10 @@ export class Home {
 
         // show how much time remains until the access_token expires
         setInterval(() => {
+            if (typeof this.inMemoryUser === "undefined" || this.inMemoryUser !== null) {
+                return;
+            }
+
             this.accessTokenExpiresIn = this.inMemoryUser.expires_in;
             this.currentTime = Math.round((new Date()).getTime() / 1000);
         }, 1000);
@@ -31,8 +35,13 @@ export class Home {
     public attached() {
         this.openIdConnect.userManager.getUser().then((user) => {
             if (typeof user === "undefined" || user === null || user.expired) {
-                // login silent will trigger the `addUserLoaded` event
-                this.openIdConnect.LoginSilent();
+                // a successful silent login will trigger the `addUserLoaded` event
+                this.openIdConnect.LoginSilent().catch((error) => {
+                    // the silent login will fail if the user 
+                    // is not logged in at the authorization server
+                    // todo: consider calling `querySessionStatus` before calling `LoginSilent`
+                    console.log(error);
+                });
             } else {
                 this.inMemoryUser = user;
             }
