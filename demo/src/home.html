@@ -14,7 +14,6 @@
   <div>
     <h1>Resource Server Response</h1>
     <p>
-      <button click.trigger="loginSilent()">Login Silent</button>
       <button click.trigger="queryResourceServer(01, true)">Resource Server 01 - Private</button>
       <button click.trigger="queryResourceServer(01, false)">Resource Server 01 - Public</button>
       <button click.trigger="queryResourceServer(02, true)">Resource Server 02 - Private</button>
@@ -24,12 +23,13 @@
       </pre>
     </p>
   </div>
-  <div show.bind="isLoggedIn">
+  <div show.bind="user !== null">
     <h1>Authorization Server Response</h2>
       <p>Current Time: ${currentTime}</p>
-      <p>Access Token Expires In: ${expiresIn}</p>
+      <p>Access Token Expires In: ${accessTokenExpiresIn}</p>
+      <button click.trigger="loginSilent()">Manual Silent Login</button>
       <p>
-        <pre>${userJson}</pre>
+        <pre>${userAsJson}</pre>
       </p>
   </div>
 </template>

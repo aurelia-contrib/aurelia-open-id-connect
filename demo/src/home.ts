@@ -6,30 +6,37 @@ import { HttpClient } from "aurelia-fetch-client";
 export class Home {
 
     private currentTime: number;
+    private accessTokenExpiresIn: number;
     private resourceServerMessage: Array<string> = new Array<string>();
-    private user: User;
-    private isLoggedIn: boolean = false;
+    private inMemoryUser: User;
 
-    public get userJson(): string {
-        return JSON.stringify(this.user, null, 4);
-    }
+    private get userAsJson(): string {
+        return JSON.stringify(this.inMemoryUser, null, 4);
+    };
 
     constructor(private openIdConnect: OpenIdConnect, private httpClient: HttpClient) {
 
-        // update the user field wheneven it reloads
-        this.openIdConnect.userManager.events.addUserLoaded(() => {
-            this.setUser();
-        });
+        // update the user field whenever the oidc-client reloads the user
+        this.openIdConnect.userManager.events.addUserLoaded(() =>
+            this.openIdConnect.userManager.getUser().then((user) =>
+                this.inMemoryUser = user));
 
         // show how much time remains until the access_token expires
         setInterval(() => {
-            this.expiresIn = this.user.expires_in;
+            this.accessTokenExpiresIn = this.inMemoryUser.expires_in;
             this.currentTime = Math.round((new Date()).getTime() / 1000);
         }, 1000);
     }
 
     public attached() {
-        this.setUser();
+        this.openIdConnect.userManager.getUser().then((user) => {
+            if (typeof user === "undefined" || user === null || user.expired) {
+                // login silent will trigger the `addUserLoaded` event
+                this.openIdConnect.LoginSilent();
+            } else {
+                this.inMemoryUser = user;
+            }
+        });
     }
 
     public loginSilent() {
@@ -66,13 +73,6 @@ export class Home {
                 .catch((err) => {
                     this.resourceServerMessage.splice(1, 0, `${err.message}\n\n`);
                 });
-        });
-    }
-
-    private setUser() {
-        this.openIdConnect.userManager.getUser().then((user) => {
-            this.isLoggedIn = user !== null;
-            this.user = user;
         });
     }
 

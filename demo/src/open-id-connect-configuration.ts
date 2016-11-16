@@ -16,7 +16,7 @@ const oidcConfig: OpenIdConnectConfiguration = {
         checkSessionInterval: 10000,
         client_id: "Aurelia.OpenIdConnect",
         filterProtocolClaims: true,
-        loadUserInfo: true,
+        loadUserInfo: false,
         post_logout_redirect_uri: `${host}/signout-oidc`,
         redirect_uri: `${host}/signin-oidc`,
         response_type: "id_token token",
