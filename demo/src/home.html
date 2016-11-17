@@ -12,7 +12,7 @@
   </style>
 
   <div>
-    <h1>Resource Server Response</h1>
+    <h3>Resource Server Response</h3>
     <p>
       <button click.trigger="queryResourceServer(01, true)">Resource Server 01 - Private</button>
       <button click.trigger="queryResourceServer(01, false)">Resource Server 01 - Public</button>
@@ -23,8 +23,8 @@
       </pre>
     </p>
   </div>
-  <div show.bind="user !== null">
-    <h1>Authorization Server Response</h2>
+  <div show.bind="inMemoryUser != null">
+    <h3>Authorization Server Response</h3>
       <p>Current Time: ${currentTime}</p>
       <p>Access Token Expires In: ${accessTokenExpiresIn}</p>
       <button click.trigger="loginSilent()">Manual Silent Login</button>

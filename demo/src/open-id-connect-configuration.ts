@@ -23,7 +23,7 @@ const oidcConfig: OpenIdConnectConfiguration = {
         scope: "openid email roles profile",
         // number of millisecods to wait for the authorization
         // server to response to silent renew request
-        silentRequestTimeout: 1000,
+        silentRequestTimeout: 10000,
         silent_redirect_uri: `${host}/signin-oidc`,
         userStore: new WebStorageStateStore("oidc", window.localStorage),
     },

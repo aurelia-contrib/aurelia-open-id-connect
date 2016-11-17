@@ -33,7 +33,7 @@ export class OpenIdConnect {
     }
 
     public LoginSilent(): Promise<User> {
-        this.logger.Debug("LoginSilent starting");
+        this.logger.Debug("LoginSilent");
 
         return this.userManager.clearStaleState().then(() => {
             let args: any = {};

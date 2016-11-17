@@ -26,7 +26,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             });
         }
         LoginSilent() {
-            this.logger.Debug("LoginSilent starting");
+            this.logger.Debug("LoginSilent");
             return this.userManager.clearStaleState().then(() => {
                 let args = {};
                 return this.userManager.signinSilent(args);

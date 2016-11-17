@@ -5,25 +5,59 @@ import { HttpClient } from "aurelia-fetch-client";
 @autoinject
 export class Home {
 
-    private currentTime: number;
     private accessTokenExpiresIn: number;
+    private currentTime: number;
     private resourceServerMessage: Array<string> = new Array<string>();
     private inMemoryUser: User;
+    private isLoggedIn: boolean;
 
     private get userAsJson(): string {
         return JSON.stringify(this.inMemoryUser, null, 4);
     };
 
     constructor(private openIdConnect: OpenIdConnect, private httpClient: HttpClient) {
+        this.setInMemoryUserOnUserLoadedEvent();
+        this.setTimeUntilAccessTokenExpiry();
+    }
 
-        // update the user field whenever the oidc-client reloads the user
+    private attached() {
+
+        // retrieve the user from storage
+        this.openIdConnect.userManager.getUser()
+            .then((user) => {
+                if (typeof user === "undefined" || user === null) {
+                    // we do not have a user in storage
+                    // so we cannot do loginSilent, because we
+                    // do not have an id_token to use as an id_token_hint
+                    return;
+                }
+                if (user.expired) {
+                    // we have an expired user in storage
+                    this.loginSilent();
+                } else {
+                    // we have a non-expired user in storage
+                    this.inMemoryUser = user;
+                }
+            });
+    }
+
+    private loginSilent() {
+        this.openIdConnect.LoginSilent().catch((error) => {
+            // if this is a timeout error 
+            // then increase the silentRequestTimeout value
+            console.log(error);
+        });
+    }
+
+    private setInMemoryUserOnUserLoadedEvent() {
         this.openIdConnect.userManager.events.addUserLoaded(() =>
-            this.openIdConnect.userManager.getUser().then((user) =>
+            this.openIdConnect.userManager.getUser().then((user: User) =>
                 this.inMemoryUser = user));
+    }
 
-        // show how much time remains until the access_token expires
+    private setTimeUntilAccessTokenExpiry() {
         setInterval(() => {
-            if (typeof this.inMemoryUser === "undefined" || this.inMemoryUser !== null) {
+            if (typeof this.inMemoryUser === "undefined" || this.inMemoryUser == null) {
                 return;
             }
 
@@ -32,70 +66,37 @@ export class Home {
         }, 1000);
     }
 
-    public attached() {
-        this.openIdConnect.userManager.getUser().then((user) => {
-            if (typeof user === "undefined" || user === null || user.expired) {
-                // a successful silent login will trigger the `addUserLoaded` event
-                this.openIdConnect.LoginSilent().catch((error) => {
-                    // the silent login will fail if the user 
-                    // is not logged in at the authorization server
-                    // todo: consider calling `querySessionStatus` before calling `LoginSilent`
-                    console.log(error);
-                });
-            } else {
-                this.inMemoryUser = user;
-            }
-        });
-    }
+    private getFetchInit(): RequestInit {
+        let fetchInit = <RequestInit>{
+            headers: new Headers()
+        };
 
-    public loginSilent() {
-        this.openIdConnect.LoginSilent();
-    }
+        if (this.inMemoryUser != null) {
+            (<Headers>fetchInit.headers)
+                .append("Authorization", `Bearer ${this.inMemoryUser.access_token}`);
+        }
 
-    public queryResourceServer(serverNum: number, isPrivate: boolean) {
-
-        this.openIdConnect.userManager.getUser().then((user: User) => {
-
-            let url = this.getResourceServerUrl(serverNum, isPrivate);
-
-            this.resourceServerMessage.splice(0, 0, `Fetching ${url}\n`);
-
-            let fetchInit = {
-                headers: new Headers(),
-            };
-
-            if (user !== null) {
-                fetchInit.headers.append("Authorization", `Bearer ${user.access_token}`);
-            }
-
-            this.httpClient.fetch(url, fetchInit)
-                .then((response) => {
-                    if (response.ok) {
-                        return response.text();
-                    } else {
-                        return response.statusText;
-                    }
-                })
-                .then((data) => {
-                    this.resourceServerMessage.splice(1, 0, `${data}\n\n`);
-                })
-                .catch((err) => {
-                    this.resourceServerMessage.splice(1, 0, `${err.message}\n\n`);
-                });
-        });
+        return fetchInit;
     }
 
     private getResourceServerUrl(serverNum: number, isPrivate: boolean) {
-
-        let leftPart: string;
-        let path: string;
-
-        leftPart = serverNum === 1
+        let leftPart = serverNum === 1
             ? "http://localhost:5001"
             : "http://localhost:5002";
 
-        path = isPrivate ? "private" : "public";
+        let path = isPrivate ? "private" : "public";
 
         return `${leftPart}/api/${path}`;
+    }
+
+    private queryResourceServer(serverNum: number, isPrivate: boolean) {
+        let fetchUrl = this.getResourceServerUrl(serverNum, isPrivate);
+        let fetchInit = this.getFetchInit();
+
+        this.resourceServerMessage.splice(0, 0, `Fetching ${fetchUrl}\n`);
+        this.httpClient.fetch(fetchUrl, fetchInit)
+            .then((response) => response.ok ? response.text() : response.statusText)
+            .then((data) => this.resourceServerMessage.splice(1, 0, `${data}\n\n`))
+            .catch((err) => this.resourceServerMessage.splice(1, 0, `${err.message}\n\n`));
     }
 }
