@@ -13,8 +13,8 @@ define(["require", "exports"], function (require, exports) {
         }
 
         _createClass(OpenIdConnectLogger, [{
-            key: "Debug",
-            value: function Debug(message) {
+            key: "debug",
+            value: function debug(message) {
                 console.debug("DEBUG [OpenIdConnect] " + message);
             }
         }]);

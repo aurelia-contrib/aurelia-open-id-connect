@@ -10,8 +10,8 @@ export declare class OpenIdConnectRouting {
     private logger;
     private userManager;
     constructor(openIdConnectConfiguration: OpenIdConnectConfiguration, logger: OpenIdConnectLogger, userManager: UserManager);
-    ConfigureRouter(routerConfiguration: RouterConfiguration, loginRedirectHandler: IRedirectHandler, loginSilentRedirectHandler: IRedirectHandler, logoutRedirectHandler: IRedirectHandler): void;
-    private IsSilentLogin();
+    configureRouter(routerConfiguration: RouterConfiguration, loginRedirectHandler: IRedirectHandler, loginSilentRedirectHandler: IRedirectHandler, logoutRedirectHandler: IRedirectHandler): void;
+    private isSilentLogin();
     private addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
     private addLoginRedirectRoute(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler);
     private getPath(uri);

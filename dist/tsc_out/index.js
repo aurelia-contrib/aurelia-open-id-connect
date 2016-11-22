@@ -13,7 +13,7 @@ define(["require", "exports", "oidc-client", "./open-id-connect-roles", "./open-
         config.globalResources("./open-id-connect-user-block");
         config.globalResources("./open-id-connect-role-filter");
         callback(function (oidcConfig) {
-            logger.Debug("Configuring the OpenId Connect Client");
+            logger.debug("Configuring the OpenId Connect Client");
             let userManagerSettings = oidcConfig.userManagerSettings;
             config.container.registerInstance(oidc_client_1.UserManager, new oidc_client_1.UserManager(userManagerSettings));
             config.container.registerInstance(open_id_connect_configuration_1.OpenIdConnectConfiguration, oidcConfig);

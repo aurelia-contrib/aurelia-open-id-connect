@@ -33,18 +33,18 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
                 var _this = this;
 
                 return this.userManager.getUser().then(function (user) {
-                    if (_this.RequiresRole(navigationInstruction, open_id_connect_roles_1.OpenIdConnectRoles.Authorized)) {
+                    if (_this.requiresRole(navigationInstruction, open_id_connect_roles_1.OpenIdConnectRoles.Authorized)) {
                         if (user === null) {
                             return next.cancel(new aurelia_router_1.Redirect("login"));
                         }
                     }
-                    if (_this.RequiresRole(navigationInstruction, open_id_connect_roles_1.OpenIdConnectRoles.Administrator)) {}
+                    if (_this.requiresRole(navigationInstruction, open_id_connect_roles_1.OpenIdConnectRoles.Administrator)) {}
                     return next();
                 });
             }
         }, {
-            key: "RequiresRole",
-            value: function RequiresRole(navigationInstruction, role) {
+            key: "requiresRole",
+            value: function requiresRole(navigationInstruction, role) {
                 return navigationInstruction.getAllInstructions().some(function (instruction) {
                     return instruction.config.settings.roles !== undefined && instruction.config.settings.roles.indexOf(role) >= 0;
                 });

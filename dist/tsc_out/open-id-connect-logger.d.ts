@@ -1,3 +1,3 @@
 export declare class OpenIdConnectLogger {
-    Debug(message: string): void;
+    debug(message: string): void;
 }

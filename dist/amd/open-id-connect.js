@@ -30,43 +30,43 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
         }
 
         _createClass(OpenIdConnect, [{
-            key: "Configure",
-            value: function Configure(routerConfiguration) {
-                this.routerConfigurationService.ConfigureRouter(routerConfiguration, this.LoginRedirectHandler, this.LoginSilentRedirectHandler, this.PostLogoutRedirectHandler);
+            key: "configure",
+            value: function configure(routerConfiguration) {
+                this.routerConfigurationService.configureRouter(routerConfiguration, this.loginRedirectHandler, this.loginSilentRedirectHandler, this.postLogoutRedirectHandler);
             }
         }, {
-            key: "Login",
-            value: function Login() {
+            key: "login",
+            value: function login() {
                 var _this = this;
 
-                this.logger.Debug("Login");
+                this.logger.debug("Login");
                 this.userManager.clearStaleState().then(function () {
                     var args = {};
                     _this.userManager.signinRedirect(args);
                 });
             }
         }, {
-            key: "LoginSilent",
-            value: function LoginSilent() {
+            key: "loginSilent",
+            value: function loginSilent() {
                 var _this2 = this;
 
-                this.logger.Debug("LoginSilent");
+                this.logger.debug("LoginSilent");
                 return this.userManager.clearStaleState().then(function () {
                     var args = {};
                     return _this2.userManager.signinSilent(args);
                 });
             }
         }, {
-            key: "Logout",
-            value: function Logout() {
-                this.logger.Debug("Logout");
+            key: "logout",
+            value: function logout() {
+                this.logger.debug("Logout");
                 var args = {};
                 this.userManager.signoutRedirect(args);
             }
         }, {
-            key: "LoginRedirectHandler",
-            value: function LoginRedirectHandler(userManager, logger) {
-                logger.Debug("LoginRedirectHandler");
+            key: "loginRedirectHandler",
+            value: function loginRedirectHandler(userManager, logger) {
+                logger.debug("LoginRedirectHandler");
                 return userManager.getUser().then(function (user) {
                     if (user === null || user === undefined) {
                         return userManager.signinRedirectCallback(null);
@@ -74,15 +74,15 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 });
             }
         }, {
-            key: "LoginSilentRedirectHandler",
-            value: function LoginSilentRedirectHandler(userManager, logger) {
-                logger.Debug("SilentLoginRedirectHandler");
+            key: "loginSilentRedirectHandler",
+            value: function loginSilentRedirectHandler(userManager, logger) {
+                logger.debug("SilentLoginRedirectHandler");
                 return userManager.signinSilentCallback(null);
             }
         }, {
-            key: "PostLogoutRedirectHandler",
-            value: function PostLogoutRedirectHandler(userManager, logger) {
-                logger.Debug("PostLogoutRedirectHandler");
+            key: "postLogoutRedirectHandler",
+            value: function postLogoutRedirectHandler(userManager, logger) {
+                logger.debug("PostLogoutRedirectHandler");
                 return userManager.signoutRedirectCallback(null);
             }
         }]);

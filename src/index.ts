@@ -15,7 +15,7 @@ function configure(config: FrameworkConfiguration, callback: Function) {
     config.globalResources("./open-id-connect-role-filter");
 
     callback(function (oidcConfig: OpenIdConnectConfiguration) {
-        logger.Debug("Configuring the OpenId Connect Client");
+        logger.debug("Configuring the OpenId Connect Client");
 
         let userManagerSettings = oidcConfig.userManagerSettings;
 

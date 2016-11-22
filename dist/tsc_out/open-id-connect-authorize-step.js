@@ -15,17 +15,17 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
         }
         run(navigationInstruction, next) {
             return this.userManager.getUser().then((user) => {
-                if (this.RequiresRole(navigationInstruction, open_id_connect_roles_1.OpenIdConnectRoles.Authorized)) {
+                if (this.requiresRole(navigationInstruction, open_id_connect_roles_1.OpenIdConnectRoles.Authorized)) {
                     if (user === null) {
                         return next.cancel(new aurelia_router_1.Redirect("login"));
                     }
                 }
-                if (this.RequiresRole(navigationInstruction, open_id_connect_roles_1.OpenIdConnectRoles.Administrator)) {
+                if (this.requiresRole(navigationInstruction, open_id_connect_roles_1.OpenIdConnectRoles.Administrator)) {
                 }
                 return next();
             });
         }
-        RequiresRole(navigationInstruction, role) {
+        requiresRole(navigationInstruction, role) {
             return navigationInstruction.getAllInstructions().some((instruction) => {
                 return instruction.config.settings.roles !== undefined &&
                     instruction.config.settings.roles.indexOf(role) >= 0;

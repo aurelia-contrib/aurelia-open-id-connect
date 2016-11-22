@@ -4,5 +4,5 @@ export declare class OpenIdConnectAuthorizeStep {
     private userManager;
     constructor(userManager: UserManager);
     run(navigationInstruction: NavigationInstruction, next: any): Promise<any>;
-    private RequiresRole(navigationInstruction, role);
+    private requiresRole(navigationInstruction, role);
 }

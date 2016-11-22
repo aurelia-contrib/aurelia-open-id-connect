@@ -1,7 +1,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     class OpenIdConnectLogger {
-        Debug(message) {
+        debug(message) {
             console.debug(`DEBUG [OpenIdConnect] ${message}`);
         }
     }

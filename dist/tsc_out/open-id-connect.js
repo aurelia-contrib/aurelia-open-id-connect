@@ -15,42 +15,42 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             this.logger = logger;
             this.userManager = userManager;
         }
-        Configure(routerConfiguration) {
-            this.routerConfigurationService.ConfigureRouter(routerConfiguration, this.LoginRedirectHandler, this.LoginSilentRedirectHandler, this.PostLogoutRedirectHandler);
+        configure(routerConfiguration) {
+            this.routerConfigurationService.configureRouter(routerConfiguration, this.loginRedirectHandler, this.loginSilentRedirectHandler, this.postLogoutRedirectHandler);
         }
-        Login() {
-            this.logger.Debug("Login");
+        login() {
+            this.logger.debug("Login");
             this.userManager.clearStaleState().then(() => {
                 let args = {};
                 this.userManager.signinRedirect(args);
             });
         }
-        LoginSilent() {
-            this.logger.Debug("LoginSilent");
+        loginSilent() {
+            this.logger.debug("LoginSilent");
             return this.userManager.clearStaleState().then(() => {
                 let args = {};
                 return this.userManager.signinSilent(args);
             });
         }
-        Logout() {
-            this.logger.Debug("Logout");
+        logout() {
+            this.logger.debug("Logout");
             let args = {};
             this.userManager.signoutRedirect(args);
         }
-        LoginRedirectHandler(userManager, logger) {
-            logger.Debug("LoginRedirectHandler");
+        loginRedirectHandler(userManager, logger) {
+            logger.debug("LoginRedirectHandler");
             return userManager.getUser().then((user) => {
                 if (user === null || user === undefined) {
                     return userManager.signinRedirectCallback(null);
                 }
             });
         }
-        LoginSilentRedirectHandler(userManager, logger) {
-            logger.Debug("SilentLoginRedirectHandler");
+        loginSilentRedirectHandler(userManager, logger) {
+            logger.debug("SilentLoginRedirectHandler");
             return userManager.signinSilentCallback(null);
         }
-        PostLogoutRedirectHandler(userManager, logger) {
-            logger.Debug("PostLogoutRedirectHandler");
+        postLogoutRedirectHandler(userManager, logger) {
+            logger.debug("PostLogoutRedirectHandler");
             return userManager.signoutRedirectCallback(null);
         }
     };

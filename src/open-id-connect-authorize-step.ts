@@ -12,13 +12,13 @@ export class OpenIdConnectAuthorizeStep {
 
         return this.userManager.getUser().then((user) => {
 
-            if (this.RequiresRole(navigationInstruction, OpenIdConnectRoles.Authorized)) {
+            if (this.requiresRole(navigationInstruction, OpenIdConnectRoles.Authorized)) {
                 if (user === null) {
                     return next.cancel(new Redirect("login"));
                 }
             }
 
-            if (this.RequiresRole(navigationInstruction, OpenIdConnectRoles.Administrator)) {
+            if (this.requiresRole(navigationInstruction, OpenIdConnectRoles.Administrator)) {
                 // todo: Check for admin role.
             }
 
@@ -26,7 +26,7 @@ export class OpenIdConnectAuthorizeStep {
         });
     }
 
-    private RequiresRole(navigationInstruction: NavigationInstruction, role: OpenIdConnectRoles): boolean {
+    private requiresRole(navigationInstruction: NavigationInstruction, role: OpenIdConnectRoles): boolean {
         return navigationInstruction.getAllInstructions().some((instruction) => {
             return instruction.config.settings.roles !== undefined &&
                 instruction.config.settings.roles.indexOf(role) >= 0;

@@ -15,12 +15,12 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             this.logger = logger;
             this.userManager = userManager;
         }
-        ConfigureRouter(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler, logoutRedirectHandler) {
+        configureRouter(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler, logoutRedirectHandler) {
             this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler);
             this.addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
             routerConfiguration.addPipelineStep("authorize", open_id_connect_authorize_step_1.OpenIdConnectAuthorizeStep);
         }
-        IsSilentLogin() {
+        isSilentLogin() {
             try {
                 return window.self !== window.top;
             }
@@ -52,7 +52,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 navigationStrategy: (instruction) => {
                     let redirect;
                     let handler;
-                    if (this.IsSilentLogin()) {
+                    if (this.isSilentLogin()) {
                         redirect = () => instruction.config.moduleId = "THIS_HAPPENS_IN_A_CHILD_I_FRAME";
                         handler = loginSilentRedirectHandler;
                     }

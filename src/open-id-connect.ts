@@ -12,19 +12,19 @@ export class OpenIdConnect {
         private logger: OpenIdConnectLogger,
         public userManager: UserManager) { }
 
-    public Configure(routerConfiguration: RouterConfiguration) {
+    public configure(routerConfiguration: RouterConfiguration) {
 
         // todo: throw if routerConfiguration is null
         // todo: throw is openIdConnectConfiguration is null (maybe - do we have defaults?)
-        this.routerConfigurationService.ConfigureRouter(
+        this.routerConfigurationService.configureRouter(
             routerConfiguration,
-            this.LoginRedirectHandler,
-            this.LoginSilentRedirectHandler,
-            this.PostLogoutRedirectHandler);
+            this.loginRedirectHandler,
+            this.loginSilentRedirectHandler,
+            this.postLogoutRedirectHandler);
     }
 
-    public Login() {
-        this.logger.Debug("Login");
+    public login() {
+        this.logger.debug("Login");
 
         this.userManager.clearStaleState().then(() => {
             let args: any = {};
@@ -32,8 +32,8 @@ export class OpenIdConnect {
         });
     }
 
-    public LoginSilent(): Promise<User> {
-        this.logger.Debug("LoginSilent");
+    public loginSilent(): Promise<User> {
+        this.logger.debug("LoginSilent");
 
         return this.userManager.clearStaleState().then(() => {
             let args: any = {};
@@ -41,8 +41,8 @@ export class OpenIdConnect {
         });
     }
 
-    public Logout() {
-        this.logger.Debug("Logout");
+    public logout() {
+        this.logger.debug("Logout");
 
         let args: any = {};
         this.userManager.signoutRedirect(args);
@@ -50,8 +50,8 @@ export class OpenIdConnect {
 
     // This is public to facilitate unit testing.
     // todo: Handle "no matching state found in storage" error
-    public LoginRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any> {
-        logger.Debug("LoginRedirectHandler");
+    public loginRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any> {
+        logger.debug("LoginRedirectHandler");
         // to avoid page refresh errors
         // check to see whether we already have a user
         return userManager.getUser().then((user) => {
@@ -64,8 +64,8 @@ export class OpenIdConnect {
     }
 
     // This is public to facilitate unit testing.
-    public LoginSilentRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any> {
-        logger.Debug("SilentLoginRedirectHandler");
+    public loginSilentRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any> {
+        logger.debug("SilentLoginRedirectHandler");
 
         // notify the parent window of the response from the authorization endpoint
         // i.e. trigger signinSilent().then(...)
@@ -73,8 +73,8 @@ export class OpenIdConnect {
     }
 
     // This is public to facilitate unit testing.
-    public PostLogoutRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any> {
-        logger.Debug("PostLogoutRedirectHandler");
+    public postLogoutRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any> {
+        logger.debug("PostLogoutRedirectHandler");
         return userManager.signoutRedirectCallback(null);
     }
 }
