@@ -17,7 +17,7 @@ export class OpenIdConnectRouting {
         private logger: OpenIdConnectLogger,
         private userManager: UserManager) { }
 
-    public ConfigureRouter(
+    public configureRouter(
         routerConfiguration: RouterConfiguration,
         loginRedirectHandler: IRedirectHandler,
         loginSilentRedirectHandler: IRedirectHandler,
@@ -29,7 +29,7 @@ export class OpenIdConnectRouting {
         routerConfiguration.addPipelineStep("authorize", OpenIdConnectAuthorizeStep);
     }
 
-    private IsSilentLogin(): boolean {
+    private isSilentLogin(): boolean {
         try {
             return window.self !== window.top;
         } catch (e) {
@@ -74,7 +74,7 @@ export class OpenIdConnectRouting {
                 let redirect: Function;
                 let handler: IRedirectHandler;
 
-                if (this.IsSilentLogin()) {
+                if (this.isSilentLogin()) {
                     redirect = () => instruction.config.moduleId = "THIS_HAPPENS_IN_A_CHILD_I_FRAME";
                     handler = loginSilentRedirectHandler;
                 } else {
