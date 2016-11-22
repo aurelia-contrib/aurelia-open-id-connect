@@ -29,11 +29,11 @@ export class App {
             },
             // OpenId
             {
-                name: "login", nav: false, navigationStrategy: () => this.openIdConnect.Login(), route: "login",
+                name: "login", nav: false, navigationStrategy: () => this.openIdConnect.login(), route: "login",
                 settings: { roles: [OpenIdConnectRoles.Anonymous] },
             },
             {
-                name: "logout", nav: false, navigationStrategy: () => this.openIdConnect.Logout(), route: "logout",
+                name: "logout", nav: false, navigationStrategy: () => this.openIdConnect.logout(), route: "logout",
                 settings: { roles: [OpenIdConnectRoles.Authorized] },
             },
             {
@@ -48,7 +48,7 @@ export class App {
             },
         ]);
 
-        this.openIdConnect.Configure(routerConfiguration);
+        this.openIdConnect.configure(routerConfiguration);
         this.router = router;
     }
 }

@@ -68,7 +68,7 @@ export class Home {
     }
 
     public loginSilent() {
-        this.openIdConnect.LoginSilent().catch((error) => {
+        this.openIdConnect.loginSilent().catch((error) => {
             // if this is a timeout error,
             // then use a text editor to increase the silentRequestTimeout value,
             // that we configure in open-id-connect-configuration.ts
@@ -86,7 +86,7 @@ export class Home {
         setInterval(() => {
             this.currentTime = Math.round((new Date()).getTime() / 1000);
 
-            if (typeof this.inMemoryUser !== "undefined" || this.inMemoryUser !== null) {
+            if (typeof this.inMemoryUser !== "undefined" && this.inMemoryUser !== null) {
                 this.accessTokenExpiresIn = this.inMemoryUser.expires_in;
             }
 
