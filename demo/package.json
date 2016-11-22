@@ -1,6 +1,6 @@
 {
   "name": "aurelia-open-id-connect-demo",
-  "description": "A demo to shows aurelia-open-id-connect working with an OpenIddict.",
+  "description": "A demo to show aurelia-open-id-connect working with an OpenID Connect provider.",
   "version": "0.2.0",
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
   "dependencies": {
     "aurelia-bootstrapper": "^1.0.0",
     "aurelia-fetch-client": "^1.0.0",
-    "aurelia-open-id-connect": "github:shaunluttin/aurelia-open-id-connect#0.10.2",
+    "aurelia-open-id-connect": "file:..//..//aurelia-open-id-connect",
     "babel-polyfill": "^6.16.0",
     "bluebird": "^3.4.1",
     "requirejs": "^2.3.2",
@@ -30,20 +30,21 @@
     "aurelia-tools": "^0.2.2",
     "browser-sync": "^2.13.0",
     "connect-history-api-fallback": "^1.2.0",
+    "event-stream": "^3.3.3",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-changed-in-place": "^2.0.3",
+    "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^2.0.0-alpha",
-    "gulp-notify": "^2.2.0",
+    "gulp-tslint": "^5.0.0",
+    "gulp-typescript": "^2.13.6",
     "minimatch": "^3.0.2",
     "through2": "^2.0.1",
-    "uglify-js": "^2.6.3",
-    "vinyl-fs": "^2.4.3",
-    "event-stream": "^3.3.3",
-    "gulp-typescript": "^2.13.6",
-    "gulp-tslint": "^5.0.0",
     "tslint": "^3.11.0",
-    "typescript": "^2.0.0"
+    "tslint-microsoft-contrib": "^2.0.13",
+    "typescript": "^2.0.0",
+    "uglify-js": "^2.6.3",
+    "vinyl-fs": "^2.4.3"
   }
 }
