@@ -50,7 +50,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             value: function LoginSilent() {
                 var _this2 = this;
 
-                this.logger.Debug("LoginSilent starting");
+                this.logger.Debug("LoginSilent");
                 return this.userManager.clearStaleState().then(function () {
                     var args = {};
                     return _this2.userManager.signinSilent(args);
