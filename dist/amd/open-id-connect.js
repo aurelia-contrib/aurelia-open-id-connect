@@ -32,6 +32,9 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
         _createClass(OpenIdConnect, [{
             key: "configure",
             value: function configure(routerConfiguration) {
+                if (typeof routerConfiguration === "undefined" || routerConfiguration === null) {
+                    throw new Error("routerConfiguration parameter must not be undefined or null");
+                }
                 this.routerConfigurationService.configureRouter(routerConfiguration, this.loginRedirectHandler, this.loginSilentRedirectHandler, this.postLogoutRedirectHandler);
             }
         }, {

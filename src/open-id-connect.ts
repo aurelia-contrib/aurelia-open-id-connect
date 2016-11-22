@@ -9,7 +9,7 @@ export class OpenIdConnect {
 
     constructor(
         private routerConfigurationService: OpenIdConnectRouting,
-        private logger: OpenIdConnectLogger,
+        public logger: OpenIdConnectLogger,
         public userManager: UserManager) { }
 
     public configure(routerConfiguration: RouterConfiguration) {

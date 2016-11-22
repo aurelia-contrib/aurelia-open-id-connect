@@ -4,7 +4,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "./index"], function (require, exports, index_1) {
     "use strict";
 
     var OpenIdConnectLogger = function () {
@@ -13,6 +13,19 @@ define(["require", "exports"], function (require, exports) {
         }
 
         _createClass(OpenIdConnectLogger, [{
+            key: "enableOidcClientLogging",
+            value: function enableOidcClientLogging(level) {
+                var validLevels = [index_1.Log.INFO, index_1.Log.WARN, index_1.Log.ERROR, index_1.Log.NONE];
+                if (validLevels.indexOf(level) >= 0) {
+                    index_1.Log.level = level;
+                    index_1.Log.logger = console;
+                } else {
+                    var concat = validLevels.join(", ");
+                    var message = "The log level must be one of " + concat;
+                    throw new Error(message);
+                }
+            }
+        }, {
             key: "debug",
             value: function debug(message) {
                 console.debug("DEBUG [OpenIdConnect] " + message);

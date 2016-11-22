@@ -1,6 +1,6 @@
 import { autoinject } from "aurelia-framework";
 import { RouterConfiguration, Router } from "aurelia-router";
-import { OpenIdConnect, User, OpenIdConnectRoles } from "aurelia-open-id-connect";
+import { OpenIdConnect, OpenIdConnectRoles, User, Log } from "aurelia-open-id-connect";
 
 @autoinject
 export class App {
@@ -9,6 +9,8 @@ export class App {
     private user: User;
 
     constructor(private openIdConnect: OpenIdConnect) {
+        this.openIdConnect.logger.enableOidcClientLogging(Log.INFO);
+
         this.openIdConnect.userManager.getUser().then((user) => {
             this.user = user;
         });

@@ -5,6 +5,7 @@ define(["require", "exports", "oidc-client", "./open-id-connect-roles", "./open-
 
     exports.UserManager = oidc_client_1.UserManager;
     exports.WebStorageStateStore = oidc_client_1.WebStorageStateStore;
+    exports.Log = oidc_client_1.Log;
     exports.OpenIdConnectRoles = open_id_connect_roles_1.OpenIdConnectRoles;
     exports.OpenIdConnectRouting = open_id_connect_routing_1.OpenIdConnectRouting;
     exports.OpenIdConnectConfiguration = open_id_connect_configuration_1.OpenIdConnectConfiguration;
