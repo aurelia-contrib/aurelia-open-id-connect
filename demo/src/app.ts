@@ -9,7 +9,6 @@ export class App {
     private user: User;
 
     constructor(private openIdConnect: OpenIdConnect) {
-
         this.openIdConnect.userManager.getUser().then((user) => {
             this.user = user;
         });
@@ -20,7 +19,7 @@ export class App {
         // switch from hash (#) to slash (/) navigation
         routerConfiguration.options.pushState = true;
 
-        routerConfiguration.title = "Demo";
+        routerConfiguration.title = "OpenID Connect Implicit Flow Demo";
 
         // configure routes
         routerConfiguration.map([
@@ -42,7 +41,7 @@ export class App {
                 settings: { roles: [OpenIdConnectRoles.Authorized] }, title: "profile",
             },
             // todo: Add an admin module and admin role for the demo
-            // todo: because this is currently a non-functional stub route.
+            // todo: because this route is currently a non-functional stub.
             {
                 moduleId: "admin", name: "admin", nav: true, route: "admin",
                 settings: { roles: [OpenIdConnectRoles.Administrator] }, title: "admin",

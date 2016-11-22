@@ -1,15 +1,21 @@
 import { autoinject } from "aurelia-framework";
 import { OpenIdConnect, User } from "aurelia-open-id-connect";
 import { HttpClient } from "aurelia-fetch-client";
+import environment from "./environment";
 
 @autoinject
 export class Home {
+
+    public isLoggedIn: boolean;
 
     private accessTokenExpiresIn: number;
     private currentTime: number;
     private resourceServerMessage: Array<string> = new Array<string>();
     private inMemoryUser: User;
-    private isLoggedIn: boolean;
+
+    private get environmentAsJson(): string {
+        return JSON.stringify(environment, null, 4);
+    }
 
     private get userAsJson(): string {
         return JSON.stringify(this.inMemoryUser, null, 4);
@@ -20,31 +26,52 @@ export class Home {
         this.setTimeUntilAccessTokenExpiry();
     }
 
-    private attached() {
+    public attached() {
 
         // retrieve the user from storage
         this.openIdConnect.userManager.getUser()
             .then((user) => {
                 if (typeof user === "undefined" || user === null) {
-                    // we do not have a user in storage
-                    // so we cannot do loginSilent, because we
-                    // do not have an id_token to use as an id_token_hint
+                    // if we do not have a user in localStorage (or sessionStorage)
+                    // then we do not have an id_token to use as an id_token_hint;
+                    // as a result, we cannot do a silent login, so we return; 
+                    // alternatively, we could call `login` to 
+                    // automatically redirect to the authorization server:
+                    // this.openIdConnect.Login();
                     return;
-                }
-                if (user.expired) {
-                    // we have an expired user in storage
-                    this.loginSilent();
                 } else {
-                    // we have a non-expired user in storage
-                    this.inMemoryUser = user;
+                    if (user.expired) {
+                        // if we have an EXPIRED user in storage,
+                        // then we can do a silent login.
+                        this.loginSilent();
+                    } else {
+                        // if we have a non-expired user in storage, 
+                        // then our app can use it for access.
+                        this.inMemoryUser = user;
+                    }
+
                 }
             });
     }
 
-    private loginSilent() {
+    public queryResourceServer(serverNum: number, isPrivate: boolean) {
+        let fetchUrl = this.getResourceServerUrl(serverNum, isPrivate);
+        let fetchInit = this.getFetchInit();
+
+        this.resourceServerMessage.splice(0, 0, `Fetching ${fetchUrl}\n`);
+        this.resourceServerMessage.splice(1, 0, `\n`);
+
+        this.httpClient.fetch(fetchUrl, fetchInit)
+            .then((response) => response.ok ? response.text() : response.statusText)
+            .then((data) => this.resourceServerMessage.splice(1, 0, `${data}\n`))
+            .catch((err) => this.resourceServerMessage.splice(1, 0, `${err.message}\n`));
+    }
+
+    public loginSilent() {
         this.openIdConnect.LoginSilent().catch((error) => {
-            // if this is a timeout error 
-            // then increase the silentRequestTimeout value
+            // if this is a timeout error,
+            // then use a text editor to increase the silentRequestTimeout value,
+            // that we configure in open-id-connect-configuration.ts
             console.log(error);
         });
     }
@@ -57,12 +84,12 @@ export class Home {
 
     private setTimeUntilAccessTokenExpiry() {
         setInterval(() => {
-            if (typeof this.inMemoryUser === "undefined" || this.inMemoryUser == null) {
-                return;
+            this.currentTime = Math.round((new Date()).getTime() / 1000);
+
+            if (typeof this.inMemoryUser !== "undefined" || this.inMemoryUser !== null) {
+                this.accessTokenExpiresIn = this.inMemoryUser.expires_in;
             }
 
-            this.accessTokenExpiresIn = this.inMemoryUser.expires_in;
-            this.currentTime = Math.round((new Date()).getTime() / 1000);
         }, 1000);
     }
 
@@ -81,22 +108,11 @@ export class Home {
 
     private getResourceServerUrl(serverNum: number, isPrivate: boolean) {
         let leftPart = serverNum === 1
-            ? "http://localhost:5001"
-            : "http://localhost:5002";
+            ? environment.urls.resourceServer01
+            : environment.urls.resourceServer02;
 
         let path = isPrivate ? "private" : "public";
 
         return `${leftPart}/api/${path}`;
-    }
-
-    private queryResourceServer(serverNum: number, isPrivate: boolean) {
-        let fetchUrl = this.getResourceServerUrl(serverNum, isPrivate);
-        let fetchInit = this.getFetchInit();
-
-        this.resourceServerMessage.splice(0, 0, `Fetching ${fetchUrl}\n`);
-        this.httpClient.fetch(fetchUrl, fetchInit)
-            .then((response) => response.ok ? response.text() : response.statusText)
-            .then((data) => this.resourceServerMessage.splice(1, 0, `${data}\n\n`))
-            .catch((err) => this.resourceServerMessage.splice(1, 0, `${err.message}\n\n`));
     }
 }

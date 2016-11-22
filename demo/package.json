@@ -1,6 +1,6 @@
 {
   "name": "aurelia-open-id-connect-demo",
-  "description": "A demo to shows aurelia-open-id-connect working with an OpenID Connect Server.",
+  "description": "A demo to shows aurelia-open-id-connect working with an OpenIddict.",
   "version": "0.2.0",
   "repository": {
     "type": "git",
@@ -10,12 +10,15 @@
   "license": "MIT",
   "scripts": {
     "tslint": "node_modules/.bin/tslint --config tslint.json --project tsconfig.json",
-    "demo": "node_modules/.bin/au run --watch"
+    "demo": "node_modules/.bin/au run --watch --env prod",
+    "run:local:prod": "node_modules/.bin/au run --env prod",
+    "build:local:prod": "node_modules/.bin/au build --env prod",
+    "build:azure:prod": "node_modules/.bin/au build --env prod.azure"
   },
   "dependencies": {
     "aurelia-bootstrapper": "^1.0.0",
     "aurelia-fetch-client": "^1.0.0",
-    "aurelia-open-id-connect": "file:..//..//aurelia-open-id-connect",
+    "aurelia-open-id-connect": "github:shaunluttin/aurelia-open-id-connect#0.10.2",
     "babel-polyfill": "^6.16.0",
     "bluebird": "^3.4.1",
     "requirejs": "^2.3.2",
