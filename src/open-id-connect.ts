@@ -14,8 +14,10 @@ export class OpenIdConnect {
 
     public configure(routerConfiguration: RouterConfiguration) {
 
-        // todo: throw if routerConfiguration is null
-        // todo: throw is openIdConnectConfiguration is null (maybe - do we have defaults?)
+        if (typeof routerConfiguration === "undefined" || routerConfiguration === null) {
+            throw new Error("routerConfiguration parameter must not be undefined or null");
+        }
+
         this.routerConfigurationService.configureRouter(
             routerConfiguration,
             this.loginRedirectHandler,

@@ -36,6 +36,7 @@ export class App {
                 name: "logout", nav: false, navigationStrategy: () => this.openIdConnect.logout(), route: "logout",
                 settings: { roles: [OpenIdConnectRoles.Authorized] },
             },
+            // todo: determine why profile is not showing up in the demo
             {
                 moduleId: "user-profile", name: "profile", nav: true, route: "profile",
                 settings: { roles: [OpenIdConnectRoles.Authorized] }, title: "profile",
