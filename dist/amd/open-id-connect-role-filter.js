@@ -43,7 +43,7 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-roles"], f
 
         return OpenIdConnectRoleFilterValueConverter;
     }();
-    OpenIdConnectRoleFilterValueConverter = __decorate([aurelia_framework_1.autoinject, __metadata('design:paramtypes', [])], OpenIdConnectRoleFilterValueConverter);
+    OpenIdConnectRoleFilterValueConverter = __decorate([aurelia_framework_1.autoinject, aurelia_framework_1.noView, __metadata('design:paramtypes', [])], OpenIdConnectRoleFilterValueConverter);
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = OpenIdConnectRoleFilterValueConverter;
 });

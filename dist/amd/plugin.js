@@ -5,6 +5,7 @@ define(["require", "exports", "oidc-client", "./open-id-connect-logger", "./open
 
     function default_1(config, callback) {
         var logger = config.container.get(open_id_connect_logger_1.default);
+        config.globalResources(["./open-id-connect-user-block", "./open-id-connect-role-filter"]);
         callback(function (oidcConfig) {
             logger.debug("Configuring the OpenId Connect Client");
             var userManagerSettings = oidcConfig.userManagerSettings;

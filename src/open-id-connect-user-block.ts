@@ -3,7 +3,7 @@ import { User } from "oidc-client";
 import OpenIdConnect from "./open-id-connect";
 
 @autoinject
-export default class OpenIdConnectUserBlock {
+export class OpenIdConnectUserBlock {
 
     private isLoggedIn: boolean = false;
     private user: User = null;
