@@ -33,12 +33,12 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
                 var _this = this;
 
                 return this.userManager.getUser().then(function (user) {
-                    if (_this.requiresRole(navigationInstruction, open_id_connect_roles_1.OpenIdConnectRoles.Authorized)) {
+                    if (_this.requiresRole(navigationInstruction, open_id_connect_roles_1.default.Authorized)) {
                         if (user === null) {
                             return next.cancel(new aurelia_router_1.Redirect("login"));
                         }
                     }
-                    if (_this.requiresRole(navigationInstruction, open_id_connect_roles_1.OpenIdConnectRoles.Administrator)) {}
+                    if (_this.requiresRole(navigationInstruction, open_id_connect_roles_1.default.Administrator)) {}
                     return next();
                 });
             }
@@ -54,6 +54,7 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
         return OpenIdConnectAuthorizeStep;
     }();
     OpenIdConnectAuthorizeStep = __decorate([aurelia_framework_1.autoinject, __metadata('design:paramtypes', [oidc_client_1.UserManager])], OpenIdConnectAuthorizeStep);
-    exports.OpenIdConnectAuthorizeStep = OpenIdConnectAuthorizeStep;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.default = OpenIdConnectAuthorizeStep;
 });
 //# sourceMappingURL=open-id-connect-authorize-step.js.map

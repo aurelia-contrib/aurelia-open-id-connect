@@ -1,4 +1,4 @@
-define(["require", "exports", "./index"], function (require, exports, index_1) {
+define(["require", "exports", "oidc-client"], function (require, exports, oidc_client_1) {
     "use strict";
     let isDevelopment = window.location.host.startsWith("localhost");
     let authority = isDevelopment
@@ -20,10 +20,11 @@ define(["require", "exports", "./index"], function (require, exports, index_1) {
                 redirect_uri: `${host}/signin-oidc`,
                 response_type: "id_token token",
                 scope: "openid email roles profile",
-                userStore: new index_1.WebStorageStateStore("oidc", window.localStorage),
+                userStore: new oidc_client_1.WebStorageStateStore("oidc", window.localStorage),
             };
         }
     }
-    exports.OpenIdConnectConfiguration = OpenIdConnectConfiguration;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.default = OpenIdConnectConfiguration;
 });
 //# sourceMappingURL=open-id-connect-configuration.js.map

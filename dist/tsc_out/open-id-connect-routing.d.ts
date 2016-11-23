@@ -1,11 +1,9 @@
 import { RouterConfiguration } from "aurelia-router";
 import { UserManager } from "oidc-client";
-import { OpenIdConnectConfiguration } from "./open-id-connect-configuration";
-import { OpenIdConnectLogger } from "./open-id-connect-logger";
-export interface IRedirectHandler {
-    (userManager: UserManager, logger: OpenIdConnectLogger): Promise<any>;
-}
-export declare class OpenIdConnectRouting {
+import OpenIdConnectConfiguration from "./open-id-connect-configuration";
+import OpenIdConnectLogger from "./open-id-connect-logger";
+import IRedirectHandler from "./iredirect-handler";
+export default class OpenIdConnectRouting {
     private openIdConnectConfiguration;
     private logger;
     private userManager;

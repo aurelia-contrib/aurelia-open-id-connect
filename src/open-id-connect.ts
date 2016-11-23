@@ -1,11 +1,11 @@
 import { autoinject } from "aurelia-framework";
 import { RouterConfiguration } from "aurelia-router";
 import { UserManager, User } from "oidc-client";
-import { OpenIdConnectRouting } from "./open-id-connect-routing";
-import { OpenIdConnectLogger } from "./open-id-connect-logger";
+import OpenIdConnectRouting from "./open-id-connect-routing";
+import OpenIdConnectLogger from "./open-id-connect-logger";
 
 @autoinject
-export class OpenIdConnect {
+export default class OpenIdConnect {
 
     constructor(
         private routerConfigurationService: OpenIdConnectRouting,

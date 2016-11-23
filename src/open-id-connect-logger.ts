@@ -1,7 +1,7 @@
-import { Log } from "./index";
+import { Log } from "oidc-client";
 
 /* tslint:disable no-console */
-export class OpenIdConnectLogger {
+export default class OpenIdConnectLogger {
 
     public enableOidcClientLogging(level: number) {
 

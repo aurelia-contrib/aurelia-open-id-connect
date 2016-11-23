@@ -92,7 +92,8 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
 
         return OpenIdConnect;
     }();
-    OpenIdConnect = __decorate([aurelia_framework_1.autoinject, __metadata('design:paramtypes', [open_id_connect_routing_1.OpenIdConnectRouting, open_id_connect_logger_1.OpenIdConnectLogger, oidc_client_1.UserManager])], OpenIdConnect);
-    exports.OpenIdConnect = OpenIdConnect;
+    OpenIdConnect = __decorate([aurelia_framework_1.autoinject, __metadata('design:paramtypes', [open_id_connect_routing_1.default, open_id_connect_logger_1.default, oidc_client_1.UserManager])], OpenIdConnect);
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.default = OpenIdConnect;
 });
 //# sourceMappingURL=open-id-connect.js.map

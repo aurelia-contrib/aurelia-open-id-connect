@@ -1,5 +1,6 @@
 import { autoinject } from "aurelia-framework";
-import { OpenIdConnect, User } from "aurelia-open-id-connect";
+import { OpenIdConnect } from "aurelia-open-id-connect";
+import { User } from "oidc-client";
 import { HttpClient } from "aurelia-fetch-client";
 import environment from "./environment";
 

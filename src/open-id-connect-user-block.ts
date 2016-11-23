@@ -1,9 +1,9 @@
 import { autoinject } from "aurelia-framework";
 import { User } from "oidc-client";
-import { OpenIdConnect } from "./open-id-connect";
+import OpenIdConnect from "./open-id-connect";
 
 @autoinject
-export class OpenIdConnectUserBlock {
+export default class OpenIdConnectUserBlock {
 
     private isLoggedIn: boolean = false;
     private user: User = null;

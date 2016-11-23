@@ -4,7 +4,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-define(["require", "exports", "./index"], function (require, exports, index_1) {
+define(["require", "exports", "oidc-client"], function (require, exports, oidc_client_1) {
     "use strict";
 
     var OpenIdConnectLogger = function () {
@@ -15,10 +15,10 @@ define(["require", "exports", "./index"], function (require, exports, index_1) {
         _createClass(OpenIdConnectLogger, [{
             key: "enableOidcClientLogging",
             value: function enableOidcClientLogging(level) {
-                var validLevels = [index_1.Log.INFO, index_1.Log.WARN, index_1.Log.ERROR, index_1.Log.NONE];
+                var validLevels = [oidc_client_1.Log.INFO, oidc_client_1.Log.WARN, oidc_client_1.Log.ERROR, oidc_client_1.Log.NONE];
                 if (validLevels.indexOf(level) >= 0) {
-                    index_1.Log.level = level;
-                    index_1.Log.logger = console;
+                    oidc_client_1.Log.level = level;
+                    oidc_client_1.Log.logger = console;
                 } else {
                     var concat = validLevels.join(", ");
                     var message = "The log level must be one of " + concat;
@@ -35,6 +35,7 @@ define(["require", "exports", "./index"], function (require, exports, index_1) {
         return OpenIdConnectLogger;
     }();
 
-    exports.OpenIdConnectLogger = OpenIdConnectLogger;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.default = OpenIdConnectLogger;
 });
 //# sourceMappingURL=open-id-connect-logger.js.map

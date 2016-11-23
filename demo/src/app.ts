@@ -1,6 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { RouterConfiguration, Router } from "aurelia-router";
-import { OpenIdConnect, OpenIdConnectRoles, User, Log } from "aurelia-open-id-connect";
+import { User, Log } from "oidc-client";
+import { OpenIdConnect, OpenIdConnectRoles } from "aurelia-open-id-connect";
 
 @autoinject
 export class App {

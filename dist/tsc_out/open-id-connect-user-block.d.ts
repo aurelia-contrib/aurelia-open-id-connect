@@ -1,5 +1,5 @@
-import { OpenIdConnect } from "./open-id-connect";
-export declare class OpenIdConnectUserBlock {
+import OpenIdConnect from "./open-id-connect";
+export default class OpenIdConnectUserBlock {
     private openIdConnect;
     private isLoggedIn;
     private user;

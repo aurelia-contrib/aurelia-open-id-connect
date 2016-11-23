@@ -13,13 +13,13 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-roles"], f
         toView(navigation, user) {
             return navigation.filter((element) => {
                 let roles = element.settings.roles;
-                if (roles.indexOf(open_id_connect_roles_1.OpenIdConnectRoles.Everyone) >= 0) {
+                if (roles.indexOf(open_id_connect_roles_1.default.Everyone) >= 0) {
                     return true;
                 }
-                if (roles.indexOf(open_id_connect_roles_1.OpenIdConnectRoles.Authorized) >= 0) {
+                if (roles.indexOf(open_id_connect_roles_1.default.Authorized) >= 0) {
                     return user !== null;
                 }
-                if (roles.indexOf(open_id_connect_roles_1.OpenIdConnectRoles.Administrator) >= 0) {
+                if (roles.indexOf(open_id_connect_roles_1.default.Administrator) >= 0) {
                 }
             });
         }
@@ -28,6 +28,7 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-roles"], f
         aurelia_framework_1.autoinject, 
         __metadata('design:paramtypes', [])
     ], OpenIdConnectRoleFilterValueConverter);
-    exports.OpenIdConnectRoleFilterValueConverter = OpenIdConnectRoleFilterValueConverter;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.default = OpenIdConnectRoleFilterValueConverter;
 });
 //# sourceMappingURL=open-id-connect-role-filter.js.map

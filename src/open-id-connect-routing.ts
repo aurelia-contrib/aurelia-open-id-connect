@@ -1,16 +1,13 @@
 import { autoinject } from "aurelia-framework";
 import { RouterConfiguration, RouteConfig, NavigationInstruction } from "aurelia-router";
 import { UserManager } from "oidc-client";
-import { OpenIdConnectConfiguration } from "./open-id-connect-configuration";
-import { OpenIdConnectAuthorizeStep } from "./open-id-connect-authorize-step";
-import { OpenIdConnectLogger } from "./open-id-connect-logger";
-
-export interface IRedirectHandler {
-    (userManager: UserManager, logger: OpenIdConnectLogger): Promise<any>;
-}
+import OpenIdConnectConfiguration from "./open-id-connect-configuration";
+import OpenIdConnectAuthorizeStep from "./open-id-connect-authorize-step";
+import OpenIdConnectLogger from "./open-id-connect-logger";
+import IRedirectHandler from "./iredirect-handler";
 
 @autoinject
-export class OpenIdConnectRouting {
+export default class OpenIdConnectRouting {
 
     constructor(
         private openIdConnectConfiguration: OpenIdConnectConfiguration,

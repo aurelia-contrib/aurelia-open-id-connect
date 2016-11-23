@@ -1,6 +1,8 @@
-export enum OpenIdConnectRoles {
+enum OpenIdConnectRoles {
     Everyone,
     Anonymous,
     Authorized,
     Administrator
 }
+
+export default OpenIdConnectRoles;

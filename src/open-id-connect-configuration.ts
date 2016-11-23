@@ -1,4 +1,4 @@
-import { UserManagerSettings, WebStorageStateStore } from "./index";
+import { UserManagerSettings, WebStorageStateStore } from "oidc-client";
 
 let isDevelopment = window.location.host.startsWith("localhost");
 
@@ -10,7 +10,7 @@ let host: string = isDevelopment
     ? "http://localhost:9000"
     : "https://zamboni-app.azurewebsites.net";
 
-export class OpenIdConnectConfiguration {
+export default class OpenIdConnectConfiguration {
     public loginRedirectModuleId: string = "home";
     public logoutRedirectModuleId: string = "home";
     public userManagerSettings: UserManagerSettings = {

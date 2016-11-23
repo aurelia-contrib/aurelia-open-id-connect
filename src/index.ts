@@ -1,11 +1,11 @@
 import { FrameworkConfiguration } from "aurelia-framework";
-import { User, UserManager, UserManagerSettings, WebStorageStateStore, Log } from "oidc-client";
-import { OpenIdConnectRoles } from "./open-id-connect-roles";
-import { OpenIdConnectRouting } from "./open-id-connect-routing";
-import { OpenIdConnectConfiguration } from "./open-id-connect-configuration";
-import { OpenIdConnectAuthorizeStep } from "./open-id-connect-authorize-step";
-import { OpenIdConnectLogger } from "./open-id-connect-logger";
-import { OpenIdConnect } from "./open-id-connect";
+import { UserManager } from "oidc-client";
+import OpenIdConnectLogger from "./open-id-connect-logger";
+import OpenIdConnectConfiguration from "./open-id-connect-configuration";
+import OpenIdConnectAuthorizationStep from "./open-id-connect-authorize-step";
+import OpenIdConnect from "./open-id-connect";
+import OpenIdConnectRouting from "./open-id-connect-routing";
+import OpenIdConnectRoles from "./open-id-connect-roles";
 
 function configure(config: FrameworkConfiguration, callback: Function) {
 
@@ -21,24 +21,17 @@ function configure(config: FrameworkConfiguration, callback: Function) {
 
         config.container.registerInstance(UserManager, new UserManager(userManagerSettings));
         config.container.registerInstance(OpenIdConnectConfiguration, oidcConfig);
+
+        logger.debug("Configured the OpenId Connect Client");
     });
 }
 
 export {
     configure,
+    OpenIdConnect,
     OpenIdConnectRoles,
+    OpenIdConnectRouting,
     OpenIdConnectConfiguration,
     OpenIdConnectLogger,
-    OpenIdConnectRouting,
-    OpenIdConnectAuthorizeStep,
-    OpenIdConnect,
-    // #region from oidc-client
-    // todo: Can we namespace these within Oidc 
-    // todo: so that referencing them involves using Oidc.UserManager, for instance?
-    Log,
-    User,
-    UserManager,
-    UserManagerSettings,
-    WebStorageStateStore
-    // #endregion
-}
+    OpenIdConnectAuthorizationStep,
+};

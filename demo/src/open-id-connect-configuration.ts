@@ -1,5 +1,6 @@
-import { OpenIdConnectConfiguration, UserManagerSettings, WebStorageStateStore } from "aurelia-open-id-connect";
 import environment from "./environment";
+import { OpenIdConnectConfiguration } from "aurelia-open-id-connect";
+import { UserManagerSettings, WebStorageStateStore } from "oidc-client";
 
 const oidcConfig: OpenIdConnectConfiguration = {
     loginRedirectModuleId: "home",

@@ -1,10 +1,10 @@
 import { autoinject } from "aurelia-framework";
 import { Redirect, NavigationInstruction } from "aurelia-router";
 import { UserManager } from "oidc-client";
-import { OpenIdConnectRoles } from "./open-id-connect-roles";
+import OpenIdConnectRoles from "./open-id-connect-roles";
 
 @autoinject
-export class OpenIdConnectAuthorizeStep {
+export default class OpenIdConnectAuthorizeStep {
 
     constructor(private userManager: UserManager) { }
 

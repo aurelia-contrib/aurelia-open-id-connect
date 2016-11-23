@@ -1,16 +1,16 @@
-define(["require", "exports", "./index"], function (require, exports, index_1) {
+define(["require", "exports", "oidc-client"], function (require, exports, oidc_client_1) {
     "use strict";
     class OpenIdConnectLogger {
         enableOidcClientLogging(level) {
             let validLevels = [
-                index_1.Log.INFO,
-                index_1.Log.WARN,
-                index_1.Log.ERROR,
-                index_1.Log.NONE,
+                oidc_client_1.Log.INFO,
+                oidc_client_1.Log.WARN,
+                oidc_client_1.Log.ERROR,
+                oidc_client_1.Log.NONE,
             ];
             if (validLevels.indexOf(level) >= 0) {
-                index_1.Log.level = level;
-                index_1.Log.logger = console;
+                oidc_client_1.Log.level = level;
+                oidc_client_1.Log.logger = console;
             }
             else {
                 let concat = validLevels.join(", ");
@@ -22,6 +22,7 @@ define(["require", "exports", "./index"], function (require, exports, index_1) {
             console.debug(`DEBUG [OpenIdConnect] ${message}`);
         }
     }
-    exports.OpenIdConnectLogger = OpenIdConnectLogger;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.default = OpenIdConnectLogger;
 });
 //# sourceMappingURL=open-id-connect-logger.js.map

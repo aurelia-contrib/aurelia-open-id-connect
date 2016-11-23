@@ -34,7 +34,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             value: function configureRouter(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler, logoutRedirectHandler) {
                 this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler);
                 this.addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
-                routerConfiguration.addPipelineStep("authorize", open_id_connect_authorize_step_1.OpenIdConnectAuthorizeStep);
+                routerConfiguration.addPipelineStep("authorize", open_id_connect_authorize_step_1.default);
             }
         }, {
             key: "isSilentLogin",
@@ -120,7 +120,8 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
 
         return OpenIdConnectRouting;
     }();
-    OpenIdConnectRouting = __decorate([aurelia_framework_1.autoinject, __metadata('design:paramtypes', [open_id_connect_configuration_1.OpenIdConnectConfiguration, open_id_connect_logger_1.OpenIdConnectLogger, oidc_client_1.UserManager])], OpenIdConnectRouting);
-    exports.OpenIdConnectRouting = OpenIdConnectRouting;
+    OpenIdConnectRouting = __decorate([aurelia_framework_1.autoinject, __metadata('design:paramtypes', [open_id_connect_configuration_1.default, open_id_connect_logger_1.default, oidc_client_1.UserManager])], OpenIdConnectRouting);
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.default = OpenIdConnectRouting;
 });
 //# sourceMappingURL=open-id-connect-routing.js.map
