@@ -1,3 +1,4 @@
+/// <reference types="core-js" />
 import { RouterConfiguration } from "aurelia-router";
 import { UserManager, User } from "oidc-client";
 import OpenIdConnectRouting from "./open-id-connect-routing";

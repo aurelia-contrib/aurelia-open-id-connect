@@ -10,7 +10,7 @@ const oidcConfig: OpenIdConnectConfiguration = {
         // to raise the access token expiring event
         accessTokenExpiringNotificationTime: "1",
         authority: environment.urls.authority,
-        automaticSilentRenew: true,
+        automaticSilentRenew: false, // true,
         // interval in milliseconds to check the user's session
         checkSessionInterval: 10000,
         client_id: "Aurelia.OpenIdConnect",

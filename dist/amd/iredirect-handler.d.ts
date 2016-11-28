@@ -1,3 +1,4 @@
+/// <reference types="core-js" />
 import { UserManager } from "oidc-client";
 import OpenIdConnectLogger from "./open-id-connect-logger";
 interface IRedirectHandler {

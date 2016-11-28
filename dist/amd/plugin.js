@@ -1,11 +1,11 @@
-"use strict";
-
 define(["require", "exports", "oidc-client", "./open-id-connect-logger", "./open-id-connect-configuration"], function (require, exports, oidc_client_1, open_id_connect_logger_1, open_id_connect_configuration_1) {
     "use strict";
-
     function default_1(config, callback) {
         var logger = config.container.get(open_id_connect_logger_1.default);
-        config.globalResources(["./open-id-connect-user-block", "./open-id-connect-role-filter"]);
+        config.globalResources([
+            "./open-id-connect-user-block",
+            "./open-id-connect-role-filter",
+        ]);
         callback(function (oidcConfig) {
             logger.debug("Configuring the OpenId Connect Client");
             var userManagerSettings = oidcConfig.userManagerSettings;

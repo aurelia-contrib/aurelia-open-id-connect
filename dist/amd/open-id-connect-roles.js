@@ -1,8 +1,5 @@
-"use strict";
-
 define(["require", "exports"], function (require, exports) {
     "use strict";
-
     var OpenIdConnectRoles;
     (function (OpenIdConnectRoles) {
         OpenIdConnectRoles[OpenIdConnectRoles["Everyone"] = 0] = "Everyone";
