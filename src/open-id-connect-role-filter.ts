@@ -1,5 +1,5 @@
 import { NavModel } from "aurelia-router";
-import { autoinject, noView } from "aurelia-framework";
+import { autoinject, noView, valueConverter } from "aurelia-framework";
 import { User } from "oidc-client";
 import OpenIdConnectRoles from "./open-id-connect-roles";
 
@@ -10,7 +10,8 @@ import OpenIdConnectRoles from "./open-id-connect-roles";
 // 
 @autoinject
 @noView
-export class OpenIdConnectRoleFilterValueConverter {
+@valueConverter("open-id-connect-role-filter")
+export default class OpenIdConnectRoleFilterValueConverter {
 
     public toView(navigation: NavModel[], user: User) {
 

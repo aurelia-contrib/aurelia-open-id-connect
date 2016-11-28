@@ -43,7 +43,7 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect"], functio
 
         return OpenIdConnectUserBlock;
     }();
-    OpenIdConnectUserBlock = __decorate([aurelia_framework_1.autoinject, __metadata('design:paramtypes', [open_id_connect_1.default])], OpenIdConnectUserBlock);
+    OpenIdConnectUserBlock = __decorate([aurelia_framework_1.autoinject, aurelia_framework_1.customElement("open-id-connect-user-block"), __metadata('design:paramtypes', [open_id_connect_1.default])], OpenIdConnectUserBlock);
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = OpenIdConnectUserBlock;
 });
