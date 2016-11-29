@@ -10,10 +10,14 @@
   "license": "MIT",
   "scripts": {
     "tslint": "node_modules/.bin/tslint --config tslint.json --project tsconfig.json",
-    "demo": "node_modules/.bin/au run --watch --env prod",
-    "run:local:prod": "node_modules/.bin/au run --env prod",
+    "demo": "node_modules/.bin/au run --watch --env dev",
+    "run:local:prod": "node_modules/.bin/au run --watch --env prod",
     "build:local:prod": "node_modules/.bin/au build --env prod",
     "build:azure:prod": "node_modules/.bin/au build --env prod.azure"
+  },
+  "dependencyNotes": {
+    "aurelia-open-id-connect": "For development, use the local aurelia-open-id-connect package.",
+    "aurelia-cli": "Temporarily use an aurelia-cli fork that creates proper sourcemaps."
   },
   "dependencies": {
     "aurelia-bootstrapper": "^1.0.0",
@@ -26,7 +30,7 @@
   },
   "peerDependencies": {},
   "devDependencies": {
-    "aurelia-cli": "^0.20.2",
+    "aurelia-cli": "file:..//..//..//_forks//cli",
     "aurelia-tools": "^0.2.2",
     "browser-sync": "^2.13.0",
     "connect-history-api-fallback": "^1.2.0",

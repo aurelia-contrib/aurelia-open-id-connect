@@ -22,6 +22,9 @@ export default class OpenIdConnectConfiguration {
         redirect_uri: `${host}/signin-oidc`,
         response_type: "id_token token",
         scope: "openid email roles profile",
-        userStore: new WebStorageStateStore("oidc", window.localStorage),
+        userStore: new WebStorageStateStore({
+            prefix: "oidc",
+            store: window.localStorage,
+        }),
     };
 }

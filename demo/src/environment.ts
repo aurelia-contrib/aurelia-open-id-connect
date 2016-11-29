@@ -1,6 +1,6 @@
 export default {
-  debug: false,
-  testing: false,
+  debug: true,
+  testing: true,
   urls: {
     authority: "http://localhost:12345",
     host: "http://localhost:9000",

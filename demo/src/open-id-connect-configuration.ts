@@ -5,10 +5,10 @@ import { UserManagerSettings, WebStorageStateStore } from "oidc-client";
 const oidcConfig: OpenIdConnectConfiguration = {
     loginRedirectModuleId: "home",
     logoutRedirectModuleId: "home",
-    userManagerSettings: <UserManagerSettings> {
+    userManagerSettings: <UserManagerSettings>{
         // number of seconds in advance of access token expiry
         // to raise the access token expiring event
-        accessTokenExpiringNotificationTime: "1",
+        accessTokenExpiringNotificationTime: 1,
         authority: environment.urls.authority,
         automaticSilentRenew: false, // true,
         // interval in milliseconds to check the user's session
@@ -24,7 +24,10 @@ const oidcConfig: OpenIdConnectConfiguration = {
         // server to response to silent renew request
         silentRequestTimeout: 10000,
         silent_redirect_uri: `${environment.urls.host}/signin-oidc`,
-        userStore: new WebStorageStateStore("oidc", window.localStorage),
+        userStore: new WebStorageStateStore({
+            prefix: "oidc",
+            store: window.localStorage,
+        }),
     },
 };
 

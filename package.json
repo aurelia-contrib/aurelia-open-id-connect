@@ -38,6 +38,6 @@
     "aurelia-framework": "^1.0.6",
     "aurelia-router": "^1.0.6",
     "babel-polyfill": "^6.16.0",
-    "oidc-client": "github:shaunluttin/oidc-client-js#master"
+    "oidc-client": "^1.2.2"
   }
 }

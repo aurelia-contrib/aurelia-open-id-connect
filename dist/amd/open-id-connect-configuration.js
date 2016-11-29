@@ -20,7 +20,10 @@ define(["require", "exports", "oidc-client"], function (require, exports, oidc_c
                 redirect_uri: host + "/signin-oidc",
                 response_type: "id_token token",
                 scope: "openid email roles profile",
-                userStore: new oidc_client_1.WebStorageStateStore("oidc", window.localStorage),
+                userStore: new oidc_client_1.WebStorageStateStore({
+                    prefix: "oidc",
+                    store: window.localStorage,
+                }),
             };
         }
         return OpenIdConnectConfiguration;
