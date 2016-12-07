@@ -12,8 +12,8 @@ import environment from "./environment";
 
 export function configure(aurelia: Aurelia) {
 
-  if (environment.useHttps && window.location.protocol !== "https") {
-    window.location.protocol = "https";
+  if (environment.useHttps && window.location.protocol !== "https:") {
+    window.location.protocol = "https:";
   }
 
   aurelia.use
