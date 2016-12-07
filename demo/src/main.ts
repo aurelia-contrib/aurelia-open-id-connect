@@ -1,15 +1,21 @@
 import { Aurelia } from "aurelia-framework";
 import oidcConfig from "./open-id-connect-configuration";
+import environment from "./environment";
 
 // Configure Bluebird Promises.
 // Note: You may want to use environment-specific configuration.
-(<any> Promise).config({
+(<any>Promise).config({
   warnings: {
     wForgottenReturn: false,
   },
 });
 
 export function configure(aurelia: Aurelia) {
+
+  if (environment.useHttps && window.location.protocol !== "https") {
+    window.location.protocol = "https";
+  }
+
   aurelia.use
     .standardConfiguration()
     .plugin("aurelia-open-id-connect", (callback) => callback(oidcConfig));
