@@ -30,7 +30,7 @@
   },
   "peerDependencies": {},
   "devDependencies": {
-    "aurelia-cli": "^0.23.0",
+    "aurelia-cli": "github:shaunluttin/cli#0.1.0-sourcemaps",
     "aurelia-tools": "^0.2.2",
     "browser-sync": "^2.13.0",
     "connect-history-api-fallback": "^1.2.0",
