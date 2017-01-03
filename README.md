@@ -16,6 +16,7 @@ http://openid.net/specs/openid-connect-implicit-1_0.html
    
     git clone https://github.com/shaunluttin/aurelia-open-id-connect.git
     cd aurelia-open-id-connect/demo
+    git checkout 0.11.2
     npm install -y
     npm run demo
 
