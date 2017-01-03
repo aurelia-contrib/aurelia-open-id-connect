@@ -87,12 +87,14 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             anchor.href = uri;
             return anchor;
         };
-        OpenIdConnectRouting = __decorate([
-            aurelia_framework_1.autoinject, 
-            __metadata('design:paramtypes', [open_id_connect_configuration_1.default, open_id_connect_logger_1.default, oidc_client_1.UserManager])
-        ], OpenIdConnectRouting);
         return OpenIdConnectRouting;
     }());
+    OpenIdConnectRouting = __decorate([
+        aurelia_framework_1.autoinject,
+        __metadata("design:paramtypes", [open_id_connect_configuration_1.default,
+            open_id_connect_logger_1.default,
+            oidc_client_1.UserManager])
+    ], OpenIdConnectRouting);
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = OpenIdConnectRouting;
 });

@@ -32,12 +32,12 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
                     instruction.config.settings.roles.indexOf(role) >= 0;
             });
         };
-        OpenIdConnectAuthorizeStep = __decorate([
-            aurelia_framework_1.autoinject, 
-            __metadata('design:paramtypes', [oidc_client_1.UserManager])
-        ], OpenIdConnectAuthorizeStep);
         return OpenIdConnectAuthorizeStep;
     }());
+    OpenIdConnectAuthorizeStep = __decorate([
+        aurelia_framework_1.autoinject,
+        __metadata("design:paramtypes", [oidc_client_1.UserManager])
+    ], OpenIdConnectAuthorizeStep);
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = OpenIdConnectAuthorizeStep;
 });

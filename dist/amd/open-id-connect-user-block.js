@@ -22,13 +22,13 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect"], functio
                 _this.isLoggedIn = user !== null;
             });
         };
-        OpenIdConnectUserBlock = __decorate([
-            aurelia_framework_1.autoinject,
-            aurelia_framework_1.customElement("open-id-connect-user-block"), 
-            __metadata('design:paramtypes', [open_id_connect_1.default])
-        ], OpenIdConnectUserBlock);
         return OpenIdConnectUserBlock;
     }());
+    OpenIdConnectUserBlock = __decorate([
+        aurelia_framework_1.autoinject,
+        aurelia_framework_1.customElement("open-id-connect-user-block"),
+        __metadata("design:paramtypes", [open_id_connect_1.default])
+    ], OpenIdConnectUserBlock);
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = OpenIdConnectUserBlock;
 });
