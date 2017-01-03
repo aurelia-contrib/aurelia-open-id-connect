@@ -30,7 +30,7 @@
   },
   "peerDependencies": {},
   "devDependencies": {
-    "aurelia-cli": "file:..//..//..//_forks//cli",
+    "aurelia-cli": "^0.23.0",
     "aurelia-tools": "^0.2.2",
     "browser-sync": "^2.13.0",
     "connect-history-api-fallback": "^1.2.0",
