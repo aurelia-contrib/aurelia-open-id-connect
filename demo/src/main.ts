@@ -12,10 +12,10 @@ import environment from "./environment";
 
 export function configure(aurelia: Aurelia) {
 
-  if (location.protocol != 'https:') {
+  if (environment.useHttps && location.protocol !== "https:") {
     // location.protocol is buggy in Firefox
     // see also http://stackoverflow.com/a/10036029
-    location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+    location.href = "https:" + window.location.href.substring(window.location.protocol.length);
   }
 
   aurelia.use
