@@ -1,7 +1,7 @@
 {
   "name": "aurelia-open-id-connect-demo",
   "description": "A demo to show aurelia-open-id-connect working with an OpenID Connect provider.",
-  "version": "0.2.0",
+  "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/shaunluttin/aurelia-open-id-connect"
