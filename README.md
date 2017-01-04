@@ -1,16 +1,14 @@
+# Alpha
+
+If the install doesn't work, try an [earlier or later release][0]. `0.11.2` is apparently reliable across machines.
+
+Alternatively, open a GitHub issue.
+
 # Install 
 
-    npm install --save shaunluttin/aurelia-open-id-connect#0.9.0
+    npm install --save shaunluttin/aurelia-open-id-connect#0.11.2
     
-    jspm install github:shaunluttin/aurelia-open-id-connect@0.9.0
-
-# Implicit Flow Implementor Guide
-
-The OpenID Connect Implicit Client Implementer's Guide 1.0 contains a subset of the OpenID Connect Core 1.0 specification. 
-
-It is designed to be easy to read and implement for basic Web-based Relying Parties using the OAuth 2.0 Implicit Flow.
-
-http://openid.net/specs/openid-connect-implicit-1_0.html
+    jspm install github:shaunluttin/aurelia-open-id-connect@0.11.2
 
 # Clone and Demo 
    
@@ -35,9 +33,9 @@ Find examples of those here:
 
     npm run publish
 
-# Usage (in progress)
+# Usage
 
-See the demo project for a usage example. Here are some gotchas.
+See the demo project for a usage example.
 
 Add the following two dependencies in aurelia.json to use the package.
 
@@ -50,4 +48,15 @@ Add the following two dependencies in aurelia.json to use the package.
 "oidc-client"
 ```
 
-Set `build.loader.plugs.stub = false` in aurelia.json to load HTML from the package.
+Set `build.loader.plugs.stub = false` in aurelia.json to load HTML from the package. If that does not work, try `true`. :)
+
+# Implicit Flow Implementor Guide
+
+The [OpenID Connect Implicit Client Implementer's Guide 1.0][1] contains a subset of the OpenID Connect Core 1.0 specification. 
+
+It is designed to be easy to read and implement for basic Web-based Relying Parties using the OAuth 2.0 Implicit Flow.
+
+
+[0]: https://github.com/shaunluttin/aurelia-open-id-connect/releases
+[1]: http://openid.net/specs/openid-connect-implicit-1_0.html
+
