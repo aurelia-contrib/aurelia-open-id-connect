@@ -1,4 +1,3 @@
-/// <reference types="core-js" />
 import { NavigationInstruction } from "aurelia-router";
 import { UserManager } from "oidc-client";
 export default class OpenIdConnectAuthorizeStep {

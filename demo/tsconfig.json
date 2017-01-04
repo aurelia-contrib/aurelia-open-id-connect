@@ -10,18 +10,28 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
-    "lib": ["es2015", "dom"]
+    "lib": [
+      "es2016",
+      "es2016.array.include",
+      "es2015",
+      "es5",
+      "es2015.symbol.wellknown",
+      "es2015.reflect",
+      "es2015.proxy",
+      "es2015.promise",
+      "es2015.iterable",
+      "es2015.symbol",
+      "es2015.generator",
+      "es2015.collection",
+      "es2015.core",
+      "es2016",
+      "dom"
+    ]
   },
+  "include": [
+    "src/**/*"
+  ],
   "exclude": [
-    "node_modules", 
-    "aurelia_project"
-  ],
-  "filesGlob": [
-    "./src/**/*.ts",
-    "./test/**/*.ts",
-    "./custom_typings/**/*.d.ts"
-  ],
-  "atom": {
-    "rewriteTsconfig": false
-  }
+    "node_modules/**/*"
+  ]
 }
