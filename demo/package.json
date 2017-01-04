@@ -16,8 +16,8 @@
     "build:azure:prod": "node_modules/.bin/au build --env prod.azure"
   },
   "dependencyNotes": {
-    "aurelia-open-id-connect": "For development, use the local aurelia-open-id-connect package.",
-    "aurelia-cli": "Temporarily use an aurelia-cli fork that creates proper sourcemaps."
+    "aurelia-open-id-connect": "For development, we use the local aurelia-open-id-connect package.",
+    "aurelia-cli": "For sourcemaps, we use our fork of the aurelia-cli, which creates proper sourcemaps."
   },
   "dependencies": {
     "aurelia-bootstrapper": "^1.0.0",
@@ -30,6 +30,7 @@
   },
   "peerDependencies": {},
   "devDependencies": {
+    "@types/whatwg-fetch": "0.0.32",
     "aurelia-cli": "github:shaunluttin/cli#0.1.0-sourcemaps",
     "aurelia-tools": "^0.2.2",
     "browser-sync": "^2.13.0",
@@ -47,7 +48,7 @@
     "through2": "^2.0.1",
     "tslint": "^3.11.0",
     "tslint-microsoft-contrib": "^2.0.13",
-    "typescript": "^2.0.0",
+    "typescript": "^2.1.0",
     "uglify-js": "^2.6.3",
     "vinyl-fs": "^2.4.3"
   }
