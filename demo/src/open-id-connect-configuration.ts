@@ -16,14 +16,14 @@ const oidcConfig: OpenIdConnectConfiguration = {
         client_id: "Aurelia.OpenIdConnect",
         filterProtocolClaims: true,
         loadUserInfo: false,
-        post_logout_redirect_uri: `${environment.urls.host}/signout-oidc`,
-        redirect_uri: `${environment.urls.host}/signin-oidc`,
+        post_logout_redirect_uri: `${environment.urls.host}/signout-oidc/`,
+        redirect_uri: `${environment.urls.host}/signin-oidc/`,
         response_type: "id_token token",
         scope: "openid email roles profile",
         // number of millisecods to wait for the authorization
         // server to response to silent renew request
         silentRequestTimeout: 10000,
-        silent_redirect_uri: `${environment.urls.host}/signin-oidc`,
+        silent_redirect_uri: `${environment.urls.host}/signin-oidc/`,
         userStore: new WebStorageStateStore({
             prefix: "oidc",
             store: window.localStorage,
