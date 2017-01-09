@@ -26,7 +26,8 @@
     "babel-polyfill": "^6.16.0",
     "bluebird": "^3.4.1",
     "requirejs": "^2.3.2",
-    "text": "github:requirejs/text"
+    "text": "github:requirejs/text",
+    "whatwg-fetch": "^2.0.1"
   },
   "peerDependencies": {},
   "devDependencies": {
