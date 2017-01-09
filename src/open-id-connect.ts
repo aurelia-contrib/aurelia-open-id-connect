@@ -1,5 +1,5 @@
 import { autoinject } from "aurelia-framework";
-import { RouterConfiguration } from "aurelia-router";
+import { RouterConfiguration, NavigationInstruction } from "aurelia-router";
 import { UserManager, User } from "oidc-client";
 import OpenIdConnectRouting from "./open-id-connect-routing";
 import OpenIdConnectLogger from "./open-id-connect-logger";
@@ -25,13 +25,21 @@ export default class OpenIdConnect {
             this.postLogoutRedirectHandler);
     }
 
-    public login() {
+    public login(instruction: NavigationInstruction): Promise<any> {
         this.logger.debug("Login");
+        this.setRequiredNavigationInstructions(instruction);
 
-        this.userManager.clearStaleState().then(() => {
+        return this.userManager.clearStaleState().then(() => {
             let args: any = {};
-            this.userManager.signinRedirect(args);
+            return this.userManager.signinRedirect(args);
         });
+    }
+
+    public logout(instruction: NavigationInstruction): Promise<any> {
+        this.logger.debug("Logout");
+
+        let args: any = {};
+        return this.userManager.signoutRedirect(args);
     }
 
     public loginSilent(): Promise<User> {
@@ -41,13 +49,6 @@ export default class OpenIdConnect {
             let args: any = {};
             return this.userManager.signinSilent(args);
         });
-    }
-
-    public logout() {
-        this.logger.debug("Logout");
-
-        let args: any = {};
-        this.userManager.signoutRedirect(args);
     }
 
     // This is public to facilitate unit testing.
@@ -78,5 +79,11 @@ export default class OpenIdConnect {
     public postLogoutRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any> {
         logger.debug("PostLogoutRedirectHandler");
         return userManager.signoutRedirectCallback(null);
+    }
+
+    private setRequiredNavigationInstructions(instruction: NavigationInstruction) {
+        instruction.config.href = instruction.fragment;
+        instruction.config.moduleId = instruction.fragment;
+        instruction.config.redirect = instruction.fragment;
     }
 }

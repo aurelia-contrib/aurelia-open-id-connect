@@ -21,13 +21,19 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             }
             this.routerConfigurationService.configureRouter(routerConfiguration, this.loginRedirectHandler, this.loginSilentRedirectHandler, this.postLogoutRedirectHandler);
         };
-        OpenIdConnect.prototype.login = function () {
+        OpenIdConnect.prototype.login = function (instruction) {
             var _this = this;
             this.logger.debug("Login");
-            this.userManager.clearStaleState().then(function () {
+            this.setRequiredNavigationInstructions(instruction);
+            return this.userManager.clearStaleState().then(function () {
                 var args = {};
-                _this.userManager.signinRedirect(args);
+                return _this.userManager.signinRedirect(args);
             });
+        };
+        OpenIdConnect.prototype.logout = function (instruction) {
+            this.logger.debug("Logout");
+            var args = {};
+            return this.userManager.signoutRedirect(args);
         };
         OpenIdConnect.prototype.loginSilent = function () {
             var _this = this;
@@ -36,11 +42,6 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 var args = {};
                 return _this.userManager.signinSilent(args);
             });
-        };
-        OpenIdConnect.prototype.logout = function () {
-            this.logger.debug("Logout");
-            var args = {};
-            this.userManager.signoutRedirect(args);
         };
         OpenIdConnect.prototype.loginRedirectHandler = function (userManager, logger) {
             logger.debug("LoginRedirectHandler");
@@ -57,6 +58,11 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
         OpenIdConnect.prototype.postLogoutRedirectHandler = function (userManager, logger) {
             logger.debug("PostLogoutRedirectHandler");
             return userManager.signoutRedirectCallback(null);
+        };
+        OpenIdConnect.prototype.setRequiredNavigationInstructions = function (instruction) {
+            instruction.config.href = instruction.fragment;
+            instruction.config.moduleId = instruction.fragment;
+            instruction.config.redirect = instruction.fragment;
         };
         return OpenIdConnect;
     }());

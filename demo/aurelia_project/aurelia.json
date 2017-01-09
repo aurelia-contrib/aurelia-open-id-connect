@@ -55,7 +55,7 @@
             ".html",
             ".css"
           ],
-          "stub":false 
+          "stub": false
         }
       ]
     },
@@ -69,6 +69,12 @@
         "source": [
           "[**/*.js]",
           "**/*.{css,html}"
+        ]
+      },
+      {
+        "name": "debug-bundle.js",
+        "dependencies": [
+          "aurelia-router"
         ]
       },
       {
@@ -96,7 +102,6 @@
           "aurelia-path",
           "aurelia-polyfills",
           "aurelia-route-recognizer",
-          "aurelia-router",
           "aurelia-task-queue",
           "aurelia-templating",
           "aurelia-templating-binding",
