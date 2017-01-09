@@ -10,6 +10,8 @@ Alternatively, open a GitHub issue.
     
     jspm install github:shaunluttin/aurelia-open-id-connect@0.11.2
 
+We recommend `npm install` instead of `jspm install`. 
+
 # Clone and Demo 
    
     git clone https://github.com/shaunluttin/aurelia-open-id-connect.git
