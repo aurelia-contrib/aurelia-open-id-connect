@@ -17,6 +17,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
         }
         OpenIdConnectRouting.prototype.configureRouter = function (routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler, logoutRedirectHandler) {
             this.addLoginRoute(routerConfiguration);
+            this.addLogoutRoute(routerConfiguration);
             this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler);
             this.addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
             routerConfiguration.addPipelineStep("authorize", open_id_connect_authorize_step_1.default);
@@ -29,6 +30,11 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 var args = {};
                 return _this.userManager.signinRedirect(args);
             });
+        };
+        OpenIdConnectRouting.prototype.logout = function (instruction) {
+            this.logger.debug("Logout");
+            var args = {};
+            return this.userManager.signoutRedirect(args);
         };
         OpenIdConnectRouting.prototype.isSilentLogin = function () {
             try {
@@ -54,24 +60,21 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 },
             });
         };
-        OpenIdConnectRouting.prototype.addLogoutRedirectRoute = function (routerConfiguration, logoutRedirectHandler) {
+        OpenIdConnectRouting.prototype.addLogoutRoute = function (routerConfiguration) {
             var _this = this;
-            var logoutRedirectRoute = {
-                name: "postLogoutRedirectRoute",
+            routerConfiguration.mapRoute({
+                name: "logout",
+                nav: false,
                 navigationStrategy: function (instruction) {
-                    var redirect = function () {
-                        instruction.config.moduleId = _this.openIdConnectConfiguration.logoutRedirectModuleId;
-                    };
-                    return logoutRedirectHandler(_this.userManager, _this.logger)
-                        .then(function () { return redirect(); })
-                        .catch(function (err) {
-                        redirect();
-                        throw err;
-                    });
+                    _this.logout(instruction);
                 },
-                route: this.getPath(this.openIdConnectConfiguration.userManagerSettings.post_logout_redirect_uri),
-            };
-            routerConfiguration.mapRoute(logoutRedirectRoute);
+                route: "logout",
+                settings: {
+                    roles: [
+                        open_id_connect_roles_1.default.Authorized,
+                    ],
+                },
+            });
         };
         OpenIdConnectRouting.prototype.addLoginRedirectRoute = function (routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler) {
             var _this = this;
@@ -100,6 +103,25 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 route: this.getPath(this.openIdConnectConfiguration.userManagerSettings.redirect_uri),
             };
             routerConfiguration.mapRoute(loginRedirectRoute);
+        };
+        OpenIdConnectRouting.prototype.addLogoutRedirectRoute = function (routerConfiguration, logoutRedirectHandler) {
+            var _this = this;
+            var logoutRedirectRoute = {
+                name: "postLogoutRedirectRoute",
+                navigationStrategy: function (instruction) {
+                    var redirect = function () {
+                        instruction.config.moduleId = _this.openIdConnectConfiguration.logoutRedirectModuleId;
+                    };
+                    return logoutRedirectHandler(_this.userManager, _this.logger)
+                        .then(function () { return redirect(); })
+                        .catch(function (err) {
+                        redirect();
+                        throw err;
+                    });
+                },
+                route: this.getPath(this.openIdConnectConfiguration.userManagerSettings.post_logout_redirect_uri),
+            };
+            routerConfiguration.mapRoute(logoutRedirectRoute);
         };
         OpenIdConnectRouting.prototype.getPath = function (uri) {
             return this.convertUriToAnchor(uri).pathname;

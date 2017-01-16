@@ -21,11 +21,6 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             }
             this.routerConfigurationService.configureRouter(routerConfiguration, this.loginRedirectHandler, this.loginSilentRedirectHandler, this.postLogoutRedirectHandler);
         };
-        OpenIdConnect.prototype.logout = function (instruction) {
-            this.logger.debug("Logout");
-            var args = {};
-            return this.userManager.signoutRedirect(args);
-        };
         OpenIdConnect.prototype.loginSilent = function () {
             var _this = this;
             this.logger.debug("LoginSilent");

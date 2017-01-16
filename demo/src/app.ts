@@ -1,5 +1,5 @@
 import { autoinject } from "aurelia-framework";
-import { RouterConfiguration, Router, NavigationInstruction } from "aurelia-router";
+import { RouterConfiguration, Router } from "aurelia-router";
 import { User, Log } from "oidc-client";
 import { OpenIdConnect, OpenIdConnectRoles } from "aurelia-open-id-connect";
 
@@ -29,20 +29,6 @@ export class App {
             {
                 moduleId: "home", name: "home", nav: true, route: [""],
                 settings: { roles: [OpenIdConnectRoles.Everyone] }, title: "home",
-            },
-            // OpenId
-            {
-                name: "logout",
-                nav: false,
-                navigationStrategy: (instruction: NavigationInstruction) => {
-                    this.openIdConnect.logout(instruction);
-                },
-                route: "logout",
-                settings: {
-                    roles: [
-                        OpenIdConnectRoles.Authorized,
-                    ],
-                },
             },
             // todo: determine why profile is not showing up in the demo
             {

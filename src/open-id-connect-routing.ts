@@ -22,6 +22,7 @@ export default class OpenIdConnectRouting {
         logoutRedirectHandler: IRedirectHandler) {
 
         this.addLoginRoute(routerConfiguration);
+        this.addLogoutRoute(routerConfiguration);
         this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler);
         this.addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
 
@@ -36,6 +37,13 @@ export default class OpenIdConnectRouting {
             let args: any = {};
             return this.userManager.signinRedirect(args);
         });
+    }
+
+    public logout(instruction: NavigationInstruction): Promise<any> {
+        this.logger.debug("Logout");
+
+        let args: any = {};
+        return this.userManager.signoutRedirect(args);
     }
 
     private isSilentLogin(): boolean {
@@ -62,29 +70,20 @@ export default class OpenIdConnectRouting {
         });
     }
 
-    private addLogoutRedirectRoute(
-        routerConfiguration: RouterConfiguration,
-        logoutRedirectHandler: IRedirectHandler) {
-
-        let logoutRedirectRoute: RouteConfig = {
-            name: "postLogoutRedirectRoute",
-            navigationStrategy: (instruction: NavigationInstruction): Promise<any> => {
-
-                let redirect: Function = () => {
-                    instruction.config.moduleId = this.openIdConnectConfiguration.logoutRedirectModuleId;
-                };
-
-                return logoutRedirectHandler(this.userManager, this.logger)
-                    .then(() => redirect())
-                    .catch((err) => {
-                        redirect();
-                        throw err;
-                    });
+    private addLogoutRoute(routerConfiguration: RouterConfiguration) {
+        routerConfiguration.mapRoute({
+            name: "logout",
+            nav: false,
+            navigationStrategy: (instruction: NavigationInstruction) => {
+                this.logout(instruction);
             },
-            route: this.getPath(this.openIdConnectConfiguration.userManagerSettings.post_logout_redirect_uri),
-        };
-
-        routerConfiguration.mapRoute(logoutRedirectRoute);
+            route: "logout",
+            settings: {
+                roles: [
+                    OpenIdConnectRoles.Authorized,
+                ],
+            },
+        });
     }
 
     private addLoginRedirectRoute(
@@ -121,6 +120,31 @@ export default class OpenIdConnectRouting {
         };
 
         routerConfiguration.mapRoute(loginRedirectRoute);
+    }
+
+    private addLogoutRedirectRoute(
+        routerConfiguration: RouterConfiguration,
+        logoutRedirectHandler: IRedirectHandler) {
+
+        let logoutRedirectRoute: RouteConfig = {
+            name: "postLogoutRedirectRoute",
+            navigationStrategy: (instruction: NavigationInstruction): Promise<any> => {
+
+                let redirect: Function = () => {
+                    instruction.config.moduleId = this.openIdConnectConfiguration.logoutRedirectModuleId;
+                };
+
+                return logoutRedirectHandler(this.userManager, this.logger)
+                    .then(() => redirect())
+                    .catch((err) => {
+                        redirect();
+                        throw err;
+                    });
+            },
+            route: this.getPath(this.openIdConnectConfiguration.userManagerSettings.post_logout_redirect_uri),
+        };
+
+        routerConfiguration.mapRoute(logoutRedirectRoute);
     }
 
     private getPath(uri: string): string {
