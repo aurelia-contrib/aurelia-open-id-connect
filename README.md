@@ -4,7 +4,7 @@ If the install doesn't work, try an [earlier or later release][0]. `0.11.2` is a
 
 Alternatively, open a GitHub issue.
 
-# Install 
+# Installation
 
     npm install --save shaunluttin/aurelia-open-id-connect#0.11.2
     
@@ -12,7 +12,26 @@ Alternatively, open a GitHub issue.
 
 We recommend `npm install` instead of `jspm install`. 
 
-# Clone and Demo 
+Add the following two dependencies to aurelia.json.
+
+```
+{
+  "name": "aurelia-open-id-connect",
+  "path": "../node_modules/aurelia-open-id-connect/dist/amd",
+  "main": "index"
+},
+"oidc-client"
+```
+
+Also in aurelia.json, set `build.loader.plugs.stub = false` (to load HTML from the package). If that does not work, try `true`. :)
+
+In `main.ts` add the plugin. 
+
+     .plugin("aurelia-open-id-connect", (callback) => callback(oidcConfig));        
+
+See the demo project for a usage example.
+
+# Demo Project 
    
     git clone https://github.com/shaunluttin/aurelia-open-id-connect.git
     cd aurelia-open-id-connect/demo
@@ -34,23 +53,6 @@ Find examples of those here:
 # Clone and Publish 
 
     npm run publish
-
-# Usage
-
-See the demo project for a usage example.
-
-Add the following two dependencies in aurelia.json to use the package.
-
-```
-{
-  "name": "aurelia-open-id-connect",
-  "path": "../node_modules/aurelia-open-id-connect/dist/amd",
-  "main": "index"
-},
-"oidc-client"
-```
-
-Set `build.loader.plugs.stub = false` in aurelia.json to load HTML from the package. If that does not work, try `true`. :)
 
 # Implicit Flow Implementor Guide
 
