@@ -21,15 +21,6 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             }
             this.routerConfigurationService.configureRouter(routerConfiguration, this.loginRedirectHandler, this.loginSilentRedirectHandler, this.postLogoutRedirectHandler);
         };
-        OpenIdConnect.prototype.login = function (instruction) {
-            var _this = this;
-            this.logger.debug("Login");
-            this.setRequiredNavigationInstructions(instruction);
-            return this.userManager.clearStaleState().then(function () {
-                var args = {};
-                return _this.userManager.signinRedirect(args);
-            });
-        };
         OpenIdConnect.prototype.logout = function (instruction) {
             this.logger.debug("Logout");
             var args = {};
@@ -58,11 +49,6 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
         OpenIdConnect.prototype.postLogoutRedirectHandler = function (userManager, logger) {
             logger.debug("PostLogoutRedirectHandler");
             return userManager.signoutRedirectCallback(null);
-        };
-        OpenIdConnect.prototype.setRequiredNavigationInstructions = function (instruction) {
-            instruction.config.href = instruction.fragment;
-            instruction.config.moduleId = instruction.fragment;
-            instruction.config.redirect = instruction.fragment;
         };
         return OpenIdConnect;
     }());

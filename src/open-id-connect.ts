@@ -25,16 +25,6 @@ export default class OpenIdConnect {
             this.postLogoutRedirectHandler);
     }
 
-    public login(instruction: NavigationInstruction): Promise<any> {
-        this.logger.debug("Login");
-        this.setRequiredNavigationInstructions(instruction);
-
-        return this.userManager.clearStaleState().then(() => {
-            let args: any = {};
-            return this.userManager.signinRedirect(args);
-        });
-    }
-
     public logout(instruction: NavigationInstruction): Promise<any> {
         this.logger.debug("Logout");
 
@@ -51,8 +41,6 @@ export default class OpenIdConnect {
         });
     }
 
-    // This is public to facilitate unit testing.
-    // todo: Handle "no matching state found in storage" error
     public loginRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any> {
         logger.debug("LoginRedirectHandler");
         // to avoid page refresh errors
@@ -66,7 +54,6 @@ export default class OpenIdConnect {
         });
     }
 
-    // This is public to facilitate unit testing.
     public loginSilentRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any> {
         logger.debug("SilentLoginRedirectHandler");
 
@@ -75,15 +62,8 @@ export default class OpenIdConnect {
         return userManager.signinSilentCallback(null);
     }
 
-    // This is public to facilitate unit testing.
     public postLogoutRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any> {
         logger.debug("PostLogoutRedirectHandler");
         return userManager.signoutRedirectCallback(null);
-    }
-
-    private setRequiredNavigationInstructions(instruction: NavigationInstruction) {
-        instruction.config.href = instruction.fragment;
-        instruction.config.moduleId = instruction.fragment;
-        instruction.config.redirect = instruction.fragment;
     }
 }

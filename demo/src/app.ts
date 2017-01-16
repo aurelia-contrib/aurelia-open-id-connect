@@ -32,19 +32,6 @@ export class App {
             },
             // OpenId
             {
-                name: "login",
-                nav: false,
-                navigationStrategy: (instruction: NavigationInstruction) => {
-                    this.openIdConnect.login(instruction);
-                },
-                route: "login",
-                settings: {
-                    roles: [
-                        OpenIdConnectRoles.Anonymous,
-                    ],
-                },
-            },
-            {
                 name: "logout",
                 nav: false,
                 navigationStrategy: (instruction: NavigationInstruction) => {

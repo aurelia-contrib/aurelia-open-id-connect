@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-configuration", "./open-id-connect-authorize-step", "./open-id-connect-logger"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_configuration_1, open_id_connect_authorize_step_1, open_id_connect_logger_1) {
+define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-roles", "./open-id-connect-configuration", "./open-id-connect-authorize-step", "./open-id-connect-logger"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_roles_1, open_id_connect_configuration_1, open_id_connect_authorize_step_1, open_id_connect_logger_1) {
     "use strict";
     var OpenIdConnectRouting = (function () {
         function OpenIdConnectRouting(openIdConnectConfiguration, logger, userManager) {
@@ -16,9 +16,19 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             this.userManager = userManager;
         }
         OpenIdConnectRouting.prototype.configureRouter = function (routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler, logoutRedirectHandler) {
+            this.addLoginRoute(routerConfiguration);
             this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler);
             this.addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
             routerConfiguration.addPipelineStep("authorize", open_id_connect_authorize_step_1.default);
+        };
+        OpenIdConnectRouting.prototype.login = function (instruction) {
+            var _this = this;
+            this.logger.debug("Login");
+            this.setRequiredNavigationInstructions(instruction);
+            return this.userManager.clearStaleState().then(function () {
+                var args = {};
+                return _this.userManager.signinRedirect(args);
+            });
         };
         OpenIdConnectRouting.prototype.isSilentLogin = function () {
             try {
@@ -27,6 +37,22 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             catch (e) {
                 return true;
             }
+        };
+        OpenIdConnectRouting.prototype.addLoginRoute = function (routerConfiguration) {
+            var _this = this;
+            routerConfiguration.mapRoute({
+                name: "login",
+                nav: false,
+                navigationStrategy: function (instruction) {
+                    _this.login(instruction);
+                },
+                route: "login",
+                settings: {
+                    roles: [
+                        open_id_connect_roles_1.default.Anonymous,
+                    ],
+                },
+            });
         };
         OpenIdConnectRouting.prototype.addLogoutRedirectRoute = function (routerConfiguration, logoutRedirectHandler) {
             var _this = this;
@@ -86,6 +112,11 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             var anchor = document.createElement("a");
             anchor.href = uri;
             return anchor;
+        };
+        OpenIdConnectRouting.prototype.setRequiredNavigationInstructions = function (instruction) {
+            instruction.config.href = instruction.fragment;
+            instruction.config.moduleId = instruction.fragment;
+            instruction.config.redirect = instruction.fragment;
         };
         return OpenIdConnectRouting;
     }());

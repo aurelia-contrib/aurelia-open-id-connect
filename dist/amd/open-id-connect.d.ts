@@ -8,11 +8,9 @@ export default class OpenIdConnect {
     userManager: UserManager;
     constructor(routerConfigurationService: OpenIdConnectRouting, logger: OpenIdConnectLogger, userManager: UserManager);
     configure(routerConfiguration: RouterConfiguration): void;
-    login(instruction: NavigationInstruction): Promise<any>;
     logout(instruction: NavigationInstruction): Promise<any>;
     loginSilent(): Promise<User>;
     loginRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any>;
     loginSilentRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any>;
     postLogoutRedirectHandler(userManager: UserManager, logger: OpenIdConnectLogger): Promise<any>;
-    private setRequiredNavigationInstructions(instruction);
 }

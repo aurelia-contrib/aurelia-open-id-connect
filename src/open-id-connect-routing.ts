@@ -1,6 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { RouterConfiguration, RouteConfig, NavigationInstruction } from "aurelia-router";
 import { UserManager } from "oidc-client";
+import OpenIdConnectRoles from "./open-id-connect-roles";
 import OpenIdConnectConfiguration from "./open-id-connect-configuration";
 import OpenIdConnectAuthorizeStep from "./open-id-connect-authorize-step";
 import OpenIdConnectLogger from "./open-id-connect-logger";
@@ -20,10 +21,21 @@ export default class OpenIdConnectRouting {
         loginSilentRedirectHandler: IRedirectHandler,
         logoutRedirectHandler: IRedirectHandler) {
 
+        this.addLoginRoute(routerConfiguration);
         this.addLoginRedirectRoute(routerConfiguration, loginRedirectHandler, loginSilentRedirectHandler);
         this.addLogoutRedirectRoute(routerConfiguration, logoutRedirectHandler);
 
         routerConfiguration.addPipelineStep("authorize", OpenIdConnectAuthorizeStep);
+    }
+
+    public login(instruction: NavigationInstruction): Promise<any> {
+        this.logger.debug("Login");
+        this.setRequiredNavigationInstructions(instruction);
+
+        return this.userManager.clearStaleState().then(() => {
+            let args: any = {};
+            return this.userManager.signinRedirect(args);
+        });
     }
 
     private isSilentLogin(): boolean {
@@ -32,6 +44,22 @@ export default class OpenIdConnectRouting {
         } catch (e) {
             return true;
         }
+    }
+
+    private addLoginRoute(routerConfiguration: RouterConfiguration) {
+        routerConfiguration.mapRoute({
+            name: "login",
+            nav: false,
+            navigationStrategy: (instruction: NavigationInstruction) => {
+                this.login(instruction);
+            },
+            route: "login",
+            settings: {
+                roles: [
+                    OpenIdConnectRoles.Anonymous,
+                ],
+            },
+        });
     }
 
     private addLogoutRedirectRoute(
@@ -109,5 +137,11 @@ export default class OpenIdConnectRouting {
         let anchor: HTMLAnchorElement = document.createElement("a");
         anchor.href = uri;
         return anchor;
+    }
+
+    private setRequiredNavigationInstructions(instruction: NavigationInstruction) {
+        instruction.config.href = instruction.fragment;
+        instruction.config.moduleId = instruction.fragment;
+        instruction.config.redirect = instruction.fragment;
     }
 }
