@@ -6,11 +6,13 @@ Alternatively, open a GitHub issue.
 
 # Installation
 
+Install the plugin. We recommend `npm install` instead of `jspm install`. 
+
     npm install --save shaunluttin/aurelia-open-id-connect#0.11.2
     
     jspm install github:shaunluttin/aurelia-open-id-connect@0.11.2
 
-We recommend `npm install` instead of `jspm install`. Now make the following changes to `aurelia.json`. Add the following dependencies:
+Now make the following changes to `aurelia.json`. Add the following dependencies:
 
 ```
 {
@@ -21,7 +23,11 @@ We recommend `npm install` instead of `jspm install`. Now make the following cha
 "oidc-client"
 ```
 
-And set `build.loader.plugs.stub = false` in order to load plugin HTML. If that does not work, try `true`. Now, create an `open-id-connect-configuration.ts` file in your project's root (the name and location are arbitrary). Then in `main.ts` add the plugin, referencing the configuration.
+And set `build.loader.plugs.stub = false` in order to load plugin HTML. If that does not work, try `true`. 
+
+Now, create an `open-id-connect-configuration.ts` file in your project's root (the name and location are arbitrary). There is an example here: https://github.com/shaunluttin/aurelia-open-id-connect/blob/master/demo/src/open-id-connect-configuration.ts
+
+Then in `main.ts` add the plugin, referencing the configuration.
 
     import oidcConfig from "./open-id-connect-configuration";    
 
