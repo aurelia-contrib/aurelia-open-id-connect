@@ -1,4 +1,3 @@
-import "fetch";
 import { autoinject } from "aurelia-framework";
 import { OpenIdConnect } from "aurelia-open-id-connect";
 import { User } from "oidc-client";
