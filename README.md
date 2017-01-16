@@ -10,9 +10,7 @@ Alternatively, open a GitHub issue.
     
     jspm install github:shaunluttin/aurelia-open-id-connect@0.11.2
 
-We recommend `npm install` instead of `jspm install`. 
-
-Add the following two dependencies to aurelia.json.
+We recommend `npm install` instead of `jspm install`. Now make the following changes to `aurelia.json`. Add the following dependencies:
 
 ```
 {
@@ -23,11 +21,7 @@ Add the following two dependencies to aurelia.json.
 "oidc-client"
 ```
 
-Also in aurelia.json, set `build.loader.plugs.stub = false` (to load plugin HTML). If that does not work, try `true`.
-
-Create an `open-id-connect-configuration.ts` file in your project's root (the name and location are arbitrary).
-
-In `main.ts` add the plugin, referencing the configuration.
+And set `build.loader.plugs.stub = false` in order to load plugin HTML. If that does not work, try `true`. Now, create an `open-id-connect-configuration.ts` file in your project's root (the name and location are arbitrary). Then in `main.ts` add the plugin, referencing the configuration.
 
     import oidcConfig from "./open-id-connect-configuration";    
 
