@@ -23,11 +23,15 @@ Add the following two dependencies to aurelia.json.
 "oidc-client"
 ```
 
-Also in aurelia.json, set `build.loader.plugs.stub = false` (to load HTML from the package). If that does not work, try `true`. :)
+Also in aurelia.json, set `build.loader.plugs.stub = false` (to load plugin HTML). If that does not work, try `true`.
 
-In `main.ts` add the plugin. 
+Create an `open-id-connect-configuration.ts` file in your project's root (the name and location are arbitrary).
 
-     .plugin("aurelia-open-id-connect", (callback) => callback(oidcConfig));        
+In `main.ts` add the plugin, referencing the configuration.
+
+    import oidcConfig from "./open-id-connect-configuration";    
+
+    .plugin("aurelia-open-id-connect", (callback) => callback(oidcConfig));
 
 See the demo project for a usage example.
 
