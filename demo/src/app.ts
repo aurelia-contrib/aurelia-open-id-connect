@@ -1,4 +1,4 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject, LogManager } from "aurelia-framework";
 import { RouterConfiguration, Router } from "aurelia-router";
 import { User, Log } from "oidc-client";
 import { OpenIdConnect, OpenIdConnectRoles } from "aurelia-open-id-connect";
@@ -9,11 +9,14 @@ export class App {
   private router: Router;
   private user: User;
 
-  constructor(private openIdConnect: OpenIdConnect) {
-    this.openIdConnect.logger.enableLogging(Log.INFO);
+  constructor(
+    private openIdConnect: OpenIdConnect) {
+    this.openIdConnect.logger.enableLogging(Log.NONE);
     this.openIdConnect.userManager.getUser().then((user) => {
       this.user = user;
     });
+
+    LogManager.setLevel(LogManager.logLevel.none);
   }
 
   public configureRouter(routerConfiguration: RouterConfiguration, router: Router) {
