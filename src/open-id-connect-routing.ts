@@ -65,7 +65,7 @@ export default class OpenIdConnectRouting {
 
     private addLoginRedirectRoute(routerConfiguration: RouterConfiguration) {
         routerConfiguration.mapRoute({
-            name: "redirectRoute",
+            name: "logInRedirectCallback",
             navigationStrategy: (instruction: NavigationInstruction) => {
                 if (this.isSilentLogin()) {
                     return this.openIdConnectNavigationStrategies.silentSignICallback(instruction);
@@ -79,7 +79,7 @@ export default class OpenIdConnectRouting {
 
     private addLogoutRedirectRoute(routerConfiguration: RouterConfiguration) {
         routerConfiguration.mapRoute({
-            name: "postLogoutRedirectRoute",
+            name: "logOutRedirectCallback",
             navigationStrategy: (instruction: NavigationInstruction) => {
                 return this.openIdConnectNavigationStrategies.signoutRedirectCallback(instruction);
             },
