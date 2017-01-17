@@ -3,7 +3,7 @@ import { UserManagerSettings, WebStorageStateStore } from "oidc-client";
 let isDevelopment = window.location.host.startsWith("localhost");
 
 let authority: string = isDevelopment
-    ? "http://localhost:12345"
+    ? "http://localhost:5000"
     : "https://zamboni-auth.azurewebsites.net";
 
 let host: string = isDevelopment
