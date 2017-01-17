@@ -2,7 +2,7 @@ define(["require", "exports", "oidc-client"], function (require, exports, oidc_c
     "use strict";
     var isDevelopment = window.location.host.startsWith("localhost");
     var authority = isDevelopment
-        ? "http://localhost:12345"
+        ? "http://localhost:5000"
         : "https://zamboni-auth.azurewebsites.net";
     var host = isDevelopment
         ? "http://localhost:9000"

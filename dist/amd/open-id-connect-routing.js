@@ -29,7 +29,8 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 name: "login",
                 nav: false,
                 navigationStrategy: function (instruction) {
-                    _this.openIdConnectNavigationStrategies.login(instruction);
+                    instruction.config.redirect = "";
+                    return _this.openIdConnectNavigationStrategies.login(instruction);
                 },
                 route: "login",
                 settings: {
@@ -45,6 +46,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 name: "logout",
                 nav: false,
                 navigationStrategy: function (instruction) {
+                    instruction.config.redirect = "";
                     return _this.openIdConnectNavigationStrategies.logout(instruction);
                 },
                 route: "logout",
@@ -58,7 +60,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
         OpenIdConnectRouting.prototype.addLoginRedirectRoute = function (routerConfiguration) {
             var _this = this;
             routerConfiguration.mapRoute({
-                name: "redirectRoute",
+                name: "logInRedirectCallback",
                 navigationStrategy: function (instruction) {
                     if (_this.isSilentLogin()) {
                         return _this.openIdConnectNavigationStrategies.silentSignICallback(instruction);
@@ -73,7 +75,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
         OpenIdConnectRouting.prototype.addLogoutRedirectRoute = function (routerConfiguration) {
             var _this = this;
             routerConfiguration.mapRoute({
-                name: "postLogoutRedirectRoute",
+                name: "logOutRedirectCallback",
                 navigationStrategy: function (instruction) {
                     return _this.openIdConnectNavigationStrategies.signoutRedirectCallback(instruction);
                 },

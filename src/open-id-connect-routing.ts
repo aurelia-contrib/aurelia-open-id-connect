@@ -29,10 +29,8 @@ export default class OpenIdConnectRouting {
             name: "login",
             nav: false,
             navigationStrategy: (instruction: NavigationInstruction) => {
-                // no return
-                // and do setRequiredNavigationInstructions.
-                this.setRequiredNavigationInstructions(instruction);
-                this.openIdConnectNavigationStrategies.login(instruction);
+                instruction.config.redirect = "";
+                return this.openIdConnectNavigationStrategies.login(instruction);
             },
             route: "login",
             settings: {
@@ -48,10 +46,7 @@ export default class OpenIdConnectRouting {
             name: "logout",
             nav: false,
             navigationStrategy: (instruction: NavigationInstruction) => {
-                // return
-                // and do not setRequiredNavigationInstructions.
-                // This leads to a nice-to-fix error:
-                // "Cannot read property 'trim()' of undefined."
+                instruction.config.redirect = "";
                 return this.openIdConnectNavigationStrategies.logout(instruction);
             },
             route: "logout",
@@ -103,11 +98,5 @@ export default class OpenIdConnectRouting {
         let anchor: HTMLAnchorElement = document.createElement("a");
         anchor.href = uri;
         return anchor;
-    }
-
-    private setRequiredNavigationInstructions(instruction: NavigationInstruction) {
-        instruction.config.href = instruction.fragment;
-        instruction.config.moduleId = instruction.fragment;
-        instruction.config.redirect = instruction.fragment;
     }
 }

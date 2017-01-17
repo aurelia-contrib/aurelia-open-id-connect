@@ -60,7 +60,7 @@ export default class OpenIdConnectNavigationStrategies {
     public signoutRedirectCallback(instruction: NavigationInstruction): Promise<any> {
         let callbackHandler: Function = () => {
             let args: any = {};
-            this.userManager.signoutRedirectCallback(args);
+            return this.userManager.signoutRedirectCallback(args);
         };
 
         let postCallbackRedirect: Function = () => {

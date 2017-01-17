@@ -16,7 +16,6 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             this.userManager = userManager;
         }
         OpenIdConnectNavigationStrategies.prototype.login = function (instruction) {
-            this.setRequiredNavigationInstructions(instruction);
             var args = {};
             return this.userManager.signinRedirect(args);
         };
@@ -54,7 +53,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             var _this = this;
             var callbackHandler = function () {
                 var args = {};
-                _this.userManager.signoutRedirectCallback(args);
+                return _this.userManager.signoutRedirectCallback(args);
             };
             var postCallbackRedirect = function () {
                 instruction.config.moduleId = _this.openIdConnectConfiguration.logoutRedirectModuleId;
@@ -68,11 +67,6 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 postCallbackRedirect();
                 throw err;
             });
-        };
-        OpenIdConnectNavigationStrategies.prototype.setRequiredNavigationInstructions = function (instruction) {
-            instruction.config.href = instruction.fragment;
-            instruction.config.moduleId = instruction.fragment;
-            instruction.config.redirect = instruction.fragment;
         };
         return OpenIdConnectNavigationStrategies;
     }());
