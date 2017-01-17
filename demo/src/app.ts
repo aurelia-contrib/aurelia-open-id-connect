@@ -10,8 +10,7 @@ export class App {
   private user: User;
 
   constructor(private openIdConnect: OpenIdConnect) {
-    this.openIdConnect.logger.enableOidcClientLogging(Log.INFO);
-
+    this.openIdConnect.logger.enableLogging(Log.INFO);
     this.openIdConnect.userManager.getUser().then((user) => {
       this.user = user;
     });

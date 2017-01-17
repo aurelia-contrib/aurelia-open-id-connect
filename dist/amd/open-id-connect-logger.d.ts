@@ -1,4 +1,5 @@
 export default class OpenIdConnectLogger {
-    enableOidcClientLogging(level: number): void;
+    private level;
+    enableLogging(level: number): void;
     debug(message: string): void;
 }

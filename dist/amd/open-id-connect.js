@@ -10,8 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-routing", "./open-id-connect-logger"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_routing_1, open_id_connect_logger_1) {
     "use strict";
     var OpenIdConnect = (function () {
-        function OpenIdConnect(routerConfigurationService, logger, userManager) {
-            this.routerConfigurationService = routerConfigurationService;
+        function OpenIdConnect(openIdConnectRouting, logger, userManager) {
+            this.openIdConnectRouting = openIdConnectRouting;
             this.logger = logger;
             this.userManager = userManager;
         }
@@ -19,7 +19,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             if (typeof routerConfiguration === "undefined" || routerConfiguration === null) {
                 throw new Error("routerConfiguration parameter must not be undefined or null");
             }
-            this.routerConfigurationService.configureRouter(routerConfiguration, this.loginRedirectHandler, this.loginSilentRedirectHandler, this.postLogoutRedirectHandler);
+            this.openIdConnectRouting.configureRouter(routerConfiguration);
         };
         OpenIdConnect.prototype.loginSilent = function () {
             var _this = this;
@@ -28,22 +28,6 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 var args = {};
                 return _this.userManager.signinSilent(args);
             });
-        };
-        OpenIdConnect.prototype.loginRedirectHandler = function (userManager, logger) {
-            logger.debug("LoginRedirectHandler");
-            return userManager.getUser().then(function (user) {
-                if (user === null || user === undefined) {
-                    return userManager.signinRedirectCallback(null);
-                }
-            });
-        };
-        OpenIdConnect.prototype.loginSilentRedirectHandler = function (userManager, logger) {
-            logger.debug("SilentLoginRedirectHandler");
-            return userManager.signinSilentCallback(null);
-        };
-        OpenIdConnect.prototype.postLogoutRedirectHandler = function (userManager, logger) {
-            logger.debug("PostLogoutRedirectHandler");
-            return userManager.signoutRedirectCallback(null);
         };
         return OpenIdConnect;
     }());

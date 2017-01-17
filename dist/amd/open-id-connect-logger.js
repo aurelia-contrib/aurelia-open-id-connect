@@ -2,8 +2,9 @@ define(["require", "exports", "oidc-client"], function (require, exports, oidc_c
     "use strict";
     var OpenIdConnectLogger = (function () {
         function OpenIdConnectLogger() {
+            this.level = oidc_client_1.Log.NONE;
         }
-        OpenIdConnectLogger.prototype.enableOidcClientLogging = function (level) {
+        OpenIdConnectLogger.prototype.enableLogging = function (level) {
             var validLevels = [
                 oidc_client_1.Log.INFO,
                 oidc_client_1.Log.WARN,
@@ -15,13 +16,16 @@ define(["require", "exports", "oidc-client"], function (require, exports, oidc_c
                 oidc_client_1.Log.logger = console;
             }
             else {
+                this.level = level;
                 var concat = validLevels.join(", ");
                 var message = "The log level must be one of " + concat;
                 throw new Error(message);
             }
         };
         OpenIdConnectLogger.prototype.debug = function (message) {
-            console.debug("DEBUG [OpenIdConnect] " + message);
+            if (this.level === oidc_client_1.Log.ERROR) {
+                console.debug("DEBUG [OpenIdConnect] " + message);
+            }
         };
         return OpenIdConnectLogger;
     }());
