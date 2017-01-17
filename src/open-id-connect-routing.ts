@@ -30,7 +30,7 @@ export default class OpenIdConnectRouting {
             nav: false,
             navigationStrategy: (instruction: NavigationInstruction) => {
                 // no return
-                // instead, setRequiredNavigationInstructions
+                // and do setRequiredNavigationInstructions.
                 this.setRequiredNavigationInstructions(instruction);
                 this.openIdConnectNavigationStrategies.login(instruction);
             },
@@ -49,8 +49,8 @@ export default class OpenIdConnectRouting {
             nav: false,
             navigationStrategy: (instruction: NavigationInstruction) => {
                 // return
-                // but do not setRequiredNavigationInstructions.
-                // Thought this leads to a nice-to-fix error
+                // and do not setRequiredNavigationInstructions.
+                // This leads to a nice-to-fix error:
                 // "Cannot read property 'trim()' of undefined."
                 return this.openIdConnectNavigationStrategies.logout(instruction);
             },
