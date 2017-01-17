@@ -14,7 +14,8 @@
     "package:clean": "node_modules/.bin/rimraf dist",
     "package:tsc": "node_modules/.bin/tsc",
     "package:html": "node_modules/.bin/cpx src/**/*.html dist/amd",
-    "package": "npm run package:clean && npm run package:tsc && npm run package:html"
+    "package": "npm run package:clean && npm run package:tsc && npm run package:html",
+    "package-and-demo": "npm run package && cd demo && rimraf node_modules/aurelia-open-id-connect && npm install && npm run demo && cd .."
   },
   "jspm": {
     "main": "index.js",
