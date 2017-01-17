@@ -21,6 +21,7 @@ export default class OpenIdConnectConfiguration {
         post_logout_redirect_uri: `${host}/signout-oidc`,
         redirect_uri: `${host}/signin-oidc`,
         response_type: "id_token token",
+        silent_redirect_uri: `${host}/signin-oidc`,
         scope: "openid email roles profile",
         userStore: new WebStorageStateStore({
             prefix: "oidc",

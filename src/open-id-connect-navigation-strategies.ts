@@ -26,9 +26,9 @@ export default class OpenIdConnectNavigationStrategies {
 
         let callbackHandler: Function = () => {
             return this.userManager.getUser().then((user) => {
-                // Prevent page refresh errors
-                // by signing in only if we do not already have a user.
-                // Otherwise we receive a 'No matching state found in storage' error.
+                // getUser()
+                // Sign in only if we do not already have a user;
+                // otherwise, we receive a 'No matching state found in storage' error.
                 if (user === null || user === undefined) {
                     let args: any = {};
                     return this.userManager.signinRedirectCallback(args);
@@ -46,8 +46,15 @@ export default class OpenIdConnectNavigationStrategies {
     public silentSignICallback(instruction: NavigationInstruction): Promise<any> {
 
         let callbackHandler: Function = () => {
-            let args: any = {};
-            return this.userManager.signinSilentCallback(args);
+
+            this.userManager.clearStaleState().then(() => {
+                // clearStaleState()
+                // Clear existing state first;
+                // otherwise, we receive a 'No matching state found in storage' error. 
+                let args: any = {};
+                return this.userManager.signinSilentCallback(args);
+            });
+
         };
 
         let postCallbackRedirect: Function = () => {

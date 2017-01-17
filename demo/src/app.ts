@@ -11,12 +11,13 @@ export class App {
 
   constructor(
     private openIdConnect: OpenIdConnect) {
-    this.openIdConnect.logger.enableLogging(Log.NONE);
+
+    LogManager.setLevel(LogManager.logLevel.info);
+    this.openIdConnect.logger.enableLogging(Log.INFO);
+
     this.openIdConnect.userManager.getUser().then((user) => {
       this.user = user;
     });
-
-    LogManager.setLevel(LogManager.logLevel.none);
   }
 
   public configureRouter(routerConfiguration: RouterConfiguration, router: Router) {
