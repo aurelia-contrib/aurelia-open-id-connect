@@ -1,8 +1,10 @@
+# Why? 
+
+This plugin adapts `oidc-client-js` to the Aurelia router. While it possible to use the `oidc-client-js` on its own, you will find yourself writing a fair amount of code to handling the routing within Aurelia.
+
 # Alpha
 
-If the install doesn't work, try an [earlier or later release][0]. `0.11.2` is apparently reliable across machines.
-
-Alternatively, open a GitHub issue.
+If the install doesn't work, try an [earlier or later release][0]. `0.11.2` is apparently reliable across machines. Alternatively, open a GitHub issue.
 
 # Installation
 
