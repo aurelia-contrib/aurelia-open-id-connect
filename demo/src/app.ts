@@ -12,8 +12,8 @@ export class App {
   constructor(
     private openIdConnect: OpenIdConnect) {
 
-    LogManager.setLevel(LogManager.logLevel.info);
-    this.openIdConnect.logger.enableLogging(Log.INFO);
+    LogManager.setLevel(LogManager.logLevel.none);
+    this.openIdConnect.logger.enableLogging(Log.NONE);
 
     this.openIdConnect.userManager.getUser().then((user) => {
       this.user = user;
