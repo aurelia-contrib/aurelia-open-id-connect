@@ -4,18 +4,25 @@ This plugin adapts `oidc-client-js` to the Aurelia router. While it possible to 
 
 # Alpha
 
-If the install doesn't work, try an [earlier or later release][0]. `0.11.2` is apparently reliable across machines. Alternatively, open a GitHub issue.
+If the most recent `aurelia-open-id-connect` release does not work, try an [earlier or later one][0] such as `0.11.2`.
 
-# Installation
+# Usage 
 
-Install the plugin. We recommend `npm install` instead of `jspm install`.
+### Install the package
 
-    npm install --save shaunluttin/aurelia-open-id-connect#0.11.2
+We recommend NPM instead of JSPM.
 
-    jspm install github:shaunluttin/aurelia-open-id-connect@0.11.2
+```
+npm install --save shaunluttin/aurelia-open-id-connect#0.11.2
 
-Now make the following changes to `aurelia.json`. Add the following dependencies:
+jspm install github:shaunluttin/aurelia-open-id-connect@0.11.2
+```
 
+### Add it to Aurelia
+
+We recommend the Aurelia CLI.
+
+Add the following dependencies to `aurelia.json`.
 ```
 {
   "name": "aurelia-open-id-connect",
@@ -25,19 +32,30 @@ Now make the following changes to `aurelia.json`. Add the following dependencies
 "oidc-client"
 ```
 
-And set `build.loader.plugs.stub = false` in order to load plugin HTML. If that does not work, try `true`.
+Also: set `build.loader.plugins.stub = false` to load the plugin's HTML.
 
-Now, create an `open-id-connect-configuration.ts` file in your project's root (the name and location are arbitrary). There is an example here: https://github.com/shaunluttin/aurelia-open-id-connect/blob/master/demo/src/open-id-connect-configuration.ts
+### Configure the OpenID Connect client
 
-Then in `main.ts` add the plugin, referencing the configuration.
+We recommend TypeScript.
+    
+Create a `src/open-id-connect-configuration.ts` file. There is an [example in the demo project](/demo/src/open-id-connect-configuration.ts).
+
+In your `src/main.ts`, import the configuration file, add the plugin, and invoke the callback, passing it the imported configuration. 
 
     import oidcConfig from "./open-id-connect-configuration";
+    
+    ...
 
-    .plugin("aurelia-open-id-connect", (callback) => callback(oidcConfig));
-
-See the demo project for a usage example.
+    aurelia.use
+        .plugin("aurelia-open-id-connect", (callback) => callback(oidcConfig));
 
 # Demo Project
+
+The demo has an example of how to configure everything. 
+
+See it LIVE here: https://zamboni-app.azurewebsites.net
+
+Or, clone and run it locally:
 
     git clone https://github.com/shaunluttin/aurelia-open-id-connect.git
     cd aurelia-open-id-connect/demo
@@ -45,7 +63,7 @@ See the demo project for a usage example.
     npm install -y
     npm run demo
 
-A complete demo requres the following running locally:
+Note: a complete demo requires the following running locally:
 
 * an OpenId Connect authorization server at http://localhost:5000
 * a Resource Server at http://localhost:5001
@@ -56,16 +74,15 @@ Find examples of those here:
     git clone https://github.com/openiddict/openiddict-samples.git
     cd openiddict-samples/samples/ImplicitFlow
 
-# Clone and Publish
+# Publish
 
-    npm run publish
+    npm run package
 
 # Implicit Flow Implementor Guide
 
 The [OpenID Connect Implicit Client Implementer's Guide 1.0][1] contains a subset of the OpenID Connect Core 1.0 specification.
 
 It is designed to be easy to read and implement for basic Web-based Relying Parties using the OAuth 2.0 Implicit Flow.
-
 
 [0]: https://github.com/shaunluttin/aurelia-open-id-connect/releases
 [1]: http://openid.net/specs/openid-connect-implicit-1_0.html
