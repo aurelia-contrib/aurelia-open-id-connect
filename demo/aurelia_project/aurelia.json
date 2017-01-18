@@ -60,8 +60,8 @@
       ]
     },
     "options": {
-      "minify": "false",
-      "sourcemaps": "dev & stage"
+      "minify": false,
+      "sourcemaps": false
     },
     "bundles": [
       {
@@ -74,7 +74,12 @@
       {
         "name": "debug-bundle.js",
         "dependencies": [
-          "aurelia-router"
+          {
+            "name": "oidc-client",
+            "path": "../node_modules/oidc-client/lib/",
+            "main": "oidc-client"
+          }
+          
         ]
       },
       {
@@ -102,6 +107,7 @@
           "aurelia-path",
           "aurelia-polyfills",
           "aurelia-route-recognizer",
+          "aurelia-router",
           "aurelia-task-queue",
           "aurelia-templating",
           "aurelia-templating-binding",
@@ -121,8 +127,7 @@
             "name": "aurelia-open-id-connect",
             "path": "../node_modules/aurelia-open-id-connect/dist/amd",
             "main": "index"
-          },
-          "oidc-client"
+          }
         ]
       }
     ]

@@ -28,7 +28,8 @@ export default class OpenIdConnectNavigationStrategies {
             return this.userManager.getUser().then((user) => {
                 // getUser()
                 // Sign in only if we do not already have a user;
-                // otherwise, we receive a 'No matching state found in storage' error.
+                // otherwise, we receive a 'No matching state found in storage' error,
+                // on a page refresh with stale state in the window.location.
                 if (user === null || user === undefined) {
                     let args: any = {};
                     return this.userManager.signinRedirectCallback(args);
@@ -46,15 +47,13 @@ export default class OpenIdConnectNavigationStrategies {
     public silentSignICallback(instruction: NavigationInstruction): Promise<any> {
 
         let callbackHandler: Function = () => {
-
-            this.userManager.clearStaleState().then(() => {
-                // clearStaleState()
-                // Clear existing state first;
-                // otherwise, we receive a 'No matching state found in storage' error. 
-                let args: any = {};
-                return this.userManager.signinSilentCallback(args);
-            });
-
+            // The url must be null;
+            // otherwise, IFrameWindow.notifyParent will not work,
+            // And we will receive one of two errors: 
+            // 'No matching state found in storage' or
+            // 'No state in response'
+            let url: string = null;
+            return this.userManager.signinSilentCallback(url);
         };
 
         let postCallbackRedirect: Function = () => {
