@@ -12,11 +12,17 @@ If the most recent `aurelia-open-id-connect` release does not work, try an [earl
 
 ### Create an Aurelia application
 
-We use the [Aurelia CLI][aurelia-cli] with TypeScript and RequireJS. 
+We use the [Aurelia CLI][aurelia-cli].
 
 ```
 au new
+```
+
+We use TypeScript and RequireJS. After creating the app, enter its directory and build.
+
+```
 cd aurelia-app
+au build
 ```
 
 ### Install the aurelia-open-id-connect package
