@@ -21,12 +21,14 @@ cd aurelia-app
 
 ### Install the aurelia-open-id-connect package
 
-We use NPM. 
-
+Install from NPM.
 ```
-npm install --save shaunluttin/aurelia-open-id-connect#0.11.2
+npm install --save aurelia-open-id-connect
+```
 
-jspm install github:shaunluttin/aurelia-open-id-connect@0.11.2
+Install from GitHub.
+```
+npm install --save shaunluttin/aurelia-open-id-connect#0.12.1
 ```
 
 Also install UNMET PEER DEPENDENCIES such as `babel-polyfill`.
