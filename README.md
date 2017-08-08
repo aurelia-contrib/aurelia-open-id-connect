@@ -14,28 +14,22 @@ If the most recent `aurelia-open-id-connect` release does not work, try an [earl
 
 We use the [Aurelia CLI][aurelia-cli].
 
-```
-au new
-```
+    au new
 
 We use TypeScript and RequireJS. After creating the app, enter its directory and build.
 
-```
-cd aurelia-app
-au build
-```
+    cd aurelia-app
+    au build
 
 ### Install the aurelia-open-id-connect package
 
 Install from NPM.
-```
-npm install --save aurelia-open-id-connect
-```
+
+    npm install --save aurelia-open-id-connect
 
 Install from GitHub.
-```
-npm install --save shaunluttin/aurelia-open-id-connect#0.12.1
-```
+
+    npm install --save shaunluttin/aurelia-open-id-connect#0.12.1
 
 Also install UNMET PEER DEPENDENCIES such as `babel-polyfill`.
 
@@ -43,16 +37,14 @@ Also install UNMET PEER DEPENDENCIES such as `babel-polyfill`.
 
 We use the Aurelia CLI, so we add the following to `aurelia.json`.
 
-```
-{
-  "name": "aurelia-open-id-connect",
-  "path": "../node_modules/aurelia-open-id-connect/dist/amd",
-  "main": "index"
-},
-"oidc-client"
-```
+    {
+    "name": "aurelia-open-id-connect",
+    "path": "../node_modules/aurelia-open-id-connect/dist/amd",
+    "main": "index"
+    },
+    "oidc-client"
 
-Also: set `build.loader.plugins.stub = false` to load the plugin's HTML.
+**Also** set `build.loader.plugins.stub = false` to load the plugin's HTML.
 
 ### Configure the OpenID Connect client
 
@@ -60,14 +52,19 @@ Create a `src/open-id-connect-configuration.ts` file that specifies the Open ID 
 
 In your `src/main.ts`, import the configuration file, add the plugin, and invoke the callback, passing it the imported configuration. 
 
-```
-import oidcConfig from "./open-id-connect-configuration";
-    
-...
+    import oidcConfig from "./open-id-connect-configuration";
 
-aurelia.use
-   .plugin("aurelia-open-id-connect", (callback) => callback(oidcConfig));
-```
+    aurelia.use
+       .plugin("aurelia-open-id-connect", (callback) => callback(oidcConfig));
+
+### Add the user-block
+
+    The simplest approach is to add the `user-block` to the app.html view.
+
+    <template>
+      <h1>${message}</h1>
+      <open-id-connect-user-block></open-id-connect-user-block>
+    </template>
 
 # Demo Project
 
