@@ -3,8 +3,10 @@ import { OpenIdConnectConfiguration } from "aurelia-open-id-connect";
 import { UserManagerSettings, WebStorageStateStore } from "oidc-client";
 
 const urls = {
-  authority: "",
-  host: ""
+  // Either host your own OpenID Provider or select a certified authority
+  // from the list http://openid.net/certification/
+  authority: "TODO",
+  host: "http://localhost:9000"
 }
 
 export default {
