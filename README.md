@@ -4,13 +4,24 @@ This plugin adapts `oidc-client-js` to the Aurelia router. While it is possible 
 
 # Alpha
 
+This is [Alpha software][alpha-software]: it is complete enough for *internal* testing.
+
 If the most recent `aurelia-open-id-connect` release does not work, try an [earlier or later one][0] such as `0.11.2`.
 
 # Usage 
 
-### Install the package
+### Create an Aurelia application
 
-We recommend NPM instead of JSPM.
+We use the [Aurelia CLI][aurelia-cli] with TypeScript and RequireJS. 
+
+```
+au new
+cd aurelia-app
+```
+
+### Install the aurelia-open-id-connect package
+
+We use NPM. 
 
 ```
 npm install --save shaunluttin/aurelia-open-id-connect#0.11.2
@@ -18,11 +29,12 @@ npm install --save shaunluttin/aurelia-open-id-connect#0.11.2
 jspm install github:shaunluttin/aurelia-open-id-connect@0.11.2
 ```
 
-### Add it to Aurelia
+Also install UNMET PEER DEPENDENCIES such as `babel-polyfill`.
 
-We recommend the Aurelia CLI.
+### Add aurelia-open-id-connect to Aurelia
 
-Add the following dependencies to `aurelia.json`.
+We use the Aurelia CLI, so we add the following to `aurelia.json`.
+
 ```
 {
   "name": "aurelia-open-id-connect",
@@ -36,18 +48,20 @@ Also: set `build.loader.plugins.stub = false` to load the plugin's HTML.
 
 ### Configure the OpenID Connect client
 
-We recommend TypeScript.
+The following assumes TypeScript.
     
-Create a `src/open-id-connect-configuration.ts` file. There is an [example in the demo project](/demo/src/open-id-connect-configuration.ts).
+Create a `src/open-id-connect-configuration.ts` file that specifies the Open ID Connect configuration. There is an [example in the demo project](/demo/src/open-id-connect-configuration.ts).
 
 In your `src/main.ts`, import the configuration file, add the plugin, and invoke the callback, passing it the imported configuration. 
 
-    import oidcConfig from "./open-id-connect-configuration";
+```
+import oidcConfig from "./open-id-connect-configuration";
     
-    ...
+...
 
-    aurelia.use
-        .plugin("aurelia-open-id-connect", (callback) => callback(oidcConfig));
+aurelia.use
+   .plugin("aurelia-open-id-connect", (callback) => callback(oidcConfig));
+```
 
 # Demo Project
 
@@ -86,4 +100,5 @@ It is designed to be easy to read and implement for basic Web-based Relying Part
 
 [0]: https://github.com/shaunluttin/aurelia-open-id-connect/releases
 [1]: http://openid.net/specs/openid-connect-implicit-1_0.html
-
+[alpha-software]: https://blog.codinghorror.com/alpha-beta-and-sometimes-gamma/
+[aurelia-cli]: https://www.npmjs.com/package/aurelia-cli
