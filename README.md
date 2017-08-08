@@ -56,9 +56,7 @@ Also: set `build.loader.plugins.stub = false` to load the plugin's HTML.
 
 ### Configure the OpenID Connect client
 
-The following assumes TypeScript.
-    
-Create a `src/open-id-connect-configuration.ts` file that specifies the Open ID Connect configuration. There is an [example in the demo project](/demo/src/open-id-connect-configuration.ts).
+Create a `src/open-id-connect-configuration.ts` file that specifies the Open ID Connect configuration. There is an [example here](/open-id-connect-configuration.ts.example).
 
 In your `src/main.ts`, import the configuration file, add the plugin, and invoke the callback, passing it the imported configuration. 
 
