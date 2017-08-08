@@ -59,12 +59,18 @@ In your `src/main.ts`, import the configuration file, add the plugin, and invoke
 
 ### Add the user-block
 
-    The simplest approach is to add the `user-block` to the app.html view.
+We add the `user-block` to the app.html view.
 
     <template>
       <h1>${message}</h1>
       <open-id-connect-user-block></open-id-connect-user-block>
     </template>
+
+### Configure routing
+
+Configure routing in the app.ts file.
+
+TODO: Detail how to do this.
 
 # Demo Project
 
