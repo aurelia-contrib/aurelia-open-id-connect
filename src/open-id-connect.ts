@@ -21,6 +21,17 @@ export default class OpenIdConnect {
         this.openIdConnectRouting.configureRouter(routerConfiguration);
     }
 
+    public login(): Promise<any> {
+        let args: any = {};
+        return this.userManager.signinRedirect(args);
+    }
+
+    public logout(): Promise<any> {
+        let args: any = {};
+        return this.userManager.signoutRedirect(args);
+    }
+
+
     public loginSilent(): Promise<User> {
         this.logger.debug("LoginSilent");
 

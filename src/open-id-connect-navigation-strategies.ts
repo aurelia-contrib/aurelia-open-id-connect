@@ -12,16 +12,6 @@ export default class OpenIdConnectNavigationStrategies {
         private openIdConnectConfiguration: OpenIdConnectConfiguration,
         private userManager: UserManager) { }
 
-    public login(instruction: NavigationInstruction): Promise<any> {
-        let args: any = {};
-        return this.userManager.signinRedirect(args);
-    }
-
-    public logout(instruction: NavigationInstruction): Promise<any> {
-        let args: any = {};
-        return this.userManager.signoutRedirect(args);
-    }
-
     public signInRedirectCallback(instruction: NavigationInstruction): Promise<any> {
 
         let callbackHandler: Function = () => {
