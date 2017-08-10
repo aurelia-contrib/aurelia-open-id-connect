@@ -10,8 +10,6 @@ export default class OpenIdConnectRouting {
     private userManager;
     constructor(openIdConnectConfiguration: OpenIdConnectConfiguration, openIdConnectNavigationStrategies: OpenIdConnectNavigationStrategies, logger: OpenIdConnectLogger, userManager: UserManager);
     configureRouter(routerConfiguration: RouterConfiguration): void;
-    private addLoginRoute(routerConfiguration);
-    private addLogoutRoute(routerConfiguration);
     private addLoginRedirectRoute(routerConfiguration);
     private addLogoutRedirectRoute(routerConfiguration);
     private isSilentLogin();

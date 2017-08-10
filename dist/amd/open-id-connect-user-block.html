@@ -1,8 +1,7 @@
 <template>
   <div class="user-block">
-    <a show.bind="!isLoggedIn" href="login">login / signup</a>
-    <a show.bind="isLoggedIn" href="logout">logout</a>
-    <a show.bind="isLoggedIn">${user.profile.unique_name}</a>
+    <button show.bind="!isLoggedIn" click.delegate="login()">login / signup</button>
+    <button show.bind="isLoggedIn" click.delegate="logout()">logout</button>
+    <span show.bind="isLoggedIn">${user.profile.unique_name}</span>
   </div>
 </template>
-

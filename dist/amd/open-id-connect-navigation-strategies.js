@@ -9,20 +9,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-logger", "./open-id-connect-configuration"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_logger_1, open_id_connect_configuration_1) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnectNavigationStrategies = (function () {
         function OpenIdConnectNavigationStrategies(logger, openIdConnectConfiguration, userManager) {
             this.logger = logger;
             this.openIdConnectConfiguration = openIdConnectConfiguration;
             this.userManager = userManager;
         }
-        OpenIdConnectNavigationStrategies.prototype.login = function (instruction) {
-            var args = {};
-            return this.userManager.signinRedirect(args);
-        };
-        OpenIdConnectNavigationStrategies.prototype.logout = function (instruction) {
-            var args = {};
-            return this.userManager.signoutRedirect(args);
-        };
         OpenIdConnectNavigationStrategies.prototype.signInRedirectCallback = function (instruction) {
             var _this = this;
             var callbackHandler = function () {
@@ -68,15 +61,14 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 throw err;
             });
         };
+        OpenIdConnectNavigationStrategies = __decorate([
+            aurelia_framework_1.autoinject,
+            __metadata("design:paramtypes", [open_id_connect_logger_1.default,
+                open_id_connect_configuration_1.default,
+                oidc_client_1.UserManager])
+        ], OpenIdConnectNavigationStrategies);
         return OpenIdConnectNavigationStrategies;
     }());
-    OpenIdConnectNavigationStrategies = __decorate([
-        aurelia_framework_1.autoinject,
-        __metadata("design:paramtypes", [open_id_connect_logger_1.default,
-            open_id_connect_configuration_1.default,
-            oidc_client_1.UserManager])
-    ], OpenIdConnectNavigationStrategies);
-    Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = OpenIdConnectNavigationStrategies;
 });
 //# sourceMappingURL=open-id-connect-navigation-strategies.js.map

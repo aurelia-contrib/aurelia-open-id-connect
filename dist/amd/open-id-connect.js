@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-routing", "./open-id-connect-logger"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_routing_1, open_id_connect_logger_1) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnect = (function () {
         function OpenIdConnect(openIdConnectRouting, logger, userManager) {
             this.openIdConnectRouting = openIdConnectRouting;
@@ -21,6 +22,14 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             }
             this.openIdConnectRouting.configureRouter(routerConfiguration);
         };
+        OpenIdConnect.prototype.login = function () {
+            var args = {};
+            return this.userManager.signinRedirect(args);
+        };
+        OpenIdConnect.prototype.logout = function () {
+            var args = {};
+            return this.userManager.signoutRedirect(args);
+        };
         OpenIdConnect.prototype.loginSilent = function () {
             var _this = this;
             this.logger.debug("LoginSilent");
@@ -29,15 +38,14 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 return _this.userManager.signinSilent(args);
             });
         };
+        OpenIdConnect = __decorate([
+            aurelia_framework_1.autoinject,
+            __metadata("design:paramtypes", [open_id_connect_routing_1.default,
+                open_id_connect_logger_1.default,
+                oidc_client_1.UserManager])
+        ], OpenIdConnect);
         return OpenIdConnect;
     }());
-    OpenIdConnect = __decorate([
-        aurelia_framework_1.autoinject,
-        __metadata("design:paramtypes", [open_id_connect_routing_1.default,
-            open_id_connect_logger_1.default,
-            oidc_client_1.UserManager])
-    ], OpenIdConnect);
-    Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = OpenIdConnect;
 });
 //# sourceMappingURL=open-id-connect.js.map

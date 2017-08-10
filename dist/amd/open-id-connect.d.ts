@@ -8,5 +8,7 @@ export default class OpenIdConnect {
     userManager: UserManager;
     constructor(openIdConnectRouting: OpenIdConnectRouting, logger: OpenIdConnectLogger, userManager: UserManager);
     configure(routerConfiguration: RouterConfiguration): void;
+    login(): Promise<any>;
+    logout(): Promise<any>;
     loginSilent(): Promise<User>;
 }

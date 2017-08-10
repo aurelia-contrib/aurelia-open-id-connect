@@ -1,5 +1,6 @@
 define(["require", "exports", "oidc-client"], function (require, exports, oidc_client_1) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     var isDevelopment = window.location.host.startsWith("localhost");
     var authority = isDevelopment
         ? "http://localhost:5000"
@@ -29,7 +30,6 @@ define(["require", "exports", "oidc-client"], function (require, exports, oidc_c
         }
         return OpenIdConnectConfiguration;
     }());
-    Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = OpenIdConnectConfiguration;
 });
 //# sourceMappingURL=open-id-connect-configuration.js.map

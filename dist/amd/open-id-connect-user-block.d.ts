@@ -5,4 +5,6 @@ export default class OpenIdConnectUserBlock {
     private user;
     constructor(openIdConnect: OpenIdConnect);
     attached(): void;
+    login(): void;
+    logout(): void;
 }
