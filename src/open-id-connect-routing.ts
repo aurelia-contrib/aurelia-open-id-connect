@@ -17,45 +17,9 @@ export default class OpenIdConnectRouting {
         private userManager: UserManager) { }
 
     public configureRouter(routerConfiguration: RouterConfiguration) {
-        this.addLoginRoute(routerConfiguration);
-        this.addLogoutRoute(routerConfiguration);
         this.addLoginRedirectRoute(routerConfiguration);
         this.addLogoutRedirectRoute(routerConfiguration);
         routerConfiguration.addPipelineStep("authorize", OpenIdConnectAuthorizeStep);
-    }
-
-    private addLoginRoute(routerConfiguration: RouterConfiguration) {
-        routerConfiguration.mapRoute({
-            name: "login",
-            nav: false,
-            navigationStrategy: (instruction: NavigationInstruction) => {
-                instruction.config.redirect = "";
-                return this.openIdConnectNavigationStrategies.login(instruction);
-            },
-            route: "login",
-            settings: {
-                roles: [
-                    OpenIdConnectRoles.Anonymous,
-                ],
-            },
-        });
-    }
-
-    private addLogoutRoute(routerConfiguration: RouterConfiguration) {
-        routerConfiguration.mapRoute({
-            name: "logout",
-            nav: false,
-            navigationStrategy: (instruction: NavigationInstruction) => {
-                instruction.config.redirect = "";
-                return this.openIdConnectNavigationStrategies.logout(instruction);
-            },
-            route: "logout",
-            settings: {
-                roles: [
-                    OpenIdConnectRoles.Authorized,
-                ],
-            },
-        });
     }
 
     private addLoginRedirectRoute(routerConfiguration: RouterConfiguration) {

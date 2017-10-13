@@ -106,6 +106,9 @@ Find examples of those here:
 # Publish
 
     npm run package
+    npm version patch -m "Some message"
+    npm login
+    npm publish
 
 # Implicit Flow Implementor Guide
 

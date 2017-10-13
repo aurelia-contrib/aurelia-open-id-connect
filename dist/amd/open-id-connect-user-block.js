@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 define(["require", "exports", "aurelia-framework", "./open-id-connect"], function (require, exports, aurelia_framework_1, open_id_connect_1) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnectUserBlock = (function () {
         function OpenIdConnectUserBlock(openIdConnect) {
             this.openIdConnect = openIdConnect;
@@ -22,14 +23,19 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect"], functio
                 _this.isLoggedIn = user !== null;
             });
         };
+        OpenIdConnectUserBlock.prototype.login = function () {
+            this.openIdConnect.login();
+        };
+        OpenIdConnectUserBlock.prototype.logout = function () {
+            this.openIdConnect.logout();
+        };
+        OpenIdConnectUserBlock = __decorate([
+            aurelia_framework_1.autoinject,
+            aurelia_framework_1.customElement("open-id-connect-user-block"),
+            __metadata("design:paramtypes", [open_id_connect_1.default])
+        ], OpenIdConnectUserBlock);
         return OpenIdConnectUserBlock;
     }());
-    OpenIdConnectUserBlock = __decorate([
-        aurelia_framework_1.autoinject,
-        aurelia_framework_1.customElement("open-id-connect-user-block"),
-        __metadata("design:paramtypes", [open_id_connect_1.default])
-    ], OpenIdConnectUserBlock);
-    Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = OpenIdConnectUserBlock;
 });
 //# sourceMappingURL=open-id-connect-user-block.js.map

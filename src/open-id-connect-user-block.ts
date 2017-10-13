@@ -17,4 +17,12 @@ export default class OpenIdConnectUserBlock {
             this.isLoggedIn = user !== null;
         });
     }
+
+    public login() {
+        this.openIdConnect.login();
+    }
+
+    public logout() {
+        this.openIdConnect.logout();
+    }
 }

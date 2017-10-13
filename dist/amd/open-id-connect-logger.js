@@ -1,5 +1,6 @@
 define(["require", "exports", "oidc-client"], function (require, exports, oidc_client_1) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnectLogger = (function () {
         function OpenIdConnectLogger() {
             this.level = oidc_client_1.Log.NONE;
@@ -29,7 +30,6 @@ define(["require", "exports", "oidc-client"], function (require, exports, oidc_c
         };
         return OpenIdConnectLogger;
     }());
-    Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = OpenIdConnectLogger;
 });
 //# sourceMappingURL=open-id-connect-logger.js.map

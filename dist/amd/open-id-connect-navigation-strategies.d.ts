@@ -7,8 +7,6 @@ export default class OpenIdConnectNavigationStrategies {
     private openIdConnectConfiguration;
     private userManager;
     constructor(logger: OpenIdConnectLogger, openIdConnectConfiguration: OpenIdConnectConfiguration, userManager: UserManager);
-    login(instruction: NavigationInstruction): Promise<any>;
-    logout(instruction: NavigationInstruction): Promise<any>;
     signInRedirectCallback(instruction: NavigationInstruction): Promise<any>;
     silentSignICallback(instruction: NavigationInstruction): Promise<any>;
     signoutRedirectCallback(instruction: NavigationInstruction): Promise<any>;
