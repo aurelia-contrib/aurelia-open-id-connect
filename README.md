@@ -29,7 +29,7 @@ Install from NPM.
 
 Install from GitHub.
 
-    npm install --save shaunluttin/aurelia-open-id-connect#0.12.1
+    npm install --save shaunluttin/aurelia-open-id-connect
 
 Also install UNMET PEER DEPENDENCIES such as `babel-polyfill`.
 
@@ -38,9 +38,9 @@ Also install UNMET PEER DEPENDENCIES such as `babel-polyfill`.
 We use the Aurelia CLI, so we add the following to `aurelia.json`.
 
     {
-    "name": "aurelia-open-id-connect",
-    "path": "../node_modules/aurelia-open-id-connect/dist/amd",
-    "main": "index"
+       "name": "aurelia-open-id-connect",
+       "path": "../node_modules/aurelia-open-id-connect/dist/amd",
+       "main": "index"
     },
     "oidc-client"
 
@@ -72,9 +72,15 @@ Configure routing in the app.ts file.
 
 TODO: Detail how to do this.
 
-# Demo Project
+# Demo Projects
 
-The demo has an example of how to configure everything. 
+The demos have an example of how to configure everything. 
+
+### Smaller Demo(s)
+
+https://github.com/shaunluttin/aurelia-open-id-connect-demos
+
+### Large Demo
 
 See it LIVE here: https://zamboni-app.azurewebsites.net
 
