@@ -12,7 +12,7 @@
         "emitDecoratorMetadata": true,
         "moduleResolution": "node",
         "lib": [
-            "es2016",
+            "es2017",
             "dom"
         ]
     },
