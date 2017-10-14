@@ -17,7 +17,7 @@
     "package": "npm run package:clean && npm run package:tsc && npm run package:html"
   },
   "scripts-comments": {
-    "release": "npm run package && npm version <major | minor | patch>"
+    "release": "npm run package && git add dist && git commit -m 'Prepare release' && npm version <major | minor | patch>"
   },
   "jspm": {
     "main": "index.js",
