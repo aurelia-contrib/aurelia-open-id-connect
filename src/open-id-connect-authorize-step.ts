@@ -8,7 +8,9 @@ export default class OpenIdConnectAuthorizeStep {
 
     constructor(private userManager: UserManager) { }
 
-    public async run(navigationInstruction: NavigationInstruction, next: any): Promise<any> {
+    public async run(
+        navigationInstruction: NavigationInstruction,
+        next: any): Promise<any> {
 
         const user = await this.userManager.getUser();
 
@@ -25,10 +27,12 @@ export default class OpenIdConnectAuthorizeStep {
         return next();
     }
 
-    private requiresRole(navigationInstruction: NavigationInstruction, role: OpenIdConnectRoles): boolean {
-        return navigationInstruction.getAllInstructions().some((instruction) => {
-            return instruction.config.settings.roles !== undefined &&
-                instruction.config.settings.roles.indexOf(role) >= 0;
-        });
+    private requiresRole(
+        navigationInstruction: NavigationInstruction,
+        role: OpenIdConnectRoles): boolean {
+
+        return navigationInstruction.getAllInstructions().some((instruction) =>
+            instruction.config.settings.roles !== undefined &&
+            instruction.config.settings.roles.indexOf(role) >= 0);
     }
 }
