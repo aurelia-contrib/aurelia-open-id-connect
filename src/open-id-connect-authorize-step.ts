@@ -8,22 +8,21 @@ export default class OpenIdConnectAuthorizeStep {
 
     constructor(private userManager: UserManager) { }
 
-    public run(navigationInstruction: NavigationInstruction, next: any): Promise<any> {
+    public async run(navigationInstruction: NavigationInstruction, next: any): Promise<any> {
 
-        return this.userManager.getUser().then((user) => {
+        const user = await this.userManager.getUser();
 
-            if (this.requiresRole(navigationInstruction, OpenIdConnectRoles.Authorized)) {
-                if (user === null) {
-                    return next.cancel(new Redirect("login"));
-                }
+        if (this.requiresRole(navigationInstruction, OpenIdConnectRoles.Authorized)) {
+            if (user === null) {
+                return next.cancel(new Redirect("login"));
             }
+        }
 
-            if (this.requiresRole(navigationInstruction, OpenIdConnectRoles.Administrator)) {
-                // todo: Check for admin role.
-            }
+        if (this.requiresRole(navigationInstruction, OpenIdConnectRoles.Administrator)) {
+            // todo: Check for admin role.
+        }
 
-            return next();
-        });
+        return next();
     }
 
     private requiresRole(navigationInstruction: NavigationInstruction, role: OpenIdConnectRoles): boolean {
