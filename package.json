@@ -29,16 +29,16 @@
   },
   "license": "MIT",
   "dependencies": {
-    "aurelia-fetch-client": "^1.0.0",
-    "aurelia-framework": "^1.0.6",
-    "aurelia-router": "^1.0.6",
-    "babel-polyfill": "^6.16.0",
-    "oidc-client": "^1.2.2"
+    "aurelia-fetch-client": "1.x",
+    "aurelia-framework": "1.x",
+    "aurelia-router": "1.x",
+    "babel-polyfill": "6.x",
+    "oidc-client": "1.x"
   },
   "devDependencies": {
-    "cpx": "^1.5.0",
-    "tslint": "^3.15.1",
-    "tslint-microsoft-contrib": "^2.0.13",
-    "typescript": "^2.1.0"
+    "cpx": "1.x",
+    "tslint": "5.x",
+    "tslint-microsoft-contrib": "2.x",
+    "typescript": "2.x"
   }
 }
