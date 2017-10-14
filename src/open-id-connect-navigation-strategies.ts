@@ -12,19 +12,19 @@ export default class OpenIdConnectNavigationStrategies {
         private openIdConnectConfiguration: OpenIdConnectConfiguration,
         private userManager: UserManager) { }
 
-    public signInRedirectCallback(instruction: NavigationInstruction): Promise<any> {
+    public async signInRedirectCallback(instruction: NavigationInstruction): Promise<any> {
 
-        let callbackHandler: Function = () => {
-            return this.userManager.getUser().then((user) => {
-                // getUser()
-                // Sign in only if we do not already have a user;
-                // otherwise, we receive a 'No matching state found in storage' error,
-                // on a page refresh with stale state in the window.location.
-                if (user === null || user === undefined) {
-                    let args: any = {};
-                    return this.userManager.signinRedirectCallback(args);
-                }
-            });
+        let callbackHandler: Function = async () => {
+
+            const user = await this.userManager.getUser();
+
+            // Sign in only if we do not already have a user;
+            // otherwise, we receive a 'No matching state found in storage' error,
+            // on a page refresh with stale state in the window.location.
+            if (user === null || user === undefined) {
+                let args: any = {};
+                return this.userManager.signinRedirectCallback(args);
+            }
         };
 
         let postCallbackRedirect: Function = () => {
@@ -54,6 +54,7 @@ export default class OpenIdConnectNavigationStrategies {
     }
 
     public signoutRedirectCallback(instruction: NavigationInstruction): Promise<any> {
+
         let callbackHandler: Function = () => {
             let args: any = {};
             return this.userManager.signoutRedirectCallback(args);
@@ -66,12 +67,14 @@ export default class OpenIdConnectNavigationStrategies {
         return this.runHandlers(callbackHandler, postCallbackRedirect);
     }
 
-    private runHandlers(callbackHandler: Function, postCallbackRedirect: Function) {
-        return callbackHandler()
-            .then(() => postCallbackRedirect())
-            .catch((err) => {
-                postCallbackRedirect();
-                throw err;
-            });
+    private async runHandlers(callbackHandler: Function, postCallbackRedirect: Function): Promise<any> {
+
+        try {
+            await callbackHandler();
+            postCallbackRedirect();
+        } catch (err) {
+            postCallbackRedirect();
+            throw err;
+        }
     }
 }
