@@ -10,11 +10,11 @@
     "url": "https://github.com/shaunluttin/aurelia-open-id-connect.git"
   },
   "scripts": {
-    "tslint": "node_modules/.bin/tslint --config tslint.json --project tsconfig.json",
     "package:clean": "node_modules/.bin/rimraf dist",
     "package:tsc": "node_modules/.bin/tsc",
     "package:html": "node_modules/.bin/cpx src/**/*.html dist/amd",
-    "package": "npm run package:clean && npm run package:tsc && npm run package:html"
+    "package": "npm run package:clean && npm run package:tsc && npm run package:html",
+    "lint": "tslint --project tsconfig.json"
   },
   "scripts-comments": {
     "release": "npm run package && git add dist && git commit -m 'Prepare release' && npm version <major | minor | patch>",

@@ -1,16 +1,11 @@
 {
-  "extends": [
-    "tslint:recommended"
-  ],
-  "rules": {
-    "variable-name": [
-      true,
-      "ban-keywords",
-      "check-format"
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
     ],
-    "function-name": true
-  },
-  "rulesDirectory": [
-    "./node_modules/tslint-microsoft-contrib"
-  ]
+    "jsRules": {},
+    "rules": {},
+    "rulesDirectory": [
+        "node_modules/tslint-microsoft-contrib/"
+    ]
 }
