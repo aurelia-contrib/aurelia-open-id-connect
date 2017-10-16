@@ -1,17 +1,16 @@
 import { Log } from "oidc-client";
 
-/* tslint:disable no-console */
 export default class OpenIdConnectLogger {
 
     private level: number = Log.NONE;
 
-    /** 
+    /**
      * Set the log level for both the aurelia-open-id-connect logger
      * and the underlying oidc-client logger.
      */
     public enableLogging(level: number) {
 
-        let validLevels: number[] = [
+        const validLevels: number[] = [
             Log.INFO,
             Log.WARN,
             Log.ERROR,
@@ -23,14 +22,15 @@ export default class OpenIdConnectLogger {
             Log.logger = console;
         } else {
             this.level = level;
-            let concat: string = validLevels.join(", ");
-            let message: string = `The log level must be one of ${concat}`;
+            const concat: string = validLevels.join(", ");
+            const message: string = `The log level must be one of ${concat}`;
             throw new Error(message);
         }
     }
 
     public debug(message: string) {
         if (this.level === Log.ERROR) {
+            /* tslint:disable no-console */
             console.debug(`DEBUG [OpenIdConnect] ${message}`);
         }
     }
