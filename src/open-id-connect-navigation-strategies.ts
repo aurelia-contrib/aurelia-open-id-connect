@@ -61,13 +61,16 @@ export default class OpenIdConnectNavigationStrategies {
         };
 
         let postCallbackRedirect: Function = () => {
-            instruction.config.moduleId = this.openIdConnectConfiguration.logoutRedirectModuleId;
+            instruction.config.moduleId =
+                this.openIdConnectConfiguration.logoutRedirectModuleId;
         };
 
         return this.runHandlers(callbackHandler, postCallbackRedirect);
     }
 
-    private async runHandlers(callbackHandler: Function, postCallbackRedirect: Function): Promise<any> {
+    private async runHandlers(
+        callbackHandler: Function, 
+        postCallbackRedirect: Function): Promise<any> {
 
         try {
             await callbackHandler();
