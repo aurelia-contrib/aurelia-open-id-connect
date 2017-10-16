@@ -32,12 +32,13 @@ export default class OpenIdConnect {
     }
 
 
-    public loginSilent(): Promise<User> {
-        this.logger.debug("LoginSilent");
+    public async loginSilent(): Promise<User> {
 
-        return this.userManager.clearStaleState().then(() => {
-            let args: any = {};
-            return this.userManager.signinSilent(args);
-        });
+        this.logger.debug("loginSilent");
+
+        await this.userManager.clearStaleState();
+
+        const args: any = {};
+        return this.userManager.signinSilent(args);
     }
 }
