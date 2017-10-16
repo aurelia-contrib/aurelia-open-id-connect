@@ -22,12 +22,12 @@ export default class OpenIdConnect {
     }
 
     public login(): Promise<any> {
-        let args: any = {};
+        const args: any = {};
         return this.userManager.signinRedirect(args);
     }
 
     public logout(): Promise<any> {
-        let args: any = {};
+        const args: any = {};
         return this.userManager.signoutRedirect(args);
     }
 
