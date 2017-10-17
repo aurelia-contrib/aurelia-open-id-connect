@@ -3,8 +3,8 @@ import { User } from "oidc-client";
 import OpenIdConnect from "./open-id-connect";
 
 @autoinject
-@customElement("open-id-connect-user-block")
-export default class OpenIdConnectUserBlock {
+@customElement("open-id-connect-user-debug")
+export default class OpenIdConnectUserDebug {
 
     private isLoggedIn: boolean = false;
     private user: User = null;
