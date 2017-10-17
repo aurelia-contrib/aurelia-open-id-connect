@@ -13,6 +13,7 @@ export default function (
     ]);
 
     const openIdConnectConfig = new OpenIdConnectConfiguration();
+
     callback(openIdConnectConfig);
 
     const logger: OpenIdConnectLogger = frameworkConfig.container.get(OpenIdConnectLogger);

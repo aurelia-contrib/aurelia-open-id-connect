@@ -12,7 +12,7 @@ export default class OpenIdConnectConfiguration {
     private setDefaults() {
 
         const authority = "http://localhost:5000";
-        const host = "https://zamboni-app.azurewebsites.net";
+        const host = "https://localhost:9000";
 
         this.loginRedirectModuleId = "home";
         this.logoutRedirectModuleId = "home";
