@@ -1,21 +1,24 @@
 import { FrameworkConfiguration } from "aurelia-framework";
 import { UserManager } from "oidc-client";
-import OpenIdConnectLogger from "./open-id-connect-logger";
 import OpenIdConnectConfiguration from "./open-id-connect-configuration";
+import OpenIdConnectLogger from "./open-id-connect-logger";
 
-export default function (config: FrameworkConfiguration, callback: Function) {
+export default function (
+    config: FrameworkConfiguration,
+    // todo: Simplify this callback, if appropriate.
+    callback: (func: (config: OpenIdConnectConfiguration) => void) => void) {
 
-    let logger: OpenIdConnectLogger = config.container.get(OpenIdConnectLogger);
+    const logger: OpenIdConnectLogger = config.container.get(OpenIdConnectLogger);
 
     config.globalResources([
         "./open-id-connect-user-block",
         "./open-id-connect-role-filter",
     ]);
 
-    callback(function (oidcConfig: OpenIdConnectConfiguration) {
+    callback((oidcConfig: OpenIdConnectConfiguration) => {
         logger.debug("Configuring the OpenId Connect Client");
 
-        let userManagerSettings = oidcConfig.userManagerSettings;
+        const userManagerSettings = oidcConfig.userManagerSettings;
 
         config.container.registerInstance(UserManager, new UserManager(userManagerSettings));
         config.container.registerInstance(OpenIdConnectConfiguration, oidcConfig);
