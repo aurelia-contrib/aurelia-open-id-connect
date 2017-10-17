@@ -27,11 +27,11 @@ Install from NPM.
 
     npm install --save aurelia-open-id-connect
 
-Install from GitHub.
+Alternatively, install from GitHub.
 
     npm install --save shaunluttin/aurelia-open-id-connect
 
-Also install UNMET PEER DEPENDENCIES such as `babel-polyfill`.
+Note: sometimes we need to install UNMET PEER DEPENDENCIES such as `babel-polyfill`.
 
 ### Add aurelia-open-id-connect to Aurelia
 
@@ -44,7 +44,7 @@ We use the Aurelia CLI, so we add the following to `aurelia.json`.
     },
     "oidc-client"
 
-**Also** set `build.loader.plugins.stub = false` to load the plugin's HTML.
+**Also** set `build.loader.plugins.stub = false` to load the plugin's HTML. (TODO: Verify that this is necessary.)
 
 ### Configure the OpenID Connect client
 
@@ -53,9 +53,14 @@ Create a `src/open-id-connect-configuration.ts` file that specifies the Open ID 
 In your `src/main.ts`, import the configuration file, add the plugin, and invoke the callback, passing it the imported configuration. 
 
     import oidcConfig from "./open-id-connect-configuration";
+    import { OpenIdConnectConfiguration } from "aurelia-open-id-connect";
 
     aurelia.use
-       .plugin("aurelia-open-id-connect", (callback) => callback(oidcConfig));
+      .plugin("aurelia-open-id-connect", (config: OpenIdConnectConfiguration) => {
+        config.userManagerSettings = oidcConfig.userManagerSettings;
+        config.loginRedirectModuleId = oidcConfig.loginRedirectModuleId;
+        config.logoutRedirectModuleId = oidcConfig.logoutRedirectModuleId;
+      });
 
 ### Add the user-block
 
@@ -70,7 +75,60 @@ We add the `user-block` to the app.html view.
 
 Configure routing in the app.ts file.
 
-TODO: Detail how to do this.
+    import { autoinject } from "aurelia-framework";
+    import { RouterConfiguration, Router } from "aurelia-router";
+    import { User, Log } from "oidc-client";
+    import { OpenIdConnect, OpenIdConnectRoles } from "aurelia-open-id-connect";
+
+    @autoinject
+    export class App {
+
+      private router: Router;
+      private user: User;
+
+      constructor(private openIdConnect: OpenIdConnect) {
+        this.openIdConnect.logger.enableLogging(Log.INFO);
+        this.openIdConnect.userManager.getUser().then((user) => {
+          this.user = user;
+        });
+      }
+
+      public configureRouter(routerConfiguration: RouterConfiguration, router: Router) {
+
+        // switch from hash (#) to slash (/) navigation
+        routerConfiguration.options.pushState = true;
+        routerConfiguration.title = "OpenID Connect Implicit Flow Demo";
+
+        // configure routes
+        routerConfiguration.map([
+          {
+            moduleId: "index",
+            name: "index",
+            route: ["", "index"],
+            title: "index",
+          },
+        ]);
+
+        this.openIdConnect.configure(routerConfiguration);
+        this.router = router;
+      }
+    }
+
+Add a simple index view that maps to the index route.
+
+index.html
+
+    <template></template>
+
+index.ts
+ 
+    export class Index { }
+
+### Run your application
+
+    npm install
+    au build
+    au run
 
 # Demo Projects
 
