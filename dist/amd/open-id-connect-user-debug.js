@@ -10,33 +10,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 define(["require", "exports", "aurelia-framework", "./open-id-connect"], function (require, exports, aurelia_framework_1, open_id_connect_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var OpenIdConnectUserBlock = (function () {
-        function OpenIdConnectUserBlock(openIdConnect) {
+    var OpenIdConnectUserDebug = (function () {
+        function OpenIdConnectUserDebug(openIdConnect) {
             this.openIdConnect = openIdConnect;
             this.isLoggedIn = false;
             this.user = null;
         }
-        Object.defineProperty(OpenIdConnectUserBlock.prototype, "stringifiedUser", {
+        Object.defineProperty(OpenIdConnectUserDebug.prototype, "stringifiedUser", {
             get: function () {
                 return JSON.stringify(this.user, undefined, 2);
             },
             enumerable: true,
             configurable: true
         });
-        OpenIdConnectUserBlock.prototype.attached = function () {
+        OpenIdConnectUserDebug.prototype.attached = function () {
             var _this = this;
             this.openIdConnect.userManager.getUser().then(function (user) {
                 _this.user = user;
                 _this.isLoggedIn = user !== null;
             });
         };
-        OpenIdConnectUserBlock = __decorate([
+        OpenIdConnectUserDebug = __decorate([
             aurelia_framework_1.autoinject,
-            aurelia_framework_1.customElement("open-id-connect-user-block"),
+            aurelia_framework_1.customElement("open-id-connect-user-debug"),
             __metadata("design:paramtypes", [open_id_connect_1.default])
-        ], OpenIdConnectUserBlock);
-        return OpenIdConnectUserBlock;
+        ], OpenIdConnectUserDebug);
+        return OpenIdConnectUserDebug;
     }());
-    exports.default = OpenIdConnectUserBlock;
+    exports.default = OpenIdConnectUserDebug;
 });
 //# sourceMappingURL=open-id-connect-user-debug.js.map

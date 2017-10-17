@@ -1,5 +1,5 @@
 import OpenIdConnect from "./open-id-connect";
-export default class OpenIdConnectUserBlock {
+export default class OpenIdConnectUserDebug {
     private openIdConnect;
     private isLoggedIn;
     private user;
