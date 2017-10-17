@@ -4,6 +4,7 @@ define(["require", "exports", "oidc-client", "./open-id-connect-configuration", 
     function default_1(frameworkConfig, callback) {
         frameworkConfig.globalResources([
             "./open-id-connect-user-block",
+            "./open-id-connect-user-debug",
             "./open-id-connect-role-filter",
         ]);
         var openIdConnectConfig = new open_id_connect_configuration_1.default();
