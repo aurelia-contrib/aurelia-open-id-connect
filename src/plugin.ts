@@ -9,6 +9,7 @@ export default function (
 
     frameworkConfig.globalResources([
         "./open-id-connect-user-block",
+        "./open-id-connect-user-debug",
         "./open-id-connect-role-filter",
     ]);
 
