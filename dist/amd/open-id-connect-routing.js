@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-configuration", "./open-id-connect-authorize-step", "./open-id-connect-logger", "./open-id-connect-navigation-strategies"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_configuration_1, open_id_connect_authorize_step_1, open_id_connect_logger_1, open_id_connect_navigation_strategies_1) {
+define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-authorize-step", "./open-id-connect-configuration", "./open-id-connect-logger", "./open-id-connect-navigation-strategies"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_authorize_step_1, open_id_connect_configuration_1, open_id_connect_logger_1, open_id_connect_navigation_strategies_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnectRouting = (function () {
@@ -58,7 +58,6 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
         OpenIdConnectRouting.prototype.getPath = function (uri) {
             return this.convertUriToAnchor(uri).pathname;
         };
-        ;
         OpenIdConnectRouting.prototype.convertUriToAnchor = function (uri) {
             var anchor = document.createElement("a");
             anchor.href = uri;

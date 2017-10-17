@@ -3,4 +3,6 @@ export default class OpenIdConnectConfiguration {
     loginRedirectModuleId: string;
     logoutRedirectModuleId: string;
     userManagerSettings: UserManagerSettings;
+    constructor();
+    private setDefaults();
 }

@@ -1,7 +1,7 @@
 import { RouterConfiguration } from "aurelia-router";
-import { UserManager, User } from "oidc-client";
-import OpenIdConnectRouting from "./open-id-connect-routing";
+import { User, UserManager } from "oidc-client";
 import OpenIdConnectLogger from "./open-id-connect-logger";
+import OpenIdConnectRouting from "./open-id-connect-routing";
 export default class OpenIdConnect {
     private openIdConnectRouting;
     logger: OpenIdConnectLogger;

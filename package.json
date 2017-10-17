@@ -11,11 +11,13 @@
   },
   "scripts": {
     "lint": "tslint --project tsconfig.json",
+    "build": "tsc",
+    "build:tests": "tsc --project tsconfig.test.json",
     "package:clean": "rimraf dist",
     "package:tsc": "tsc",
     "package:html": "cpx src/**/*.html dist/amd",
     "package": "npm run package:clean && npm run package:tsc && npm run package:html",
-    "test": "jasmine"
+    "test": "npm run build:tests && jasmine"
   },
   "scripts-comments": {
     "release": "npm run package && git add dist && git commit -m 'Prepare release' && npm version <major | minor | patch>",
@@ -38,6 +40,7 @@
     "oidc-client": "1.x"
   },
   "devDependencies": {
+    "@types/jasmine": "^2.6.0",
     "cpx": "1.x",
     "jasmine": "^2.8.0",
     "tslint": "5.x",

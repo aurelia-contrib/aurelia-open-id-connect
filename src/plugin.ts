@@ -4,25 +4,27 @@ import OpenIdConnectConfiguration from "./open-id-connect-configuration";
 import OpenIdConnectLogger from "./open-id-connect-logger";
 
 export default function (
-    config: FrameworkConfiguration,
-    // todo: Simplify this callback, if appropriate.
-    callback: (func: (config: OpenIdConnectConfiguration) => void) => void) {
+    frameworkConfig: FrameworkConfiguration,
+    callback: (openIdConnectConfig: OpenIdConnectConfiguration) => void) {
 
-    const logger: OpenIdConnectLogger = config.container.get(OpenIdConnectLogger);
-
-    config.globalResources([
+    frameworkConfig.globalResources([
         "./open-id-connect-user-block",
         "./open-id-connect-role-filter",
     ]);
 
-    callback((oidcConfig: OpenIdConnectConfiguration) => {
-        logger.debug("Configuring the OpenId Connect Client");
+    const openIdConnectConfig = new OpenIdConnectConfiguration();
+    callback(openIdConnectConfig);
 
-        const userManagerSettings = oidcConfig.userManagerSettings;
+    const logger: OpenIdConnectLogger = frameworkConfig.container.get(OpenIdConnectLogger);
+    logger.debug("Configuring the OpenId Connect Client");
 
-        config.container.registerInstance(UserManager, new UserManager(userManagerSettings));
-        config.container.registerInstance(OpenIdConnectConfiguration, oidcConfig);
+    const userManagerSettings = openIdConnectConfig.userManagerSettings;
+    const userManager = new UserManager(userManagerSettings);
+    frameworkConfig.container
+        .registerInstance(UserManager, userManager);
 
-        logger.debug("Configured the OpenId Connect Client");
-    });
+    frameworkConfig.container
+        .registerInstance(OpenIdConnectConfiguration, openIdConnectConfig);
+
+    logger.debug("Configured the OpenId Connect Client");
 }

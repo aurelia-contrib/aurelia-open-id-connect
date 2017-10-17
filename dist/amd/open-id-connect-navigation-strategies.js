@@ -42,7 +42,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-logger", "./open-id-connect-configuration"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_logger_1, open_id_connect_configuration_1) {
+define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-configuration", "./open-id-connect-logger"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_configuration_1, open_id_connect_logger_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnectNavigationStrategies = (function () {
@@ -96,7 +96,8 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 return _this.userManager.signoutRedirectCallback(args);
             };
             var postCallbackRedirect = function () {
-                instruction.config.moduleId = _this.openIdConnectConfiguration.logoutRedirectModuleId;
+                instruction.config.moduleId =
+                    _this.openIdConnectConfiguration.logoutRedirectModuleId;
             };
             return this.runHandlers(callbackHandler, postCallbackRedirect);
         };
