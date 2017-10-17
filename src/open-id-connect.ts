@@ -1,8 +1,11 @@
 import { autoinject } from "aurelia-framework";
 import { RouterConfiguration } from "aurelia-router";
-import { UserManager, User } from "oidc-client";
-import OpenIdConnectRouting from "./open-id-connect-routing";
+import {
+    User,
+    UserManager,
+} from "oidc-client";
 import OpenIdConnectLogger from "./open-id-connect-logger";
+import OpenIdConnectRouting from "./open-id-connect-routing";
 
 @autoinject
 export default class OpenIdConnect {
@@ -30,7 +33,6 @@ export default class OpenIdConnect {
         const args: any = {};
         return this.userManager.signoutRedirect(args);
     }
-
 
     public async loginSilent(): Promise<User> {
 
