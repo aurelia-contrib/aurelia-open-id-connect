@@ -1,11 +1,14 @@
 import { autoinject } from "aurelia-framework";
-import { RouterConfiguration, NavigationInstruction } from "aurelia-router";
+import {
+    NavigationInstruction,
+    RouterConfiguration,
+} from "aurelia-router";
 import { UserManager } from "oidc-client";
-import OpenIdConnectRoles from "./open-id-connect-roles";
-import OpenIdConnectConfiguration from "./open-id-connect-configuration";
 import OpenIdConnectAuthorizeStep from "./open-id-connect-authorize-step";
+import OpenIdConnectConfiguration from "./open-id-connect-configuration";
 import OpenIdConnectLogger from "./open-id-connect-logger";
 import OpenIdConnectNavigationStrategies from "./open-id-connect-navigation-strategies";
+import OpenIdConnectRoles from "./open-id-connect-roles";
 
 @autoinject
 export default class OpenIdConnectRouting {
@@ -56,10 +59,10 @@ export default class OpenIdConnectRouting {
 
     private getPath(uri: string): string {
         return this.convertUriToAnchor(uri).pathname;
-    };
+    }
 
     private convertUriToAnchor(uri: string): HTMLAnchorElement {
-        let anchor: HTMLAnchorElement = document.createElement("a");
+        const anchor: HTMLAnchorElement = document.createElement("a");
         anchor.href = uri;
         return anchor;
     }
