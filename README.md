@@ -27,9 +27,9 @@ Install from NPM.
 
     npm install --save aurelia-open-id-connect
 
-Alternatively, install from GitHub.
+Alternatively, install from GitHub [with an optional commit-ish].
 
-    npm install --save shaunluttin/aurelia-open-id-connect
+    npm install --save shaunluttin/aurelia-open-id-connect[#<commit-ish>]
 
 Note: sometimes we need to install UNMET PEER DEPENDENCIES such as `babel-polyfill`.
 
@@ -62,13 +62,14 @@ In your `src/main.ts`, import the configuration file, add the plugin, and invoke
         config.logoutRedirectModuleId = oidcConfig.logoutRedirectModuleId;
       });
 
-### Add the user-block
+### Add the user-block and router view.
 
 We add the `user-block` to the app.html view.
 
     <template>
       <h1>${message}</h1>
       <open-id-connect-user-block></open-id-connect-user-block>
+      <router-view></router-view>
     </template>
 
 ### Configure routing

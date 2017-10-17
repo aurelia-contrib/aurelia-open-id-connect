@@ -7,7 +7,7 @@ define(["require", "exports"], function (require, exports) {
         }
         OpenIdConnectConfiguration.prototype.setDefaults = function () {
             var authority = "http://localhost:5000";
-            var host = "https://zamboni-app.azurewebsites.net";
+            var host = "https://localhost:9000";
             this.loginRedirectModuleId = "home";
             this.logoutRedirectModuleId = "home";
             this.userManagerSettings = {
