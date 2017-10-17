@@ -16,6 +16,13 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect"], functio
             this.isLoggedIn = false;
             this.user = null;
         }
+        Object.defineProperty(OpenIdConnectUserBlock.prototype, "stringifiedUser", {
+            get: function () {
+                return JSON.stringify(this.user, undefined, 2);
+            },
+            enumerable: true,
+            configurable: true
+        });
         OpenIdConnectUserBlock.prototype.attached = function () {
             var _this = this;
             this.openIdConnect.userManager.getUser().then(function (user) {

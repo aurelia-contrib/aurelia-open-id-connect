@@ -2,6 +2,6 @@
   <div class="user-block">
     <button show.bind="!isLoggedIn" click.delegate="login()">login / signup</button>
     <button show.bind="isLoggedIn" click.delegate="logout()">logout</button>
-    <pre show.bind="isLoggedIn">${JSON.stringify(user, undefined, 2)}</pre>
+    <pre show.bind="isLoggedIn"><code>Stringified User: ${stringifiedUser}</code></pre>
   </div>
 </template>
