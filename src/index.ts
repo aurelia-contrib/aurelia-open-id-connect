@@ -1,13 +1,12 @@
-
-// by convention, we must call this `configure`
-import configure from "./plugin";
+// by convention, the plugin is named `configure`
 import OpenIdConnect from "./open-id-connect";
-import OpenIdConnectRoles from "./open-id-connect-roles";
 import OpenIdConnectConfiguration from "./open-id-connect-configuration";
+import OpenIdConnectRoles from "./open-id-connect-roles";
+import configure from "./plugin";
 
 export {
     configure,
     OpenIdConnect,
     OpenIdConnectRoles,
-    OpenIdConnectConfiguration
-}
+    OpenIdConnectConfiguration,
+};
