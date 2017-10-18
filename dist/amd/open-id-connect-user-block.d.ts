@@ -5,7 +5,7 @@ export default class OpenIdConnectUserBlock {
     private user;
     readonly stringifiedUser: string;
     constructor(openIdConnect: OpenIdConnect);
-    attached(): void;
+    attached(): Promise<void>;
     login(): void;
     logout(): void;
 }

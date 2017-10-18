@@ -5,5 +5,5 @@ export default class OpenIdConnectUserDebug {
     private user;
     readonly stringifiedUser: string;
     constructor(openIdConnect: OpenIdConnect);
-    attached(): void;
+    attached(): Promise<void>;
 }
