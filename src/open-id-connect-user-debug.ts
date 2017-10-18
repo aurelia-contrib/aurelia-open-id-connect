@@ -15,10 +15,8 @@ export default class OpenIdConnectUserDebug {
 
     constructor(private openIdConnect: OpenIdConnect) { }
 
-    public attached() {
-        this.openIdConnect.userManager.getUser().then((user: User) => {
-            this.user = user;
-            this.isLoggedIn = user !== null;
-        });
+    public async attached() {
+        this.user = await this.openIdConnect.userManager.getUser();
+        this.isLoggedIn = this.user !== null;
     }
 }
