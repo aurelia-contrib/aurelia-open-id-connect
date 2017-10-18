@@ -21,7 +21,10 @@
     "test": "npm run build:tests && jasmine"
   },
   "scripts-comments": {
-    "publish": "npm run release && npm version <major | minor | patch> && npm publish ."
+    "publish:step:01": "npm run release",
+    "publish:step:02": "npm version <major | minor | patch>",
+    "publish:step:03": "npm publish .",
+    "publish:step:04": "git push --follow-tags"
   },
   "jspm": {
     "main": "index.js",
