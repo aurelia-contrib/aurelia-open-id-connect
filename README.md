@@ -72,6 +72,28 @@ We add the `user-block` to the app.html view.
       <router-view></router-view>
     </template>
 
+### Change the Aurelia Container
+
+Normally you application would look like this:
+
+    <body aurelia-app="main">
+       <!-- Some placeholder content -->
+       <script src="scripts/main.js" data-main="aurelia-bootstrapper"/>
+    </body>
+
+...but what you'd do instead is:
+
+    <body>
+      <div aurelia-app="main">
+        <!-- Some placeholder content -->
+        <script src="scripts/main.js" data-main="aurelia-bootstrapper"/>
+      </div>
+    </body>
+
+> Aurelia was replacing the complete body element's contents, hence the disappearing iframe. The fix was to create a child div element where Aurelia puts its contents. Now everything works! ~ @ErikSchierboom
+
+Thank you @RichiCoder1, @bewl, and @mttmccb for help to find the fix: https://github.com/shaunluttin/aurelia-open-id-connect/issues/4
+
 ### Configure routing
 
 Configure routing in the app.ts file.
