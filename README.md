@@ -191,13 +191,6 @@ Find examples of those here:
     git clone https://github.com/openiddict/openiddict-samples.git
     cd openiddict-samples/samples/ImplicitFlow
 
-# Publish
-
-    npm run package
-    npm version patch -m "Some message"
-    npm login
-    npm publish
-
 # Implicit Flow Implementor Guide
 
 The [OpenID Connect Implicit Client Implementer's Guide 1.0][1] contains a subset of the OpenID Connect Core 1.0 specification.
