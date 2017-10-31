@@ -35,12 +35,19 @@ Note: sometimes we need to install UNMET PEER DEPENDENCIES such as `babel-polyfi
 
 ### Add aurelia-open-id-connect to Aurelia
 
-We use the Aurelia CLI, so we add the following to `aurelia.json`.
+We use the Aurelia CLI, so we add the following to `aurelia.json` in a bundle.
 
     {
-       "name": "aurelia-open-id-connect",
-       "path": "../node_modules/aurelia-open-id-connect/dist/amd",
-       "main": "index"
+        "name": "aurelia-open-id-connect",
+        "path": "../node_modules/aurelia-open-id-connect/dist/amd",
+        "main": "index",
+        "resources": [
+            "open-id-connect-user-block.html",
+            "open-id-connect-user-block.js",
+            "open-id-connect-user-debug.html",
+            "open-id-connect-user-debug.js",
+            "open-id-connect-role-filter.js"
+        ]
     },
     "oidc-client"
 
