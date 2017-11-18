@@ -42,8 +42,9 @@
     "oidc-client": "1.x"
   },
   "devDependencies": {
-    "@types/mocha": "^2.2.44",
     "@types/chai": "^4.0.5",
+    "@types/mocha": "^2.2.44",
+    "@types/sinon": "^4.0.0",
     "chai": "^4.1.2",
     "cpx": "1.x",
     "karma": "^1.7.1",
@@ -53,6 +54,7 @@
     "karma-typescript": "^3.0.8",
     "mocha": "^4.0.1",
     "phantomjs": "^2.1.7",
+    "sinon": "^4.1.2",
     "tslint": "5.x",
     "tslint-microsoft-contrib": "2.x",
     "typescript": "2.x"
