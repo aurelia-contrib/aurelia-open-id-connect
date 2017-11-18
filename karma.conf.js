@@ -4,7 +4,12 @@ module.exports = function(config) {
         frameworks: ["mocha", "karma-typescript"],
 
         files: [
+            { pattern: "src/**/*.ts" },
             { pattern: "spec/**/*.spec.ts" }
+        ],
+
+        exclude: [
+            "/**/*.d.ts"
         ],
 
         preprocessors: {
@@ -13,7 +18,7 @@ module.exports = function(config) {
 
         karmaTypescriptConfig: {
             compilerOptions: {
-                lib: ["ES2015", "DOM"]
+                lib: ["es2017", "dom"]
             }
         },
 
