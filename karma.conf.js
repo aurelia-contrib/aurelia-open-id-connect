@@ -4,7 +4,7 @@ module.exports = function(config) {
         frameworks: ["mocha", "karma-typescript"],
 
         files: [
-            { pattern: 'node_modules/babel-polyfill/browser.js', instrument: false}, 
+            { pattern: 'node_modules/babel-polyfill/browser.js' }, 
             { pattern: "src/**/*.ts" },
             { pattern: "spec/**/*.spec.ts" }
         ],
@@ -18,17 +18,8 @@ module.exports = function(config) {
         },
 
         karmaTypescriptConfig: {
-            // TODO: Spend 20-minutes trying to share the tsconfig.json settings
             compilerOptions: {
-                sourceMap: true,
                 target: "es5",
-                experimentalDecorators: true,
-                noImplicitAny: false,
-                module: "commonjs",
-                declaration: true,
-                removeComments: true,
-                emitDecoratorMetadata: true,
-                moduleResolution: "node",
                 lib: [
                     "es2017",
                     "dom"
