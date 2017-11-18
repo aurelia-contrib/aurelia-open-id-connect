@@ -10,3 +10,4 @@ src/**/*.d.ts
 spec/**/*.js
 spec/**/*.js.map
 spec/**/*.d.ts
+coverage/
