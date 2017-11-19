@@ -35,9 +35,7 @@ export default class OpenIdConnect {
     }
 
     public async loginSilent(): Promise<User> {
-
-        this.logger.debug("loginSilent");
-
+        // TODO: Spend 15-minutes determining whether clearStaleState is necessary.
         await this.userManager.clearStaleState();
 
         const args: any = {};
