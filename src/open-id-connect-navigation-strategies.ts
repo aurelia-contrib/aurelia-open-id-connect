@@ -8,6 +8,7 @@ import OpenIdConnectLogger from "./open-id-connect-logger";
 export default class OpenIdConnectNavigationStrategies {
 
     constructor(
+        // @ts-ignore
         private logger: OpenIdConnectLogger,
         private openIdConnectConfiguration: OpenIdConnectConfiguration,
         private userManager: UserManager) { }

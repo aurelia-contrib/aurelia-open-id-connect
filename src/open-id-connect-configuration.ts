@@ -1,4 +1,4 @@
-import { UserManagerSettings, WebStorageStateStore } from "oidc-client";
+import { UserManagerSettings } from "oidc-client";
 
 export default class OpenIdConnectConfiguration {
     public loginRedirectModuleId: string;

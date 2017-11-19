@@ -6,7 +6,7 @@ import OpenIdConnect from "./open-id-connect";
 @customElement("open-id-connect-user-debug")
 export default class OpenIdConnectUserDebug {
 
-    private isLoggedIn: boolean = false;
+    protected isLoggedIn: boolean = false;
     private user: User = null;
 
     public get stringifiedUser(): string {

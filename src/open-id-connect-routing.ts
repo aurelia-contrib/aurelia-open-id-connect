@@ -3,12 +3,10 @@ import {
     NavigationInstruction,
     RouterConfiguration,
 } from "aurelia-router";
-import { UserManager } from "oidc-client";
 import OpenIdConnectAuthorizeStep from "./open-id-connect-authorize-step";
 import OpenIdConnectConfiguration from "./open-id-connect-configuration";
 import OpenIdConnectLogger from "./open-id-connect-logger";
 import OpenIdConnectNavigationStrategies from "./open-id-connect-navigation-strategies";
-import OpenIdConnectRoles from "./open-id-connect-roles";
 
 @autoinject
 export default class OpenIdConnectRouting {
@@ -16,8 +14,8 @@ export default class OpenIdConnectRouting {
     constructor(
         private openIdConnectConfiguration: OpenIdConnectConfiguration,
         private openIdConnectNavigationStrategies: OpenIdConnectNavigationStrategies,
-        private logger: OpenIdConnectLogger,
-        private userManager: UserManager) { }
+        // @ts-ignore
+        private logger: OpenIdConnectLogger) { }
 
     public configureRouter(routerConfiguration: RouterConfiguration) {
         this.addLoginRedirectRoute(routerConfiguration);
