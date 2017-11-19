@@ -7,20 +7,24 @@ export default function (
     frameworkConfig: FrameworkConfiguration,
     callback: (openIdConnectConfig: OpenIdConnectConfiguration) => void) {
 
+    // register global resources
     frameworkConfig.globalResources([
         "./open-id-connect-user-block",
         "./open-id-connect-user-debug",
         "./open-id-connect-role-filter",
     ]);
 
-    const openIdConnectConfig = new OpenIdConnectConfiguration();
-    callback(openIdConnectConfig);
-
     const logger: OpenIdConnectLogger = frameworkConfig.container.get(OpenIdConnectLogger);
     logger.debug("Configuring the OpenId Connect Client");
 
+    // allow userland to change the OIDC configuration
+    const openIdConnectConfig = new OpenIdConnectConfiguration();
+    callback(openIdConnectConfig);
+
+    // register instances in the DI container
     const userManagerSettings = openIdConnectConfig.userManagerSettings;
     const userManager = new UserManager(userManagerSettings);
+
     frameworkConfig.container
         .registerInstance(UserManager, userManager);
 

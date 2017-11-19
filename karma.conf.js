@@ -27,7 +27,7 @@ module.exports = function(config) {
             }
         },
 
-        reporters: ["dots", "karma-typescript"],
+        reporters: ["karma-typescript", "mocha"],
 
         browsers: ["PhantomJS"]
     });
