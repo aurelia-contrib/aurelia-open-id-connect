@@ -1,10 +1,10 @@
-module.exports = function(config) {
+module.exports = function (config) {
     config.set({
 
         frameworks: ["mocha", "karma-typescript"],
 
         files: [
-            { pattern: 'node_modules/babel-polyfill/browser.js' }, 
+            { pattern: 'node_modules/babel-polyfill/browser.js' },
             { pattern: "src/**/*.ts" },
             { pattern: "spec/**/*.spec.ts" }
         ],
@@ -17,7 +17,11 @@ module.exports = function(config) {
             "**/*.ts": ["karma-typescript"]
         },
 
+        // https://github.com/monounity/karma-typescript
         karmaTypescriptConfig: {
+            reports: {
+                "text-summary": null
+            },
             compilerOptions: {
                 target: "es5",
                 lib: [
