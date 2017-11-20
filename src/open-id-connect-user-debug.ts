@@ -6,8 +6,11 @@ import OpenIdConnect from "./open-id-connect";
 @customElement("open-id-connect-user-debug")
 export default class OpenIdConnectUserDebug {
 
-    protected isLoggedIn: boolean = false;
     private user: User = null;
+
+    public get isLoggedIn(): boolean {
+        return this.user !== null && this.user !== undefined;
+    }
 
     public get stringifiedUser(): string {
         return JSON.stringify(this.user, undefined, 2);
@@ -16,7 +19,6 @@ export default class OpenIdConnectUserDebug {
     constructor(private openIdConnect: OpenIdConnect) { }
 
     public async attached() {
-        this.user = await this.openIdConnect.userManager.getUser();
-        this.isLoggedIn = this.user !== null;
+        this.user = await this.openIdConnect.getUser();
     }
 }

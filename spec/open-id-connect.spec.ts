@@ -1,6 +1,6 @@
 import { RouterConfiguration } from "aurelia-router";
 import { assert } from "chai";
-import { UserManager } from "oidc-client";
+import { User, UserManager } from "oidc-client";
 import sinon = require("sinon");
 import OpenIdConnect from "../src/open-id-connect";
 import OpenIdConnectLogger from "../src/open-id-connect-logger";
@@ -41,29 +41,50 @@ describe("open-id-connect", () => {
     });
 
     context("login", () => {
-        it("should forward call to this.userManager.signinRedirect", async () => {
+        it("should return result of this.userManager.signinRedirect", async () => {
+            // arrange
+            const expected = Promise.resolve(0);
+            userManager.signinRedirect.returns(expected);
             // act
-            await openIdConnect.login();
+            const actual = openIdConnect.login();
             // assert
-            sinon.assert.calledOnce(userManager.signinRedirect);
+            assert.equal(await actual, await expected);
         });
     });
 
     context("logout", () => {
-        it("should forward call to this.userManager.signoutRedirect", async () => {
+        it("should return result of this.userManager.signoutRedirect", async () => {
+            // arrange
+            const expected = Promise.resolve(0);
+            userManager.signoutRedirect.returns(expected);
             // act
-            await openIdConnect.logout();
+            const actual = openIdConnect.logout();
             // assert
-            sinon.assert.calledOnce(userManager.signoutRedirect);
+            assert.equal(await actual, await expected);
         });
     });
 
     context("loginSilent", () => {
-        it("should forward call to this.userManager.signinSilent", async () => {
+        it("should return result of this.userManager.signinSilent", async () => {
+            // arrange
+            const expected = Promise.resolve({ id_token: "id_token" } as User);
+            userManager.signinSilent.returns(expected);
             // act
-            await openIdConnect.loginSilent();
+            const actual = openIdConnect.loginSilent();
             // assert
-            sinon.assert.calledOnce(userManager.signinSilent);
+            assert.equal(await actual, await expected);
+        });
+    });
+
+    context("getUser", () => {
+        it("should return result of this.userManager.getUser", async () => {
+            // arrange
+            const expected = Promise.resolve({ id_token: "id_token" } as User);
+            userManager.getUser.returns(expected);
+            // act
+            const actual = openIdConnect.getUser();
+            // assert
+            assert.equal(await actual, await expected);
         });
     });
 });

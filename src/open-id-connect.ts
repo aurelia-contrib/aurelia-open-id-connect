@@ -34,8 +34,12 @@ export default class OpenIdConnect {
         return this.userManager.signoutRedirect(args);
     }
 
-    public async loginSilent(): Promise<User> {
+    public loginSilent(): Promise<User> {
         const args: any = {};
         return this.userManager.signinSilent(args);
+    }
+
+    public getUser(): Promise<User> {
+        return this.userManager.getUser();
     }
 }
