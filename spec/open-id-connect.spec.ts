@@ -1,6 +1,6 @@
 import { RouterConfiguration } from "aurelia-router";
 import { assert } from "chai";
-import { User, UserManager } from "oidc-client";
+import { User, UserManager, UserManagerEvents } from "oidc-client";
 import sinon = require("sinon");
 import OpenIdConnect from "../src/open-id-connect";
 import OpenIdConnectLogger from "../src/open-id-connect-logger";
@@ -11,6 +11,12 @@ describe("open-id-connect", () => {
     const openIdConnectRouting = sinon.createStubInstance(OpenIdConnectRouting);
     const logger = sinon.createStubInstance(OpenIdConnectLogger);
     const userManager = sinon.createStubInstance(UserManager);
+
+    const events = {
+        addUserLoaded: sinon.spy(),
+    };
+
+    sinon.stub(userManager, "events").get(() => events);
 
     const openIdConnect = new OpenIdConnect(
         openIdConnectRouting,
@@ -41,26 +47,20 @@ describe("open-id-connect", () => {
     });
 
     context("login", () => {
-        it("should return result of this.userManager.signinRedirect", async () => {
-            // arrange
-            const expected = Promise.resolve(0);
-            userManager.signinRedirect.returns(expected);
+        it("should call this.userManager.signinRedirect", async () => {
             // act
-            const actual = openIdConnect.login();
+            await openIdConnect.login();
             // assert
-            assert.equal(await actual, await expected);
+            sinon.assert.calledOnce(userManager.signinRedirect);
         });
     });
 
     context("logout", () => {
-        it("should return result of this.userManager.signoutRedirect", async () => {
-            // arrange
-            const expected = Promise.resolve(0);
-            userManager.signoutRedirect.returns(expected);
+        it("should call this.userManager.signoutRedirect", async () => {
             // act
-            const actual = openIdConnect.logout();
+            await openIdConnect.logout();
             // assert
-            assert.equal(await actual, await expected);
+            sinon.assert.calledOnce(userManager.signoutRedirect);
         });
     });
 
@@ -85,6 +85,20 @@ describe("open-id-connect", () => {
             const actual = openIdConnect.getUser();
             // assert
             assert.equal(await actual, await expected);
+        });
+    });
+
+    context("handlers", () => {
+        it("should invoke method on underlying events object", async () => {
+            // act
+            openIdConnect.handlers("addUserLoaded", () => undefined);
+            // assert
+            sinon.assert.calledOnce(events.addUserLoaded);
+        });
+
+        it("should throw when the key does not start with add/remove", async () => {
+            // assert
+            assert.throws(() => openIdConnect.handlers("load", () => undefined));
         });
     });
 });

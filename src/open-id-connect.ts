@@ -3,6 +3,7 @@ import { RouterConfiguration } from "aurelia-router";
 import {
     User,
     UserManager,
+    UserManagerEvents,
 } from "oidc-client";
 import OpenIdConnectLogger from "./open-id-connect-logger";
 import OpenIdConnectRouting from "./open-id-connect-routing";
@@ -24,14 +25,14 @@ export default class OpenIdConnect {
         this.openIdConnectRouting.configureRouter(routerConfiguration);
     }
 
-    public login(): Promise<any> {
+    public async login(): Promise<void> {
         const args: any = {};
-        return this.userManager.signinRedirect(args);
+        await this.userManager.signinRedirect(args);
     }
 
-    public logout(): Promise<any> {
+    public async logout(): Promise<void> {
         const args: any = {};
-        return this.userManager.signoutRedirect(args);
+        await this.userManager.signoutRedirect(args);
     }
 
     public loginSilent(): Promise<User> {
@@ -42,4 +43,18 @@ export default class OpenIdConnect {
     public getUser(): Promise<User> {
         return this.userManager.getUser();
     }
+
+    public handlers(key: keyof UserManagerEvents, handler: eventHandler) {
+        if (!key.startsWith("add") && !key.startsWith("remove")) {
+            let message = "The 'handlers' method expects a 'key' argument ";
+            message += "that starts with either 'add' or 'remove'. Instead we ";
+            message += "recevied " + key;
+            throw new TypeError(message);
+        }
+
+        const addOrRemoveEventHandler: any = this.userManager.events[key];
+        addOrRemoveEventHandler(handler);
+    }
 }
+
+export type eventHandler = (...ev: any[]) => void;

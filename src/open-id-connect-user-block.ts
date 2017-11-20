@@ -4,20 +4,19 @@ import OpenIdConnect from "./open-id-connect";
 
 @autoinject
 @customElement("open-id-connect-user-block")
-export default class OpenIdConnectUserBlock {
+export default class {
 
-    protected isLoggedIn: boolean = false;
-    private user: User = null;
+    protected user: User = null;
 
-    public get stringifiedUser(): string {
-        return JSON.stringify(this.user, undefined, 2);
+    public get isLoggedIn(): boolean {
+        return this.user !== null && this.user !== undefined;
     }
 
     constructor(private openIdConnect: OpenIdConnect) { }
 
     public async attached() {
-        this.user = await this.openIdConnect.userManager.getUser();
-        this.isLoggedIn = this.user !== null;
+        this.openIdConnect.handlers("addUserUnloaded", () => this.user = null);
+        this.user = await this.openIdConnect.getUser();
     }
 
     public login() {
