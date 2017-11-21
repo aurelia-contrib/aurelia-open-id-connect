@@ -31,5 +31,8 @@ export default function (
     frameworkConfig.container
         .registerInstance(OpenIdConnectConfiguration, openIdConnectConfig);
 
+    frameworkConfig.container
+        .registerInstance(Window, window);
+
     logger.debug("Configured the OpenId Connect Client");
 }

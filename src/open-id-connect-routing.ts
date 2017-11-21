@@ -14,6 +14,7 @@ export default class OpenIdConnectRouting {
     constructor(
         private openIdConnectConfiguration: OpenIdConnectConfiguration,
         private openIdConnectNavigationStrategies: OpenIdConnectNavigationStrategies,
+        private $window: Window,
         // @ts-ignore
         private logger: OpenIdConnectLogger) { }
 
@@ -33,7 +34,7 @@ export default class OpenIdConnectRouting {
                     return this.openIdConnectNavigationStrategies.signInRedirectCallback(instruction);
                 }
             },
-            route: this.getPath(this.openIdConnectConfiguration.userManagerSettings.redirect_uri),
+            route: this.getPath(this.openIdConnectConfiguration.RedirectUri),
         });
     }
 
@@ -43,13 +44,13 @@ export default class OpenIdConnectRouting {
             navigationStrategy: (instruction: NavigationInstruction) => {
                 return this.openIdConnectNavigationStrategies.signoutRedirectCallback(instruction);
             },
-            route: this.getPath(this.openIdConnectConfiguration.userManagerSettings.post_logout_redirect_uri),
+            route: this.getPath(this.openIdConnectConfiguration.PostLogoutRedirectUri),
         });
     }
 
     private isSilentLogin(): boolean {
         try {
-            return window.self !== window.top;
+            return this.$window.self !== this.$window.top;
         } catch (e) {
             return true;
         }
