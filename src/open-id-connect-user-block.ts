@@ -15,7 +15,10 @@ export default class {
     constructor(private openIdConnect: OpenIdConnect) { }
 
     public async attached() {
-        this.openIdConnect.handlers("addUserUnloaded", () => this.user = null);
+        this.openIdConnect.addOrRemoveHandler("addUserUnloaded", () => {
+            this.user = null;
+        });
+
         this.user = await this.openIdConnect.getUser();
     }
 

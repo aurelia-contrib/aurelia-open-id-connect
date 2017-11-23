@@ -91,14 +91,14 @@ describe("open-id-connect", () => {
     context("handlers", () => {
         it("should invoke method on underlying events object", async () => {
             // act
-            openIdConnect.handlers("addUserLoaded", () => undefined);
+            openIdConnect.addOrRemoveHandler("addUserLoaded", () => undefined);
             // assert
-            sinon.assert.calledOnce(events.addUserLoaded);
+            sinon.assert.calledOn(events.addUserLoaded, events);
         });
 
         it("should throw when the key does not start with add/remove", async () => {
             // assert
-            assert.throws(() => openIdConnect.handlers("load", () => undefined));
+            assert.throws(() => openIdConnect.addOrRemoveHandler("load", () => undefined));
         });
     });
 });

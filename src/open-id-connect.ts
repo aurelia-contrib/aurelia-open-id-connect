@@ -1,10 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { RouterConfiguration } from "aurelia-router";
-import {
-    User,
-    UserManager,
-    UserManagerEvents,
-} from "oidc-client";
+import { User, UserManager, UserManagerEvents } from "oidc-client";
+import { UserManagerEventHandler, UserManagerEventsAction } from "./internal-types";
 import OpenIdConnectLogger from "./open-id-connect-logger";
 import OpenIdConnectRouting from "./open-id-connect-routing";
 
@@ -44,17 +41,21 @@ export default class OpenIdConnect {
         return this.userManager.getUser();
     }
 
-    public handlers(key: keyof UserManagerEvents, handler: eventHandler) {
+    public addOrRemoveHandler(
+        key: keyof UserManagerEvents,
+        handler: UserManagerEventHandler) {
+
         if (!key.startsWith("add") && !key.startsWith("remove")) {
-            let message = "The 'handlers' method expects a 'key' argument ";
+            let message = "The 'addOrRemoveHandlers' method expects a 'key' argument ";
             message += "that starts with either 'add' or 'remove'. Instead we ";
             message += "recevied " + key;
             throw new TypeError(message);
         }
 
-        const addOrRemoveEventHandler: any = this.userManager.events[key];
-        addOrRemoveEventHandler(handler);
+        const addOrRemove: UserManagerEventsAction =
+            this.userManager.events[key]
+                .bind(this.userManager.events);
+
+        addOrRemove(handler);
     }
 }
-
-export type eventHandler = (...ev: any[]) => void;

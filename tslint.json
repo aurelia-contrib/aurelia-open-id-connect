@@ -6,7 +6,8 @@
     "jsRules": {},
     "rules": {
         "callable-types": false,
-        "space-before-function-paren": false
+        "space-before-function-paren": false,
+        "interface-name": false
     },
     "rulesDirectory": [
         "node_modules/tslint-microsoft-contrib/"
