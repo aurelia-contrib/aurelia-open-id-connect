@@ -3,12 +3,10 @@ import {
     NavigationInstruction,
     RouterConfiguration,
 } from "aurelia-router";
-import { UserManager } from "oidc-client";
 import OpenIdConnectAuthorizeStep from "./open-id-connect-authorize-step";
 import OpenIdConnectConfiguration from "./open-id-connect-configuration";
 import OpenIdConnectLogger from "./open-id-connect-logger";
 import OpenIdConnectNavigationStrategies from "./open-id-connect-navigation-strategies";
-import OpenIdConnectRoles from "./open-id-connect-roles";
 
 @autoinject
 export default class OpenIdConnectRouting {
@@ -16,8 +14,9 @@ export default class OpenIdConnectRouting {
     constructor(
         private openIdConnectConfiguration: OpenIdConnectConfiguration,
         private openIdConnectNavigationStrategies: OpenIdConnectNavigationStrategies,
-        private logger: OpenIdConnectLogger,
-        private userManager: UserManager) { }
+        private $window: Window,
+        // @ts-ignore
+        private logger: OpenIdConnectLogger) { }
 
     public configureRouter(routerConfiguration: RouterConfiguration) {
         this.addLoginRedirectRoute(routerConfiguration);
@@ -30,12 +29,12 @@ export default class OpenIdConnectRouting {
             name: "logInRedirectCallback",
             navigationStrategy: (instruction: NavigationInstruction) => {
                 if (this.isSilentLogin()) {
-                    return this.openIdConnectNavigationStrategies.silentSignICallback(instruction);
+                    return this.openIdConnectNavigationStrategies.silentSignInCallback(instruction);
                 } else {
                     return this.openIdConnectNavigationStrategies.signInRedirectCallback(instruction);
                 }
             },
-            route: this.getPath(this.openIdConnectConfiguration.userManagerSettings.redirect_uri),
+            route: this.getPath(this.openIdConnectConfiguration.RedirectUri),
         });
     }
 
@@ -43,15 +42,15 @@ export default class OpenIdConnectRouting {
         routerConfiguration.mapRoute({
             name: "logOutRedirectCallback",
             navigationStrategy: (instruction: NavigationInstruction) => {
-                return this.openIdConnectNavigationStrategies.signoutRedirectCallback(instruction);
+                return this.openIdConnectNavigationStrategies.signOutRedirectCallback(instruction);
             },
-            route: this.getPath(this.openIdConnectConfiguration.userManagerSettings.post_logout_redirect_uri),
+            route: this.getPath(this.openIdConnectConfiguration.PostLogoutRedirectUri),
         });
     }
 
     private isSilentLogin(): boolean {
         try {
-            return window.self !== window.top;
+            return this.$window.self !== this.$window.top;
         } catch (e) {
             return true;
         }

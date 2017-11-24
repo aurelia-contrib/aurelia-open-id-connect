@@ -4,20 +4,26 @@ import OpenIdConnect from "./open-id-connect";
 
 @autoinject
 @customElement("open-id-connect-user-block")
-export default class OpenIdConnectUserBlock {
+export default class {
 
-    private isLoggedIn: boolean = false;
-    private user: User = null;
+    protected user: User = null;
 
-    public get stringifiedUser(): string {
-        return JSON.stringify(this.user, undefined, 2);
+    public get isLoggedIn(): boolean {
+        return this.user !== null && this.user !== undefined;
     }
 
     constructor(private openIdConnect: OpenIdConnect) { }
 
     public async attached() {
-        this.user = await this.openIdConnect.userManager.getUser();
-        this.isLoggedIn = this.user !== null;
+        this.openIdConnect.addOrRemoveHandler("addUserUnloaded", () => {
+            this.user = null;
+        });
+
+        this.openIdConnect.addOrRemoveHandler("addUserLoaded", async () => {
+            this.user = await this.openIdConnect.getUser();
+        });
+
+        this.user = await this.openIdConnect.getUser();
     }
 
     public login() {
@@ -26,5 +32,20 @@ export default class OpenIdConnectUserBlock {
 
     public logout() {
         this.openIdConnect.logout();
+    }
+
+    protected async loginSilent() {
+        try {
+            await this.openIdConnect.loginSilent();
+        } catch (err) {
+            if (err.error !== "login_required") {
+                throw err;
+            }
+
+            const doRedirect = window.confirm("Login required. Redirect to Identity Provider?");
+            if (doRedirect) {
+                this.login();
+            }
+        }
     }
 }

@@ -45,48 +45,50 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 define(["require", "exports", "aurelia-framework", "./open-id-connect"], function (require, exports, aurelia_framework_1, open_id_connect_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var OpenIdConnectUserBlock = (function () {
-        function OpenIdConnectUserBlock(openIdConnect) {
+    var default_1 = (function () {
+        function default_1(openIdConnect) {
             this.openIdConnect = openIdConnect;
-            this.isLoggedIn = false;
             this.user = null;
         }
-        Object.defineProperty(OpenIdConnectUserBlock.prototype, "stringifiedUser", {
+        Object.defineProperty(default_1.prototype, "isLoggedIn", {
             get: function () {
-                return JSON.stringify(this.user, undefined, 2);
+                return this.user !== null && this.user !== undefined;
             },
             enumerable: true,
             configurable: true
         });
-        OpenIdConnectUserBlock.prototype.attached = function () {
+        default_1.prototype.attached = function () {
             return __awaiter(this, void 0, void 0, function () {
+                var _this = this;
                 var _a;
                 return __generator(this, function (_b) {
                     switch (_b.label) {
                         case 0:
+                            this.openIdConnect.addOrRemoveHandler("addUserUnloaded", function () {
+                                _this.user = null;
+                            });
                             _a = this;
-                            return [4, this.openIdConnect.userManager.getUser()];
+                            return [4, this.openIdConnect.getUser()];
                         case 1:
                             _a.user = _b.sent();
-                            this.isLoggedIn = this.user !== null;
                             return [2];
                     }
                 });
             });
         };
-        OpenIdConnectUserBlock.prototype.login = function () {
+        default_1.prototype.login = function () {
             this.openIdConnect.login();
         };
-        OpenIdConnectUserBlock.prototype.logout = function () {
+        default_1.prototype.logout = function () {
             this.openIdConnect.logout();
         };
-        OpenIdConnectUserBlock = __decorate([
+        default_1 = __decorate([
             aurelia_framework_1.autoinject,
             aurelia_framework_1.customElement("open-id-connect-user-block"),
             __metadata("design:paramtypes", [open_id_connect_1.default])
-        ], OpenIdConnectUserBlock);
-        return OpenIdConnectUserBlock;
+        ], default_1);
+        return default_1;
     }());
-    exports.default = OpenIdConnectUserBlock;
+    exports.default = default_1;
 });
 //# sourceMappingURL=open-id-connect-user-block.js.map

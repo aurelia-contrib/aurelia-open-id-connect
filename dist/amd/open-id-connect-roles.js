@@ -3,10 +3,9 @@ define(["require", "exports"], function (require, exports) {
     Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnectRoles;
     (function (OpenIdConnectRoles) {
-        OpenIdConnectRoles[OpenIdConnectRoles["Administrator"] = 0] = "Administrator";
-        OpenIdConnectRoles[OpenIdConnectRoles["Everyone"] = 1] = "Everyone";
-        OpenIdConnectRoles[OpenIdConnectRoles["Anonymous"] = 2] = "Anonymous";
-        OpenIdConnectRoles[OpenIdConnectRoles["Authorized"] = 3] = "Authorized";
+        OpenIdConnectRoles[OpenIdConnectRoles["Everyone"] = 0] = "Everyone";
+        OpenIdConnectRoles[OpenIdConnectRoles["Anonymous"] = 1] = "Anonymous";
+        OpenIdConnectRoles[OpenIdConnectRoles["Authenticated"] = 2] = "Authenticated";
     })(OpenIdConnectRoles || (OpenIdConnectRoles = {}));
     exports.default = OpenIdConnectRoles;
 });

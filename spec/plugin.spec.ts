@@ -1,46 +1,69 @@
+import { Container, FrameworkConfiguration } from "aurelia-framework";
+import { UserManager } from "oidc-client";
+import sinon = require("sinon");
 import OpenIdConnectConfiguration from "../src/open-id-connect-configuration";
+import OpenIdConnectLogger from "../src/open-id-connect-logger";
 import plugin from "../src/plugin";
-import "./helpers/global-setup";
 
 describe("plugin", () => {
 
-    let frameworkConfiguration: any;
-    let actualLoginRedirectModuleId: string;
-    const userDefinedLoginRedirectModuleId: string = Math.random().toString();
+    // arrange
+    const logger = sinon.createStubInstance(OpenIdConnectLogger);
+
+    const container = sinon.createStubInstance(Container);
+    container.get.withArgs(OpenIdConnectLogger).returns(logger);
+
+    const frameworkConfig = sinon.createStubInstance(FrameworkConfiguration);
+    frameworkConfig.container = container;
+
+    const userDefinedLoginRedirect = "userDefinedLoginRedirect";
+    const userDefinedAuthority = "userDefinedAuthority";
+
+    const pluginCallback = sinon.stub().callsFake((config: OpenIdConnectConfiguration) => {
+        // mimic the user-defined configuration that happens in src/main.ts.
+        config.loginRedirectModuleId = userDefinedLoginRedirect;
+        config.UserManagerSettings.authority = userDefinedAuthority;
+    });
 
     // tslint:disable-next-line:only-arrow-functions
-    beforeEach(function() {
-
-        // arrange
-        frameworkConfiguration = jasmine.createSpyObj(
-            "frameworkConfig",
-            ["globalResources", "container"]);
-
-        frameworkConfiguration.container.get =
-            jasmine.createSpy("get").and.returnValue({ debug: () => undefined });
-
-        frameworkConfiguration.container.registerInstance =
-            jasmine.createSpy("registerInstance").and.callFake((type, obj) => {
-                if (obj instanceof OpenIdConnectConfiguration) {
-                    actualLoginRedirectModuleId = obj.loginRedirectModuleId;
-                }
-            });
-
+    beforeEach(function () {
         // act
-        plugin(
-            frameworkConfiguration,
-            (openIdConnectConfig) => {
-                openIdConnectConfig.loginRedirectModuleId = userDefinedLoginRedirectModuleId;
-            });
+        plugin(frameworkConfig, pluginCallback);
     });
 
-    it("should add two global resources", () => {
+    const resourcesToAdd = [
+        "./open-id-connect-user-block",
+        "./open-id-connect-user-debug",
+    ];
+
+    it(`should add these to global resources \r\n\t${resourcesToAdd.join("\r\n\t")}`, () => {
         // assert
-        expect(frameworkConfiguration.globalResources).toHaveBeenCalledTimes(1);
+        sinon.assert.calledWith(frameworkConfig.globalResources, resourcesToAdd);
     });
 
-    it("should pass the user-specified configuration to the framework container", () => {
+    it("should register a UserManager instance that has user-defined configuration", () => {
+
+        // Use the `any` type for the userManager, because the oidc-client
+        // type declarations do not include the settings property.
+        const matcher = sinon.match((userManager: any) =>
+            userManager.settings.authority === userDefinedAuthority);
+
         // assert
-        expect(actualLoginRedirectModuleId).toBe(userDefinedLoginRedirectModuleId);
+        sinon.assert.calledWith(
+            container.registerInstance,
+            UserManager,
+            matcher);
+    });
+
+    it("should register an OpenIdConnectConfiguration instance that has user-defined configuration", () => {
+
+        const matcher = sinon.match((config: OpenIdConnectConfiguration) =>
+            config.loginRedirectModuleId === userDefinedLoginRedirect);
+
+        // assert
+        sinon.assert.calledWith(
+            container.registerInstance,
+            OpenIdConnectConfiguration,
+            matcher);
     });
 });

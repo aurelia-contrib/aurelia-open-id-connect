@@ -1,9 +1,4 @@
-import OpenIdConnect from "./open-id-connect";
-export default class OpenIdConnectUserDebug {
-    private openIdConnect;
-    private isLoggedIn;
-    private user;
+import OpenIdConnectUserBlock from "./open-id-connect-user-block";
+export default class  extends OpenIdConnectUserBlock {
     readonly stringifiedUser: string;
-    constructor(openIdConnect: OpenIdConnect);
-    attached(): Promise<void>;
 }

@@ -58,28 +58,52 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             this.openIdConnectRouting.configureRouter(routerConfiguration);
         };
         OpenIdConnect.prototype.login = function () {
-            var args = {};
-            return this.userManager.signinRedirect(args);
-        };
-        OpenIdConnect.prototype.logout = function () {
-            var args = {};
-            return this.userManager.signoutRedirect(args);
-        };
-        OpenIdConnect.prototype.loginSilent = function () {
             return __awaiter(this, void 0, void 0, function () {
                 var args;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
-                            this.logger.debug("loginSilent");
-                            return [4, this.userManager.clearStaleState()];
+                            args = {};
+                            return [4, this.userManager.signinRedirect(args)];
                         case 1:
                             _a.sent();
-                            args = {};
-                            return [2, this.userManager.signinSilent(args)];
+                            return [2];
                     }
                 });
             });
+        };
+        OpenIdConnect.prototype.logout = function () {
+            return __awaiter(this, void 0, void 0, function () {
+                var args;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            args = {};
+                            return [4, this.userManager.signoutRedirect(args)];
+                        case 1:
+                            _a.sent();
+                            return [2];
+                    }
+                });
+            });
+        };
+        OpenIdConnect.prototype.loginSilent = function () {
+            var args = {};
+            return this.userManager.signinSilent(args);
+        };
+        OpenIdConnect.prototype.getUser = function () {
+            return this.userManager.getUser();
+        };
+        OpenIdConnect.prototype.addOrRemoveHandler = function (key, handler) {
+            if (!key.startsWith("add") && !key.startsWith("remove")) {
+                var message = "The 'addOrRemoveHandlers' method expects a 'key' argument ";
+                message += "that starts with either 'add' or 'remove'. Instead we ";
+                message += "recevied " + key;
+                throw new TypeError(message);
+            }
+            var addOrRemove = this.userManager.events[key]
+                .bind(this.userManager.events);
+            addOrRemove(handler);
         };
         OpenIdConnect = __decorate([
             aurelia_framework_1.autoinject,

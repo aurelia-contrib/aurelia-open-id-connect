@@ -1,9 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { RouterConfiguration } from "aurelia-router";
-import {
-    User,
-    UserManager,
-} from "oidc-client";
+import { User, UserManager, UserManagerEvents } from "oidc-client";
+import { UserManagerEventHandler, UserManagerEventsAction } from "./internal-types";
 import OpenIdConnectLogger from "./open-id-connect-logger";
 import OpenIdConnectRouting from "./open-id-connect-routing";
 
@@ -24,23 +22,40 @@ export default class OpenIdConnect {
         this.openIdConnectRouting.configureRouter(routerConfiguration);
     }
 
-    public login(): Promise<any> {
+    public async login(): Promise<void> {
         const args: any = {};
-        return this.userManager.signinRedirect(args);
+        await this.userManager.signinRedirect(args);
     }
 
-    public logout(): Promise<any> {
+    public async logout(): Promise<void> {
         const args: any = {};
-        return this.userManager.signoutRedirect(args);
+        await this.userManager.signoutRedirect(args);
     }
 
-    public async loginSilent(): Promise<User> {
-
-        this.logger.debug("loginSilent");
-
-        await this.userManager.clearStaleState();
-
+    public loginSilent(): Promise<User> {
         const args: any = {};
         return this.userManager.signinSilent(args);
+    }
+
+    public getUser(): Promise<User> {
+        return this.userManager.getUser();
+    }
+
+    public addOrRemoveHandler(
+        key: keyof UserManagerEvents,
+        handler: UserManagerEventHandler) {
+
+        if (!key.startsWith("add") && !key.startsWith("remove")) {
+            let message = "The 'addOrRemoveHandlers' method expects a 'key' argument ";
+            message += "that starts with either 'add' or 'remove'. Instead we ";
+            message += "recevied " + key;
+            throw new TypeError(message);
+        }
+
+        const addOrRemove: UserManagerEventsAction =
+            this.userManager.events[key]
+                .bind(this.userManager.events);
+
+        addOrRemove(handler);
     }
 }

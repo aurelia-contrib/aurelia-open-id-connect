@@ -57,64 +57,69 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 var callbackHandler, postCallbackRedirect;
                 return __generator(this, function (_a) {
                     callbackHandler = function () { return __awaiter(_this, void 0, void 0, function () {
-                        var user, args;
+                        var args;
                         return __generator(this, function (_a) {
-                            switch (_a.label) {
-                                case 0: return [4, this.userManager.getUser()];
-                                case 1:
-                                    user = _a.sent();
-                                    if (user === null || user === undefined) {
-                                        args = {};
-                                        return [2, this.userManager.signinRedirectCallback(args)];
-                                    }
-                                    return [2];
-                            }
+                            args = {};
+                            this.userManager.signinRedirectCallback(args);
+                            return [2];
                         });
                     }); };
                     postCallbackRedirect = function () {
-                        instruction.config.moduleId = _this.openIdConnectConfiguration.loginRedirectModuleId;
+                        instruction.config.moduleId =
+                            _this.openIdConnectConfiguration.LoginRedirectModuleId;
                     };
-                    return [2, this.runHandlers(callbackHandler, postCallbackRedirect)];
+                    return [2, this.runHandlerAndAlwaysRedirect(callbackHandler, postCallbackRedirect)];
                 });
             });
         };
-        OpenIdConnectNavigationStrategies.prototype.silentSignICallback = function (instruction) {
+        OpenIdConnectNavigationStrategies.prototype.silentSignInCallback = function (instruction) {
             var _this = this;
-            var callbackHandler = function () {
-                var url = null;
-                return _this.userManager.signinSilentCallback(url);
-            };
+            var callbackHandler = function () { return __awaiter(_this, void 0, void 0, function () {
+                var url;
+                return __generator(this, function (_a) {
+                    url = null;
+                    this.userManager.signinSilentCallback(url);
+                    return [2];
+                });
+            }); };
             var postCallbackRedirect = function () {
-                instruction.config.moduleId = "THIS_HAPPENS_IN_A_CHILD_I_FRAME";
+                instruction.config.moduleId = "THIS_HAPPENS_IN_A_CHILD_IFRAME";
             };
-            return this.runHandlers(callbackHandler, postCallbackRedirect);
+            return this.runHandlerAndAlwaysRedirect(callbackHandler, postCallbackRedirect);
         };
-        OpenIdConnectNavigationStrategies.prototype.signoutRedirectCallback = function (instruction) {
+        OpenIdConnectNavigationStrategies.prototype.signOutRedirectCallback = function (instruction) {
             var _this = this;
-            var callbackHandler = function () {
-                var args = {};
-                return _this.userManager.signoutRedirectCallback(args);
-            };
+            var callbackHandler = function () { return __awaiter(_this, void 0, void 0, function () {
+                var args;
+                return __generator(this, function (_a) {
+                    args = {};
+                    this.userManager.signoutRedirectCallback(args);
+                    return [2];
+                });
+            }); };
             var postCallbackRedirect = function () {
                 instruction.config.moduleId =
-                    _this.openIdConnectConfiguration.logoutRedirectModuleId;
+                    _this.openIdConnectConfiguration.LogoutRedirectModuleId;
             };
-            return this.runHandlers(callbackHandler, postCallbackRedirect);
+            return this.runHandlerAndAlwaysRedirect(callbackHandler, postCallbackRedirect);
         };
-        OpenIdConnectNavigationStrategies.prototype.runHandlers = function (callbackHandler, postCallbackRedirect) {
+        OpenIdConnectNavigationStrategies.prototype.runHandlerAndAlwaysRedirect = function (callbackHandler, postCallbackRedirect) {
             return __awaiter(this, void 0, void 0, function () {
                 var err_1;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             _a.trys.push([0, 2, , 3]);
+                            this.logger.debug("Handling the response from the Identity Provider");
                             return [4, callbackHandler()];
                         case 1:
                             _a.sent();
+                            this.logger.debug("Redirecting on authorization success");
                             postCallbackRedirect();
                             return [3, 3];
                         case 2:
                             err_1 = _a.sent();
+                            this.logger.debug("Redirecting on authorization error");
                             postCallbackRedirect();
                             throw err_1;
                         case 3: return [2];

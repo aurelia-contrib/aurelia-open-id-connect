@@ -45,8 +45,7 @@ We use the Aurelia CLI, so we add the following to `aurelia.json` in a bundle.
             "open-id-connect-user-block.html",
             "open-id-connect-user-block.js",
             "open-id-connect-user-debug.html",
-            "open-id-connect-user-debug.js",
-            "open-id-connect-role-filter.js"
+            "open-id-connect-user-debug.js"
         ]
     },
     "oidc-client"
@@ -117,7 +116,6 @@ Configure routing in the app.ts file.
       private user: User;
 
       constructor(private openIdConnect: OpenIdConnect) {
-        this.openIdConnect.logger.enableLogging(Log.INFO);
         this.openIdConnect.userManager.getUser().then((user) => {
           this.user = user;
         });

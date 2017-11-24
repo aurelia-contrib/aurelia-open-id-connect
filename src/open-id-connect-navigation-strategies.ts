@@ -8,35 +8,28 @@ import OpenIdConnectLogger from "./open-id-connect-logger";
 export default class OpenIdConnectNavigationStrategies {
 
     constructor(
+        // @ts-ignore
         private logger: OpenIdConnectLogger,
         private openIdConnectConfiguration: OpenIdConnectConfiguration,
         private userManager: UserManager) { }
 
     public async signInRedirectCallback(instruction: NavigationInstruction): Promise<any> {
-
         const callbackHandler = async () => {
-
-            const user = await this.userManager.getUser();
-
-            // Sign in only if we do not already have a user;
-            // otherwise, we receive a 'No matching state found in storage' error,
-            // on a page refresh with stale state in the window.location.
-            if (user === null || user === undefined) {
-                const args: any = {};
-                return this.userManager.signinRedirectCallback(args);
-            }
+            const args: any = {};
+            return this.userManager.signinRedirectCallback(args);
         };
 
         const postCallbackRedirect = () => {
-            instruction.config.moduleId = this.openIdConnectConfiguration.loginRedirectModuleId;
+            instruction.config.moduleId =
+                this.openIdConnectConfiguration.LoginRedirectModuleId;
         };
 
-        return this.runHandlers(callbackHandler, postCallbackRedirect);
+        return this.runHandlerAndAlwaysRedirect(callbackHandler, postCallbackRedirect);
     }
 
-    public silentSignICallback(instruction: NavigationInstruction): Promise<any> {
+    public silentSignInCallback(instruction: NavigationInstruction): Promise<any> {
 
-        const callbackHandler = () => {
+        const callbackHandler = async () => {
             // The url must be null;
             // otherwise, IFrameWindow.notifyParent will not work,
             // And we will receive one of two errors:
@@ -47,35 +40,39 @@ export default class OpenIdConnectNavigationStrategies {
         };
 
         const postCallbackRedirect = () => {
-            instruction.config.moduleId = "THIS_HAPPENS_IN_A_CHILD_I_FRAME";
+            instruction.config.moduleId = "THIS_HAPPENS_IN_A_CHILD_IFRAME";
         };
 
-        return this.runHandlers(callbackHandler, postCallbackRedirect);
+        return this.runHandlerAndAlwaysRedirect(callbackHandler, postCallbackRedirect);
     }
 
-    public signoutRedirectCallback(instruction: NavigationInstruction): Promise<any> {
+    // TODO: Handle the "No end session endpoint url returned" error.
+    public signOutRedirectCallback(instruction: NavigationInstruction): Promise<any> {
 
-        const callbackHandler = () => {
+        const callbackHandler = async () => {
             const args: any = {};
             return this.userManager.signoutRedirectCallback(args);
         };
 
         const postCallbackRedirect = () => {
             instruction.config.moduleId =
-                this.openIdConnectConfiguration.logoutRedirectModuleId;
+                this.openIdConnectConfiguration.LogoutRedirectModuleId;
         };
 
-        return this.runHandlers(callbackHandler, postCallbackRedirect);
+        return this.runHandlerAndAlwaysRedirect(callbackHandler, postCallbackRedirect);
     }
 
-    private async runHandlers(
+    private async runHandlerAndAlwaysRedirect(
         callbackHandler: () => Promise<any>,
         postCallbackRedirect: () => void): Promise<any> {
 
         try {
+            this.logger.debug("Handling the response from the Identity Provider");
             await callbackHandler();
+            this.logger.debug("Redirecting on authorization success");
             postCallbackRedirect();
         } catch (err) {
+            this.logger.debug("Redirecting on authorization error");
             postCallbackRedirect();
             throw err;
         }
