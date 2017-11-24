@@ -7,15 +7,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-authorize-step", "./open-id-connect-configuration", "./open-id-connect-logger", "./open-id-connect-navigation-strategies"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_authorize_step_1, open_id_connect_configuration_1, open_id_connect_logger_1, open_id_connect_navigation_strategies_1) {
+define(["require", "exports", "aurelia-framework", "./open-id-connect-authorize-step", "./open-id-connect-configuration", "./open-id-connect-logger", "./open-id-connect-navigation-strategies"], function (require, exports, aurelia_framework_1, open_id_connect_authorize_step_1, open_id_connect_configuration_1, open_id_connect_logger_1, open_id_connect_navigation_strategies_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnectRouting = (function () {
-        function OpenIdConnectRouting(openIdConnectConfiguration, openIdConnectNavigationStrategies, logger, userManager) {
+        function OpenIdConnectRouting(openIdConnectConfiguration, openIdConnectNavigationStrategies, $window, logger) {
             this.openIdConnectConfiguration = openIdConnectConfiguration;
             this.openIdConnectNavigationStrategies = openIdConnectNavigationStrategies;
+            this.$window = $window;
             this.logger = logger;
-            this.userManager = userManager;
         }
         OpenIdConnectRouting.prototype.configureRouter = function (routerConfiguration) {
             this.addLoginRedirectRoute(routerConfiguration);
@@ -34,7 +34,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                         return _this.openIdConnectNavigationStrategies.signInRedirectCallback(instruction);
                     }
                 },
-                route: this.getPath(this.openIdConnectConfiguration.userManagerSettings.redirect_uri),
+                route: this.getPath(this.openIdConnectConfiguration.RedirectUri),
             });
         };
         OpenIdConnectRouting.prototype.addLogoutRedirectRoute = function (routerConfiguration) {
@@ -44,12 +44,12 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 navigationStrategy: function (instruction) {
                     return _this.openIdConnectNavigationStrategies.signoutRedirectCallback(instruction);
                 },
-                route: this.getPath(this.openIdConnectConfiguration.userManagerSettings.post_logout_redirect_uri),
+                route: this.getPath(this.openIdConnectConfiguration.PostLogoutRedirectUri),
             });
         };
         OpenIdConnectRouting.prototype.isSilentLogin = function () {
             try {
-                return window.self !== window.top;
+                return this.$window.self !== this.$window.top;
             }
             catch (e) {
                 return true;
@@ -67,8 +67,8 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             aurelia_framework_1.autoinject,
             __metadata("design:paramtypes", [open_id_connect_configuration_1.default,
                 open_id_connect_navigation_strategies_1.default,
-                open_id_connect_logger_1.default,
-                oidc_client_1.UserManager])
+                Window,
+                open_id_connect_logger_1.default])
         ], OpenIdConnectRouting);
         return OpenIdConnectRouting;
     }());
