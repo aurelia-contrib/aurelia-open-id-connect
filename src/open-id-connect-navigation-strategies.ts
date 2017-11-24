@@ -16,7 +16,7 @@ export default class OpenIdConnectNavigationStrategies {
     public async signInRedirectCallback(instruction: NavigationInstruction): Promise<any> {
         const callbackHandler = async () => {
             const args: any = {};
-            this.userManager.signinRedirectCallback(args);
+            return this.userManager.signinRedirectCallback(args);
         };
 
         const postCallbackRedirect = () => {
@@ -36,7 +36,7 @@ export default class OpenIdConnectNavigationStrategies {
             // 'No matching state found in storage' or
             // 'No state in response'
             const url: string = null;
-            this.userManager.signinSilentCallback(url);
+            return this.userManager.signinSilentCallback(url);
         };
 
         const postCallbackRedirect = () => {
@@ -51,7 +51,7 @@ export default class OpenIdConnectNavigationStrategies {
 
         const callbackHandler = async () => {
             const args: any = {};
-            this.userManager.signoutRedirectCallback(args);
+            return this.userManager.signoutRedirectCallback(args);
         };
 
         const postCallbackRedirect = () => {

@@ -19,6 +19,10 @@ export default class {
             this.user = null;
         });
 
+        this.openIdConnect.addOrRemoveHandler("addUserLoaded", async () => {
+            this.user = await this.openIdConnect.getUser();
+        });
+
         this.user = await this.openIdConnect.getUser();
     }
 
@@ -28,5 +32,20 @@ export default class {
 
     public logout() {
         this.openIdConnect.logout();
+    }
+
+    protected async loginSilent() {
+        try {
+            await this.openIdConnect.loginSilent();
+        } catch (err) {
+            if (err.error !== "login_required") {
+                throw err;
+            }
+
+            const doRedirect = window.confirm("Login required. Redirect to Identity Provider?");
+            if (doRedirect) {
+                this.login();
+            }
+        }
     }
 }

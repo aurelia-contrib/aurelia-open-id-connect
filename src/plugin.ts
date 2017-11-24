@@ -1,12 +1,11 @@
 import { FrameworkConfiguration, PLATFORM } from "aurelia-framework";
-import { UserManager } from "oidc-client";
+import { Log, UserManager } from "oidc-client";
 import OpenIdConnectConfiguration from "./open-id-connect-configuration";
 import OpenIdConnectLogger from "./open-id-connect-logger";
 
 export default function (
     frameworkConfig: FrameworkConfiguration,
-    callback?: (openIdConnectConfig: OpenIdConnectConfiguration) => void,
-    logLevel?: number) {
+    callback?: (openIdConnectConfig: OpenIdConnectConfiguration) => void) {
 
     // register global resources
     frameworkConfig.globalResources([
@@ -15,7 +14,7 @@ export default function (
     ]);
 
     // TODO: Allow error level configuration in main.ts
-    const openIdConnectLogger = new OpenIdConnectLogger(logLevel);
+    const openIdConnectLogger = new OpenIdConnectLogger(Log.ERROR);
     openIdConnectLogger.debug("Configuring the OpenId Connect Client");
 
     // allow userland to change the OIDC configuration
