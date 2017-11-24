@@ -1,9 +1,25 @@
 import { UserManagerSettings } from "oidc-client";
 
 export default class OpenIdConnectConfiguration {
+
+    // TODO: Making these three fields private
+    // because they are currently redundant with the properties.
+    // The downside is that this is a breaking change.
     public loginRedirectModuleId: string;
     public logoutRedirectModuleId: string;
     public userManagerSettings: UserManagerSettings;
+
+    public get LogoutRedirectModuleId(): string {
+        return this.logoutRedirectModuleId;
+    }
+
+    public get LoginRedirectModuleId(): string {
+        return this.loginRedirectModuleId;
+    }
+
+    public get UserManagerSettings(): UserManagerSettings {
+        return this.userManagerSettings;
+    }
 
     public get RedirectUri(): string {
         return this.userManagerSettings.redirect_uri;

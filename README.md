@@ -116,7 +116,6 @@ Configure routing in the app.ts file.
       private user: User;
 
       constructor(private openIdConnect: OpenIdConnect) {
-        this.openIdConnect.logger.enableLogging(Log.INFO);
         this.openIdConnect.userManager.getUser().then((user) => {
           this.user = user;
         });

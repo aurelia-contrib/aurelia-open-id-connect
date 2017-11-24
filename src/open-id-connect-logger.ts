@@ -4,34 +4,39 @@ export default class OpenIdConnectLogger {
 
     private level: number = Log.NONE;
 
+    constructor(level: number) {
+        this.setLogLevel(level);
+    }
+
+    // TODO: Support more log levels.
+    public debug(message: string) {
+        if (this.level === Log.ERROR) {
+            /* tslint:disable no-console */
+            console.debug(`DEBUG [OpenIdConnect] ${message}`);
+        }
+    }
+
     /**
      * Set the log level for both the aurelia-open-id-connect logger
      * and the underlying oidc-client logger.
      */
-    public enableLogging(level: number) {
+    private setLogLevel(level: number) {
 
-        const validLevels: number[] = [
+        const validOidcClientLevels: number[] = [
             Log.INFO,
             Log.WARN,
             Log.ERROR,
             Log.NONE,
         ];
 
-        if (validLevels.indexOf(level) >= 0) {
+        if (validOidcClientLevels.indexOf(level) >= 0) {
+            this.level = level;
             Log.level = level;
             Log.logger = console;
         } else {
-            this.level = level;
-            const concat: string = validLevels.join(", ");
-            const message: string = `The log level must be one of ${concat}`;
-            throw new Error(message);
-        }
-    }
-
-    public debug(message: string) {
-        if (this.level === Log.ERROR) {
-            /* tslint:disable no-console */
-            console.debug(`DEBUG [OpenIdConnect] ${message}`);
+            const levels: string = validOidcClientLevels.join(", ");
+            const msg: string = `The log level must be one of ${levels}`;
+            this.debug(msg);
         }
     }
 }

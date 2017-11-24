@@ -22,7 +22,7 @@ describe("plugin", () => {
     const pluginCallback = sinon.stub().callsFake((config: OpenIdConnectConfiguration) => {
         // mimic the user-defined configuration that happens in src/main.ts.
         config.loginRedirectModuleId = userDefinedLoginRedirect;
-        config.userManagerSettings.authority = userDefinedAuthority;
+        config.UserManagerSettings.authority = userDefinedAuthority;
     });
 
     // tslint:disable-next-line:only-arrow-functions

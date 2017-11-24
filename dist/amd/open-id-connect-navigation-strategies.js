@@ -60,10 +60,14 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                         var user, args;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
-                                case 0: return [4, this.userManager.getUser()];
+                                case 0:
+                                    this.logger.debug("signInRedirectCallback (1)");
+                                    return [4, this.userManager.getUser()];
                                 case 1:
                                     user = _a.sent();
+                                    this.logger.debug("signInRedirectCallback (2)");
                                     if (user === null || user === undefined) {
+                                        this.logger.debug("signInRedirectCallback (3)");
                                         args = {};
                                         return [2, this.userManager.signinRedirectCallback(args)];
                                     }
@@ -72,9 +76,11 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                         });
                     }); };
                     postCallbackRedirect = function () {
-                        instruction.config.moduleId = _this.openIdConnectConfiguration.loginRedirectModuleId;
+                        _this.logger.debug("signInRedirectCallback (4)");
+                        instruction.config.moduleId =
+                            _this.openIdConnectConfiguration.loginRedirectModuleId;
                     };
-                    return [2, this.runHandlers(callbackHandler, postCallbackRedirect)];
+                    return [2, this.runHandlersWithErrorHandling(callbackHandler, postCallbackRedirect)];
                 });
             });
         };
@@ -87,7 +93,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             var postCallbackRedirect = function () {
                 instruction.config.moduleId = "THIS_HAPPENS_IN_A_CHILD_I_FRAME";
             };
-            return this.runHandlers(callbackHandler, postCallbackRedirect);
+            return this.runHandlersWithErrorHandling(callbackHandler, postCallbackRedirect);
         };
         OpenIdConnectNavigationStrategies.prototype.signoutRedirectCallback = function (instruction) {
             var _this = this;
@@ -99,9 +105,9 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 instruction.config.moduleId =
                     _this.openIdConnectConfiguration.logoutRedirectModuleId;
             };
-            return this.runHandlers(callbackHandler, postCallbackRedirect);
+            return this.runHandlersWithErrorHandling(callbackHandler, postCallbackRedirect);
         };
-        OpenIdConnectNavigationStrategies.prototype.runHandlers = function (callbackHandler, postCallbackRedirect) {
+        OpenIdConnectNavigationStrategies.prototype.runHandlersWithErrorHandling = function (callbackHandler, postCallbackRedirect) {
             return __awaiter(this, void 0, void 0, function () {
                 var err_1;
                 return __generator(this, function (_a) {

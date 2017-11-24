@@ -6,19 +6,22 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             aurelia_framework_1.PLATFORM.moduleName("./open-id-connect-user-block"),
             aurelia_framework_1.PLATFORM.moduleName("./open-id-connect-user-debug"),
         ]);
-        var logger = frameworkConfig.container.get(open_id_connect_logger_1.default);
-        logger.debug("Configuring the OpenId Connect Client");
+        var openIdConnectLogger = new open_id_connect_logger_1.default();
+        openIdConnectLogger.enableLogging(oidc_client_1.Log.ERROR);
+        openIdConnectLogger.debug("Configuring the OpenId Connect Client");
         var openIdConnectConfig = new open_id_connect_configuration_1.default();
         callback(openIdConnectConfig);
         var userManagerSettings = openIdConnectConfig.userManagerSettings;
         var userManager = new oidc_client_1.UserManager(userManagerSettings);
+        frameworkConfig.container
+            .registerInstance(open_id_connect_logger_1.default, openIdConnectLogger);
         frameworkConfig.container
             .registerInstance(oidc_client_1.UserManager, userManager);
         frameworkConfig.container
             .registerInstance(open_id_connect_configuration_1.default, openIdConnectConfig);
         frameworkConfig.container
             .registerInstance(Window, window);
-        logger.debug("Configured the OpenId Connect Client");
+        openIdConnectLogger.debug("Configured the OpenId Connect Client");
     }
     exports.default = default_1;
 });

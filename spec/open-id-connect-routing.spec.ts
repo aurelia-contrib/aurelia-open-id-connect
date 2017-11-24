@@ -74,7 +74,7 @@ describe("open-id-connect-routing", () => {
 
             it("should use redirect signin strategy during redirection", () => {
                 // arrange
-                openIdConnectNavigationStrategies.silentSignICallback.reset();
+                openIdConnectNavigationStrategies.silentSignInCallback.reset();
                 openIdConnectNavigationStrategies.signInRedirectCallback.reset();
 
                 // mimic working in top level window
@@ -86,7 +86,7 @@ describe("open-id-connect-routing", () => {
 
                 // assert
                 sinon.assert.notCalled(
-                    openIdConnectNavigationStrategies.silentSignICallback);
+                    openIdConnectNavigationStrategies.silentSignInCallback);
 
                 sinon.assert.calledOnce(
                     openIdConnectNavigationStrategies.signInRedirectCallback);
@@ -94,7 +94,7 @@ describe("open-id-connect-routing", () => {
 
             it("should use silent signin strategy during iFrame redirection", () => {
                 // arrange
-                openIdConnectNavigationStrategies.silentSignICallback.reset();
+                openIdConnectNavigationStrategies.silentSignInCallback.reset();
                 openIdConnectNavigationStrategies.signInRedirectCallback.reset();
 
                 // mimic working in an iframe
@@ -106,7 +106,7 @@ describe("open-id-connect-routing", () => {
 
                 // assert
                 sinon.assert.calledOnce(
-                    openIdConnectNavigationStrategies.silentSignICallback);
+                    openIdConnectNavigationStrategies.silentSignInCallback);
 
                 sinon.assert.notCalled(
                     openIdConnectNavigationStrategies.signInRedirectCallback);

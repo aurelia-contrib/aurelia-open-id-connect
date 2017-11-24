@@ -29,7 +29,7 @@ export default class OpenIdConnectRouting {
             name: "logInRedirectCallback",
             navigationStrategy: (instruction: NavigationInstruction) => {
                 if (this.isSilentLogin()) {
-                    return this.openIdConnectNavigationStrategies.silentSignICallback(instruction);
+                    return this.openIdConnectNavigationStrategies.silentSignInCallback(instruction);
                 } else {
                     return this.openIdConnectNavigationStrategies.signInRedirectCallback(instruction);
                 }
@@ -42,7 +42,7 @@ export default class OpenIdConnectRouting {
         routerConfiguration.mapRoute({
             name: "logOutRedirectCallback",
             navigationStrategy: (instruction: NavigationInstruction) => {
-                return this.openIdConnectNavigationStrategies.signoutRedirectCallback(instruction);
+                return this.openIdConnectNavigationStrategies.signOutRedirectCallback(instruction);
             },
             route: this.getPath(this.openIdConnectConfiguration.PostLogoutRedirectUri),
         });

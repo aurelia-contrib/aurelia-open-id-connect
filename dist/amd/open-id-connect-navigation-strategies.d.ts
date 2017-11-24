@@ -10,5 +10,5 @@ export default class OpenIdConnectNavigationStrategies {
     signInRedirectCallback(instruction: NavigationInstruction): Promise<any>;
     silentSignICallback(instruction: NavigationInstruction): Promise<any>;
     signoutRedirectCallback(instruction: NavigationInstruction): Promise<any>;
-    private runHandlers(callbackHandler, postCallbackRedirect);
+    private runHandlersWithErrorHandling(callbackHandler, postCallbackRedirect);
 }
