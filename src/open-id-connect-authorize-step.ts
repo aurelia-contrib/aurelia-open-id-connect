@@ -4,8 +4,8 @@ import {
     Redirect,
 } from "aurelia-router";
 import { UserManager } from "oidc-client";
-import OpenIdConnectLogger from "./open-id-connect-logger";
-import OpenIdConnectRoles from "./open-id-connect-roles";
+import { OpenIdConnectRoles } from ".";
+import { OpenIdConnectLogger } from "./index-internal";
 
 @autoinject
 export default class OpenIdConnectAuthorizeStep {

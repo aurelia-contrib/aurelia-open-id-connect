@@ -2,10 +2,11 @@ import { NavigationInstruction, RouteConfig } from "aurelia-router";
 import { assert } from "chai";
 import { UserManager } from "oidc-client";
 import sinon = require("sinon");
-import OpenIdConnectConfiguration from "../src/open-id-connect-configuration";
-import OpenIdConnectLogger from "../src/open-id-connect-logger";
-
-import OpenIdConnectNavigationStrategies from "../src/open-id-connect-navigation-strategies";
+import { OpenIdConnectConfiguration } from "../src";
+import {
+    OpenIdConnectLogger,
+    OpenIdConnectNavigationStrategies,
+} from "../src/index-internal";
 
 describe("open-id-connect-navigation-strategies", () => {
 

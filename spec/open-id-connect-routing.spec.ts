@@ -1,11 +1,13 @@
 import { RouterConfiguration } from "aurelia-router";
 import { assert } from "chai";
 import sinon = require("sinon");
-import OpenIdConnectAuthorizeStep from "../src/open-id-connect-authorize-step";
-import OpenIdConnectConfiguration from "../src/open-id-connect-configuration";
-import OpenIdConnectLogger from "../src/open-id-connect-logger";
-import OpenIdConnectNavigationStrategies from "../src/open-id-connect-navigation-strategies";
-import OpenIdConnectRouting from "../src/open-id-connect-routing";
+import { OpenIdConnectConfiguration } from "../src";
+import {
+    OpenIdConnectAuthorizeStep,
+    OpenIdConnectLogger,
+    OpenIdConnectNavigationStrategies,
+    OpenIdConnectRouting,
+} from "../src/index-internal";
 
 describe("open-id-connect-routing", () => {
 

@@ -1,7 +1,7 @@
 import { FrameworkConfiguration, PLATFORM } from "aurelia-framework";
 import { Log, UserManager } from "oidc-client";
-import OpenIdConnectConfiguration from "./open-id-connect-configuration";
-import OpenIdConnectLogger from "./open-id-connect-logger";
+import { OpenIdConnectConfiguration } from ".";
+import { OpenIdConnectLogger } from "./index-internal";
 
 export default function (
     frameworkConfig: FrameworkConfiguration,

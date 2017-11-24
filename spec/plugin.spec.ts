@@ -1,9 +1,14 @@
 import { Container, FrameworkConfiguration } from "aurelia-framework";
 import { UserManager } from "oidc-client";
 import sinon = require("sinon");
-import OpenIdConnectConfiguration from "../src/open-id-connect-configuration";
-import OpenIdConnectLogger from "../src/open-id-connect-logger";
-import plugin from "../src/plugin";
+import {
+    configure,
+    OpenIdConnect,
+    OpenIdConnectConfiguration,
+} from "../src";
+import {
+    OpenIdConnectLogger,
+} from "../src/index-internal";
 
 describe("plugin", () => {
 
@@ -28,7 +33,7 @@ describe("plugin", () => {
     // tslint:disable-next-line:only-arrow-functions
     beforeEach(function () {
         // act
-        plugin(frameworkConfig, pluginCallback);
+        configure(frameworkConfig, pluginCallback);
     });
 
     const resourcesToAdd = [

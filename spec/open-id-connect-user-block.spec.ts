@@ -1,8 +1,8 @@
 import { assert } from "chai";
 import { UserManager } from "oidc-client";
 import sinon = require("sinon");
-import OpenIdConnect from "../src/open-id-connect";
-import OpenIdConnectUserBlock from "../src/open-id-connect-user-block";
+import { OpenIdConnect } from "../src";
+import { OpenIdConnectUserBlock } from "../src/index-internal";
 
 describe("open-id-connect-user-block", () => {
 

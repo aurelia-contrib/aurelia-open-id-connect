@@ -1,5 +1,5 @@
 import { UserManager } from "oidc-client";
-import OpenIdConnectLogger from "./open-id-connect-logger";
+import { OpenIdConnectLogger } from "./index-internal";
 
 export default interface IRedirectHandler {
     (userManager: UserManager, logger: OpenIdConnectLogger): Promise<any>;
