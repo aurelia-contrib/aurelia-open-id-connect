@@ -60,8 +60,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                         var args;
                         return __generator(this, function (_a) {
                             args = {};
-                            this.userManager.signinRedirectCallback(args);
-                            return [2];
+                            return [2, this.userManager.signinRedirectCallback(args)];
                         });
                     }); };
                     postCallbackRedirect = function () {
@@ -78,8 +77,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 var url;
                 return __generator(this, function (_a) {
                     url = null;
-                    this.userManager.signinSilentCallback(url);
-                    return [2];
+                    return [2, this.userManager.signinSilentCallback(url)];
                 });
             }); };
             var postCallbackRedirect = function () {
@@ -93,8 +91,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 var args;
                 return __generator(this, function (_a) {
                     args = {};
-                    this.userManager.signoutRedirectCallback(args);
-                    return [2];
+                    return [2, this.userManager.signoutRedirectCallback(args)];
                 });
             }); };
             var postCallbackRedirect = function () {

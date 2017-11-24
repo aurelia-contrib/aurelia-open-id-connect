@@ -8,4 +8,5 @@ export default class  {
     attached(): Promise<void>;
     login(): void;
     logout(): void;
+    protected loginSilent(): Promise<void>;
 }

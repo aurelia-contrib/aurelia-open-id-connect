@@ -67,6 +67,19 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect"], functio
                             this.openIdConnect.addOrRemoveHandler("addUserUnloaded", function () {
                                 _this.user = null;
                             });
+                            this.openIdConnect.addOrRemoveHandler("addUserLoaded", function () { return __awaiter(_this, void 0, void 0, function () {
+                                var _a;
+                                return __generator(this, function (_b) {
+                                    switch (_b.label) {
+                                        case 0:
+                                            _a = this;
+                                            return [4, this.openIdConnect.getUser()];
+                                        case 1:
+                                            _a.user = _b.sent();
+                                            return [2];
+                                    }
+                                });
+                            }); });
                             _a = this;
                             return [4, this.openIdConnect.getUser()];
                         case 1:
@@ -81,6 +94,32 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect"], functio
         };
         default_1.prototype.logout = function () {
             this.openIdConnect.logout();
+        };
+        default_1.prototype.loginSilent = function () {
+            return __awaiter(this, void 0, void 0, function () {
+                var err_1, doRedirect;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            _a.trys.push([0, 2, , 3]);
+                            return [4, this.openIdConnect.loginSilent()];
+                        case 1:
+                            _a.sent();
+                            return [3, 3];
+                        case 2:
+                            err_1 = _a.sent();
+                            if (err_1.error !== "login_required") {
+                                throw err_1;
+                            }
+                            doRedirect = window.confirm("Login required. Redirect to Identity Provider?");
+                            if (doRedirect) {
+                                this.login();
+                            }
+                            return [3, 3];
+                        case 3: return [2];
+                    }
+                });
+            });
         };
         default_1 = __decorate([
             aurelia_framework_1.autoinject,
