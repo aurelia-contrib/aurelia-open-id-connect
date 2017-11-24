@@ -42,7 +42,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-logger", "./open-id-connect-routing"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_logger_1, open_id_connect_routing_1) {
+define(["require", "exports", "aurelia-framework", "oidc-client", "./index-internal"], function (require, exports, aurelia_framework_1, oidc_client_1, index_internal_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnect = (function () {
@@ -107,8 +107,8 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
         };
         OpenIdConnect = __decorate([
             aurelia_framework_1.autoinject,
-            __metadata("design:paramtypes", [open_id_connect_routing_1.default,
-                open_id_connect_logger_1.default,
+            __metadata("design:paramtypes", [index_internal_1.OpenIdConnectRouting,
+                index_internal_1.OpenIdConnectLogger,
                 oidc_client_1.UserManager])
         ], OpenIdConnect);
         return OpenIdConnect;

@@ -42,7 +42,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-client", "./open-id-connect-logger", "./open-id-connect-roles"], function (require, exports, aurelia_framework_1, aurelia_router_1, oidc_client_1, open_id_connect_logger_1, open_id_connect_roles_1) {
+define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-client", ".", "./index-internal"], function (require, exports, aurelia_framework_1, aurelia_router_1, oidc_client_1, _1, index_internal_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnectAuthorizeStep = (function () {
@@ -58,7 +58,7 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
                         case 0: return [4, this.userManager.getUser()];
                         case 1:
                             user = _a.sent();
-                            if (this.requiresRole(navigationInstruction, open_id_connect_roles_1.default.Authenticated)) {
+                            if (this.requiresRole(navigationInstruction, _1.OpenIdConnectRoles.Authenticated)) {
                                 if (user === null) {
                                     this.logger.debug("Requires authenticated role.");
                                     return [2, next.cancel(new aurelia_router_1.Redirect("/"))];
@@ -78,7 +78,7 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
         OpenIdConnectAuthorizeStep = __decorate([
             aurelia_framework_1.autoinject,
             __metadata("design:paramtypes", [oidc_client_1.UserManager,
-                open_id_connect_logger_1.default])
+                index_internal_1.OpenIdConnectLogger])
         ], OpenIdConnectAuthorizeStep);
         return OpenIdConnectAuthorizeStep;
     }());

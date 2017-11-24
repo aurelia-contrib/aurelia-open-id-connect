@@ -1,7 +1,6 @@
 import { RouterConfiguration } from "aurelia-router";
-import OpenIdConnectConfiguration from "./open-id-connect-configuration";
-import OpenIdConnectLogger from "./open-id-connect-logger";
-import OpenIdConnectNavigationStrategies from "./open-id-connect-navigation-strategies";
+import { OpenIdConnectConfiguration } from ".";
+import { OpenIdConnectLogger, OpenIdConnectNavigationStrategies } from "./index-internal";
 export default class OpenIdConnectRouting {
     private openIdConnectConfiguration;
     private openIdConnectNavigationStrategies;
