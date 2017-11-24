@@ -1,36 +1,11 @@
-import {
-    autoinject,
-    noView,
-    valueConverter,
-} from "aurelia-framework";
-import { NavModel } from "aurelia-router";
-import { User } from "oidc-client";
-import OpenIdConnectRoles from "./open-id-connect-roles";
+/* TODO: Create a value converter that filters the naviation based on the
+ * the current user's role. Usage will look something like this:
 
-// We use `noView` to prevent Aurelia from looking for a related .html file.
-// todo: Use `export default` once Aurelia releases a build with the bug fix.
-// todo: The bug issue is here: https://github.com/aurelia/templating/issues/498
-@autoinject
-@noView
-@valueConverter("open-id-connect-role-filter")
-export default class OpenIdConnectRoleFilterValueConverter {
+    <ul>
+    <li repeat.for="nav of router.navigation | openIdConnectRoleFilter">
+        <a href.bind="nav.href">${nav.title}</a>
+    </li>
+    <li><open-id-connect-user-block></open-id-connect-user-block></li>
+    </ul>
 
-    public toView(navigation: NavModel[], user: User) {
-
-        return navigation.filter((element) => {
-            const roles: OpenIdConnectRoles[] = element.settings.roles;
-
-            if (roles.indexOf(OpenIdConnectRoles.Everyone) >= 0) {
-                return true;
-            }
-
-            if (roles.indexOf(OpenIdConnectRoles.Authorized) >= 0) {
-                return user !== null;
-            }
-
-            if (roles.indexOf(OpenIdConnectRoles.Administrator) >= 0) {
-                // todo: Check for admin role.
-            }
-        });
-    }
-}
+ */

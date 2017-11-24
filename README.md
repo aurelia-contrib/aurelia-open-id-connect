@@ -45,8 +45,7 @@ We use the Aurelia CLI, so we add the following to `aurelia.json` in a bundle.
             "open-id-connect-user-block.html",
             "open-id-connect-user-block.js",
             "open-id-connect-user-debug.html",
-            "open-id-connect-user-debug.js",
-            "open-id-connect-role-filter.js"
+            "open-id-connect-user-debug.js"
         ]
     },
     "oidc-client"

@@ -26,7 +26,7 @@ describe("plugin", () => {
     });
 
     // tslint:disable-next-line:only-arrow-functions
-    beforeEach(function() {
+    beforeEach(function () {
         // act
         plugin(frameworkConfig, pluginCallback);
     });
@@ -34,7 +34,6 @@ describe("plugin", () => {
     const resourcesToAdd = [
         "./open-id-connect-user-block",
         "./open-id-connect-user-debug",
-        "./open-id-connect-role-filter",
     ];
 
     it(`should add these to global resources \r\n\t${resourcesToAdd.join("\r\n\t")}`, () => {

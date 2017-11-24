@@ -1,4 +1,4 @@
-import { FrameworkConfiguration } from "aurelia-framework";
+import { FrameworkConfiguration, PLATFORM } from "aurelia-framework";
 import { UserManager } from "oidc-client";
 import OpenIdConnectConfiguration from "./open-id-connect-configuration";
 import OpenIdConnectLogger from "./open-id-connect-logger";
@@ -9,9 +9,8 @@ export default function (
 
     // register global resources
     frameworkConfig.globalResources([
-        "./open-id-connect-user-block",
-        "./open-id-connect-user-debug",
-        "./open-id-connect-role-filter",
+        PLATFORM.moduleName("./open-id-connect-user-block"),
+        PLATFORM.moduleName("./open-id-connect-user-debug"),
     ]);
 
     const logger: OpenIdConnectLogger = frameworkConfig.container.get(OpenIdConnectLogger);
