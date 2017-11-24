@@ -5,6 +5,27 @@ define(["require", "exports"], function (require, exports) {
         function OpenIdConnectConfiguration() {
             this.setDefaults();
         }
+        Object.defineProperty(OpenIdConnectConfiguration.prototype, "LogoutRedirectModuleId", {
+            get: function () {
+                return this.logoutRedirectModuleId;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(OpenIdConnectConfiguration.prototype, "LoginRedirectModuleId", {
+            get: function () {
+                return this.loginRedirectModuleId;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(OpenIdConnectConfiguration.prototype, "UserManagerSettings", {
+            get: function () {
+                return this.userManagerSettings;
+            },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(OpenIdConnectConfiguration.prototype, "RedirectUri", {
             get: function () {
                 return this.userManagerSettings.redirect_uri;

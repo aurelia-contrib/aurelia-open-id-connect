@@ -28,7 +28,7 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-authorize-
                 name: "logInRedirectCallback",
                 navigationStrategy: function (instruction) {
                     if (_this.isSilentLogin()) {
-                        return _this.openIdConnectNavigationStrategies.silentSignICallback(instruction);
+                        return _this.openIdConnectNavigationStrategies.silentSignInCallback(instruction);
                     }
                     else {
                         return _this.openIdConnectNavigationStrategies.signInRedirectCallback(instruction);
@@ -42,7 +42,7 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-authorize-
             routerConfiguration.mapRoute({
                 name: "logOutRedirectCallback",
                 navigationStrategy: function (instruction) {
-                    return _this.openIdConnectNavigationStrategies.signoutRedirectCallback(instruction);
+                    return _this.openIdConnectNavigationStrategies.signOutRedirectCallback(instruction);
                 },
                 route: this.getPath(this.openIdConnectConfiguration.PostLogoutRedirectUri),
             });
