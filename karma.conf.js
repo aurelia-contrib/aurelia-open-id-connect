@@ -20,7 +20,9 @@ module.exports = function (config) {
         // https://github.com/monounity/karma-typescript
         karmaTypescriptConfig: {
             reports: {
-                "text-summary": null
+                "text": null,
+                "text-summary": null,
+                "html": "coverage",
             },
             compilerOptions: {
                 target: "es5",
