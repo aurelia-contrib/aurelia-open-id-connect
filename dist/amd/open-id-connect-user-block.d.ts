@@ -1,5 +1,5 @@
 import { User } from "oidc-client";
-import { OpenIdConnect } from ".";
+import OpenIdConnect from "./open-id-connect";
 export default class  {
     private openIdConnect;
     protected user: User;

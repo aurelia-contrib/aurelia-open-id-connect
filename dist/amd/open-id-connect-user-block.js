@@ -42,7 +42,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "aurelia-framework", "."], function (require, exports, aurelia_framework_1, _1) {
+define(["require", "exports", "aurelia-framework", "./open-id-connect"], function (require, exports, aurelia_framework_1, open_id_connect_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var default_1 = (function () {
@@ -124,7 +124,7 @@ define(["require", "exports", "aurelia-framework", "."], function (require, expo
         default_1 = __decorate([
             aurelia_framework_1.autoinject,
             aurelia_framework_1.customElement("open-id-connect-user-block"),
-            __metadata("design:paramtypes", [_1.OpenIdConnect])
+            __metadata("design:paramtypes", [open_id_connect_1.default])
         ], default_1);
         return default_1;
     }());

@@ -1,7 +1,7 @@
 import { NavigationInstruction } from "aurelia-router";
 import { UserManager } from "oidc-client";
-import { OpenIdConnectConfiguration } from ".";
-import { OpenIdConnectLogger } from "./index-internal";
+import OpenIdConnectConfiguration from "./open-id-connect-configuration";
+import OpenIdConnectLogger from "./open-id-connect-logger";
 export default class OpenIdConnectNavigationStrategies {
     private logger;
     private openIdConnectConfiguration;

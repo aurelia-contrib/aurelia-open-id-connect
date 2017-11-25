@@ -1,6 +1,6 @@
 import { NavigationInstruction } from "aurelia-router";
 import { UserManager } from "oidc-client";
-import { OpenIdConnectLogger } from "./index-internal";
+import OpenIdConnectLogger from "./open-id-connect-logger";
 export default class OpenIdConnectAuthorizeStep {
     private userManager;
     private logger;
