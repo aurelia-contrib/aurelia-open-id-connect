@@ -1,55 +1,66 @@
 import { UserManagerSettings } from "oidc-client";
+import { OpenIdConnectConfigurationDto } from "./index";
+
+const defaultClientUri = "https://localhost:9000";
 
 export default class OpenIdConnectConfiguration {
 
-    // TODO: Making these three fields private
-    // because they are currently redundant with the properties.
-    // The downside is that this is a breaking change.
-    public loginRedirectModuleId: string;
-    public logoutRedirectModuleId: string;
-    public userManagerSettings: UserManagerSettings;
+    [key: string]: any;
 
-    public get LogoutRedirectModuleId(): string {
-        return this.logoutRedirectModuleId;
+    // tslint:disable-next-line:variable-name
+    private  _loginRedirectModuleId: string = "/";
+    // tslint:disable-next-line:variable-name
+    private  _logoutRedirectModuleId: string = "/";
+    // tslint:disable-next-line:variable-name
+    private  _userManagerSettings: UserManagerSettings = {
+        authority: "https://localhost:5000",
+        client_id: "Aurelia.OpenIdConnect",
+        loadUserInfo: true,
+        post_logout_redirect_uri: `${defaultClientUri}/signout-oidc`,
+        redirect_uri: `${defaultClientUri}/signin-oidc`,
+        response_type: "id_token token",
+        scope: "openid email roles profile",
+        silent_redirect_uri: `${defaultClientUri}/signin-oidc`,
+    };
+
+    public get loginRedirectModuleId(): string {
+        return this._loginRedirectModuleId;
     }
 
-    public get LoginRedirectModuleId(): string {
-        return this.loginRedirectModuleId;
+    public get logoutRedirectModuleId(): string {
+        return this._logoutRedirectModuleId;
     }
 
-    public get UserManagerSettings(): UserManagerSettings {
-        return this.userManagerSettings;
+    public get userManagerSettings(): UserManagerSettings {
+        return this._userManagerSettings;
     }
 
-    public get RedirectUri(): string {
-        return this.userManagerSettings.redirect_uri;
+    public get redirectUri(): string {
+        return this._userManagerSettings.redirect_uri;
     }
 
-    public get PostLogoutRedirectUri(): string {
-        return this.userManagerSettings.post_logout_redirect_uri;
+    public get postLogoutRedirectUri(): string {
+        return this._userManagerSettings.post_logout_redirect_uri;
     }
 
-    constructor() {
-        this.setDefaults();
-    }
+    constructor(dto?: OpenIdConnectConfigurationDto) {
 
-    private setDefaults() {
+        if (!dto) {
+            return;
+        }
 
-        const authority = "https://localhost:5000";
-        const clientApp = "https://localhost:9000";
+        Object.keys(dto).forEach((k) => {
+            this["_" + k] = dto[k];
+        });
 
-        this.loginRedirectModuleId = "home";
-        this.logoutRedirectModuleId = "home";
-        this.userManagerSettings = {
-            authority,
-            client_id: "Aurelia.OpenIdConnect",
-            filterProtocolClaims: true, // todo: What is this?
-            loadUserInfo: true,
-            post_logout_redirect_uri: `${clientApp}/signout-oidc`,
-            redirect_uri: `${clientApp}/signin-oidc`,
-            response_type: "id_token token",
-            scope: "openid email roles profile",
-            silent_redirect_uri: `${clientApp}/signin-oidc`,
-        };
+        if (!dto.userManagerSettings) {
+            return;
+        }
+
+        Object.keys(dto.userManagerSettings).forEach((k) => {
+            // Use a type assertion to suppress the implicty any error.
+            // Element implicitly has an 'any' type because type 'UserManagerSettings' has no index signature.
+            (this.userManagerSettings as any)[k] = (dto.userManagerSettings as any)[k];
+        });
     }
 }

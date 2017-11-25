@@ -3,9 +3,9 @@ import {
     NavigationInstruction,
     RouterConfiguration,
 } from "aurelia-router";
-import { OpenIdConnectConfiguration } from ".";
 import {
     OpenIdConnectAuthorizeStep,
+    OpenIdConnectConfiguration,
     OpenIdConnectLogger,
     OpenIdConnectNavigationStrategies,
 } from "./index-internal";
@@ -36,7 +36,7 @@ export default class OpenIdConnectRouting {
                     return this.openIdConnectNavigationStrategies.signInRedirectCallback(instruction);
                 }
             },
-            route: this.getPath(this.openIdConnectConfiguration.RedirectUri),
+            route: this.getPath(this.openIdConnectConfiguration.redirectUri),
         });
     }
 
@@ -46,7 +46,7 @@ export default class OpenIdConnectRouting {
             navigationStrategy: (instruction: NavigationInstruction) => {
                 return this.openIdConnectNavigationStrategies.signOutRedirectCallback(instruction);
             },
-            route: this.getPath(this.openIdConnectConfiguration.PostLogoutRedirectUri),
+            route: this.getPath(this.openIdConnectConfiguration.postLogoutRedirectUri),
         });
     }
 

@@ -2,8 +2,8 @@ import { NavigationInstruction, RouteConfig } from "aurelia-router";
 import { assert } from "chai";
 import { UserManager } from "oidc-client";
 import sinon = require("sinon");
-import { OpenIdConnectConfiguration } from "../src";
 import {
+    OpenIdConnectConfiguration,
     OpenIdConnectLogger,
     OpenIdConnectNavigationStrategies,
 } from "../src/index-internal";
@@ -16,10 +16,10 @@ describe("open-id-connect-navigation-strategies", () => {
     const instruction = sinon.createStubInstance(NavigationInstruction);
 
     const loginRedirectModuleId = "login";
-    sinon.stub(configuration, "LoginRedirectModuleId").get(() => loginRedirectModuleId);
+    sinon.stub(configuration, "loginRedirectModuleId").get(() => loginRedirectModuleId);
 
     const logoutRedirectModuleId = "logout";
-    sinon.stub(configuration, "LogoutRedirectModuleId").get(() => logoutRedirectModuleId);
+    sinon.stub(configuration, "logoutRedirectModuleId").get(() => logoutRedirectModuleId);
 
     instruction.config = { moduleId: "" } as RouteConfig;
 

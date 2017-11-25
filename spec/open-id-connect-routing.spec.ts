@@ -1,9 +1,9 @@
 import { RouterConfiguration } from "aurelia-router";
 import { assert } from "chai";
 import sinon = require("sinon");
-import { OpenIdConnectConfiguration } from "../src";
 import {
     OpenIdConnectAuthorizeStep,
+    OpenIdConnectConfiguration,
     OpenIdConnectLogger,
     OpenIdConnectNavigationStrategies,
     OpenIdConnectRouting,
@@ -38,8 +38,8 @@ describe("open-id-connect-routing", () => {
     const redirectUri = `${uriLeftPart}${signInPath}`;
     const postLogoutRedirectUri = `${uriLeftPart}${signOutPath}`;
 
-    sinon.stub(openIdConnectConfiguration, "RedirectUri").get(() => redirectUri);
-    sinon.stub(openIdConnectConfiguration, "PostLogoutRedirectUri").get(() => postLogoutRedirectUri);
+    sinon.stub(openIdConnectConfiguration, "redirectUri").get(() => redirectUri);
+    sinon.stub(openIdConnectConfiguration, "postLogoutRedirectUri").get(() => postLogoutRedirectUri);
 
     const openIdConnectRouting = new OpenIdConnectRouting(
         openIdConnectConfiguration,

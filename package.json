@@ -55,6 +55,7 @@
     "karma-typescript": "^3.0.8",
     "mocha": "^4.0.1",
     "phantomjs": "^2.1.7",
+    "proxyquire": "^1.8.0",
     "sinon": "^4.1.2",
     "tslint": "^5.8.0",
     "tslint-microsoft-contrib": "^5.0.1",

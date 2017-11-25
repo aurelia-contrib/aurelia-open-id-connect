@@ -1,8 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { NavigationInstruction } from "aurelia-router";
 import { UserManager } from "oidc-client";
-import { OpenIdConnectConfiguration } from ".";
-import { OpenIdConnectLogger } from "./index-internal";
+import { OpenIdConnectConfiguration, OpenIdConnectLogger } from "./index-internal";
 
 @autoinject
 export default class OpenIdConnectNavigationStrategies {
@@ -21,7 +20,7 @@ export default class OpenIdConnectNavigationStrategies {
 
         const postCallbackRedirect = () => {
             instruction.config.moduleId =
-                this.openIdConnectConfiguration.LoginRedirectModuleId;
+                this.openIdConnectConfiguration.loginRedirectModuleId;
         };
 
         return this.runHandlerAndAlwaysRedirect(callbackHandler, postCallbackRedirect);
@@ -56,7 +55,7 @@ export default class OpenIdConnectNavigationStrategies {
 
         const postCallbackRedirect = () => {
             instruction.config.moduleId =
-                this.openIdConnectConfiguration.LogoutRedirectModuleId;
+                this.openIdConnectConfiguration.logoutRedirectModuleId;
         };
 
         return this.runHandlerAndAlwaysRedirect(callbackHandler, postCallbackRedirect);

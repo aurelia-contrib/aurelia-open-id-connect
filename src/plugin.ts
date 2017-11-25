@@ -1,11 +1,16 @@
 import { FrameworkConfiguration, PLATFORM } from "aurelia-framework";
-import { Log, UserManager } from "oidc-client";
-import { OpenIdConnectConfiguration } from ".";
-import { OpenIdConnectLogger } from "./index-internal";
+import { UserManager } from "oidc-client";
+import { OpenIdConnectConfigurationDto } from ".";
+import {
+    OpenIdConnectConfiguration,
+    OpenIdConnectFactory,
+    OpenIdConnectLogger,
+} from "./index-internal";
 
 export default function (
     frameworkConfig: FrameworkConfiguration,
-    callback?: (openIdConnectConfig: OpenIdConnectConfiguration) => void) {
+    callback?: () => OpenIdConnectConfigurationDto,
+    factory?: OpenIdConnectFactory) {
 
     // register global resources
     frameworkConfig.globalResources([
@@ -14,16 +19,16 @@ export default function (
     ]);
 
     // TODO: Allow error level configuration in main.ts
-    const openIdConnectLogger = new OpenIdConnectLogger(Log.ERROR);
+    const openIdConnectLogger = factory.createOpenIdConnectLogger(0);
     openIdConnectLogger.debug("Configuring the OpenId Connect Client");
 
     // allow userland to change the OIDC configuration
-    const openIdConnectConfig = new OpenIdConnectConfiguration();
-    callback(openIdConnectConfig);
+    const dto = callback();
+    const openIdConnectConfig = factory.createOpenIdConnectConfiguration(dto);
 
     // register instances in the DI container
-    const userManagerSettings = openIdConnectConfig.UserManagerSettings;
-    const userManager = new UserManager(userManagerSettings);
+    const userManagerSettings = dto.userManagerSettings;
+    const userManager = factory.createUserManager(userManagerSettings);
 
     frameworkConfig.container
         .registerInstance(OpenIdConnectLogger, openIdConnectLogger);

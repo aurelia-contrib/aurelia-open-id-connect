@@ -1,12 +1,15 @@
 import { Container, FrameworkConfiguration } from "aurelia-framework";
+import { assert } from "chai";
 import { UserManager } from "oidc-client";
 import sinon = require("sinon");
 import {
     configure,
     OpenIdConnect,
-    OpenIdConnectConfiguration,
+    OpenIdConnectConfigurationDto,
 } from "../src";
 import {
+    OpenIdConnectConfiguration,
+    OpenIdConnectFactory,
     OpenIdConnectLogger,
 } from "../src/index-internal";
 
@@ -14,26 +17,25 @@ describe("plugin", () => {
 
     // arrange
     const logger = sinon.createStubInstance(OpenIdConnectLogger);
+    const configuration = sinon.createStubInstance(OpenIdConnectConfiguration);
+    const userManager = sinon.createStubInstance(UserManager);
+    const factory = sinon.createStubInstance(OpenIdConnectFactory);
+    factory.createOpenIdConnectLogger.returns(logger);
+    factory.createOpenIdConnectConfiguration.returns(configuration);
+    factory.createUserManager.returns(userManager);
 
-    const container = sinon.createStubInstance(Container);
-    container.get.withArgs(OpenIdConnectLogger).returns(logger);
-
+    const dependencyContainer = sinon.createStubInstance(Container);
     const frameworkConfig = sinon.createStubInstance(FrameworkConfiguration);
-    frameworkConfig.container = container;
+    frameworkConfig.container = dependencyContainer;
 
-    const userDefinedLoginRedirect = "userDefinedLoginRedirect";
-    const userDefinedAuthority = "userDefinedAuthority";
+    const userDefinedConfiguration = {
+        userManagerSettings: {},
+    };
+    const pluginCallback = sinon.stub().callsFake(() => userDefinedConfiguration);
 
-    const pluginCallback = sinon.stub().callsFake((config: OpenIdConnectConfiguration) => {
-        // mimic the user-defined configuration that happens in src/main.ts.
-        config.loginRedirectModuleId = userDefinedLoginRedirect;
-        config.UserManagerSettings.authority = userDefinedAuthority;
-    });
-
-    // tslint:disable-next-line:only-arrow-functions
-    beforeEach(function () {
+    before(() => {
         // act
-        configure(frameworkConfig, pluginCallback);
+        configure(frameworkConfig, pluginCallback, factory);
     });
 
     const resourcesToAdd = [
@@ -46,29 +48,49 @@ describe("plugin", () => {
         sinon.assert.calledWith(frameworkConfig.globalResources, resourcesToAdd);
     });
 
-    it("should register a UserManager instance that has user-defined configuration", () => {
-
-        // Use the `any` type for the userManager, because the oidc-client
-        // type declarations do not include the settings property.
-        const matcher = sinon.match((userManager: any) =>
-            userManager.settings.authority === userDefinedAuthority);
-
+    it(`should register an OpenIdConnectLogger with the DI container`, () => {
         // assert
         sinon.assert.calledWith(
-            container.registerInstance,
-            UserManager,
-            matcher);
+            dependencyContainer.registerInstance,
+            OpenIdConnectLogger,
+            sinon.match.same(logger));
     });
 
-    it("should register an OpenIdConnectConfiguration instance that has user-defined configuration", () => {
-
-        const matcher = sinon.match((config: OpenIdConnectConfiguration) =>
-            config.loginRedirectModuleId === userDefinedLoginRedirect);
-
+    it(`should register a UserManager instance with the DI container`, () => {
         // assert
         sinon.assert.calledWith(
-            container.registerInstance,
+            dependencyContainer.registerInstance,
+            UserManager,
+            sinon.match.same(userManager));
+    });
+
+    it(`should register an OpenIdConnectConfiguration instance with the DI container`, () => {
+        // assert
+        sinon.assert.calledWith(
+            dependencyContainer.registerInstance,
             OpenIdConnectConfiguration,
-            matcher);
+            sinon.match.same(configuration));
+    });
+
+    it(`should register a Window instance with the DI container`, () => {
+        // assert
+        sinon.assert.calledWith(
+            dependencyContainer.registerInstance,
+            Window,
+            window);
+    });
+
+    it(`should flow user-defined configuration to the Configuration builder`, () => {
+        // assert
+        sinon.assert.calledWith(
+            factory.createOpenIdConnectConfiguration,
+            sinon.match.same(userDefinedConfiguration));
+    });
+
+    it(`should flow user-defined configuration to the UserManager builder`, () => {
+        // assert
+        sinon.assert.calledWith(
+            factory.createUserManager,
+            sinon.match.same(userDefinedConfiguration.userManagerSettings));
     });
 });
