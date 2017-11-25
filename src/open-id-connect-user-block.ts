@@ -12,7 +12,7 @@ export default class {
         return this.user !== null && this.user !== undefined;
     }
 
-    constructor(private openIdConnect: OpenIdConnect) { }
+    constructor(protected openIdConnect: OpenIdConnect) { }
 
     public async attached() {
         this.openIdConnect.addOrRemoveHandler("addUserUnloaded", () => {
@@ -32,20 +32,5 @@ export default class {
 
     public logout() {
         this.openIdConnect.logout();
-    }
-
-    protected async loginSilent() {
-        try {
-            await this.openIdConnect.loginSilent();
-        } catch (err) {
-            if (err.error !== "login_required") {
-                throw err;
-            }
-
-            const doRedirect = window.confirm("Login required. Redirect to Identity Provider?");
-            if (doRedirect) {
-                this.login();
-            }
-        }
     }
 }
