@@ -4,6 +4,11 @@ import { UserManager } from "oidc-client";
 import OpenIdConnectConfigurationManager from "./open-id-connect-configuration-manager";
 import OpenIdConnectLogger from "./open-id-connect-logger";
 
+// TODO: Move some of the route-definition logic from
+// the open-id-connect-routing.ts file into this file instead.
+// The current file, for instance, could define the
+// { name, navigationStrategy, route } object instead of defining only
+// the navigationStrategy implementation.
 @autoinject
 export default class OpenIdConnectNavigationStrategies {
 
@@ -24,7 +29,9 @@ export default class OpenIdConnectNavigationStrategies {
                 this.openIdConnectConfiguration.loginRedirectModuleId;
         };
 
-        return this.runHandlerAndAlwaysRedirect(callbackHandler, postCallbackRedirect);
+        return this.runHandlerAndCompleteNavigationInstruction(
+            callbackHandler,
+            navigationInstruction);
     }
 
     public silentSignInCallback(instruction: NavigationInstruction): Promise<any> {
@@ -39,11 +46,14 @@ export default class OpenIdConnectNavigationStrategies {
             return this.userManager.signinSilentCallback(url);
         };
 
-        const postCallbackRedirect = () => {
+        const navigationInstruction = () => {
+            // TODO: Use more expressive code to perform the iframe no-op.
             instruction.config.moduleId = "THIS_HAPPENS_IN_A_CHILD_IFRAME";
         };
 
-        return this.runHandlerAndAlwaysRedirect(callbackHandler, postCallbackRedirect);
+        return this.runHandlerAndCompleteNavigationInstruction(
+            callbackHandler,
+            navigationInstruction);
     }
 
     // TODO: Handle the "No end session endpoint url returned" error.
@@ -59,21 +69,23 @@ export default class OpenIdConnectNavigationStrategies {
                 this.openIdConnectConfiguration.logoutRedirectModuleId;
         };
 
-        return this.runHandlerAndAlwaysRedirect(callbackHandler, postCallbackRedirect);
+        return this.runHandlerAndCompleteNavigationInstruction(
+            callbackHandler,
+            navigationInstruction);
     }
 
-    private async runHandlerAndAlwaysRedirect(
+    private async runHandlerAndCompleteNavigationInstruction(
         callbackHandler: () => Promise<any>,
-        postCallbackRedirect: () => void): Promise<any> {
+        navigationInstruction: () => void): Promise<any> {
 
         try {
             this.logger.debug("Handling the response from the Identity Provider");
             await callbackHandler();
             this.logger.debug("Redirecting on authorization success");
-            postCallbackRedirect();
+            navigationInstruction();
         } catch (err) {
             this.logger.debug("Redirecting on authorization error");
-            postCallbackRedirect();
+            navigationInstruction();
             throw err;
         }
     }
