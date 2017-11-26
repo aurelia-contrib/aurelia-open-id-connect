@@ -10,7 +10,9 @@ export default class OpenIdConnectLogger {
     }
 
     constructor(level: number) {
-        this.setLogLevel(level);
+        if (level !== null && level !== undefined) {
+            this.setLogLevel(level);
+        }
     }
 
     // +++++++++++++++++++++++++++++++++++++++++++++
