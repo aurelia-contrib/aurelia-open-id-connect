@@ -1,3 +1,5 @@
+// Until we determine how to use barrels with the Aurelia-CLI,
+// use this internal index only with the tests.
 import IredirectHandler from "./iredirect-handler";
 import OpenIdConnectAuthorizeStep from "./open-id-connect-authorize-step";
 import OpenIdConnectConfigurationManager from "./open-id-connect-configuration-manager";

@@ -1,12 +1,9 @@
 import { autoinject } from "aurelia-framework";
 import { RouterConfiguration } from "aurelia-router";
 import { User, UserManager, UserManagerEvents } from "oidc-client";
-import {
-    OpenIdConnectLogger,
-    OpenIdConnectRouting,
-    UserManagerEventHandler,
-    UserManagerEventsAction,
-} from "./index-internal";
+import { UserManagerEventHandler, UserManagerEventsAction } from "./internal-types";
+import OpenIdConnectLogger from "./open-id-connect-logger";
+import OpenIdConnectRouting from "./open-id-connect-routing";
 
 @autoinject
 export default class OpenIdConnect {

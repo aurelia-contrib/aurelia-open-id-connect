@@ -6,8 +6,9 @@ import {
     Redirect,
 } from "aurelia-router";
 import { UserManager } from "oidc-client";
-import { OpenIdConnectRoles } from ".";
-import { OpenIdConnectConfigurationManager, OpenIdConnectLogger } from "./index-internal";
+import OpenIdConnectConfigurationManager from "./open-id-connect-configuration-manager";
+import OpenIdConnectLogger from "./open-id-connect-logger";
+import OpenIdConnectRoles from "./open-id-connect-roles";
 
 @autoinject
 export default class OpenIdConnectAuthorizeStep implements PipelineStep {

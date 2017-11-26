@@ -1,6 +1,6 @@
 import { autoinject, customElement } from "aurelia-framework";
 import { User } from "oidc-client";
-import { OpenIdConnect } from ".";
+import OpenIdConnect from "./open-id-connect";
 
 @autoinject
 @customElement("open-id-connect-user-block")

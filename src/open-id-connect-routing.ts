@@ -3,12 +3,10 @@ import {
     NavigationInstruction,
     RouterConfiguration,
 } from "aurelia-router";
-import {
-    OpenIdConnectAuthorizeStep,
-    OpenIdConnectConfigurationManager,
-    OpenIdConnectLogger,
-    OpenIdConnectNavigationStrategies,
-} from "./index-internal";
+import OpenIdConnectAuthorizeStep from "./open-id-connect-authorize-step";
+import OpenIdConnectConfigurationManager from "./open-id-connect-configuration-manager";
+import OpenIdConnectLogger from "./open-id-connect-logger";
+import OpenIdConnectNavigationStrategies from "./open-id-connect-navigation-strategies";
 
 @autoinject
 export default class OpenIdConnectRouting {

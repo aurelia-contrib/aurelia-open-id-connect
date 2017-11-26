@@ -1,7 +1,8 @@
 import { autoinject } from "aurelia-framework";
 import { NavigationInstruction } from "aurelia-router";
 import { UserManager } from "oidc-client";
-import { OpenIdConnectConfigurationManager, OpenIdConnectLogger } from "./index-internal";
+import OpenIdConnectConfigurationManager from "./open-id-connect-configuration-manager";
+import OpenIdConnectLogger from "./open-id-connect-logger";
 
 @autoinject
 export default class OpenIdConnectNavigationStrategies {
