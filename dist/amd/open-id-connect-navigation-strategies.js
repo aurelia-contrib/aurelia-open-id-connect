@@ -54,7 +54,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
         OpenIdConnectNavigationStrategies.prototype.signInRedirectCallback = function (instruction) {
             return __awaiter(this, void 0, void 0, function () {
                 var _this = this;
-                var callbackHandler, postCallbackRedirect;
+                var callbackHandler, navigationInstruction;
                 return __generator(this, function (_a) {
                     callbackHandler = function () { return __awaiter(_this, void 0, void 0, function () {
                         var args;
@@ -63,11 +63,11 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                             return [2, this.userManager.signinRedirectCallback(args)];
                         });
                     }); };
-                    postCallbackRedirect = function () {
-                        instruction.config.moduleId =
+                    navigationInstruction = function () {
+                        instruction.config.redirect =
                             _this.openIdConnectConfiguration.loginRedirectModuleId;
                     };
-                    return [2, this.runHandlerAndAlwaysRedirect(callbackHandler, postCallbackRedirect)];
+                    return [2, this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction)];
                 });
             });
         };
@@ -80,10 +80,10 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                     return [2, this.userManager.signinSilentCallback(url)];
                 });
             }); };
-            var postCallbackRedirect = function () {
-                instruction.config.moduleId = "THIS_HAPPENS_IN_A_CHILD_IFRAME";
+            var navigationInstruction = function () {
+                instruction.config.redirect = "THIS_HAPPENS_IN_A_CHILD_IFRAME";
             };
-            return this.runHandlerAndAlwaysRedirect(callbackHandler, postCallbackRedirect);
+            return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
         };
         OpenIdConnectNavigationStrategies.prototype.signOutRedirectCallback = function (instruction) {
             var _this = this;
@@ -94,13 +94,13 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                     return [2, this.userManager.signoutRedirectCallback(args)];
                 });
             }); };
-            var postCallbackRedirect = function () {
-                instruction.config.moduleId =
+            var navigationInstruction = function () {
+                instruction.config.redirect =
                     _this.openIdConnectConfiguration.logoutRedirectModuleId;
             };
-            return this.runHandlerAndAlwaysRedirect(callbackHandler, postCallbackRedirect);
+            return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
         };
-        OpenIdConnectNavigationStrategies.prototype.runHandlerAndAlwaysRedirect = function (callbackHandler, postCallbackRedirect) {
+        OpenIdConnectNavigationStrategies.prototype.runHandlerAndCompleteNavigationInstruction = function (callbackHandler, navigationInstruction) {
             return __awaiter(this, void 0, void 0, function () {
                 var err_1;
                 return __generator(this, function (_a) {
@@ -112,12 +112,12 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                         case 1:
                             _a.sent();
                             this.logger.debug("Redirecting on authorization success");
-                            postCallbackRedirect();
+                            navigationInstruction();
                             return [3, 3];
                         case 2:
                             err_1 = _a.sent();
                             this.logger.debug("Redirecting on authorization error");
-                            postCallbackRedirect();
+                            navigationInstruction();
                             throw err_1;
                         case 3: return [2];
                     }
