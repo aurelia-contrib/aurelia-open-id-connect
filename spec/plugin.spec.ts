@@ -30,7 +30,17 @@ describe("plugin", () => {
 
     context("without user-defined configuration", () => {
 
+        const expectedLogLevel = 100;
+        const expectedUserManager = {};
+
         before(() => {
+            // arrange
+            sinon.stub(configurationManager, "logLevel")
+                .get(() => expectedLogLevel);
+
+            sinon.stub(configurationManager, "userManagerSettings")
+                .get(() => expectedUserManager);
+
             // act
             configure(frameworkConfig, undefined, factory);
         });
@@ -76,6 +86,28 @@ describe("plugin", () => {
                 Window,
                 window);
         });
+
+        it(`should flow ConfigurationManager.logLevel to the Logger builder`, () => {
+            // assert
+            sinon.assert.calledWith(
+                factory.createOpenIdConnectLogger,
+                sinon.match.same(expectedLogLevel));
+        });
+
+        it(`should flow ConfigurationManagaer.userManagerSettings to the UserManager builder`, () => {
+            // assert
+            sinon.assert.calledWith(
+                factory.createUserManager,
+                sinon.match.same(expectedUserManager));
+        });
+
+        it(`should flow empty object to the Configuration builder`, () => {
+            // assert
+            const isEmptyObject = (obj) => Object.keys(obj).length === 0;
+            sinon.assert.calledWith(
+                factory.createOpenIdConnectConfiguration,
+                sinon.match(isEmptyObject));
+        });
     });
 
     context("with user-defined configuration", () => {
@@ -85,38 +117,28 @@ describe("plugin", () => {
             userManagerSettings: {},
         };
 
-        sinon.stub(configurationManager, "logLevel")
-            .get(() => userDefinedConfiguration.logLevel);
+        // we support two callback interfaces:
+        // one started with version 0.19,
+        // one lasted until version 0.18
+        const pluginCallbackV19 = () => userDefinedConfiguration;
+        const pluginCallbackV18 = (config: OpenIdConnectConfiguration) => {
+            config.logLevel = userDefinedConfiguration.logLevel;
+            config.userManagerSettings = userDefinedConfiguration.userManagerSettings;
+        };
 
-        sinon.stub(configurationManager, "userManagerSettings")
-            .get(() => userDefinedConfiguration.userManagerSettings);
+        let version = 0.19;
+        [pluginCallbackV19, pluginCallbackV18].forEach((callback) => {
+            it(`should flow v${version} user-defined configuration to the Configuration builder`, () => {
+                // act
+                configure(frameworkConfig, callback, factory);
+                // assert
+                sinon.assert.calledWith(
+                    factory.createOpenIdConnectConfiguration,
+                    sinon.match.same(userDefinedConfiguration));
+            });
 
-        const pluginCallback = sinon.stub().callsFake(() => userDefinedConfiguration);
-
-        before(() => {
-            // act
-            configure(frameworkConfig, pluginCallback, factory);
+            version = version - 0.01;
         });
 
-        it(`should flow user-defined configuration to the Configuration builder`, () => {
-            // assert
-            sinon.assert.calledWith(
-                factory.createOpenIdConnectConfiguration,
-                sinon.match.same(userDefinedConfiguration));
-        });
-
-        it(`should flow user-defined configuration to the Logger builder`, () => {
-            // assert
-            sinon.assert.calledWith(
-                factory.createOpenIdConnectLogger,
-                sinon.match.same(userDefinedConfiguration.logLevel));
-        });
-
-        it(`should flow user-defined configuration to the UserManager builder`, () => {
-            // assert
-            sinon.assert.calledWith(
-                factory.createUserManager,
-                sinon.match.same(userDefinedConfiguration.userManagerSettings));
-        });
     });
 });
