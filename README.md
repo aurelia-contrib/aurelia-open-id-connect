@@ -8,6 +8,18 @@ This is [Alpha software][alpha-software]: it is complete enough for *internal* t
 
 If the most recent `aurelia-open-id-connect` release does not work, try an [earlier or later one][0] such as `0.11.2`.
 
+# Demo Projects
+
+The demos have an example of how to configure everything. 
+
+### Smaller Demo(s)
+
+https://github.com/shaunluttin/aurelia-open-id-connect-demos
+
+### Larger, LIVE Demo
+
+See it LIVE here: https://zamboni-app.azurewebsites.net
+
 # Usage 
 
 ### Create an Aurelia application
@@ -59,14 +71,9 @@ Create a `src/open-id-connect-configuration.ts` file that specifies the Open ID 
 In your `src/main.ts`, import the configuration file, add the plugin, and invoke the callback, passing it the imported configuration. 
 
     import oidcConfig from "./open-id-connect-configuration";
-    import { OpenIdConnectConfiguration } from "aurelia-open-id-connect";
 
     aurelia.use
-      .plugin("aurelia-open-id-connect", (config: OpenIdConnectConfiguration) => {
-        config.userManagerSettings = oidcConfig.userManagerSettings;
-        config.loginRedirectModuleId = oidcConfig.loginRedirectModuleId;
-        config.logoutRedirectModuleId = oidcConfig.logoutRedirectModuleId;
-      });
+      .plugin("aurelia-open-id-connect", () => oidcConfig);
 
 ### Add the user-block and router view.
 
@@ -158,36 +165,6 @@ index.ts
     au build
     au run
 
-# Demo Projects
-
-The demos have an example of how to configure everything. 
-
-### Smaller Demo(s)
-
-https://github.com/shaunluttin/aurelia-open-id-connect-demos
-
-### Large Demo
-
-See it LIVE here: https://zamboni-app.azurewebsites.net
-
-Or, clone and run it locally:
-
-    git clone https://github.com/shaunluttin/aurelia-open-id-connect.git
-    cd aurelia-open-id-connect/demo
-    git checkout 0.11.2
-    npm install -y
-    npm run demo
-
-Note: a complete demo requires the following running locally:
-
-* an OpenId Connect authorization server at http://localhost:5000
-* a Resource Server at http://localhost:5001
-* another Resource Server at http://localhost:5002
-
-Find examples of those here:
-
-    git clone https://github.com/openiddict/openiddict-samples.git
-    cd openiddict-samples/samples/ImplicitFlow
 
 # Implicit Flow Implementor Guide
 
