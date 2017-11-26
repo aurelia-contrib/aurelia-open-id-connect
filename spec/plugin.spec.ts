@@ -17,88 +17,106 @@ describe("plugin", () => {
 
     // arrange
     const logger = sinon.createStubInstance(OpenIdConnectLogger);
-    const configuration = sinon.createStubInstance(OpenIdConnectConfigurationManager);
+    const configurationManager = sinon.createStubInstance(OpenIdConnectConfigurationManager);
     const userManager = sinon.createStubInstance(UserManager);
     const factory = sinon.createStubInstance(OpenIdConnectFactory);
     factory.createOpenIdConnectLogger.returns(logger);
-    factory.createOpenIdConnectConfiguration.returns(configuration);
+    factory.createOpenIdConnectConfiguration.returns(configurationManager);
     factory.createUserManager.returns(userManager);
 
     const dependencyContainer = sinon.createStubInstance(Container);
     const frameworkConfig = sinon.createStubInstance(FrameworkConfiguration);
     frameworkConfig.container = dependencyContainer;
 
-    const userDefinedConfiguration = {
-        logLevel: 5,
-        userManagerSettings: {},
-    };
-    const pluginCallback = sinon.stub().callsFake(() => userDefinedConfiguration);
+    context("without user-defined configuration", () => {
 
-    before(() => {
-        // act
-        configure(frameworkConfig, pluginCallback, factory);
+        before(() => {
+            // act
+            configure(frameworkConfig, undefined, factory);
+        });
+
+        const resourcesToAdd = [
+            "./open-id-connect-user-block",
+            "./open-id-connect-user-debug",
+        ];
+
+        it(`should add these to global resources \r\n\t${resourcesToAdd.join("\r\n\t")}`, () => {
+            // assert
+            sinon.assert.calledWith(frameworkConfig.globalResources, resourcesToAdd);
+        });
+
+        it(`should register an OpenIdConnectLogger with the DI container`, () => {
+            // assert
+            sinon.assert.calledWith(
+                dependencyContainer.registerInstance,
+                OpenIdConnectLogger,
+                sinon.match.same(logger));
+        });
+
+        it(`should register a UserManager instance with the DI container`, () => {
+            // assert
+            sinon.assert.calledWith(
+                dependencyContainer.registerInstance,
+                UserManager,
+                sinon.match.same(userManager));
+        });
+
+        it(`should register an OpenIdConnectConfiguration instance with the DI container`, () => {
+            // assert
+            sinon.assert.calledWith(
+                dependencyContainer.registerInstance,
+                OpenIdConnectConfigurationManager,
+                sinon.match.same(configurationManager));
+        });
+
+        it(`should register a Window instance with the DI container`, () => {
+            // assert
+            sinon.assert.calledWith(
+                dependencyContainer.registerInstance,
+                Window,
+                window);
+        });
     });
 
-    const resourcesToAdd = [
-        "./open-id-connect-user-block",
-        "./open-id-connect-user-debug",
-    ];
+    context("with user-defined configuration", () => {
 
-    it(`should add these to global resources \r\n\t${resourcesToAdd.join("\r\n\t")}`, () => {
-        // assert
-        sinon.assert.calledWith(frameworkConfig.globalResources, resourcesToAdd);
-    });
+        const userDefinedConfiguration = {
+            logLevel: 5,
+            userManagerSettings: {},
+        };
 
-    it(`should register an OpenIdConnectLogger with the DI container`, () => {
-        // assert
-        sinon.assert.calledWith(
-            dependencyContainer.registerInstance,
-            OpenIdConnectLogger,
-            sinon.match.same(logger));
-    });
+        sinon.stub(configurationManager, "logLevel")
+            .get(() => userDefinedConfiguration.logLevel);
 
-    it(`should register a UserManager instance with the DI container`, () => {
-        // assert
-        sinon.assert.calledWith(
-            dependencyContainer.registerInstance,
-            UserManager,
-            sinon.match.same(userManager));
-    });
+        sinon.stub(configurationManager, "userManagerSettings")
+            .get(() => userDefinedConfiguration.userManagerSettings);
 
-    it(`should register an OpenIdConnectConfiguration instance with the DI container`, () => {
-        // assert
-        sinon.assert.calledWith(
-            dependencyContainer.registerInstance,
-            OpenIdConnectConfigurationManager,
-            sinon.match.same(configuration));
-    });
+        const pluginCallback = sinon.stub().callsFake(() => userDefinedConfiguration);
 
-    it(`should register a Window instance with the DI container`, () => {
-        // assert
-        sinon.assert.calledWith(
-            dependencyContainer.registerInstance,
-            Window,
-            window);
-    });
+        before(() => {
+            // act
+            configure(frameworkConfig, pluginCallback, factory);
+        });
 
-    it(`should flow user-defined configuration to the Configuration builder`, () => {
-        // assert
-        sinon.assert.calledWith(
-            factory.createOpenIdConnectConfiguration,
-            sinon.match.same(userDefinedConfiguration));
-    });
+        it(`should flow user-defined configuration to the Configuration builder`, () => {
+            // assert
+            sinon.assert.calledWith(
+                factory.createOpenIdConnectConfiguration,
+                sinon.match.same(userDefinedConfiguration));
+        });
 
-    it(`should flow user-defined configuration to the Logger builder`, () => {
-        // assert
-        sinon.assert.calledWith(
-            factory.createOpenIdConnectLogger,
-            sinon.match.same(userDefinedConfiguration.logLevel));
-    });
+        it(`should flow user-defined configuration to the Logger builder`, () => {
+            // assert
+            sinon.assert.calledWith(
+                factory.createOpenIdConnectLogger,
+                sinon.match.same(userDefinedConfiguration.logLevel));
+        });
 
-    it(`should flow user-defined configuration to the UserManager builder`, () => {
-        // assert
-        sinon.assert.calledWith(
-            factory.createUserManager,
-            sinon.match.same(userDefinedConfiguration.userManagerSettings));
+        it(`should flow user-defined configuration to the UserManager builder`, () => {
+            // assert
+            sinon.assert.calledWith(
+                factory.createUserManager,
+                sinon.match.same(userDefinedConfiguration.userManagerSettings));
+        });
     });
 });

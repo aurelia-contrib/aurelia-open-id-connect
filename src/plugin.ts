@@ -20,23 +20,24 @@ export default function (
         PLATFORM.moduleName("./open-id-connect-user-debug"),
     ]);
 
-    // allow userland to change the OIDC configuration
-    const userConfig = callback();
+    // register configuration
+    const userConfig = (callback !== null && callback !== undefined)
+        ? callback()
+        : null;
+
+    const configManager = factory.createOpenIdConnectConfiguration(userConfig);
+    frameworkConfig.container
+        .registerInstance(OpenIdConnectConfigurationManager, configManager);
 
     // register logger
-    const openIdConnectLogger = factory.createOpenIdConnectLogger(userConfig.logLevel);
+    const openIdConnectLogger = factory.createOpenIdConnectLogger(configManager.logLevel);
     frameworkConfig.container
         .registerInstance(OpenIdConnectLogger, openIdConnectLogger);
 
     // register userManager
-    const userManager = factory.createUserManager(userConfig.userManagerSettings);
+    const userManager = factory.createUserManager(configManager.userManagerSettings);
     frameworkConfig.container
         .registerInstance(UserManager, userManager);
-
-    // register configuration
-    const openIdConnectConfig = factory.createOpenIdConnectConfiguration(userConfig);
-    frameworkConfig.container
-        .registerInstance(OpenIdConnectConfigurationManager, openIdConnectConfig);
 
     // register window
     frameworkConfig.container.registerInstance(Window, window);
