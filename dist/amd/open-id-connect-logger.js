@@ -4,7 +4,9 @@ define(["require", "exports", "oidc-client"], function (require, exports, oidc_c
     var OpenIdConnectLogger = (function () {
         function OpenIdConnectLogger(level) {
             this._level = oidc_client_1.Log.NONE;
-            this.setLogLevel(level);
+            if (level !== null && level !== undefined) {
+                this.setLogLevel(level);
+            }
         }
         Object.defineProperty(OpenIdConnectLogger.prototype, "level", {
             get: function () {
