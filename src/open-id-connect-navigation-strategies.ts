@@ -24,8 +24,8 @@ export default class OpenIdConnectNavigationStrategies {
             return this.userManager.signinRedirectCallback(args);
         };
 
-        const postCallbackRedirect = () => {
-            instruction.config.moduleId =
+        const navigationInstruction = () => {
+            instruction.config.redirect =
                 this.openIdConnectConfiguration.loginRedirectModuleId;
         };
 
@@ -48,7 +48,7 @@ export default class OpenIdConnectNavigationStrategies {
 
         const navigationInstruction = () => {
             // TODO: Use more expressive code to perform the iframe no-op.
-            instruction.config.moduleId = "THIS_HAPPENS_IN_A_CHILD_IFRAME";
+            instruction.config.redirect = "THIS_HAPPENS_IN_A_CHILD_IFRAME";
         };
 
         return this.runHandlerAndCompleteNavigationInstruction(
@@ -64,8 +64,8 @@ export default class OpenIdConnectNavigationStrategies {
             return this.userManager.signoutRedirectCallback(args);
         };
 
-        const postCallbackRedirect = () => {
-            instruction.config.moduleId =
+        const navigationInstruction = () => {
+            instruction.config.redirect =
                 this.openIdConnectConfiguration.logoutRedirectModuleId;
         };
 

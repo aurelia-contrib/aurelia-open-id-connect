@@ -60,7 +60,7 @@ describe("open-id-connect-navigation-strategies", () => {
                 // act
                 await strategies[o.method](instruction);
                 // assert
-                assert.equal(instruction.config.moduleId, o.redirectsTo);
+                assert.equal(instruction.config.redirect, o.redirectsTo);
             });
 
             it(`should redirect to ${o.redirectsTo} on error`, async () => {
@@ -77,7 +77,7 @@ describe("open-id-connect-navigation-strategies", () => {
                 } finally {
                     // assert
                     assert.isTrue(threwError);
-                    assert.equal(instruction.config.moduleId, o.redirectsTo);
+                    assert.equal(instruction.config.redirect, o.redirectsTo);
                 }
             });
         });
