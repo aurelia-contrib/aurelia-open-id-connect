@@ -56,7 +56,6 @@ export default class OpenIdConnectNavigationStrategies {
             navigationInstruction);
     }
 
-    // TODO: Handle the "No end session endpoint url returned" error.
     public signOutRedirectCallback(instruction: NavigationInstruction): Promise<any> {
 
         const callbackHandler = async () => {

@@ -29,7 +29,16 @@ export default class OpenIdConnect {
 
     public async logout(): Promise<void> {
         const args: any = {};
-        await this.userManager.signoutRedirect(args);
+        try {
+            await this.userManager.signoutRedirect(args);
+        } catch (err) {
+            if (err.message === "no end session endpoint") {
+                this.logger.debug(err);
+                this.logger.debug("The user remains logged in at the authorization server.");
+            } else {
+                throw err;
+            }
+        }
     }
 
     public loginSilent(): Promise<User> {
