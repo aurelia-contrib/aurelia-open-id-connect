@@ -8,11 +8,15 @@ export default class OpenIdConnectConfiguration {
     [key: string]: any;
 
     // tslint:disable-next-line:variable-name
-    private  _loginRedirectModuleId: string = "/";
+    private _loginRedirectModuleId: string = "/";
     // tslint:disable-next-line:variable-name
-    private  _logoutRedirectModuleId: string = "/";
+    private _logoutRedirectModuleId: string = "/";
     // tslint:disable-next-line:variable-name
-    private  _userManagerSettings: UserManagerSettings = {
+    private _unauthorizedRedirectModuleId: "/";
+    // tslint:disable-next-line:variable-name
+    private _logLevel: 0;
+    // tslint:disable-next-line:variable-name
+    private _userManagerSettings: UserManagerSettings = {
         authority: "https://localhost:5000",
         client_id: "Aurelia.OpenIdConnect",
         loadUserInfo: true,
@@ -29,6 +33,14 @@ export default class OpenIdConnectConfiguration {
 
     public get logoutRedirectModuleId(): string {
         return this._logoutRedirectModuleId;
+    }
+
+    public get unauthorizedRedirectModuleId(): string {
+        return this._unauthorizedRedirectModuleId;
+    }
+
+    public get logLevel(): number {
+        return this._logLevel;
     }
 
     public get userManagerSettings(): UserManagerSettings {

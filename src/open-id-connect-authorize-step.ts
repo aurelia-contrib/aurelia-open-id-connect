@@ -7,13 +7,14 @@ import {
 } from "aurelia-router";
 import { UserManager } from "oidc-client";
 import { OpenIdConnectRoles } from ".";
-import { OpenIdConnectLogger } from "./index-internal";
+import { OpenIdConnectConfiguration, OpenIdConnectLogger } from "./index-internal";
 
 @autoinject
 export default class OpenIdConnectAuthorizeStep implements PipelineStep {
 
     constructor(
         private userManager: UserManager,
+        private configuration: OpenIdConnectConfiguration,
         private logger: OpenIdConnectLogger) { }
 
     public async run(
@@ -26,9 +27,9 @@ export default class OpenIdConnectAuthorizeStep implements PipelineStep {
         // so that user-land can configure multiple, arbitrary roles.
         if (this.requiresRole(navigationInstruction, OpenIdConnectRoles.Authenticated)) {
             if (user === null) {
-                // TODO: Allow configuration of the redirect route.
                 this.logger.debug("Requires authenticated role.");
-                return next.cancel(new Redirect("/"));
+                const redirect = new Redirect(this.configuration.unauthorizedRedirectModuleId);
+                return next.cancel(redirect);
             }
         }
 

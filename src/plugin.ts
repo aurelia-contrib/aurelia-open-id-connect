@@ -18,29 +18,24 @@ export default function (
         PLATFORM.moduleName("./open-id-connect-user-debug"),
     ]);
 
-    // TODO: Allow error level configuration in main.ts
-    const openIdConnectLogger = factory.createOpenIdConnectLogger(0);
-    openIdConnectLogger.debug("Configuring the OpenId Connect Client");
-
     // allow userland to change the OIDC configuration
-    const dto = callback();
-    const openIdConnectConfig = factory.createOpenIdConnectConfiguration(dto);
+    const userConfig = callback();
 
-    // register instances in the DI container
-    const userManagerSettings = dto.userManagerSettings;
-    const userManager = factory.createUserManager(userManagerSettings);
-
+    // register logger
+    const openIdConnectLogger = factory.createOpenIdConnectLogger(userConfig.logLevel);
     frameworkConfig.container
         .registerInstance(OpenIdConnectLogger, openIdConnectLogger);
 
+    // register userManager
+    const userManager = factory.createUserManager(userConfig.userManagerSettings);
     frameworkConfig.container
         .registerInstance(UserManager, userManager);
 
+    // register configuration
+    const openIdConnectConfig = factory.createOpenIdConnectConfiguration(userConfig);
     frameworkConfig.container
         .registerInstance(OpenIdConnectConfiguration, openIdConnectConfig);
 
-    frameworkConfig.container
-        .registerInstance(Window, window);
-
-    openIdConnectLogger.debug("Configured the OpenId Connect Client");
+    // register window
+    frameworkConfig.container.registerInstance(Window, window);
 }

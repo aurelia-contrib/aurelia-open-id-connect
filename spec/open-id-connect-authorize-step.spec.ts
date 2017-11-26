@@ -7,15 +7,27 @@ import {
 import { User, UserManager } from "oidc-client";
 import sinon = require("sinon");
 import { OpenIdConnectRoles } from "../src";
-import { OpenIdConnectAuthorizeStep, OpenIdConnectLogger } from "../src/index-internal";
+import {
+    OpenIdConnectAuthorizeStep,
+    OpenIdConnectConfiguration,
+    OpenIdConnectLogger,
+} from "../src/index-internal";
 
 describe("open-id-connect-authorize-step", () => {
 
-    const unauthorizedRedirectModuleId = "/";
+    const unauthRedirectModuleId = "/you-shall-not-pass!";
 
     const logger = sinon.createStubInstance(OpenIdConnectLogger);
+    const configuration = sinon.createStubInstance(OpenIdConnectConfiguration);
     const userManager = sinon.createStubInstance(UserManager);
-    const authorizationStep = new OpenIdConnectAuthorizeStep(userManager, logger);
+
+    sinon.stub(configuration, "unauthorizedRedirectModuleId").get(() => unauthRedirectModuleId);
+
+    const authorizationStep = new OpenIdConnectAuthorizeStep(
+        userManager,
+        configuration,
+        logger);
+
     const navigationInstruction = sinon.createStubInstance(NavigationInstruction);
 
     const createConfigForRoles = (...roles: OpenIdConnectRoles[]) => {
@@ -45,16 +57,16 @@ describe("open-id-connect-authorize-step", () => {
 
             (navigationInstruction.getAllInstructions).returns([instruction]);
 
-            it(`should redirect to ${unauthorizedRedirectModuleId} if user is null`, async () => {
+            it(`should redirect to ${unauthRedirectModuleId} if user is null`, async () => {
                 // arrange
                 (userManager.getUser).returns(null);
                 // act
                 await authorizationStep.run(navigationInstruction, next);
                 // assert
-                sinon.assert.calledOnce(next.cancel);
+                sinon.assert.calledWith(next.cancel, new Redirect(unauthRedirectModuleId));
             });
 
-            it(`should NOT redirect to ${unauthorizedRedirectModuleId} if user is not null`, async () => {
+            it(`should NOT redirect to ${unauthRedirectModuleId} if user is not null`, async () => {
                 // arrange
                 (userManager.getUser).returns({});
                 // act

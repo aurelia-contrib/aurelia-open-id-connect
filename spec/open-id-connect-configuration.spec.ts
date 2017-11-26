@@ -8,6 +8,7 @@ describe("open-id-connect-configuration", () => {
     const expected = {
         loginRedirectModuleId: "loginRedirectModuleId",
         logoutRedirectModuleId: "logoutRedirectModuleId",
+        logLevel: 5,
         userManagerSettings: {
             accessTokenExpiringNotificationTime: 1111111111111111,
             authority: "authority",

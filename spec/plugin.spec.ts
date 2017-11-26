@@ -29,6 +29,7 @@ describe("plugin", () => {
     frameworkConfig.container = dependencyContainer;
 
     const userDefinedConfiguration = {
+        logLevel: 5,
         userManagerSettings: {},
     };
     const pluginCallback = sinon.stub().callsFake(() => userDefinedConfiguration);
@@ -85,6 +86,13 @@ describe("plugin", () => {
         sinon.assert.calledWith(
             factory.createOpenIdConnectConfiguration,
             sinon.match.same(userDefinedConfiguration));
+    });
+
+    it(`should flow user-defined configuration to the Logger builder`, () => {
+        // assert
+        sinon.assert.calledWith(
+            factory.createOpenIdConnectLogger,
+            sinon.match.same(userDefinedConfiguration.logLevel));
     });
 
     it(`should flow user-defined configuration to the UserManager builder`, () => {
