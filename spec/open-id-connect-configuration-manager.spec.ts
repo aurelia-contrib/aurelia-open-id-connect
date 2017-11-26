@@ -1,6 +1,6 @@
 import { assert } from "chai";
 import { UserManagerSettings, WebStorageStateStore } from "oidc-client";
-import { OpenIdConnectConfigurationDto } from "../src";
+import { OpenIdConnectConfiguration } from "../src";
 import { OpenIdConnectConfigurationManager } from "../src/index-internal";
 
 describe("open-id-connect-configuration-manager", () => {
