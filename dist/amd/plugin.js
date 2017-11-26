@@ -1,26 +1,22 @@
-define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-configuration", "./open-id-connect-logger"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_configuration_1, open_id_connect_logger_1) {
+define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-configuration-manager", "./open-id-connect-logger"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_configuration_manager_1, open_id_connect_logger_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    function default_1(frameworkConfig, callback) {
+    function default_1(frameworkConfig, callback, factory) {
         frameworkConfig.globalResources([
             aurelia_framework_1.PLATFORM.moduleName("./open-id-connect-user-block"),
             aurelia_framework_1.PLATFORM.moduleName("./open-id-connect-user-debug"),
         ]);
-        var openIdConnectLogger = new open_id_connect_logger_1.default(oidc_client_1.Log.ERROR);
-        openIdConnectLogger.debug("Configuring the OpenId Connect Client");
-        var openIdConnectConfig = new open_id_connect_configuration_1.default();
-        callback(openIdConnectConfig);
-        var userManagerSettings = openIdConnectConfig.UserManagerSettings;
-        var userManager = new oidc_client_1.UserManager(userManagerSettings);
+        var userConfig = callback();
+        var openIdConnectLogger = factory.createOpenIdConnectLogger(userConfig.logLevel);
         frameworkConfig.container
             .registerInstance(open_id_connect_logger_1.default, openIdConnectLogger);
+        var userManager = factory.createUserManager(userConfig.userManagerSettings);
         frameworkConfig.container
             .registerInstance(oidc_client_1.UserManager, userManager);
+        var openIdConnectConfig = factory.createOpenIdConnectConfiguration(userConfig);
         frameworkConfig.container
-            .registerInstance(open_id_connect_configuration_1.default, openIdConnectConfig);
-        frameworkConfig.container
-            .registerInstance(Window, window);
-        openIdConnectLogger.debug("Configured the OpenId Connect Client");
+            .registerInstance(open_id_connect_configuration_manager_1.default, openIdConnectConfig);
+        frameworkConfig.container.registerInstance(Window, window);
     }
     exports.default = default_1;
 });

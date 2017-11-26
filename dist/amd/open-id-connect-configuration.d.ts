@@ -1,13 +1,9 @@
 import { UserManagerSettings } from "oidc-client";
-export default class OpenIdConnectConfiguration {
+export default interface OpenIdConnectConfigurationDto {
+    [key: string]: any;
     loginRedirectModuleId: string;
     logoutRedirectModuleId: string;
+    unauthorizedRedirectModuleId: string;
+    logLevel: number;
     userManagerSettings: UserManagerSettings;
-    readonly LogoutRedirectModuleId: string;
-    readonly LoginRedirectModuleId: string;
-    readonly UserManagerSettings: UserManagerSettings;
-    readonly RedirectUri: string;
-    readonly PostLogoutRedirectUri: string;
-    constructor();
-    private setDefaults();
 }

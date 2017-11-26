@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-define(["require", "exports", "aurelia-framework", "./open-id-connect-authorize-step", "./open-id-connect-configuration", "./open-id-connect-logger", "./open-id-connect-navigation-strategies"], function (require, exports, aurelia_framework_1, open_id_connect_authorize_step_1, open_id_connect_configuration_1, open_id_connect_logger_1, open_id_connect_navigation_strategies_1) {
+define(["require", "exports", "aurelia-framework", "./open-id-connect-authorize-step", "./open-id-connect-configuration-manager", "./open-id-connect-logger", "./open-id-connect-navigation-strategies"], function (require, exports, aurelia_framework_1, open_id_connect_authorize_step_1, open_id_connect_configuration_manager_1, open_id_connect_logger_1, open_id_connect_navigation_strategies_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnectRouting = (function () {
@@ -34,7 +34,7 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-authorize-
                         return _this.openIdConnectNavigationStrategies.signInRedirectCallback(instruction);
                     }
                 },
-                route: this.getPath(this.openIdConnectConfiguration.RedirectUri),
+                route: this.getPath(this.openIdConnectConfiguration.redirectUri),
             });
         };
         OpenIdConnectRouting.prototype.addLogoutRedirectRoute = function (routerConfiguration) {
@@ -44,7 +44,7 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-authorize-
                 navigationStrategy: function (instruction) {
                     return _this.openIdConnectNavigationStrategies.signOutRedirectCallback(instruction);
                 },
-                route: this.getPath(this.openIdConnectConfiguration.PostLogoutRedirectUri),
+                route: this.getPath(this.openIdConnectConfiguration.postLogoutRedirectUri),
             });
         };
         OpenIdConnectRouting.prototype.isSilentLogin = function () {
@@ -65,7 +65,7 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-authorize-
         };
         OpenIdConnectRouting = __decorate([
             aurelia_framework_1.autoinject,
-            __metadata("design:paramtypes", [open_id_connect_configuration_1.default,
+            __metadata("design:paramtypes", [open_id_connect_configuration_manager_1.default,
                 open_id_connect_navigation_strategies_1.default,
                 Window,
                 open_id_connect_logger_1.default])

@@ -3,31 +3,52 @@ define(["require", "exports", "oidc-client"], function (require, exports, oidc_c
     Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnectLogger = (function () {
         function OpenIdConnectLogger(level) {
-            this.level = oidc_client_1.Log.NONE;
+            this._level = oidc_client_1.Log.NONE;
             this.setLogLevel(level);
         }
-        OpenIdConnectLogger.prototype.debug = function (message) {
-            if (this.level === oidc_client_1.Log.ERROR) {
-                console.debug("DEBUG [OpenIdConnect] " + message);
+        Object.defineProperty(OpenIdConnectLogger.prototype, "level", {
+            get: function () {
+                return this._level;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        OpenIdConnectLogger.prototype.debug = function (msg) {
+            if (this.level >= oidc_client_1.Log.DEBUG) {
+                console.debug("DEBUG [OpenIdConnect] " + msg);
+            }
+        };
+        OpenIdConnectLogger.prototype.info = function (msg) {
+            if (this.level >= oidc_client_1.Log.INFO) {
+                console.info("INFO [OpenIdConnect] " + msg);
+            }
+        };
+        OpenIdConnectLogger.prototype.warn = function (msg) {
+            if (this.level >= oidc_client_1.Log.WARN) {
+                console.warn("WARN [OpenIdConnect] " + msg);
+            }
+        };
+        OpenIdConnectLogger.prototype.error = function (msg) {
+            if (this.level >= oidc_client_1.Log.ERROR) {
+                console.error("ERROR [OpenIdConnect] " + msg);
             }
         };
         OpenIdConnectLogger.prototype.setLogLevel = function (level) {
             var validOidcClientLevels = [
+                oidc_client_1.Log.DEBUG,
                 oidc_client_1.Log.INFO,
                 oidc_client_1.Log.WARN,
                 oidc_client_1.Log.ERROR,
                 oidc_client_1.Log.NONE,
             ];
-            if (validOidcClientLevels.indexOf(level) >= 0) {
-                this.level = level;
-                oidc_client_1.Log.level = level;
-                oidc_client_1.Log.logger = console;
-            }
-            else {
+            if (!validOidcClientLevels.includes(level)) {
                 var levels = validOidcClientLevels.join(", ");
                 var msg = "The log level must be one of " + levels;
-                this.debug(msg);
+                throw new RangeError(msg);
             }
+            this._level = level;
+            oidc_client_1.Log.level = level;
+            oidc_client_1.Log.logger = console;
         };
         return OpenIdConnectLogger;
     }());

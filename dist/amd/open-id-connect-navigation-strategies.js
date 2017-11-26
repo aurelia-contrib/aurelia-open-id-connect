@@ -42,7 +42,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-configuration", "./open-id-connect-logger"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_configuration_1, open_id_connect_logger_1) {
+define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-configuration-manager", "./open-id-connect-logger"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_configuration_manager_1, open_id_connect_logger_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnectNavigationStrategies = (function () {
@@ -65,7 +65,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                     }); };
                     postCallbackRedirect = function () {
                         instruction.config.moduleId =
-                            _this.openIdConnectConfiguration.LoginRedirectModuleId;
+                            _this.openIdConnectConfiguration.loginRedirectModuleId;
                     };
                     return [2, this.runHandlerAndAlwaysRedirect(callbackHandler, postCallbackRedirect)];
                 });
@@ -96,7 +96,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             }); };
             var postCallbackRedirect = function () {
                 instruction.config.moduleId =
-                    _this.openIdConnectConfiguration.LogoutRedirectModuleId;
+                    _this.openIdConnectConfiguration.logoutRedirectModuleId;
             };
             return this.runHandlerAndAlwaysRedirect(callbackHandler, postCallbackRedirect);
         };
@@ -127,7 +127,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
         OpenIdConnectNavigationStrategies = __decorate([
             aurelia_framework_1.autoinject,
             __metadata("design:paramtypes", [open_id_connect_logger_1.default,
-                open_id_connect_configuration_1.default,
+                open_id_connect_configuration_manager_1.default,
                 oidc_client_1.UserManager])
         ], OpenIdConnectNavigationStrategies);
         return OpenIdConnectNavigationStrategies;

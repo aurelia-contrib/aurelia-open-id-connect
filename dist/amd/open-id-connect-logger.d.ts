@@ -1,6 +1,10 @@
 export default class OpenIdConnectLogger {
-    private level;
+    private _level;
+    readonly level: number;
     constructor(level: number);
-    debug(message: string): void;
+    debug(msg: string): void;
+    info(msg: string): void;
+    warn(msg: string): void;
+    error(msg: string): void;
     private setLogLevel(level);
 }
