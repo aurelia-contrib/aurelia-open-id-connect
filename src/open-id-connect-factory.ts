@@ -1,16 +1,16 @@
 import { UserManager, UserManagerSettings } from "oidc-client";
-import { OpenIdConnectConfigurationDto } from ".";
+import { OpenIdConnectConfiguration } from ".";
 import {
-    OpenIdConnectConfiguration,
+    OpenIdConnectConfigurationManager,
     OpenIdConnectLogger,
 } from "./index-internal";
 
 export default class {
 
-    public createOpenIdConnectConfiguration(dto: OpenIdConnectConfigurationDto)
-        : OpenIdConnectConfiguration {
+    public createOpenIdConnectConfiguration(dto: OpenIdConnectConfiguration)
+        : OpenIdConnectConfigurationManager {
 
-        return new OpenIdConnectConfiguration(dto);
+        return new OpenIdConnectConfigurationManager(dto);
     }
 
     public createOpenIdConnectLogger(level: number): OpenIdConnectLogger {

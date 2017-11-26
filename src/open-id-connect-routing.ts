@@ -5,7 +5,7 @@ import {
 } from "aurelia-router";
 import {
     OpenIdConnectAuthorizeStep,
-    OpenIdConnectConfiguration,
+    OpenIdConnectConfigurationManager,
     OpenIdConnectLogger,
     OpenIdConnectNavigationStrategies,
 } from "./index-internal";
@@ -14,7 +14,7 @@ import {
 export default class OpenIdConnectRouting {
 
     constructor(
-        private openIdConnectConfiguration: OpenIdConnectConfiguration,
+        private openIdConnectConfiguration: OpenIdConnectConfigurationManager,
         private openIdConnectNavigationStrategies: OpenIdConnectNavigationStrategies,
         private $window: Window,
         // @ts-ignore

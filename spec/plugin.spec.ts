@@ -5,10 +5,10 @@ import sinon = require("sinon");
 import {
     configure,
     OpenIdConnect,
-    OpenIdConnectConfigurationDto,
+    OpenIdConnectConfiguration,
 } from "../src";
 import {
-    OpenIdConnectConfiguration,
+    OpenIdConnectConfigurationManager,
     OpenIdConnectFactory,
     OpenIdConnectLogger,
 } from "../src/index-internal";
@@ -17,7 +17,7 @@ describe("plugin", () => {
 
     // arrange
     const logger = sinon.createStubInstance(OpenIdConnectLogger);
-    const configuration = sinon.createStubInstance(OpenIdConnectConfiguration);
+    const configuration = sinon.createStubInstance(OpenIdConnectConfigurationManager);
     const userManager = sinon.createStubInstance(UserManager);
     const factory = sinon.createStubInstance(OpenIdConnectFactory);
     factory.createOpenIdConnectLogger.returns(logger);
@@ -69,7 +69,7 @@ describe("plugin", () => {
         // assert
         sinon.assert.calledWith(
             dependencyContainer.registerInstance,
-            OpenIdConnectConfiguration,
+            OpenIdConnectConfigurationManager,
             sinon.match.same(configuration));
     });
 

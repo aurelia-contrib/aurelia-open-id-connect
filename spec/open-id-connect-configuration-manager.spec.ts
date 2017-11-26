@@ -1,9 +1,9 @@
 import { assert } from "chai";
 import { UserManagerSettings, WebStorageStateStore } from "oidc-client";
 import { OpenIdConnectConfigurationDto } from "../src";
-import { OpenIdConnectConfiguration } from "../src/index-internal";
+import { OpenIdConnectConfigurationManager } from "../src/index-internal";
 
-describe("open-id-connect-configuration", () => {
+describe("open-id-connect-configuration-manager", () => {
 
     const expected = {
         loginRedirectModuleId: "loginRedirectModuleId",
@@ -28,14 +28,14 @@ describe("open-id-connect-configuration", () => {
                 store: window.localStorage,
             }),
         } as UserManagerSettings,
-    } as OpenIdConnectConfiguration;
+    } as OpenIdConnectConfigurationManager;
 
     context("constructor", () => {
 
         context("when user values are defined", () => {
             let actual;
             before(() => {
-                actual = new OpenIdConnectConfiguration(expected);
+                actual = new OpenIdConnectConfigurationManager(expected);
             });
 
             Object.keys(expected).forEach((key) => {
@@ -62,7 +62,7 @@ describe("open-id-connect-configuration", () => {
         // these are spot checks rather than exhaustive tests
         it("should use default values when user-values are undefined", () => {
             // act
-            const actual = new OpenIdConnectConfiguration(undefined);
+            const actual = new OpenIdConnectConfigurationManager(undefined);
             // assert
             assert.equal(actual.loginRedirectModuleId, "/");
             assert.equal(actual.userManagerSettings.scope, "openid email roles profile");

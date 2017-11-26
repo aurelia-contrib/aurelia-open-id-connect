@@ -1,7 +1,7 @@
 import { autoinject } from "aurelia-framework";
 import { NavigationInstruction } from "aurelia-router";
 import { UserManager } from "oidc-client";
-import { OpenIdConnectConfiguration, OpenIdConnectLogger } from "./index-internal";
+import { OpenIdConnectConfigurationManager, OpenIdConnectLogger } from "./index-internal";
 
 @autoinject
 export default class OpenIdConnectNavigationStrategies {
@@ -9,7 +9,7 @@ export default class OpenIdConnectNavigationStrategies {
     constructor(
         // @ts-ignore
         private logger: OpenIdConnectLogger,
-        private openIdConnectConfiguration: OpenIdConnectConfiguration,
+        private openIdConnectConfiguration: OpenIdConnectConfigurationManager,
         private userManager: UserManager) { }
 
     public async signInRedirectCallback(instruction: NavigationInstruction): Promise<any> {

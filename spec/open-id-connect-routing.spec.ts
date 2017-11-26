@@ -3,7 +3,7 @@ import { assert } from "chai";
 import sinon = require("sinon");
 import {
     OpenIdConnectAuthorizeStep,
-    OpenIdConnectConfiguration,
+    OpenIdConnectConfigurationManager,
     OpenIdConnectLogger,
     OpenIdConnectNavigationStrategies,
     OpenIdConnectRouting,
@@ -20,7 +20,7 @@ describe("open-id-connect-routing", () => {
         sinon.createStubInstance(RouterConfiguration);
 
     const openIdConnectConfiguration =
-        sinon.createStubInstance(OpenIdConnectConfiguration);
+        sinon.createStubInstance(OpenIdConnectConfigurationManager);
 
     const openIdConnectNavigationStrategies =
         sinon.createStubInstance(OpenIdConnectNavigationStrategies);

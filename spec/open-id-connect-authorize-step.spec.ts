@@ -9,7 +9,7 @@ import sinon = require("sinon");
 import { OpenIdConnectRoles } from "../src";
 import {
     OpenIdConnectAuthorizeStep,
-    OpenIdConnectConfiguration,
+    OpenIdConnectConfigurationManager,
     OpenIdConnectLogger,
 } from "../src/index-internal";
 
@@ -18,7 +18,7 @@ describe("open-id-connect-authorize-step", () => {
     const unauthRedirectModuleId = "/you-shall-not-pass!";
 
     const logger = sinon.createStubInstance(OpenIdConnectLogger);
-    const configuration = sinon.createStubInstance(OpenIdConnectConfiguration);
+    const configuration = sinon.createStubInstance(OpenIdConnectConfigurationManager);
     const userManager = sinon.createStubInstance(UserManager);
 
     sinon.stub(configuration, "unauthorizedRedirectModuleId").get(() => unauthRedirectModuleId);

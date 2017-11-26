@@ -1,15 +1,15 @@
 import { FrameworkConfiguration, PLATFORM } from "aurelia-framework";
 import { UserManager } from "oidc-client";
-import { OpenIdConnectConfigurationDto } from ".";
+import { OpenIdConnectConfiguration } from ".";
 import {
-    OpenIdConnectConfiguration,
+    OpenIdConnectConfigurationManager,
     OpenIdConnectFactory,
     OpenIdConnectLogger,
 } from "./index-internal";
 
 export default function (
     frameworkConfig: FrameworkConfiguration,
-    callback?: () => OpenIdConnectConfigurationDto,
+    callback?: () => OpenIdConnectConfiguration,
     factory?: OpenIdConnectFactory) {
 
     // register global resources
@@ -34,7 +34,7 @@ export default function (
     // register configuration
     const openIdConnectConfig = factory.createOpenIdConnectConfiguration(userConfig);
     frameworkConfig.container
-        .registerInstance(OpenIdConnectConfiguration, openIdConnectConfig);
+        .registerInstance(OpenIdConnectConfigurationManager, openIdConnectConfig);
 
     // register window
     frameworkConfig.container.registerInstance(Window, window);

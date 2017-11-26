@@ -3,7 +3,7 @@ import { assert } from "chai";
 import { UserManager } from "oidc-client";
 import sinon = require("sinon");
 import {
-    OpenIdConnectConfiguration,
+    OpenIdConnectConfigurationManager,
     OpenIdConnectLogger,
     OpenIdConnectNavigationStrategies,
 } from "../src/index-internal";
@@ -11,7 +11,7 @@ import {
 describe("open-id-connect-navigation-strategies", () => {
 
     const logger = sinon.createStubInstance(OpenIdConnectLogger);
-    const configuration = sinon.createStubInstance(OpenIdConnectConfiguration);
+    const configuration = sinon.createStubInstance(OpenIdConnectConfigurationManager);
     const userManager = sinon.createStubInstance(UserManager);
     const instruction = sinon.createStubInstance(NavigationInstruction);
 
