@@ -10,6 +10,10 @@ export default function (
     callback?: () => OpenIdConnectConfiguration,
     factory?: OpenIdConnectFactory) {
 
+    if (!factory) {
+        factory = new OpenIdConnectFactory();
+    }
+
     // register global resources
     frameworkConfig.globalResources([
         PLATFORM.moduleName("./open-id-connect-user-block"),
