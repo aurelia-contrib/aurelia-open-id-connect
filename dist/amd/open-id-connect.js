@@ -74,15 +74,29 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
         };
         OpenIdConnect.prototype.logout = function () {
             return __awaiter(this, void 0, void 0, function () {
-                var args;
+                var args, err_1;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             args = {};
-                            return [4, this.userManager.signoutRedirect(args)];
+                            _a.label = 1;
                         case 1:
+                            _a.trys.push([1, 3, , 4]);
+                            return [4, this.userManager.signoutRedirect(args)];
+                        case 2:
                             _a.sent();
-                            return [2];
+                            return [3, 4];
+                        case 3:
+                            err_1 = _a.sent();
+                            if (err_1.message === "no end session endpoint") {
+                                this.logger.debug(err_1);
+                                this.logger.debug("The user remains logged in at the authorization server.");
+                            }
+                            else {
+                                throw err_1;
+                            }
+                            return [3, 4];
+                        case 4: return [2];
                     }
                 });
             });
