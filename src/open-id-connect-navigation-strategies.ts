@@ -47,8 +47,9 @@ export default class OpenIdConnectNavigationStrategies {
         };
 
         const navigationInstruction = () => {
-            // TODO: Use more expressive code to perform the iframe no-op.
-            instruction.config.redirect = "THIS_HAPPENS_IN_A_CHILD_IFRAME";
+            // This happens in a child iframe.
+            instruction.config.redirect =
+                this.openIdConnectConfiguration.loginRedirectModuleId;
         };
 
         return this.runHandlerAndCompleteNavigationInstruction(

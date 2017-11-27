@@ -81,7 +81,8 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 });
             }); };
             var navigationInstruction = function () {
-                instruction.config.redirect = "THIS_HAPPENS_IN_A_CHILD_IFRAME";
+                instruction.config.redirect =
+                    _this.openIdConnectConfiguration.loginRedirectModuleId;
             };
             return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
         };
