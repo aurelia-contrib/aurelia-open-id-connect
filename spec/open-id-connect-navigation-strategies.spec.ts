@@ -43,7 +43,7 @@ describe("open-id-connect-navigation-strategies", () => {
         {
             method: "silentSignInCallback",
             delegatesTo: "signinSilentCallback",
-            redirectsTo: "THIS_HAPPENS_IN_A_CHILD_IFRAME",
+            redirectsTo: loginRedirectModuleId,
         },
     ].forEach((o) => {
 

@@ -42,12 +42,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-logger", "./open-id-connect-routing"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_logger_1, open_id_connect_routing_1) {
+define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-client", "./open-id-connect-configuration-manager", "./open-id-connect-logger", "./open-id-connect-routing"], function (require, exports, aurelia_framework_1, aurelia_router_1, oidc_client_1, open_id_connect_configuration_manager_1, open_id_connect_logger_1, open_id_connect_routing_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnect = (function () {
-        function OpenIdConnect(openIdConnectRouting, logger, userManager) {
+        function OpenIdConnect(openIdConnectRouting, router, configuration, logger, userManager) {
             this.openIdConnectRouting = openIdConnectRouting;
+            this.router = router;
+            this.configuration = configuration;
             this.logger = logger;
             this.userManager = userManager;
         }
@@ -91,6 +93,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                             if (err_1.message === "no end session endpoint") {
                                 this.logger.debug(err_1);
                                 this.logger.debug("The user remains logged in at the authorization server.");
+                                this.router.navigate(this.configuration.logoutRedirectModuleId);
                             }
                             else {
                                 throw err_1;
@@ -122,6 +125,8 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
         OpenIdConnect = __decorate([
             aurelia_framework_1.autoinject,
             __metadata("design:paramtypes", [open_id_connect_routing_1.default,
+                aurelia_router_1.Router,
+                open_id_connect_configuration_manager_1.default,
                 open_id_connect_logger_1.default,
                 oidc_client_1.UserManager])
         ], OpenIdConnect);

@@ -1,9 +1,10 @@
-import { RouterConfiguration } from "aurelia-router";
+import { Router, RouterConfiguration } from "aurelia-router";
 import { assert } from "chai";
 import { User, UserManager, UserManagerEvents } from "oidc-client";
 import sinon = require("sinon");
 import { OpenIdConnect } from "../src";
 import {
+    OpenIdConnectConfigurationManager,
     OpenIdConnectLogger,
     OpenIdConnectRouting,
 } from "../src/index-internal";
@@ -13,6 +14,8 @@ describe("open-id-connect", () => {
     const openIdConnectRouting = sinon.createStubInstance(OpenIdConnectRouting);
     const logger = sinon.createStubInstance(OpenIdConnectLogger);
     const userManager = sinon.createStubInstance(UserManager);
+    const router = sinon.createStubInstance(Router);
+    const configurationManager = sinon.createStubInstance(OpenIdConnectConfigurationManager);
 
     const events = {
         addUserLoaded: sinon.spy(),
@@ -22,6 +25,8 @@ describe("open-id-connect", () => {
 
     const openIdConnect = new OpenIdConnect(
         openIdConnectRouting,
+        router,
+        configurationManager,
         logger,
         userManager);
 

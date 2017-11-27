@@ -1,7 +1,8 @@
 import { autoinject } from "aurelia-framework";
-import { RouterConfiguration } from "aurelia-router";
+import { Router, RouterConfiguration } from "aurelia-router";
 import { User, UserManager, UserManagerEvents } from "oidc-client";
 import { UserManagerEventHandler, UserManagerEventsAction } from "./internal-types";
+import OpenIdConnectConfigurationManager from "./open-id-connect-configuration-manager";
 import OpenIdConnectLogger from "./open-id-connect-logger";
 import OpenIdConnectRouting from "./open-id-connect-routing";
 
@@ -10,6 +11,8 @@ export default class OpenIdConnect {
 
     constructor(
         private openIdConnectRouting: OpenIdConnectRouting,
+        private router: Router,
+        private configuration: OpenIdConnectConfigurationManager,
         public logger: OpenIdConnectLogger,
         public userManager: UserManager) { }
 
@@ -35,6 +38,7 @@ export default class OpenIdConnect {
             if (err.message === "no end session endpoint") {
                 this.logger.debug(err);
                 this.logger.debug("The user remains logged in at the authorization server.");
+                this.router.navigate(this.configuration.logoutRedirectModuleId);
             } else {
                 throw err;
             }
