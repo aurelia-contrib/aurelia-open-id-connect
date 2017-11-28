@@ -52,6 +52,8 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
             this.configuration = configuration;
             this.logger = logger;
             this.userManager = userManager;
+            this.userObservers = [];
+            this.setupUserObservation();
         }
         OpenIdConnect.prototype.configure = function (routerConfiguration) {
             if (typeof routerConfiguration === "undefined" || routerConfiguration === null) {
@@ -111,12 +113,6 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
         OpenIdConnect.prototype.getUser = function () {
             return this.userManager.getUser();
         };
-        OpenIdConnect.prototype.observeUser = function (callback) {
-            var _this = this;
-            this.addOrRemoveHandler("addUserLoaded", function () { return _this.getUser().then(callback); });
-            this.addOrRemoveHandler("addUserUnloaded", function () { return _this.getUser().then(callback); });
-            this.getUser().then(callback);
-        };
         OpenIdConnect.prototype.addOrRemoveHandler = function (key, handler) {
             if (!key.startsWith("add") && !key.startsWith("remove")) {
                 var message = "The 'addOrRemoveHandlers' method expects a 'key' argument ";
@@ -124,9 +120,22 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
                 message += "recevied " + key;
                 throw new TypeError(message);
             }
-            var addOrRemove = this.userManager.events[key]
-                .bind(this.userManager.events);
-            addOrRemove(handler);
+            var addOrRemove = this.userManager.events[key];
+            addOrRemove.call(this.userManager.events, handler);
+        };
+        OpenIdConnect.prototype.observeUser = function (observer) {
+            if (!this.userObservers.includes(observer)) {
+                this.userObservers.push(observer);
+            }
+            this.getUser().then(this.notifyUserObservers);
+        };
+        OpenIdConnect.prototype.notifyUserObservers = function (user) {
+            this.userObservers.forEach(function (o) { return o.userChanged(user); });
+        };
+        OpenIdConnect.prototype.setupUserObservation = function () {
+            var _this = this;
+            this.addOrRemoveHandler("addUserLoaded", function () { return _this.getUser().then(_this.notifyUserObservers); });
+            this.addOrRemoveHandler("addUserUnloaded", function () { return _this.getUser().then(_this.notifyUserObservers); });
         };
         OpenIdConnect = __decorate([
             aurelia_framework_1.autoinject,
