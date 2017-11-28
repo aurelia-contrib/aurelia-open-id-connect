@@ -19,6 +19,7 @@ describe("open-id-connect", () => {
 
     const events = {
         addUserLoaded: sinon.spy(),
+        addUserUnloaded: sinon.spy(),
     };
 
     sinon.stub(userManager, "events").get(() => events);
