@@ -54,8 +54,8 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
             this.userManager = userManager;
         }
         OpenIdConnect.prototype.configure = function (routerConfiguration) {
-            if (typeof routerConfiguration === "undefined" || routerConfiguration === null) {
-                throw new Error("routerConfiguration parameter must not be undefined or null");
+            if (typeof routerConfiguration === 'undefined' || routerConfiguration === null) {
+                throw new Error('routerConfiguration parameter must not be undefined or null');
             }
             this.openIdConnectRouting.configureRouter(routerConfiguration);
         };
@@ -90,9 +90,9 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
                             return [3, 4];
                         case 3:
                             err_1 = _a.sent();
-                            if (err_1.message === "no end session endpoint") {
+                            if (err_1.message === 'no end session endpoint') {
                                 this.logger.debug(err_1);
-                                this.logger.debug("The user remains logged in at the authorization server.");
+                                this.logger.debug('The user remains logged in at the authorization server.');
                                 this.router.navigate(this.configuration.logoutRedirectModuleId);
                             }
                             else {
@@ -112,10 +112,10 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
             return this.userManager.getUser();
         };
         OpenIdConnect.prototype.addOrRemoveHandler = function (key, handler) {
-            if (!key.startsWith("add") && !key.startsWith("remove")) {
-                var message = "The 'addOrRemoveHandlers' method expects a 'key' argument ";
-                message += "that starts with either 'add' or 'remove'. Instead we ";
-                message += "recevied " + key;
+            if (!key.startsWith('add') && !key.startsWith('remove')) {
+                var message = 'The \'addOrRemoveHandlers\' method expects a \'key\' argument ';
+                message += 'that starts with either \'add\' or \'remove\'. Instead we ';
+                message += 'recevied ' + key;
                 throw new TypeError(message);
             }
             var addOrRemove = this.userManager.events[key];
@@ -123,8 +123,8 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
         };
         OpenIdConnect.prototype.observeUser = function (callback) {
             var _this = this;
-            this.addOrRemoveHandler("addUserLoaded", function () { return _this.getUser().then(callback); });
-            this.addOrRemoveHandler("addUserUnloaded", function () { return _this.getUser().then(callback); });
+            this.addOrRemoveHandler('addUserLoaded', function () { return _this.getUser().then(callback); });
+            this.addOrRemoveHandler('addUserUnloaded', function () { return _this.getUser().then(callback); });
             this.getUser().then(callback);
         };
         OpenIdConnect = __decorate([

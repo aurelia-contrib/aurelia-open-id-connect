@@ -1,27 +1,27 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var defaultClientUri = "https://localhost:9000";
+    var defaultClientUri = 'https://localhost:9000';
     var default_1 = (function () {
         function default_1(dto) {
             var _this = this;
-            this._loginRedirectModuleId = "/";
-            this._logoutRedirectModuleId = "/";
+            this._loginRedirectModuleId = '/';
+            this._logoutRedirectModuleId = '/';
             this._userManagerSettings = {
-                authority: "https://localhost:5000",
-                client_id: "Aurelia.OpenIdConnect",
+                authority: 'https://localhost:5000',
+                client_id: 'Aurelia.OpenIdConnect',
                 loadUserInfo: true,
                 post_logout_redirect_uri: defaultClientUri + "/signout-oidc",
                 redirect_uri: defaultClientUri + "/signin-oidc",
-                response_type: "id_token token",
-                scope: "openid email roles profile",
+                response_type: 'id_token token',
+                scope: 'openid email roles profile',
                 silent_redirect_uri: defaultClientUri + "/signin-oidc",
             };
             if (!dto) {
                 return;
             }
             Object.keys(dto).forEach(function (k) {
-                _this["_" + k] = dto[k];
+                _this['_' + k] = dto[k];
             });
             if (!dto.userManagerSettings) {
                 return;

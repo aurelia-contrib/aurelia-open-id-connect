@@ -1,8 +1,8 @@
-define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-configuration-manager", "./open-id-connect-factory", "./open-id-connect-logger"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_configuration_manager_1, open_id_connect_factory_1, open_id_connect_logger_1) {
+define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-configuration", "./open-id-connect-configuration-manager", "./open-id-connect-factory", "./open-id-connect-logger"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_configuration_1, open_id_connect_configuration_manager_1, open_id_connect_factory_1, open_id_connect_logger_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var retrieveUserlandConfig = function (callback) {
-        var config = {};
+        var config = new open_id_connect_configuration_1.default();
         if (!callback || callback.length > 1) {
             return config;
         }
@@ -20,9 +20,9 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             factory = new open_id_connect_factory_1.default();
         }
         frameworkConfig.globalResources([
-            aurelia_framework_1.PLATFORM.moduleName("./open-id-connect-user-block"),
-            aurelia_framework_1.PLATFORM.moduleName("./open-id-connect-user-debug"),
-            aurelia_framework_1.PLATFORM.moduleName("./open-id-connect-navigation-value-converter"),
+            aurelia_framework_1.PLATFORM.moduleName('./open-id-connect-user-block'),
+            aurelia_framework_1.PLATFORM.moduleName('./open-id-connect-user-debug'),
+            aurelia_framework_1.PLATFORM.moduleName('./open-id-connect-navigation-value-converter'),
         ]);
         var userConfig = retrieveUserlandConfig(callback);
         var configManager = factory.createOpenIdConnectConfiguration(userConfig);

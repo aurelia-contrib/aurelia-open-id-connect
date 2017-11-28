@@ -64,10 +64,10 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect"], functio
                 return __generator(this, function (_b) {
                     switch (_b.label) {
                         case 0:
-                            this.openIdConnect.addOrRemoveHandler("addUserUnloaded", function () {
+                            this.openIdConnect.addOrRemoveHandler('addUserUnloaded', function () {
                                 _this.user = null;
                             });
-                            this.openIdConnect.addOrRemoveHandler("addUserLoaded", function () { return __awaiter(_this, void 0, void 0, function () {
+                            this.openIdConnect.addOrRemoveHandler('addUserLoaded', function () { return __awaiter(_this, void 0, void 0, function () {
                                 var _a;
                                 return __generator(this, function (_b) {
                                     switch (_b.label) {
@@ -97,7 +97,7 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect"], functio
         };
         default_1 = __decorate([
             aurelia_framework_1.autoinject,
-            aurelia_framework_1.customElement("open-id-connect-user-block"),
+            aurelia_framework_1.customElement('open-id-connect-user-block'),
             __metadata("design:paramtypes", [open_id_connect_1.default])
         ], default_1);
         return default_1;

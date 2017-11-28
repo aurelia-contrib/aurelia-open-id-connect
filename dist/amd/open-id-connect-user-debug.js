@@ -64,7 +64,7 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-user-block
                         this.openIdConnect.loginSilent();
                     }
                     catch (err) {
-                        if (err.error !== "login_required") {
+                        if (err.error !== 'login_required') {
                             throw err;
                         }
                         this.login();
@@ -82,7 +82,7 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-user-block
         });
         default_1 = __decorate([
             aurelia_framework_1.autoinject,
-            aurelia_framework_1.customElement("open-id-connect-user-debug")
+            aurelia_framework_1.customElement('open-id-connect-user-debug')
         ], default_1);
         return default_1;
     }(open_id_connect_user_block_1.default));

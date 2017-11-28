@@ -30,10 +30,11 @@
     "build:system": "cross-env tsc --project tsconfig.build.json --outDir dist/system --module system",
     "postbuild:system": "cross-env copyfiles --up 1 src/**/*.html src/**/*.css dist/system",
     "prebuild": "cross-env rimraf dist",
-    "build": "concurrently \"npm run build:amd\" \"npm run build:commonjs\" \"npm run build:es2015\" \"npm run build:native-modules\" \"npm run build:system\""
+    "build": "concurrently \"npm run build:amd\" \"npm run build:commonjs\" \"npm run build:es2015\" \"npm run build:native-modules\" \"npm run build:system\"",
+    "release": "npm run build & git add -A & git commit -m \"prepare release\""
   },
   "scripts-comments": {
-    "publish:step:01": "npm run build",
+    "publish:step:01": "npm run release",
     "publish:step:02": "npm version <major | minor | patch>",
     "publish:step:03": "npm publish .",
     "publish:step:04": "git push --follow-tags"

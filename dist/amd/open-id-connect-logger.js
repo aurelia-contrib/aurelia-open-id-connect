@@ -44,7 +44,7 @@ define(["require", "exports", "oidc-client"], function (require, exports, oidc_c
                 oidc_client_1.Log.NONE,
             ];
             if (!validOidcClientLevels.includes(level)) {
-                var levels = validOidcClientLevels.join(", ");
+                var levels = validOidcClientLevels.join(', ');
                 var msg = "The log level must be one of " + levels;
                 throw new RangeError(msg);
             }

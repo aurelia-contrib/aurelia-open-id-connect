@@ -108,16 +108,16 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                     switch (_a.label) {
                         case 0:
                             _a.trys.push([0, 2, , 3]);
-                            this.logger.debug("Handling the response from the Identity Provider");
+                            this.logger.debug('Handling the response from the Identity Provider');
                             return [4, callbackHandler()];
                         case 1:
                             _a.sent();
-                            this.logger.debug("Redirecting on authorization success");
+                            this.logger.debug('Redirecting on authorization success');
                             navigationInstruction();
                             return [3, 3];
                         case 2:
                             err_1 = _a.sent();
-                            this.logger.debug("Redirecting on authorization error");
+                            this.logger.debug('Redirecting on authorization error');
                             navigationInstruction();
                             throw err_1;
                         case 3: return [2];
