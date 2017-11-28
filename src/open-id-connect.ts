@@ -14,7 +14,9 @@ export default class OpenIdConnect {
         private router: Router,
         private configuration: OpenIdConnectConfigurationManager,
         public logger: OpenIdConnectLogger,
-        public userManager: UserManager) { }
+        public userManager: UserManager) {
+
+    }
 
     public configure(routerConfiguration: RouterConfiguration) {
 
@@ -52,6 +54,12 @@ export default class OpenIdConnect {
 
     public getUser(): Promise<User> {
         return this.userManager.getUser();
+    }
+
+    public observeUser(callback: (user: User) => void) {
+        this.addOrRemoveHandler("addUserLoaded", () => this.getUser().then(callback));
+        this.addOrRemoveHandler("addUserUnloaded", () => this.getUser().then(callback));
+        this.getUser().then(callback);
     }
 
     public addOrRemoveHandler(
