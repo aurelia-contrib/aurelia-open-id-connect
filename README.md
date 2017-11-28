@@ -52,23 +52,18 @@ We use the Aurelia CLI, so we add the following to `aurelia.json` in a bundle.
     {
         "name": "aurelia-open-id-connect",
         "path": "../node_modules/aurelia-open-id-connect/dist/amd",
-        "main": "index",
-        "resources": [
-            "open-id-connect-user-block.html",
-            "open-id-connect-user-block.js",
-            "open-id-connect-user-debug.html",
-            "open-id-connect-user-debug.js"
-        ]
+        "main": "index"
     },
     "oidc-client"
 
-**Also** set `build.loader.plugins.stub = false` to load the plugin's HTML. (TODO: Verify that this is necessary.)
+**Also** set `build.loader.plugins.stub = false` to load the plugin's HTML. 
+(TODO: Verify that this is necessary.)
 
 ### Configure the OpenID Connect client
 
 Create a `src/open-id-connect-configuration.ts` file that specifies the Open ID Connect configuration. There is an [example here](/open-id-connect-configuration.ts.example).
 
-In your `src/main.ts`, import the configuration file, add the plugin, and invoke the callback, passing it the imported configuration. 
+In your `src/main.ts`, import the configuration file, add the plugin, and invoke the callback, returning the imported configuration. 
 
     import oidcConfig from "./open-id-connect-configuration";
 
