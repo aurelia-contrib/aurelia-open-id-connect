@@ -1,5 +1,5 @@
-import { User } from "oidc-client";
+import { User } from 'oidc-client';
 
-export default interface OpenIdConnectUserObserver {
+export interface OpenIdConnectUserObserver {
     userChanged(user: User): void;
 }

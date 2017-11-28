@@ -1,15 +1,12 @@
-import { autoinject } from "aurelia-framework";
-import {
-    NavigationInstruction,
-    RouterConfiguration,
-} from "aurelia-router";
-import OpenIdConnectAuthorizeStep from "./open-id-connect-authorize-step";
-import OpenIdConnectConfigurationManager from "./open-id-connect-configuration-manager";
-import OpenIdConnectLogger from "./open-id-connect-logger";
-import OpenIdConnectNavigationStrategies from "./open-id-connect-navigation-strategies";
+import { autoinject } from 'aurelia-framework';
+import { NavigationInstruction, RouterConfiguration, } from 'aurelia-router';
+import { OpenIdConnectAuthorizeStep } from './open-id-connect-authorize-step';
+import { OpenIdConnectConfigurationManager } from './open-id-connect-configuration-manager';
+import { OpenIdConnectLogger } from './open-id-connect-logger';
+import { OpenIdConnectNavigationStrategies } from './open-id-connect-navigation-strategies';
 
 @autoinject
-export default class OpenIdConnectRouting {
+export class OpenIdConnectRouting {
 
     constructor(
         private openIdConnectConfiguration: OpenIdConnectConfigurationManager,
@@ -21,12 +18,12 @@ export default class OpenIdConnectRouting {
     public configureRouter(routerConfiguration: RouterConfiguration) {
         this.addLoginRedirectRoute(routerConfiguration);
         this.addLogoutRedirectRoute(routerConfiguration);
-        routerConfiguration.addPipelineStep("authorize", OpenIdConnectAuthorizeStep);
+        routerConfiguration.addPipelineStep('authorize', OpenIdConnectAuthorizeStep);
     }
 
     private addLoginRedirectRoute(routerConfiguration: RouterConfiguration) {
         routerConfiguration.mapRoute({
-            name: "logInRedirectCallback",
+            name: 'logInRedirectCallback',
             navigationStrategy: (instruction: NavigationInstruction) => {
                 if (this.isSilentLogin()) {
                     return this.openIdConnectNavigationStrategies.silentSignInCallback(instruction);
@@ -34,17 +31,17 @@ export default class OpenIdConnectRouting {
                     return this.openIdConnectNavigationStrategies.signInRedirectCallback(instruction);
                 }
             },
-            route: this.getPath(this.openIdConnectConfiguration.redirectUri),
+            route: this.getPath(this.openIdConnectConfiguration.redirectUri!),
         });
     }
 
     private addLogoutRedirectRoute(routerConfiguration: RouterConfiguration) {
         routerConfiguration.mapRoute({
-            name: "logOutRedirectCallback",
+            name: 'logOutRedirectCallback',
             navigationStrategy: (instruction: NavigationInstruction) => {
                 return this.openIdConnectNavigationStrategies.signOutRedirectCallback(instruction);
             },
-            route: this.getPath(this.openIdConnectConfiguration.postLogoutRedirectUri),
+            route: this.getPath(this.openIdConnectConfiguration.postLogoutRedirectUri!),
         });
     }
 
@@ -61,7 +58,7 @@ export default class OpenIdConnectRouting {
     }
 
     private convertUriToAnchor(uri: string): HTMLAnchorElement {
-        const anchor: HTMLAnchorElement = document.createElement("a");
+        const anchor: HTMLAnchorElement = document.createElement('a');
         anchor.href = uri;
         return anchor;
     }

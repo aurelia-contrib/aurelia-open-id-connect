@@ -1,29 +1,29 @@
-import { UserManagerSettings } from "oidc-client";
-import { OpenIdConnectConfiguration } from "./index";
+import { UserManagerSettings } from 'oidc-client';
+import { OpenIdConnectConfiguration } from './index';
 
-const defaultClientUri = "https://localhost:9000";
+const defaultClientUri = 'https://localhost:9000';
 
-export default class {
+export class OpenIdConnectConfigurationManager {
 
     [key: string]: any;
 
     // tslint:disable-next-line:variable-name
-    private _loginRedirectModuleId: string = "/";
+    private _loginRedirectModuleId: string = '/';
     // tslint:disable-next-line:variable-name
-    private _logoutRedirectModuleId: string = "/";
+    private _logoutRedirectModuleId: string = '/';
     // tslint:disable-next-line:variable-name
-    private _unauthorizedRedirectModuleId: "/";
+    private _unauthorizedRedirectModuleId: '/';
     // tslint:disable-next-line:variable-name
     private _logLevel: 0;
     // tslint:disable-next-line:variable-name
     private _userManagerSettings: UserManagerSettings = {
-        authority: "https://localhost:5000",
-        client_id: "Aurelia.OpenIdConnect",
+        authority: 'https://localhost:5000',
+        client_id: 'Aurelia.OpenIdConnect',
         loadUserInfo: true,
         post_logout_redirect_uri: `${defaultClientUri}/signout-oidc`,
         redirect_uri: `${defaultClientUri}/signin-oidc`,
-        response_type: "id_token token",
-        scope: "openid email roles profile",
+        response_type: 'id_token token',
+        scope: 'openid email roles profile',
         silent_redirect_uri: `${defaultClientUri}/signin-oidc`,
     };
 
@@ -47,11 +47,11 @@ export default class {
         return this._userManagerSettings;
     }
 
-    public get redirectUri(): string {
+    public get redirectUri(): string | undefined {
         return this._userManagerSettings.redirect_uri;
     }
 
-    public get postLogoutRedirectUri(): string {
+    public get postLogoutRedirectUri(): string | undefined {
         return this._userManagerSettings.post_logout_redirect_uri;
     }
 
@@ -62,7 +62,7 @@ export default class {
         }
 
         Object.keys(dto).forEach((k) => {
-            this["_" + k] = dto[k];
+            this['_' + k] = dto[k];
         });
 
         if (!dto.userManagerSettings) {

@@ -1,6 +1,6 @@
-import { Log } from "oidc-client";
+import { Log } from 'oidc-client';
 
-export default class OpenIdConnectLogger {
+export class OpenIdConnectLogger {
 
     // tslint:disable-next-line:variable-name
     private _level: number = Log.NONE;
@@ -66,7 +66,7 @@ export default class OpenIdConnectLogger {
         ];
 
         if (!validOidcClientLevels.includes(level)) {
-            const levels: string = validOidcClientLevels.join(", ");
+            const levels: string = validOidcClientLevels.join(', ');
             const msg: string = `The log level must be one of ${levels}`;
             throw new RangeError(msg);
         }

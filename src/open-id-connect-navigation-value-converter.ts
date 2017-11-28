@@ -1,7 +1,7 @@
-import { autoinject } from "aurelia-framework";
-import { NavModel } from "aurelia-router";
-import { User } from "oidc-client";
-import OpenIdConnectRoles from "./open-id-connect-roles";
+import { autoinject } from 'aurelia-framework';
+import { NavModel } from 'aurelia-router';
+import { User } from 'oidc-client';
+import { OpenIdConnectRoles } from './open-id-connect-roles';
 
 @autoinject
 export class OpenIdConnectNavigationValueConverter {
@@ -18,6 +18,8 @@ export class OpenIdConnectNavigationValueConverter {
       if (roles.indexOf(OpenIdConnectRoles.Authenticated) >= 0) {
         return user !== null;
       }
+
+      return false;
     });
   }
 }

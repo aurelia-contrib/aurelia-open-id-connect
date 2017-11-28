@@ -52,40 +52,42 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 define(["require", "exports", "aurelia-framework", "./open-id-connect-user-block"], function (require, exports, aurelia_framework_1, open_id_connect_user_block_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var default_1 = (function (_super) {
-        __extends(default_1, _super);
-        function default_1() {
+    var OpenIdConnectUserDebug = /** @class */ (function (_super) {
+        __extends(OpenIdConnectUserDebug, _super);
+        function OpenIdConnectUserDebug() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        default_1.prototype.loginSilent = function () {
+        OpenIdConnectUserDebug.prototype.loginSilent = function () {
             return __awaiter(this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
                     try {
                         this.openIdConnect.loginSilent();
                     }
                     catch (err) {
-                        if (err.error !== "login_required") {
+                        if (err.error !== 'login_required') {
+                            // TODO: Check the JavaScript specification on Error and check
+                            // the OpenID Connect specification for the nesting of an error
+                            // inside the err object.
                             throw err;
                         }
                         this.login();
                     }
-                    return [2];
+                    return [2 /*return*/];
                 });
             });
         };
-        Object.defineProperty(default_1.prototype, "stringifiedUser", {
+        Object.defineProperty(OpenIdConnectUserDebug.prototype, "stringifiedUser", {
             get: function () {
                 return JSON.stringify(this.user, undefined, 2);
             },
             enumerable: true,
             configurable: true
         });
-        default_1 = __decorate([
+        OpenIdConnectUserDebug = __decorate([
             aurelia_framework_1.autoinject,
-            aurelia_framework_1.customElement("open-id-connect-user-debug")
-        ], default_1);
-        return default_1;
-    }(open_id_connect_user_block_1.default));
-    exports.default = default_1;
+            aurelia_framework_1.customElement('open-id-connect-user-debug')
+        ], OpenIdConnectUserDebug);
+        return OpenIdConnectUserDebug;
+    }(open_id_connect_user_block_1.OpenIdConnectUserBlock));
+    exports.OpenIdConnectUserDebug = OpenIdConnectUserDebug;
 });
-//# sourceMappingURL=open-id-connect-user-debug.js.map

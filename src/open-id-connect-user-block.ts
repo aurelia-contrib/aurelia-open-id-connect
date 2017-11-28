@@ -1,12 +1,12 @@
-import { autoinject, customElement } from "aurelia-framework";
-import { User } from "oidc-client";
-import OpenIdConnect from "./open-id-connect";
+import { autoinject, customElement } from 'aurelia-framework';
+import { User } from 'oidc-client';
+import { OpenIdConnect } from './open-id-connect';
 
 @autoinject
-@customElement("open-id-connect-user-block")
-export default class {
+@customElement('open-id-connect-user-block')
+export class OpenIdConnectUserBlock {
 
-    protected user: User = null;
+    protected user: User | null = null;
 
     public get isLoggedIn(): boolean {
         return this.user !== null && this.user !== undefined;
@@ -15,11 +15,11 @@ export default class {
     constructor(protected openIdConnect: OpenIdConnect) { }
 
     public async attached() {
-        this.openIdConnect.addOrRemoveHandler("addUserUnloaded", () => {
+        this.openIdConnect.addOrRemoveHandler('addUserUnloaded', () => {
             this.user = null;
         });
 
-        this.openIdConnect.addOrRemoveHandler("addUserLoaded", async () => {
+        this.openIdConnect.addOrRemoveHandler('addUserLoaded', async () => {
             this.user = await this.openIdConnect.getUser();
         });
 

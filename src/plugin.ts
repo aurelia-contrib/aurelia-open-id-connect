@@ -1,9 +1,9 @@
-import { FrameworkConfiguration, PLATFORM } from "aurelia-framework";
-import { UserManager } from "oidc-client";
-import OpenIdConnectConfiguration from "./open-id-connect-configuration";
-import OpenIdConnectConfigurationManager from "./open-id-connect-configuration-manager";
-import OpenIdConnectFactory from "./open-id-connect-factory";
-import OpenIdConnectLogger from "./open-id-connect-logger";
+import { FrameworkConfiguration, PLATFORM } from 'aurelia-framework';
+import { UserManager } from 'oidc-client';
+import { OpenIdConnectConfiguration } from './open-id-connect-configuration';
+import { OpenIdConnectConfigurationManager } from './open-id-connect-configuration-manager';
+import { OpenIdConnectFactory } from './open-id-connect-factory';
+import { OpenIdConnectLogger } from './open-id-connect-logger';
 
 export interface CallbackV19 extends Function {
     (): OpenIdConnectConfiguration;
@@ -13,7 +13,7 @@ export interface CallbackV18 extends Function {
     (config: OpenIdConnectConfiguration): void;
 }
 
-export type PluginCallback = CallbackV18 | CallbackV19;
+export type PluginCallback = CallbackV18 | CallbackV19 | undefined;
 
 const retrieveUserlandConfig = (callback: PluginCallback): OpenIdConnectConfiguration => {
     let config = {} as OpenIdConnectConfiguration;
@@ -31,9 +31,10 @@ const retrieveUserlandConfig = (callback: PluginCallback): OpenIdConnectConfigur
         (callback as CallbackV18)(config);
         return config;
     }
-};
+    return config;
+  };
 
-export default function (
+export function configure(
     frameworkConfig: FrameworkConfiguration,
     callback?: PluginCallback,
     factory?: OpenIdConnectFactory) {
@@ -44,9 +45,9 @@ export default function (
 
     // register global resources
     frameworkConfig.globalResources([
-        PLATFORM.moduleName("./open-id-connect-user-block"),
-        PLATFORM.moduleName("./open-id-connect-user-debug"),
-        PLATFORM.moduleName("./open-id-connect-navigation-value-converter"),
+        PLATFORM.moduleName('./open-id-connect-user-block'),
+        PLATFORM.moduleName('./open-id-connect-user-debug'),
+        PLATFORM.moduleName('./open-id-connect-navigation-value-converter'),
     ]);
 
     // retrieve user-land configuration

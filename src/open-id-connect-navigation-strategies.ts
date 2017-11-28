@@ -1,8 +1,8 @@
-import { autoinject } from "aurelia-framework";
-import { NavigationInstruction } from "aurelia-router";
-import { UserManager } from "oidc-client";
-import OpenIdConnectConfigurationManager from "./open-id-connect-configuration-manager";
-import OpenIdConnectLogger from "./open-id-connect-logger";
+import { autoinject } from 'aurelia-framework';
+import { NavigationInstruction } from 'aurelia-router';
+import { UserManager } from 'oidc-client';
+import { OpenIdConnectConfigurationManager } from './open-id-connect-configuration-manager';
+import { OpenIdConnectLogger } from './open-id-connect-logger';
 
 // TODO: Move some of the route-definition logic from
 // the open-id-connect-routing.ts file into this file instead.
@@ -10,7 +10,7 @@ import OpenIdConnectLogger from "./open-id-connect-logger";
 // { name, navigationStrategy, route } object instead of defining only
 // the navigationStrategy implementation.
 @autoinject
-export default class OpenIdConnectNavigationStrategies {
+export class OpenIdConnectNavigationStrategies {
 
     constructor(
         // @ts-ignore
@@ -42,7 +42,7 @@ export default class OpenIdConnectNavigationStrategies {
             // And we will receive one of two errors:
             // 'No matching state found in storage' or
             // 'No state in response'
-            const url: string = null;
+            const url: string | undefined = undefined;
             return this.userManager.signinSilentCallback(url);
         };
 
@@ -79,12 +79,12 @@ export default class OpenIdConnectNavigationStrategies {
         navigationInstruction: () => void): Promise<any> {
 
         try {
-            this.logger.debug("Handling the response from the Identity Provider");
+            this.logger.debug('Handling the response from the Identity Provider');
             await callbackHandler();
-            this.logger.debug("Redirecting on authorization success");
+            this.logger.debug('Redirecting on authorization success');
             navigationInstruction();
         } catch (err) {
-            this.logger.debug("Redirecting on authorization error");
+            this.logger.debug('Redirecting on authorization error');
             navigationInstruction();
             throw err;
         }

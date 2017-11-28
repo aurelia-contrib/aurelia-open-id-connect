@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 define(["require", "exports", "aurelia-framework", "./open-id-connect-roles"], function (require, exports, aurelia_framework_1, open_id_connect_roles_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var OpenIdConnectNavigationValueConverter = (function () {
+    var OpenIdConnectNavigationValueConverter = /** @class */ (function () {
         function OpenIdConnectNavigationValueConverter() {
         }
         OpenIdConnectNavigationValueConverter.prototype.toView = function (navigation, user) {
@@ -16,9 +16,10 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-roles"], f
                     return true;
                 }
                 var roles = element.settings.roles;
-                if (roles.indexOf(open_id_connect_roles_1.default.Authenticated) >= 0) {
+                if (roles.indexOf(open_id_connect_roles_1.OpenIdConnectRoles.Authenticated) >= 0) {
                     return user !== null;
                 }
+                return false;
             });
         };
         OpenIdConnectNavigationValueConverter = __decorate([
@@ -28,4 +29,3 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-roles"], f
     }());
     exports.OpenIdConnectNavigationValueConverter = OpenIdConnectNavigationValueConverter;
 });
-//# sourceMappingURL=open-id-connect-navigation-value-converter.js.map

@@ -1,14 +1,14 @@
-import { autoinject } from "aurelia-framework";
-import { Router, RouterConfiguration } from "aurelia-router";
-import { User, UserManager, UserManagerEvents } from "oidc-client";
-import { UserManagerEventHandler, UserManagerEventsAction } from "./internal-types";
-import OpenIdConnectConfigurationManager from "./open-id-connect-configuration-manager";
-import OpenIdConnectLogger from "./open-id-connect-logger";
-import OpenIdConnectRouting from "./open-id-connect-routing";
-import OpenIdConnectUserObserver from "./open-id-connect-user-observer";
+import { autoinject } from 'aurelia-framework';
+import { Router, RouterConfiguration } from 'aurelia-router';
+import { User, UserManager, UserManagerEvents } from 'oidc-client';
+import { UserManagerEventHandler, UserManagerEventsAction } from './internal-types';
+import { OpenIdConnectConfigurationManager } from './open-id-connect-configuration-manager';
+import { OpenIdConnectLogger } from './open-id-connect-logger';
+import { OpenIdConnectRouting } from './open-id-connect-routing';
+import { OpenIdConnectUserObserver } from './open-id-connect-user-observer';
 
 @autoinject
-export default class OpenIdConnect {
+export class OpenIdConnect {
 
     private userObservers: OpenIdConnectUserObserver[] = [];
 
@@ -24,8 +24,8 @@ export default class OpenIdConnect {
 
     public configure(routerConfiguration: RouterConfiguration) {
 
-        if (typeof routerConfiguration === "undefined" || routerConfiguration === null) {
-            throw new Error("routerConfiguration parameter must not be undefined or null");
+        if (typeof routerConfiguration === 'undefined' || routerConfiguration === null) {
+            throw new Error('routerConfiguration parameter must not be undefined or null');
         }
 
         this.openIdConnectRouting.configureRouter(routerConfiguration);
@@ -41,9 +41,9 @@ export default class OpenIdConnect {
         try {
             await this.userManager.signoutRedirect(args);
         } catch (err) {
-            if (err.message === "no end session endpoint") {
+            if (err.message === 'no end session endpoint') {
                 this.logger.debug(err);
-                this.logger.debug("The user remains logged in at the authorization server.");
+                this.logger.debug('The user remains logged in at the authorization server.');
                 this.router.navigate(this.configuration.logoutRedirectModuleId);
             } else {
                 throw err;
@@ -64,10 +64,10 @@ export default class OpenIdConnect {
         key: keyof UserManagerEvents,
         handler: UserManagerEventHandler) {
 
-        if (!key.startsWith("add") && !key.startsWith("remove")) {
-            let message = "The 'addOrRemoveHandlers' method expects a 'key' argument ";
-            message += "that starts with either 'add' or 'remove'. Instead we ";
-            message += "recevied " + key;
+        if (!key.startsWith('add') && !key.startsWith('remove')) {
+            let message = 'The \'addOrRemoveHandlers\' method expects a \'key\' argument ';
+            message += 'that starts with either \'add\' or \'remove\'. Instead we ';
+            message += 'recevied ' + key;
             throw new TypeError(message);
         }
 
@@ -88,7 +88,7 @@ export default class OpenIdConnect {
     }
 
     private setupUserObservation() {
-        this.addOrRemoveHandler("addUserLoaded", () => this.getUser().then(this.notifyUserObservers));
-        this.addOrRemoveHandler("addUserUnloaded", () => this.getUser().then(this.notifyUserObservers));
+        this.addOrRemoveHandler('addUserLoaded', () => this.getUser().then(this.notifyUserObservers));
+        this.addOrRemoveHandler('addUserUnloaded', () => this.getUser().then(this.notifyUserObservers));
     }
 }

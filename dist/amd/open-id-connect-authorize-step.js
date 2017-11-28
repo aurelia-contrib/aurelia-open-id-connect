@@ -4,9 +4,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -42,10 +39,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-client", "./open-id-connect-configuration-manager", "./open-id-connect-logger", "./open-id-connect-roles"], function (require, exports, aurelia_framework_1, aurelia_router_1, oidc_client_1, open_id_connect_configuration_manager_1, open_id_connect_logger_1, open_id_connect_roles_1) {
+define(["require", "exports", "aurelia-framework", "aurelia-router", "./open-id-connect-roles"], function (require, exports, aurelia_framework_1, aurelia_router_1, open_id_connect_roles_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var OpenIdConnectAuthorizeStep = (function () {
+    var OpenIdConnectAuthorizeStep = /** @class */ (function () {
         function OpenIdConnectAuthorizeStep(userManager, configuration, logger) {
             this.userManager = userManager;
             this.configuration = configuration;
@@ -56,17 +53,19 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
                 var user, redirect;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0: return [4, this.userManager.getUser()];
+                        case 0: return [4 /*yield*/, this.userManager.getUser()];
                         case 1:
                             user = _a.sent();
-                            if (this.requiresRole(navigationInstruction, open_id_connect_roles_1.default.Authenticated)) {
+                            // TODO: Make this open for extension,
+                            // so that user-land can configure multiple, arbitrary roles.
+                            if (this.requiresRole(navigationInstruction, open_id_connect_roles_1.OpenIdConnectRoles.Authenticated)) {
                                 if (user === null) {
-                                    this.logger.debug("Requires authenticated role.");
+                                    this.logger.debug('Requires authenticated role.');
                                     redirect = new aurelia_router_1.Redirect(this.configuration.unauthorizedRedirectModuleId);
-                                    return [2, next.cancel(redirect)];
+                                    return [2 /*return*/, next.cancel(redirect)];
                                 }
                             }
-                            return [2, next()];
+                            return [2 /*return*/, next()];
                     }
                 });
             });
@@ -82,13 +81,9 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
             });
         };
         OpenIdConnectAuthorizeStep = __decorate([
-            aurelia_framework_1.autoinject,
-            __metadata("design:paramtypes", [oidc_client_1.UserManager,
-                open_id_connect_configuration_manager_1.default,
-                open_id_connect_logger_1.default])
+            aurelia_framework_1.autoinject
         ], OpenIdConnectAuthorizeStep);
         return OpenIdConnectAuthorizeStep;
     }());
-    exports.default = OpenIdConnectAuthorizeStep;
+    exports.OpenIdConnectAuthorizeStep = OpenIdConnectAuthorizeStep;
 });
-//# sourceMappingURL=open-id-connect-authorize-step.js.map

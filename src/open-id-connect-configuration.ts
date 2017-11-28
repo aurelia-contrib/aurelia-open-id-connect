@@ -1,6 +1,6 @@
-import { UserManagerSettings } from "oidc-client";
+import { UserManagerSettings } from 'oidc-client';
 
-export default interface OpenIdConnectConfiguration {
+export interface OpenIdConnectConfiguration {
     [key: string]: any;
     loginRedirectModuleId: string;
     logoutRedirectModuleId: string;

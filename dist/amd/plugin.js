@@ -14,28 +14,34 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             callback(config);
             return config;
         }
+        return config;
     };
-    function default_1(frameworkConfig, callback, factory) {
+    function configure(frameworkConfig, callback, factory) {
         if (!factory) {
-            factory = new open_id_connect_factory_1.default();
+            factory = new open_id_connect_factory_1.OpenIdConnectFactory();
         }
+        // register global resources
         frameworkConfig.globalResources([
-            aurelia_framework_1.PLATFORM.moduleName("./open-id-connect-user-block"),
-            aurelia_framework_1.PLATFORM.moduleName("./open-id-connect-user-debug"),
-            aurelia_framework_1.PLATFORM.moduleName("./open-id-connect-navigation-value-converter"),
+            aurelia_framework_1.PLATFORM.moduleName('./open-id-connect-user-block'),
+            aurelia_framework_1.PLATFORM.moduleName('./open-id-connect-user-debug'),
+            aurelia_framework_1.PLATFORM.moduleName('./open-id-connect-navigation-value-converter'),
         ]);
+        // retrieve user-land configuration
         var userConfig = retrieveUserlandConfig(callback);
+        // register configuration
         var configManager = factory.createOpenIdConnectConfiguration(userConfig);
         frameworkConfig.container
-            .registerInstance(open_id_connect_configuration_manager_1.default, configManager);
+            .registerInstance(open_id_connect_configuration_manager_1.OpenIdConnectConfigurationManager, configManager);
+        // register logger
         var openIdConnectLogger = factory.createOpenIdConnectLogger(configManager.logLevel);
         frameworkConfig.container
-            .registerInstance(open_id_connect_logger_1.default, openIdConnectLogger);
+            .registerInstance(open_id_connect_logger_1.OpenIdConnectLogger, openIdConnectLogger);
+        // register userManager
         var userManager = factory.createUserManager(configManager.userManagerSettings);
         frameworkConfig.container
             .registerInstance(oidc_client_1.UserManager, userManager);
+        // register window
         frameworkConfig.container.registerInstance(Window, window);
     }
-    exports.default = default_1;
+    exports.configure = configure;
 });
-//# sourceMappingURL=plugin.js.map

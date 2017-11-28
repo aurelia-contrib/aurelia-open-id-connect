@@ -176,3 +176,22 @@ It is designed to be easy to read and implement for basic Web-based Relying Part
 [1]: http://openid.net/specs/openid-connect-implicit-1_0.html
 [alpha-software]: https://blog.codinghorror.com/alpha-beta-and-sometimes-gamma/
 [aurelia-cli]: https://www.npmjs.com/package/aurelia-cli
+
+## Building
+
+**Before The First Build**
+
+`npm install` installs dependencies for the project
+`npm run build` at the base to build Aurelia Open Id Connect
+
+## Tests
+
+```shell
+npm run test
+```
+
+## Developing
+
+```shell
+npm run develop
+```

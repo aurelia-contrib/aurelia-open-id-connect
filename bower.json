@@ -1,0 +1,23 @@
+{
+  "name": "aurelia-open-id-connect",
+  "version": "0.19.7",
+  "description": "An Aurelia adapter for the IdentityModel/oidc-client-js.",
+  "keywords": [
+    "plugin"
+  ],
+  "main": "dist/commonjs/index.js",
+  "moduleType": "node",
+  "license": "MIT",
+  "author": "Shaun Luttin <shaun@bigfont.ca>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shaunluttin/aurelia-open-id-connect.git"
+  },
+  "dependencies": {
+    "aurelia-fetch-client": "^1.1.3",
+    "aurelia-framework": "^1.1.5",
+    "aurelia-router": "^1.4.0",
+    "babel-polyfill": "^6.26.0",
+    "oidc-client": "^1.4.1"
+  }
+}

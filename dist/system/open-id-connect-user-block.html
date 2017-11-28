@@ -1,0 +1,6 @@
+<template>
+  <div class="user-block">
+    <button show.bind="!isLoggedIn" click.delegate="login()">login / signup</button>
+    <button show.bind="isLoggedIn" click.delegate="logout()">logout</button>
+  </div>
+</template>

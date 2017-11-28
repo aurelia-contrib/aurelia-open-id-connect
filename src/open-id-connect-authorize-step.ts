@@ -1,17 +1,17 @@
-import { autoinject } from "aurelia-framework";
+import { autoinject } from 'aurelia-framework';
 import {
     NavigationInstruction,
     Next,
     PipelineStep,
     Redirect,
-} from "aurelia-router";
-import { UserManager } from "oidc-client";
-import OpenIdConnectConfigurationManager from "./open-id-connect-configuration-manager";
-import OpenIdConnectLogger from "./open-id-connect-logger";
-import OpenIdConnectRoles from "./open-id-connect-roles";
+} from 'aurelia-router';
+import { UserManager } from 'oidc-client';
+import { OpenIdConnectConfigurationManager } from './open-id-connect-configuration-manager';
+import { OpenIdConnectLogger } from './open-id-connect-logger';
+import { OpenIdConnectRoles } from './open-id-connect-roles';
 
 @autoinject
-export default class OpenIdConnectAuthorizeStep implements PipelineStep {
+export class OpenIdConnectAuthorizeStep implements PipelineStep {
 
     constructor(
         private userManager: UserManager,
@@ -28,7 +28,7 @@ export default class OpenIdConnectAuthorizeStep implements PipelineStep {
         // so that user-land can configure multiple, arbitrary roles.
         if (this.requiresRole(navigationInstruction, OpenIdConnectRoles.Authenticated)) {
             if (user === null) {
-                this.logger.debug("Requires authenticated role.");
+                this.logger.debug('Requires authenticated role.');
                 const redirect = new Redirect(this.configuration.unauthorizedRedirectModuleId);
                 return next.cancel(redirect);
             }

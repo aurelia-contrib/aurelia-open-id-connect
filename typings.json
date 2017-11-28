@@ -1,0 +1,4 @@
+{
+  "name": "aurelia-open-id-connect",
+  "main": "dist/amd/index.d.ts"
+}

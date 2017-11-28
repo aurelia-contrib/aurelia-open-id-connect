@@ -1,26 +1,28 @@
 {
-    "compileOnSave": false,
-    "compilerOptions": {
-        "sourceMap": true,
-        "outDir": "dist/amd",
-        "target": "es5",
-        "experimentalDecorators": true,
-        "noUnusedLocals": true,
-        "noImplicitAny": true,
-        "module": "amd",
-        "declaration": true,
-        "removeComments": true,
-        "emitDecoratorMetadata": true,
-        "moduleResolution": "node",
-        "lib": [
-            "es2017",
-            "dom"
-        ]
-    },
-    "include": [
-        "src/**/*.ts"
+  "compilerOptions": {
+    "module": "amd",
+    "moduleResolution": "node",
+    "target": "es5",
+    "lib": [
+      "es2017",
+      "dom"
     ],
-    "exclude": [
-        "node_modules"
-    ]
+    "rootDir": "src",
+    "outDir": "dist/test",
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "strictNullChecks": true,
+    "declaration": true,
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "noEmitHelpers": false
+  },
+  "exclude": [
+    ".vscode",
+    "dist",
+    "doc",
+    "node_modules"
+  ]
 }
