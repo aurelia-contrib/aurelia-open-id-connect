@@ -5,22 +5,16 @@ import { UserManagerEventHandler, UserManagerEventsAction } from "./internal-typ
 import OpenIdConnectConfigurationManager from "./open-id-connect-configuration-manager";
 import OpenIdConnectLogger from "./open-id-connect-logger";
 import OpenIdConnectRouting from "./open-id-connect-routing";
-import OpenIdConnectUserObserver from "./open-id-connect-user-observer";
 
 @autoinject
 export default class OpenIdConnect {
-
-    private userObservers: OpenIdConnectUserObserver[] = [];
 
     constructor(
         private openIdConnectRouting: OpenIdConnectRouting,
         private router: Router,
         private configuration: OpenIdConnectConfigurationManager,
         public logger: OpenIdConnectLogger,
-        public userManager: UserManager) {
-
-        this.setupUserObservation();
-    }
+        public userManager: UserManager) { }
 
     public configure(routerConfiguration: RouterConfiguration) {
 
@@ -75,20 +69,9 @@ export default class OpenIdConnect {
         addOrRemove.call(this.userManager.events, handler);
     }
 
-    public notifyUserObservers = (user: User) => {
-        this.userObservers.forEach((o) => o.userChanged(user));
-    }
-
-    public observeUser(observer: OpenIdConnectUserObserver) {
-        if (!this.userObservers.includes(observer)) {
-            this.userObservers.push(observer);
-        }
-
-        this.getUser().then(this.notifyUserObservers);
-    }
-
-    private setupUserObservation() {
-        this.addOrRemoveHandler("addUserLoaded", () => this.getUser().then(this.notifyUserObservers));
-        this.addOrRemoveHandler("addUserUnloaded", () => this.getUser().then(this.notifyUserObservers));
+    public observeUser(callback: (user: User) => void) {
+        this.addOrRemoveHandler("addUserLoaded", () => this.getUser().then(callback));
+        this.addOrRemoveHandler("addUserUnloaded", () => this.getUser().then(callback));
+        this.getUser().then(callback);
     }
 }

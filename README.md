@@ -52,49 +52,34 @@ We use the Aurelia CLI, so we add the following to `aurelia.json` in a bundle.
     {
         "name": "aurelia-open-id-connect",
         "path": "../node_modules/aurelia-open-id-connect/dist/amd",
-        "main": "index",
-        "resources": [
-            "open-id-connect-user-block.html",
-            "open-id-connect-user-block.js",
-            "open-id-connect-user-debug.html",
-            "open-id-connect-user-debug.js"
-        ]
+        "main": "index"
     },
     "oidc-client"
 
-**Also** set `build.loader.plugins.stub = false` to load the plugin's HTML. (TODO: Verify that this is necessary.)
+**Also** set `build.loader.plugins.stub = false` to load the plugin's HTML. 
+(TODO: Verify that this is necessary.)
 
 ### Configure the OpenID Connect client
 
 Create a `src/open-id-connect-configuration.ts` file that specifies the Open ID Connect configuration. There is an [example here](/open-id-connect-configuration.ts.example).
 
-In your `src/main.ts`, import the configuration file, add the plugin, and invoke the callback, passing it the imported configuration. 
+In your `src/main.ts`, import the configuration file, add the plugin, and invoke the callback, returning the imported configuration. 
 
     import oidcConfig from "./open-id-connect-configuration";
 
     aurelia.use
       .plugin("aurelia-open-id-connect", () => oidcConfig);
 
-### Add the user-block and router view.
-
-We add the `user-block` to the app.html view.
-
-    <template>
-      <h1>${message}</h1>
-      <open-id-connect-user-block></open-id-connect-user-block>
-      <router-view></router-view>
-    </template>
-
 ### Change the Aurelia Container
 
-Normally you application would look like this:
+If your application adds the `aurelia-app` property to the `body`...
 
     <body aurelia-app="main">
        <!-- Some placeholder content -->
        <script src="scripts/main.js" data-main="aurelia-bootstrapper"/>
     </body>
 
-...but what you'd do instead is:
+...then move the `aurelia-app` property to a wrapper `div` like this...
 
     <body>
       <div aurelia-app="main">
@@ -103,17 +88,34 @@ Normally you application would look like this:
       </div>
     </body>
 
+Why?
+
 > Aurelia was replacing the complete body element's contents, hence the disappearing iframe. The fix was to create a child div element where Aurelia puts its contents. Now everything works! ~ @ErikSchierboom
 
 Thank you @RichiCoder1, @bewl, and @mttmccb for help to find the fix: https://github.com/shaunluttin/aurelia-open-id-connect/issues/4
 
+### Add the user-block and router view.
+
+Add the global resources to `app.html` (or to another appropriate view).
+
+    <template>
+      <open-id-connect-user-block></open-id-connect-user-block>
+      <open-id-connect-user-debug></open-id-connect-user-debug>
+      <ul>
+          <li repeat.for="nav of router.navigation | openIdConnectNavigation:user">
+            <a href.bind="nav.href">${nav.title}</a>
+          </li>
+      </ul>
+      <router-view></router-view>
+    </template>
+
 ### Configure routing
 
-Configure routing in the app.ts file.
+Configure routing in the app.ts file and setup user-observation.
 
     import { autoinject } from "aurelia-framework";
     import { RouterConfiguration, Router } from "aurelia-router";
-    import { User, Log } from "oidc-client";
+    import { User } from "oidc-client";
     import { OpenIdConnect, OpenIdConnectRoles } from "aurelia-open-id-connect";
 
     @autoinject
@@ -123,9 +125,7 @@ Configure routing in the app.ts file.
       private user: User;
 
       constructor(private openIdConnect: OpenIdConnect) {
-        this.openIdConnect.userManager.getUser().then((user) => {
-          this.user = user;
-        });
+          this.openIdConnect.observeUser((user: User) => this.user = user);
       }
 
       public configureRouter(routerConfiguration: RouterConfiguration, router: Router) {
@@ -136,12 +136,23 @@ Configure routing in the app.ts file.
 
         // configure routes
         routerConfiguration.map([
-          {
-            moduleId: "index",
-            name: "index",
-            route: ["", "index"],
-            title: "index",
-          },
+            {
+                moduleId: "index",
+                name: "index",
+                route: ["", "index"],
+                title: "index",
+                nav: true,
+            },
+            {
+                moduleId: "private",
+                name: "private",
+                route: ["private"],
+                title: "private",
+                nav: true,
+                settings: {
+                    roles: [OpenIdConnectRoles.Authenticated],
+                }
+            },
         ]);
 
         this.openIdConnect.configure(routerConfiguration);
@@ -149,7 +160,7 @@ Configure routing in the app.ts file.
       }
     }
 
-Add a simple index view that maps to the index route.
+### Add simple views that map to the routing.
 
 index.html
 
@@ -159,12 +170,19 @@ index.ts
  
     export class Index { }
 
+private.html
+
+    <template></template>
+
+private.ts
+ 
+    export class Private { }
+
 ### Run your application
 
     npm install
     au build
     au run
-
 
 # Implicit Flow Implementor Guide
 
