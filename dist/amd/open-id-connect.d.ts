@@ -16,5 +16,6 @@ export default class OpenIdConnect {
     logout(): Promise<void>;
     loginSilent(): Promise<User>;
     getUser(): Promise<User>;
+    observeUser(callback: (user: User) => void): void;
     addOrRemoveHandler(key: keyof UserManagerEvents, handler: UserManagerEventHandler): void;
 }
