@@ -47,12 +47,16 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
     Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnect = (function () {
         function OpenIdConnect(openIdConnectRouting, router, configuration, logger, userManager) {
+            var _this = this;
             this.openIdConnectRouting = openIdConnectRouting;
             this.router = router;
             this.configuration = configuration;
             this.logger = logger;
             this.userManager = userManager;
             this.userObservers = [];
+            this.notifyUserObservers = function (user) {
+                _this.userObservers.forEach(function (o) { return o.userChanged(user); });
+            };
             this.setupUserObservation();
         }
         OpenIdConnect.prototype.configure = function (routerConfiguration) {
@@ -128,9 +132,6 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
                 this.userObservers.push(observer);
             }
             this.getUser().then(this.notifyUserObservers);
-        };
-        OpenIdConnect.prototype.notifyUserObservers = function (user) {
-            this.userObservers.forEach(function (o) { return o.userChanged(user); });
         };
         OpenIdConnect.prototype.setupUserObservation = function () {
             var _this = this;

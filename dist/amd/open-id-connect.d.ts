@@ -19,7 +19,7 @@ export default class OpenIdConnect {
     loginSilent(): Promise<User>;
     getUser(): Promise<User>;
     addOrRemoveHandler(key: keyof UserManagerEvents, handler: UserManagerEventHandler): void;
+    notifyUserObservers: (user: User) => void;
     observeUser(observer: OpenIdConnectUserObserver): void;
-    notifyUserObservers(user: User): void;
     private setupUserObservation();
 }
