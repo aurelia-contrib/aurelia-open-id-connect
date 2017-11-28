@@ -10,17 +10,30 @@
     "url": "https://github.com/shaunluttin/aurelia-open-id-connect.git"
   },
   "scripts": {
-    "build": "tsc",
-    "lint": "tslint --project tsconfig.json",
-    "package:clean": "rimraf dist",
-    "package:html": "cpx src/**/*.html dist/amd",
-    "package:tsc": "tsc",
-    "package": "npm run package:clean && npm run package:tsc && npm run package:html",
-    "release": "npm run package && git add dist && git commit -m \"prepare release\"",
-    "test": "karma start"
+    "lint": "cross-env tslint --project tsconfig.json",
+    "pretest": "cross-env npm run lint",
+    "test": "karma start --single-run",
+    "develop": "karma start",
+    "prebuild:amd": "cross-env rimraf dist/amd",
+    "build:amd": "cross-env tsc --project tsconfig.build.json --outDir dist/amd --module amd",
+    "postbuild:amd": "cross-env copyfiles --up 1 src/**/*.html src/**/*.css dist/amd",
+    "prebuild:commonjs": "cross-env rimraf dist/commonjs",
+    "build:commonjs": "cross-env tsc --project tsconfig.build.json --outDir dist/commonjs --module commonjs",
+    "postbuild:commonjs": "cross-env copyfiles --up 1 src/**/*.html src/**/*.css dist/commonjs",
+    "prebuild:es2015": "cross-env rimraf dist/es2015",
+    "build:es2015": "cross-env tsc --project tsconfig.build.json --outDir dist/es2015 --module es2015 --target es2015",
+    "postbuild:es2015": "cross-env copyfiles --up 1 src/**/*.html src/**/*.css dist/es2015",
+    "prebuild:native-modules": "cross-env rimraf dist/native-modules",
+    "build:native-modules": "cross-env tsc --project tsconfig.build.json --outDir dist/native-modules --module es2015",
+    "postbuild:native-modules": "cross-env copyfiles --up 1 src/**/*.html src/**/*.css dist/native-modules",
+    "prebuild:system": "cross-env rimraf dist/system",
+    "build:system": "cross-env tsc --project tsconfig.build.json --outDir dist/system --module system",
+    "postbuild:system": "cross-env copyfiles --up 1 src/**/*.html src/**/*.css dist/system",
+    "prebuild": "cross-env rimraf dist",
+    "build": "concurrently \"npm run build:amd\" \"npm run build:commonjs\" \"npm run build:es2015\" \"npm run build:native-modules\" \"npm run build:system\""
   },
   "scripts-comments": {
-    "publish:step:01": "npm run release",
+    "publish:step:01": "npm run build",
     "publish:step:02": "npm version <major | minor | patch>",
     "publish:step:03": "npm publish .",
     "publish:step:04": "git push --follow-tags"
@@ -39,6 +52,7 @@
     "aurelia-framework": "^1.1.5",
     "aurelia-router": "^1.4.0",
     "babel-polyfill": "^6.26.0",
+    "cross-env": "^5.1.1",
     "oidc-client": "^1.4.1"
   },
   "devDependencies": {
@@ -46,6 +60,8 @@
     "@types/mocha": "^2.2.44",
     "@types/sinon": "^4.0.0",
     "chai": "^4.1.2",
+    "concurrently": "^3.5.1",
+    "copyfiles": "^1.2.0",
     "cpx": "^1.5.0",
     "karma": "^1.7.1",
     "karma-cli": "^1.0.1",
@@ -59,6 +75,7 @@
     "sinon": "^4.1.2",
     "tslint": "^5.8.0",
     "tslint-microsoft-contrib": "^5.0.1",
-    "typescript": "^2.6.1"
+    "typescript": "^2.6.1",
+    "typescript-formatter": "^7.0.0"
   }
 }

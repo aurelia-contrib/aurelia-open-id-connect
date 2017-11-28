@@ -6,7 +6,7 @@ module.exports = function (config) {
         files: [
             { pattern: 'node_modules/babel-polyfill/browser.js' },
             { pattern: "src/**/*.ts" },
-            { pattern: "spec/**/*.spec.ts" }
+            { pattern: "test/**/*.spec.ts" }
         ],
 
         exclude: [

@@ -1,7 +1,7 @@
 enum OpenIdConnectRoles {
-    Everyone,
-    Anonymous,
-    Authenticated,
+  Everyone,
+  Anonymous,
+  Authenticated,
 }
 
 export default OpenIdConnectRoles;

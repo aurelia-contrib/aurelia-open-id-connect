@@ -1,4 +1,4 @@
-import { User } from "oidc-client";
+import { User } from 'oidc-client';
 
 export type UserManagerEventHandler = (...ev: any[]) => void;
 

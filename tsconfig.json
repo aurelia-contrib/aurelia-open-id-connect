@@ -2,7 +2,6 @@
     "compileOnSave": false,
     "compilerOptions": {
         "sourceMap": true,
-        "outDir": "dist/amd",
         "target": "es5",
         "experimentalDecorators": true,
         "noUnusedLocals": true,
@@ -18,7 +17,7 @@
         ]
     },
     "include": [
-        "src/**/*.ts"
+        "**/*.ts"
     ],
     "exclude": [
         "node_modules"
