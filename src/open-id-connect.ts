@@ -5,9 +5,12 @@ import { UserManagerEventHandler, UserManagerEventsAction } from "./internal-typ
 import OpenIdConnectConfigurationManager from "./open-id-connect-configuration-manager";
 import OpenIdConnectLogger from "./open-id-connect-logger";
 import OpenIdConnectRouting from "./open-id-connect-routing";
+import OpenIdConnectUserObserver from "./open-id-connect-user-observer";
 
 @autoinject
 export default class OpenIdConnect {
+
+    private userObservers: OpenIdConnectUserObserver[] = [];
 
     constructor(
         private openIdConnectRouting: OpenIdConnectRouting,
@@ -16,6 +19,7 @@ export default class OpenIdConnect {
         public logger: OpenIdConnectLogger,
         public userManager: UserManager) {
 
+        this.setupUserObservation();
     }
 
     public configure(routerConfiguration: RouterConfiguration) {
@@ -56,12 +60,6 @@ export default class OpenIdConnect {
         return this.userManager.getUser();
     }
 
-    public observeUser(callback: (user: User) => void) {
-        this.addOrRemoveHandler("addUserLoaded", () => this.getUser().then(callback));
-        this.addOrRemoveHandler("addUserUnloaded", () => this.getUser().then(callback));
-        this.getUser().then(callback);
-    }
-
     public addOrRemoveHandler(
         key: keyof UserManagerEvents,
         handler: UserManagerEventHandler) {
@@ -78,5 +76,22 @@ export default class OpenIdConnect {
                 .bind(this.userManager.events);
 
         addOrRemove(handler);
+    }
+
+    public observeUser(observer: OpenIdConnectUserObserver) {
+        if (!this.userObservers.includes(observer)) {
+            this.userObservers.push(observer);
+        }
+
+        this.getUser().then(this.notifyUserObservers);
+    }
+
+    public notifyUserObservers(user: User) {
+        this.userObservers.forEach((o) => o.userChanged(user));
+    }
+
+    private setupUserObservation() {
+        this.addOrRemoveHandler("addUserLoaded", () => this.getUser().then(this.notifyUserObservers));
+        this.addOrRemoveHandler("addUserUnloaded", () => this.getUser().then(this.notifyUserObservers));
     }
 }
