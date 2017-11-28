@@ -48,6 +48,7 @@ describe("plugin", () => {
         const resourcesToAdd = [
             "./open-id-connect-user-block",
             "./open-id-connect-user-debug",
+            "./open-id-connect-navigation-value-converter",
         ];
 
         it(`should add these to global resources \r\n\t${resourcesToAdd.join("\r\n\t")}`, () => {

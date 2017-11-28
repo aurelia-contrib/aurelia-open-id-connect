@@ -46,6 +46,7 @@ export default function (
     frameworkConfig.globalResources([
         PLATFORM.moduleName("./open-id-connect-user-block"),
         PLATFORM.moduleName("./open-id-connect-user-debug"),
+        PLATFORM.moduleName("./open-id-connect-navigation-value-converter"),
     ]);
 
     // retrieve user-land configuration
