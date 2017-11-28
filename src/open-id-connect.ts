@@ -75,16 +75,16 @@ export default class OpenIdConnect {
         addOrRemove.call(this.userManager.events, handler);
     }
 
+    public notifyUserObservers = (user: User) => {
+        this.userObservers.forEach((o) => o.userChanged(user));
+    }
+
     public observeUser(observer: OpenIdConnectUserObserver) {
         if (!this.userObservers.includes(observer)) {
             this.userObservers.push(observer);
         }
 
         this.getUser().then(this.notifyUserObservers);
-    }
-
-    public notifyUserObservers(user: User) {
-        this.userObservers.forEach((o) => o.userChanged(user));
     }
 
     private setupUserObservation() {
