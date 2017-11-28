@@ -35,7 +35,7 @@
     "postbuild:system": "cross-env copyfiles --up 1 src/**/*.html src/**/*.css dist/system",
     "prebuild": "cross-env rimraf dist",
     "build": "concurrently \"npm run build:amd\" \"npm run build:commonjs\" \"npm run build:es2015\" \"npm run build:native-modules\" \"npm run build:system\"",
-    "changelog": "cross-env conventional-changelog -p gde-open-id-connect-test -i doc/CHANGELOG.md -s",
+    "changelog": "cross-env conventional-changelog -p aurelia-open-id-connect -i doc/CHANGELOG.md -s",
     "bump-version": "npm --no-git-tag-version version",
     "preprepare-release": "cross-env npm run test",
     "prepare-release": "cross-env npm run changelog && npm run build"
@@ -101,5 +101,5 @@
       "babel-runtime": "^5.8.24",
       "core-js": "^2.0.3"
     }
-  },
+  }
 }
