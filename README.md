@@ -102,7 +102,7 @@ Add the global resources to `app.html` (or to another appropriate view).
       <open-id-connect-user-block></open-id-connect-user-block>
       <open-id-connect-user-debug></open-id-connect-user-debug>
       <ul>
-          <li repeat.for="nav of router.navigation | openIdConnectNavigation:user">
+          <li repeat.for="nav of router.navigation | openIdConnectNavigationFilter:user">
             <a href.bind="nav.href">${nav.title}</a>
           </li>
       </ul>
