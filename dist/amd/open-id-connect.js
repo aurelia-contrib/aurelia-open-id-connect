@@ -47,17 +47,11 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
     Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnect = (function () {
         function OpenIdConnect(openIdConnectRouting, router, configuration, logger, userManager) {
-            var _this = this;
             this.openIdConnectRouting = openIdConnectRouting;
             this.router = router;
             this.configuration = configuration;
             this.logger = logger;
             this.userManager = userManager;
-            this.userObservers = [];
-            this.notifyUserObservers = function (user) {
-                _this.userObservers.forEach(function (o) { return o.userChanged(user); });
-            };
-            this.setupUserObservation();
         }
         OpenIdConnect.prototype.configure = function (routerConfiguration) {
             if (typeof routerConfiguration === "undefined" || routerConfiguration === null) {
@@ -127,16 +121,11 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
             var addOrRemove = this.userManager.events[key];
             addOrRemove.call(this.userManager.events, handler);
         };
-        OpenIdConnect.prototype.observeUser = function (observer) {
-            if (!this.userObservers.includes(observer)) {
-                this.userObservers.push(observer);
-            }
-            this.getUser().then(this.notifyUserObservers);
-        };
-        OpenIdConnect.prototype.setupUserObservation = function () {
+        OpenIdConnect.prototype.observeUser = function (callback) {
             var _this = this;
-            this.addOrRemoveHandler("addUserLoaded", function () { return _this.getUser().then(_this.notifyUserObservers); });
-            this.addOrRemoveHandler("addUserUnloaded", function () { return _this.getUser().then(_this.notifyUserObservers); });
+            this.addOrRemoveHandler("addUserLoaded", function () { return _this.getUser().then(callback); });
+            this.addOrRemoveHandler("addUserUnloaded", function () { return _this.getUser().then(callback); });
+            this.getUser().then(callback);
         };
         OpenIdConnect = __decorate([
             aurelia_framework_1.autoinject,
