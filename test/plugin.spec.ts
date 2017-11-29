@@ -1,19 +1,18 @@
-import { Container, FrameworkConfiguration } from "aurelia-framework";
-import { assert } from "chai";
-import { UserManager } from "oidc-client";
-import sinon = require("sinon");
+import { Container, FrameworkConfiguration } from 'aurelia-framework';
+import { UserManager } from 'oidc-client';
+// tslint:disable-next-line:no-implicit-dependencies
+import sinon = require('sinon');
 import {
     configure,
-    OpenIdConnect,
     OpenIdConnectConfiguration,
-} from "../src";
+} from '../src';
 import {
     OpenIdConnectConfigurationManager,
     OpenIdConnectFactory,
     OpenIdConnectLogger,
-} from "../src/index-internal";
+} from '../src/index-internal';
 
-describe("plugin", () => {
+describe('plugin', () => {
 
     // arrange
     const logger = sinon.createStubInstance(OpenIdConnectLogger);
@@ -28,17 +27,17 @@ describe("plugin", () => {
     const frameworkConfig = sinon.createStubInstance(FrameworkConfiguration);
     frameworkConfig.container = dependencyContainer;
 
-    context("without user-defined configuration", () => {
+    context('without user-defined configuration', () => {
 
         const expectedLogLevel = 100;
         const expectedUserManager = {};
 
         before(() => {
             // arrange
-            sinon.stub(configurationManager, "logLevel")
+            sinon.stub(configurationManager, 'logLevel')
                 .get(() => expectedLogLevel);
 
-            sinon.stub(configurationManager, "userManagerSettings")
+            sinon.stub(configurationManager, 'userManagerSettings')
                 .get(() => expectedUserManager);
 
             // act
@@ -46,12 +45,12 @@ describe("plugin", () => {
         });
 
         const resourcesToAdd = [
-            "./open-id-connect-user-block",
-            "./open-id-connect-user-debug",
-            "./open-id-connect-navigation-value-converter",
+            './open-id-connect-user-block',
+            './open-id-connect-user-debug',
+            './open-id-connect-navigation-value-converter',
         ];
 
-        it(`should add these to global resources \r\n\t${resourcesToAdd.join("\r\n\t")}`, () => {
+        it(`should add these to global resources \r\n\t${resourcesToAdd.join('\r\n\t')}`, () => {
             // assert
             sinon.assert.calledWith(frameworkConfig.globalResources, resourcesToAdd);
         });
@@ -104,14 +103,14 @@ describe("plugin", () => {
 
         it(`should flow empty object to the Configuration builder`, () => {
             // assert
-            const isEmptyObject = (obj) => Object.keys(obj).length === 0;
+            const isEmptyObject = (obj: any) => Object.keys(obj).length === 0;
             sinon.assert.calledWith(
                 factory.createOpenIdConnectConfiguration,
                 sinon.match(isEmptyObject));
         });
     });
 
-    context("with user-defined configuration", () => {
+    context('with user-defined configuration', () => {
 
         const userDefinedConfiguration = {
             logLevel: 5,

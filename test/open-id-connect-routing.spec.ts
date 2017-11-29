@@ -1,15 +1,14 @@
-import { RouterConfiguration } from "aurelia-router";
-import { assert } from "chai";
-import sinon = require("sinon");
+import { RouterConfiguration } from 'aurelia-router';
+// tslint:disable-next-line:no-implicit-dependencies
+import sinon = require('sinon');
 import {
-    OpenIdConnectAuthorizeStep,
     OpenIdConnectConfigurationManager,
     OpenIdConnectLogger,
     OpenIdConnectNavigationStrategies,
     OpenIdConnectRouting,
-} from "../src/index-internal";
+} from '../src/index-internal';
 
-describe("open-id-connect-routing", () => {
+describe('open-id-connect-routing', () => {
 
     const $window: any = {
         self: this,
@@ -28,18 +27,18 @@ describe("open-id-connect-routing", () => {
     const logger =
         sinon.createStubInstance(OpenIdConnectLogger);
 
-    const uriLeftPart = "https://www.domain.tld";
+    const uriLeftPart = 'https://www.domain.tld';
 
     // paths that follow the authority component must start with a slash.
     // https://tools.ietf.org/html/rfc3986#section-3.3
-    const signInPath = "/SIGN_IN";
-    const signOutPath = "/SIGN_OUT";
+    const signInPath = '/SIGN_IN';
+    const signOutPath = '/SIGN_OUT';
 
     const redirectUri = `${uriLeftPart}${signInPath}`;
     const postLogoutRedirectUri = `${uriLeftPart}${signOutPath}`;
 
-    sinon.stub(openIdConnectConfiguration, "redirectUri").get(() => redirectUri);
-    sinon.stub(openIdConnectConfiguration, "postLogoutRedirectUri").get(() => postLogoutRedirectUri);
+    sinon.stub(openIdConnectConfiguration, 'redirectUri').get(() => redirectUri);
+    sinon.stub(openIdConnectConfiguration, 'postLogoutRedirectUri').get(() => postLogoutRedirectUri);
 
     const openIdConnectRouting = new OpenIdConnectRouting(
         openIdConnectConfiguration,
@@ -47,7 +46,7 @@ describe("open-id-connect-routing", () => {
         $window,
         logger);
 
-    context("configureRouter", () => {
+    context('configureRouter', () => {
 
         const getMapRouteArgument = (route: string) => (routerConfiguration.mapRoute as sinon.SinonStub)
             .getCalls()
@@ -58,23 +57,23 @@ describe("open-id-connect-routing", () => {
             openIdConnectRouting.configureRouter(routerConfiguration);
         });
 
-        context("redirect_uri", () => {
+        context('redirect_uri', () => {
 
-            let navigationStrategy;
+            let navigationStrategy: any;
 
             before(() => {
                 const arg = getMapRouteArgument(signInPath);
                 navigationStrategy = arg.navigationStrategy;
             });
 
-            it("should map route for the configured path", () => {
+            it('should map route for the configured path', () => {
                 // assert
                 sinon.assert.calledWith(
                     routerConfiguration.mapRoute,
-                    sinon.match.has("route", signInPath));
+                    sinon.match.has('route', signInPath));
             });
 
-            it("should use redirect signin strategy during redirection", () => {
+            it('should use redirect signin strategy during redirection', () => {
                 // arrange
                 openIdConnectNavigationStrategies.silentSignInCallback.reset();
                 openIdConnectNavigationStrategies.signInRedirectCallback.reset();
@@ -94,13 +93,13 @@ describe("open-id-connect-routing", () => {
                     openIdConnectNavigationStrategies.signInRedirectCallback);
             });
 
-            it("should use silent signin strategy during iFrame redirection", () => {
+            it('should use silent signin strategy during iFrame redirection', () => {
                 // arrange
                 openIdConnectNavigationStrategies.silentSignInCallback.reset();
                 openIdConnectNavigationStrategies.signInRedirectCallback.reset();
 
                 // mimic working in an iframe
-                $window.self = "iframe";
+                $window.self = 'iframe';
                 $window.top = $window;
 
                 // act
@@ -115,12 +114,12 @@ describe("open-id-connect-routing", () => {
             });
         });
 
-        context("post_logout_redirect_uri", () => {
-            it("should map route for the configured path", () => {
+        context('post_logout_redirect_uri', () => {
+            it('should map route for the configured path', () => {
                 // assert
                 sinon.assert.calledWith(
                     routerConfiguration.mapRoute,
-                    sinon.match.has("route", signOutPath));
+                    sinon.match.has('route', signOutPath));
             });
         });
     });

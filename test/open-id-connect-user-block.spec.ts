@@ -1,15 +1,16 @@
-import { assert } from "chai";
-import { UserManager } from "oidc-client";
-import sinon = require("sinon");
-import { OpenIdConnect } from "../src";
-import { OpenIdConnectUserBlock } from "../src/index-internal";
+// tslint:disable-next-line:no-implicit-dependencies
+import { assert } from 'chai';
+// tslint:disable-next-line:no-implicit-dependencies
+import sinon = require('sinon');
+import { OpenIdConnect } from '../src';
+import { OpenIdConnectUserBlock } from '../src/index-internal';
 
-describe("open-id-connect-user-block", () => {
+describe('open-id-connect-user-block', () => {
 
     const openIdConnect = sinon.createStubInstance(OpenIdConnect);
     const userBlock = new OpenIdConnectUserBlock(openIdConnect);
 
-    context("isLoggedIn", () => {
+    context('isLoggedIn', () => {
         [null, undefined].forEach((val) => {
             it(`should return false when the user is ${val}`, async () => {
                 // arrange
@@ -20,7 +21,7 @@ describe("open-id-connect-user-block", () => {
             });
         });
 
-        it("should return true when the user is an object", async () => {
+        it('should return true when the user is an object', async () => {
             // arrange
             openIdConnect.getUser.returns({});
             await userBlock.attached();
@@ -29,8 +30,8 @@ describe("open-id-connect-user-block", () => {
         });
     });
 
-    context("login", () => {
-        it("should call openIdConnect.login", async () => {
+    context('login', () => {
+        it('should call openIdConnect.login', async () => {
             // act
             userBlock.login();
             // assert
@@ -38,8 +39,8 @@ describe("open-id-connect-user-block", () => {
         });
     });
 
-    context("logout", () => {
-        it("should call openIdConnect.logout", async () => {
+    context('logout', () => {
+        it('should call openIdConnect.logout', async () => {
             // act
             userBlock.logout();
             // assert

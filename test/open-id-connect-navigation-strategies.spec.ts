@@ -1,29 +1,31 @@
-import { NavigationInstruction, RouteConfig } from "aurelia-router";
-import { assert } from "chai";
-import { UserManager } from "oidc-client";
-import sinon = require("sinon");
+import { NavigationInstruction, RouteConfig } from 'aurelia-router';
+// tslint:disable-next-line:no-implicit-dependencies
+import { assert } from 'chai';
+import { UserManager } from 'oidc-client';
+// tslint:disable-next-line:no-implicit-dependencies
+import sinon = require('sinon');
 import {
     OpenIdConnectConfigurationManager,
     OpenIdConnectLogger,
     OpenIdConnectNavigationStrategies,
-} from "../src/index-internal";
+} from '../src/index-internal';
 
-describe("open-id-connect-navigation-strategies", () => {
+describe('open-id-connect-navigation-strategies', () => {
 
     const logger = sinon.createStubInstance(OpenIdConnectLogger);
     const configuration = sinon.createStubInstance(OpenIdConnectConfigurationManager);
     const userManager = sinon.createStubInstance(UserManager);
     const instruction = sinon.createStubInstance(NavigationInstruction);
 
-    const loginRedirectModuleId = "login";
-    sinon.stub(configuration, "loginRedirectModuleId").get(() => loginRedirectModuleId);
+    const loginRedirectModuleId = 'login';
+    sinon.stub(configuration, 'loginRedirectModuleId').get(() => loginRedirectModuleId);
 
-    const logoutRedirectModuleId = "logout";
-    sinon.stub(configuration, "logoutRedirectModuleId").get(() => logoutRedirectModuleId);
+    const logoutRedirectModuleId = 'logout';
+    sinon.stub(configuration, 'logoutRedirectModuleId').get(() => logoutRedirectModuleId);
 
-    instruction.config = { moduleId: "" } as RouteConfig;
+    instruction.config = { moduleId: '' } as RouteConfig;
 
-    const strategies = new OpenIdConnectNavigationStrategies(
+    const strategies: any = new OpenIdConnectNavigationStrategies(
         logger,
         configuration,
         userManager,
@@ -31,18 +33,18 @@ describe("open-id-connect-navigation-strategies", () => {
 
     [
         {
-            method: "signInRedirectCallback",
-            delegatesTo: "signinRedirectCallback",
+            method: 'signInRedirectCallback',
+            delegatesTo: 'signinRedirectCallback',
             redirectsTo: loginRedirectModuleId,
         },
         {
-            method: "signOutRedirectCallback",
-            delegatesTo: "signoutRedirectCallback",
+            method: 'signOutRedirectCallback',
+            delegatesTo: 'signoutRedirectCallback',
             redirectsTo: logoutRedirectModuleId,
         },
         {
-            method: "silentSignInCallback",
-            delegatesTo: "signinSilentCallback",
+            method: 'silentSignInCallback',
+            delegatesTo: 'signinSilentCallback',
             redirectsTo: loginRedirectModuleId,
         },
     ].forEach((o) => {

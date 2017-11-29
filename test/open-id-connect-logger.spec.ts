@@ -1,23 +1,26 @@
-import { assert } from "chai";
-import { Log } from "oidc-client";
-import sinon = require("sinon");
-import { OpenIdConnectLogger } from "../src/index-internal";
+// tslint:disable-next-line:no-implicit-dependencies
+import { assert } from 'chai';
+import { Log } from 'oidc-client';
+// tslint:disable-next-line:no-implicit-dependencies
+import sinon = require('sinon');
+import { OpenIdConnectLogger } from '../src/index-internal';
 
 const assertLoggerAction = (
     logLevel: number,
     loggerName: string,
     spy: sinon.SinonSpy) => {
 
-    const logger = new OpenIdConnectLogger(logLevel);
+    const logger: any = new OpenIdConnectLogger(logLevel);
 
-    context("log level: " + logLevel, () => {
+    context('log level: ' + logLevel, () => {
 
+        // @ts-ignore
         if (logLevel >= Log[loggerName.toUpperCase()]) {
             it(`should write to ${loggerName}`, () => {
                 // arrage
                 spy.reset();
                 // act
-                logger[loggerName]("Foo");
+                logger[loggerName]('Foo');
                 // assert
                 sinon.assert.calledOnce(spy);
             });
@@ -26,7 +29,7 @@ const assertLoggerAction = (
                 // arrage
                 spy.reset();
                 // act
-                logger[loggerName]("Foo");
+                logger[loggerName]('Foo');
                 // assert
                 sinon.assert.notCalled(spy);
             });
@@ -34,20 +37,21 @@ const assertLoggerAction = (
     });
 };
 
-describe("open-id-connect-logger", () => {
+describe('open-id-connect-logger', () => {
 
     const validLogLevels = [0, 1, 2, 3, 4];
 
-    context("constructor", () => {
+    context('constructor', () => {
 
-        it("should use Log.NONE if the user-defined level is undefined", () => {
+        it('should use Log.NONE if the user-defined level is undefined', () => {
             // act
+            // @ts-ignore
             const logger = new OpenIdConnectLogger(undefined);
             // assert
             assert.equal(logger.level, Log.NONE);
         });
 
-        it("should throw if the level is invalid", () => {
+        it('should throw if the level is invalid', () => {
             // assert
             assert.throws(() => new OpenIdConnectLogger(5));
             assert.throws(() => new OpenIdConnectLogger(-1));
@@ -64,8 +68,9 @@ describe("open-id-connect-logger", () => {
             });
         });
 
-        it("should set the oidc-client logger to 'console'", () => {
+        it('should set the oidc-client logger to \'console\'', () => {
             // act
+            // @ts-ignore
             const _ = new OpenIdConnectLogger(0);
             // assert
             assert.equal(Log.logger, console);
@@ -73,15 +78,15 @@ describe("open-id-connect-logger", () => {
     });
 
     const sandbox = sinon.createSandbox();
-    const debug = sandbox.stub(console, "debug").callsFake(() => undefined);
-    const info = sandbox.stub(console, "info").callsFake(() => undefined);
-    const warn = sandbox.stub(console, "warn").callsFake(() => undefined);
-    const error = sandbox.stub(console, "error").callsFake(() => undefined);
+    const debug = sandbox.stub(console, 'debug').callsFake(() => undefined);
+    const info = sandbox.stub(console, 'info').callsFake(() => undefined);
+    const warn = sandbox.stub(console, 'warn').callsFake(() => undefined);
+    const error = sandbox.stub(console, 'error').callsFake(() => undefined);
 
     validLogLevels.forEach((logLevel) => {
-        assertLoggerAction(logLevel, "debug", debug);
-        assertLoggerAction(logLevel, "info", info);
-        assertLoggerAction(logLevel, "warn", warn);
-        assertLoggerAction(logLevel, "error", error);
+        assertLoggerAction(logLevel, 'debug', debug);
+        assertLoggerAction(logLevel, 'info', info);
+        assertLoggerAction(logLevel, 'warn', warn);
+        assertLoggerAction(logLevel, 'error', error);
     });
 });

@@ -1,27 +1,27 @@
 import {
     NavigationInstruction,
     NavigationInstructionInit,
-    Next,
     Redirect,
-} from "aurelia-router";
-import { User, UserManager } from "oidc-client";
-import sinon = require("sinon");
-import { OpenIdConnectRoles } from "../src";
+} from 'aurelia-router';
+import { UserManager } from 'oidc-client';
+// tslint:disable-next-line:no-implicit-dependencies
+import sinon = require('sinon');
+import { OpenIdConnectRoles } from '../src';
 import {
     OpenIdConnectAuthorizeStep,
     OpenIdConnectConfigurationManager,
     OpenIdConnectLogger,
-} from "../src/index-internal";
+} from '../src/index-internal';
 
-describe("open-id-connect-authorize-step", () => {
+describe('open-id-connect-authorize-step', () => {
 
-    const unauthRedirectModuleId = "/you-shall-not-pass!";
+    const unauthRedirectModuleId = '/you-shall-not-pass!';
 
     const logger = sinon.createStubInstance(OpenIdConnectLogger);
     const configuration = sinon.createStubInstance(OpenIdConnectConfigurationManager);
     const userManager = sinon.createStubInstance(UserManager);
 
-    sinon.stub(configuration, "unauthorizedRedirectModuleId").get(() => unauthRedirectModuleId);
+    sinon.stub(configuration, 'unauthorizedRedirectModuleId').get(() => unauthRedirectModuleId);
 
     const authorizationStep = new OpenIdConnectAuthorizeStep(
         userManager,
@@ -48,9 +48,9 @@ describe("open-id-connect-authorize-step", () => {
         },
     ) as any;
 
-    context("run", () => {
+    context('run', () => {
 
-        context("if navigation instruction requires the Authenticated role", () => {
+        context('if navigation instruction requires the Authenticated role', () => {
 
             const instruction = new NavigationInstruction(
                 createConfigForRoles(OpenIdConnectRoles.Authenticated));

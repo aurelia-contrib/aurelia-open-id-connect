@@ -1,15 +1,17 @@
-import { Router, RouterConfiguration } from "aurelia-router";
-import { assert } from "chai";
-import { User, UserManager, UserManagerEvents } from "oidc-client";
-import sinon = require("sinon");
-import { OpenIdConnect } from "../src";
+import { Router, RouterConfiguration } from 'aurelia-router';
+// tslint:disable-next-line:no-implicit-dependencies
+import { assert } from 'chai';
+import { User, UserManager } from 'oidc-client';
+// tslint:disable-next-line:no-implicit-dependencies
+import sinon = require('sinon');
+import { OpenIdConnect } from '../src';
 import {
     OpenIdConnectConfigurationManager,
     OpenIdConnectLogger,
     OpenIdConnectRouting,
-} from "../src/index-internal";
+} from '../src/index-internal';
 
-describe("open-id-connect", () => {
+describe('open-id-connect', () => {
 
     const openIdConnectRouting = sinon.createStubInstance(OpenIdConnectRouting);
     const logger = sinon.createStubInstance(OpenIdConnectLogger);
@@ -22,7 +24,7 @@ describe("open-id-connect", () => {
         addUserUnloaded: sinon.spy(),
     };
 
-    sinon.stub(userManager, "events").get(() => events);
+    sinon.stub(userManager, 'events').get(() => events);
 
     const openIdConnect = new OpenIdConnect(
         openIdConnectRouting,
@@ -31,18 +33,18 @@ describe("open-id-connect", () => {
         logger,
         userManager);
 
-    context("configure", () => {
-        it("should throw when routerConfiguration is undefined", () => {
+    context('configure', () => {
+        it('should throw when routerConfiguration is undefined', () => {
             // assert
             assert.throws(() => openIdConnect.configure(undefined));
         });
 
-        it("should throw when routerConfiguration is null", () => {
+        it('should throw when routerConfiguration is null', () => {
             // assert
             assert.throws(() => openIdConnect.configure(null));
         });
 
-        it("should flow routerConfiguration to this.openIdConnectRouting.configureRouter", () => {
+        it('should flow routerConfiguration to this.openIdConnectRouting.configureRouter', () => {
             // arrange
             const routerConfiguration = new RouterConfiguration();
             // act
@@ -54,8 +56,8 @@ describe("open-id-connect", () => {
         });
     });
 
-    context("login", () => {
-        it("should call this.userManager.signinRedirect", async () => {
+    context('login', () => {
+        it('should call this.userManager.signinRedirect', async () => {
             // act
             await openIdConnect.login();
             // assert
@@ -63,8 +65,8 @@ describe("open-id-connect", () => {
         });
     });
 
-    context("logout", () => {
-        it("should call this.userManager.signoutRedirect", async () => {
+    context('logout', () => {
+        it('should call this.userManager.signoutRedirect', async () => {
             // act
             await openIdConnect.logout();
             // assert
@@ -72,10 +74,10 @@ describe("open-id-connect", () => {
         });
     });
 
-    context("loginSilent", () => {
-        it("should return result of this.userManager.signinSilent", async () => {
+    context('loginSilent', () => {
+        it('should return result of this.userManager.signinSilent', async () => {
             // arrange
-            const expected = Promise.resolve({ id_token: "id_token" } as User);
+            const expected = Promise.resolve({ id_token: 'id_token' } as User);
             userManager.signinSilent.returns(expected);
             // act
             const actual = openIdConnect.loginSilent();
@@ -84,10 +86,10 @@ describe("open-id-connect", () => {
         });
     });
 
-    context("getUser", () => {
-        it("should return result of this.userManager.getUser", async () => {
+    context('getUser', () => {
+        it('should return result of this.userManager.getUser', async () => {
             // arrange
-            const expected = Promise.resolve({ id_token: "id_token" } as User);
+            const expected = Promise.resolve({ id_token: 'id_token' } as User);
             userManager.getUser.returns(expected);
             // act
             const actual = openIdConnect.getUser();
@@ -96,17 +98,17 @@ describe("open-id-connect", () => {
         });
     });
 
-    context("handlers", () => {
-        it("should invoke method on underlying events object", async () => {
+    context('handlers', () => {
+        it('should invoke method on underlying events object', async () => {
             // act
-            openIdConnect.addOrRemoveHandler("addUserLoaded", () => undefined);
+            openIdConnect.addOrRemoveHandler('addUserLoaded', () => undefined);
             // assert
             sinon.assert.calledOn(events.addUserLoaded, events);
         });
 
-        it("should throw when the key does not start with add/remove", async () => {
+        it('should throw when the key does not start with add/remove', async () => {
             // assert
-            assert.throws(() => openIdConnect.addOrRemoveHandler("load", () => undefined));
+            assert.throws(() => openIdConnect.addOrRemoveHandler('load', () => undefined));
         });
     });
 });
