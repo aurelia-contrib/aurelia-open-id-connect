@@ -1,0 +1,11 @@
+.vscode
+custom_typings
+demo
+node_modules
+test
+.gitignore
+karma.conf.js
+tsconfig.json
+tslint.json
+package.lock.json
+yarn.lock
