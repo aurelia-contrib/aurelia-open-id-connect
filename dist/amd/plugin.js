@@ -10,10 +10,8 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             config = callback();
             return config;
         }
-        if (callback.length === 1) {
-            callback(config);
-            return config;
-        }
+        callback(config);
+        return config;
     };
     function default_1(frameworkConfig, callback, factory) {
         if (!factory) {
@@ -22,7 +20,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
         frameworkConfig.globalResources([
             aurelia_framework_1.PLATFORM.moduleName('./open-id-connect-user-block'),
             aurelia_framework_1.PLATFORM.moduleName('./open-id-connect-user-debug'),
-            aurelia_framework_1.PLATFORM.moduleName('./open-id-connect-navigation-value-converter'),
+            aurelia_framework_1.PLATFORM.moduleName('./open-id-connect-navigation-filter'),
         ]);
         var userConfig = retrieveUserlandConfig(callback);
         var configManager = factory.createOpenIdConnectConfiguration(userConfig);

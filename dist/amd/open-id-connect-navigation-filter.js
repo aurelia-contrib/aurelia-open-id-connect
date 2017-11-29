@@ -7,25 +7,28 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 define(["require", "exports", "aurelia-framework", "./open-id-connect-roles"], function (require, exports, aurelia_framework_1, open_id_connect_roles_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var OpenIdConnectNavigationValueConverter = (function () {
-        function OpenIdConnectNavigationValueConverter() {
+    var default_1 = (function () {
+        function default_1() {
         }
-        OpenIdConnectNavigationValueConverter.prototype.toView = function (navigation, user) {
-            return navigation.filter(function (element) {
-                if (!element.settings.roles) {
+        default_1.prototype.toView = function (navModels, user) {
+            return navModels.filter(function (navModel) {
+                if (!navModel.settings) {
                     return true;
                 }
-                var roles = element.settings.roles;
-                if (roles.indexOf(open_id_connect_roles_1.default.Authenticated) >= 0) {
+                var requiredRoles = navModel.settings.roles;
+                if (!requiredRoles || requiredRoles.length === 0) {
+                    return true;
+                }
+                if (requiredRoles.includes(open_id_connect_roles_1.default.Authenticated)) {
                     return user !== null;
                 }
             });
         };
-        OpenIdConnectNavigationValueConverter = __decorate([
-            aurelia_framework_1.autoinject
-        ], OpenIdConnectNavigationValueConverter);
-        return OpenIdConnectNavigationValueConverter;
+        default_1 = __decorate([
+            aurelia_framework_1.valueConverter('openIdConnectNavigationFilter')
+        ], default_1);
+        return default_1;
     }());
-    exports.OpenIdConnectNavigationValueConverter = OpenIdConnectNavigationValueConverter;
+    exports.default = default_1;
 });
-//# sourceMappingURL=open-id-connect-navigation-value-converter.js.map
+//# sourceMappingURL=open-id-connect-navigation-filter.js.map

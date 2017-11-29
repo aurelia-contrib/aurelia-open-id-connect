@@ -77,10 +77,8 @@ var OpenIdConnectNavigationStrategies = (function () {
     OpenIdConnectNavigationStrategies.prototype.silentSignInCallback = function (instruction) {
         var _this = this;
         var callbackHandler = function () { return __awaiter(_this, void 0, void 0, function () {
-            var url;
             return __generator(this, function (_a) {
-                url = null;
-                return [2, this.userManager.signinSilentCallback(url)];
+                return [2, this.userManager.signinSilentCallback()];
             });
         }); };
         var navigationInstruction = function () {

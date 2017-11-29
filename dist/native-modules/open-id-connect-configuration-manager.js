@@ -64,14 +64,22 @@ var default_1 = (function () {
     });
     Object.defineProperty(default_1.prototype, "redirectUri", {
         get: function () {
-            return this._userManagerSettings.redirect_uri;
+            var value = this._userManagerSettings.redirect_uri;
+            if (!value) {
+                throw new Error('The UserManagerSettings.redirect_uri is required.');
+            }
+            return value;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(default_1.prototype, "postLogoutRedirectUri", {
         get: function () {
-            return this._userManagerSettings.post_logout_redirect_uri;
+            var value = this._userManagerSettings.post_logout_redirect_uri;
+            if (!value) {
+                throw new Error('The UserManagerSettings.post_logout_redirect_uri is required.');
+            }
+            return value;
         },
         enumerable: true,
         configurable: true

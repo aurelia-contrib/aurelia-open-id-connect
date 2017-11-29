@@ -2,7 +2,7 @@ import { User } from 'oidc-client';
 import OpenIdConnect from './open-id-connect';
 export default class  {
     protected openIdConnect: OpenIdConnect;
-    protected user: User;
+    protected user: User | null;
     readonly isLoggedIn: boolean;
     constructor(openIdConnect: OpenIdConnect);
     attached(): Promise<void>;

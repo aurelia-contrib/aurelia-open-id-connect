@@ -8,7 +8,7 @@ System.register(["aurelia-framework", "oidc-client", "./open-id-connect-configur
         frameworkConfig.globalResources([
             aurelia_framework_1.PLATFORM.moduleName('./open-id-connect-user-block'),
             aurelia_framework_1.PLATFORM.moduleName('./open-id-connect-user-debug'),
-            aurelia_framework_1.PLATFORM.moduleName('./open-id-connect-navigation-value-converter'),
+            aurelia_framework_1.PLATFORM.moduleName('./open-id-connect-navigation-filter'),
         ]);
         var userConfig = retrieveUserlandConfig(callback);
         var configManager = factory.createOpenIdConnectConfiguration(userConfig);
@@ -55,10 +55,8 @@ System.register(["aurelia-framework", "oidc-client", "./open-id-connect-configur
                     config = callback();
                     return config;
                 }
-                if (callback.length === 1) {
-                    callback(config);
-                    return config;
-                }
+                callback(config);
+                return config;
             };
         }
     };

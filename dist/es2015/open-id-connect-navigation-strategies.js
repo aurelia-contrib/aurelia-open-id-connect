@@ -40,8 +40,7 @@ let OpenIdConnectNavigationStrategies = class OpenIdConnectNavigationStrategies 
     }
     silentSignInCallback(instruction) {
         const callbackHandler = () => __awaiter(this, void 0, void 0, function* () {
-            const url = null;
-            return this.userManager.signinSilentCallback(url);
+            return this.userManager.signinSilentCallback();
         });
         const navigationInstruction = () => {
             instruction.config.redirect =

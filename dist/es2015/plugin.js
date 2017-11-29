@@ -13,10 +13,8 @@ const retrieveUserlandConfig = (callback) => {
         config = callback();
         return config;
     }
-    if (callback.length === 1) {
-        callback(config);
-        return config;
-    }
+    callback(config);
+    return config;
 };
 export default function (frameworkConfig, callback, factory) {
     if (!factory) {
@@ -25,7 +23,7 @@ export default function (frameworkConfig, callback, factory) {
     frameworkConfig.globalResources([
         PLATFORM.moduleName('./open-id-connect-user-block'),
         PLATFORM.moduleName('./open-id-connect-user-debug'),
-        PLATFORM.moduleName('./open-id-connect-navigation-value-converter'),
+        PLATFORM.moduleName('./open-id-connect-navigation-filter'),
     ]);
     const userConfig = retrieveUserlandConfig(callback);
     const configManager = factory.createOpenIdConnectConfiguration(userConfig);

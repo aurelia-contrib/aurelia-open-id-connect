@@ -42,10 +42,18 @@ export default class {
         return this._userManagerSettings;
     }
     get redirectUri() {
-        return this._userManagerSettings.redirect_uri;
+        const value = this._userManagerSettings.redirect_uri;
+        if (!value) {
+            throw new Error('The UserManagerSettings.redirect_uri is required.');
+        }
+        return value;
     }
     get postLogoutRedirectUri() {
-        return this._userManagerSettings.post_logout_redirect_uri;
+        const value = this._userManagerSettings.post_logout_redirect_uri;
+        if (!value) {
+            throw new Error('The UserManagerSettings.post_logout_redirect_uri is required.');
+        }
+        return value;
     }
 }
 //# sourceMappingURL=open-id-connect-configuration-manager.js.map
