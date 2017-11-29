@@ -5,13 +5,9 @@ import { OpenIdConnectConfigurationManager } from './open-id-connect-configurati
 import { OpenIdConnectFactory } from './open-id-connect-factory';
 import { OpenIdConnectLogger } from './open-id-connect-logger';
 
-export interface CallbackV19 extends Function {
-    (): OpenIdConnectConfiguration;
-}
+export type CallbackV19 = () => OpenIdConnectConfiguration;
 
-export interface CallbackV18 extends Function {
-    (config: OpenIdConnectConfiguration): void;
-}
+export type CallbackV18 = (config: OpenIdConnectConfiguration) => void;
 
 export type PluginCallback = CallbackV18 | CallbackV19 | undefined;
 

@@ -5,8 +5,7 @@ import { OpenIdConnectLogger } from './open-id-connect-logger';
 
 export class OpenIdConnectFactory {
 
-    public createOpenIdConnectConfiguration(dto: OpenIdConnectConfiguration)
-        : OpenIdConnectConfigurationManager {
+    public createOpenIdConnectConfiguration(dto: OpenIdConnectConfiguration): OpenIdConnectConfigurationManager {
 
         return new OpenIdConnectConfigurationManager(dto);
     }
