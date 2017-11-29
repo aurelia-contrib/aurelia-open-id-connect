@@ -1,5 +1,4 @@
 import { RouterConfiguration } from 'aurelia-router';
-// tslint:disable-next-line:no-implicit-dependencies
 import sinon = require('sinon');
 import {
   OpenIdConnectConfigurationManager,

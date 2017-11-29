@@ -1,7 +1,5 @@
-// tslint:disable-next-line:no-implicit-dependencies
 import { assert } from 'chai';
 import { Log } from 'oidc-client';
-// tslint:disable-next-line:no-implicit-dependencies
 import sinon = require('sinon');
 import { OpenIdConnectLogger } from '../src/index-internal';
 

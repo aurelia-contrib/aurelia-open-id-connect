@@ -1,8 +1,6 @@
 import { Router, RouterConfiguration } from 'aurelia-router';
-// tslint:disable-next-line:no-implicit-dependencies
 import { assert } from 'chai';
 import { UserManager } from 'oidc-client';
-// tslint:disable-next-line:no-implicit-dependencies
 import sinon = require('sinon');
 import { OpenIdConnect } from '../src';
 import {

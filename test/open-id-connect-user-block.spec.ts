@@ -1,6 +1,4 @@
-// tslint:disable-next-line:no-implicit-dependencies
 import { assert } from 'chai';
-// tslint:disable-next-line:no-implicit-dependencies
 import sinon = require('sinon');
 import { OpenIdConnect } from '../src';
 import { OpenIdConnectUserBlock } from '../src/index-internal';

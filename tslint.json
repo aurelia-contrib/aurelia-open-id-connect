@@ -12,6 +12,7 @@
     ],
     "callable-types": false,
     "space-before-function-paren": false,
+    "no-implicit-dependencies": false,
     "whitespace": [
       true,
       "check-branch",

@@ -4,7 +4,6 @@ import {
   Redirect,
 } from 'aurelia-router';
 import { UserManager } from 'oidc-client';
-// tslint:disable-next-line:no-implicit-dependencies
 import sinon = require('sinon');
 import { OpenIdConnectRoles } from '../src';
 import {

@@ -1,7 +1,5 @@
 import { NavModel } from 'aurelia-router';
-// tslint:disable-next-line:no-implicit-dependencies
 import { assert } from 'chai';
-// tslint:disable-next-line:no-implicit-dependencies
 import sinon = require('sinon');
 import { OpenIdConnectRoles } from '../src';
 import { OpenIdConnectNavigationFilter } from '../src/index-internal';

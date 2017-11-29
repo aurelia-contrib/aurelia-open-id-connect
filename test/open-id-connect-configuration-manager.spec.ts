@@ -1,4 +1,3 @@
-// tslint:disable-next-line:no-implicit-dependencies
 import { assert } from 'chai';
 import { UserManagerSettings, WebStorageStateStore } from 'oidc-client';
 import { OpenIdConnectConfiguration } from '../src/index';
