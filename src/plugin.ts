@@ -15,7 +15,7 @@ export interface CallbackV18 extends Function {
 
 export type PluginCallback = CallbackV18 | CallbackV19;
 
-const retrieveUserlandConfig = (callback: PluginCallback): OpenIdConnectConfiguration => {
+const retrieveUserlandConfig = (callback?: PluginCallback): OpenIdConnectConfiguration => {
   let config = new OpenIdConnectConfiguration();
 
   if (!callback || callback.length > 1) {
@@ -27,13 +27,11 @@ const retrieveUserlandConfig = (callback: PluginCallback): OpenIdConnectConfigur
     return config;
   }
 
-  if (callback.length === 1) {
-    (callback as CallbackV18)(config);
-    return config;
-  }
+  (callback as CallbackV18)(config);
+  return config;
 };
 
-export default function(
+export default function (
   frameworkConfig: FrameworkConfiguration,
   callback?: PluginCallback,
   factory?: OpenIdConnectFactory) {

@@ -65,7 +65,7 @@ export default class OpenIdConnect {
       throw new TypeError(message);
     }
 
-    const addOrRemove: UserManagerEventsAction = this.userManager.events[key];
+    const addOrRemove = this.userManager.events[key] as UserManagerEventsAction;
     addOrRemove.call(this.userManager.events, handler);
   }
 

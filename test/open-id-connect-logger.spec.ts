@@ -42,7 +42,7 @@ describe('open-id-connect-logger', () => {
 
     it('should use Log.NONE if the user-defined level is undefined', () => {
       // act
-      const logger = new OpenIdConnectLogger(undefined);
+      const logger = new OpenIdConnectLogger(undefined as any);
       // assert
       assert.equal(logger.level, Log.NONE);
     });

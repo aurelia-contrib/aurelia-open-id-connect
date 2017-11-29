@@ -9,10 +9,9 @@ import {
 
 describe('open-id-connect-routing', () => {
 
-  const $window: any = {
-    self: this,
-    top: this,
-  };
+  const $window: any = {};
+  $window.self = $window;
+  $window.top = $window;
 
   const routerConfiguration =
     sinon.createStubInstance(RouterConfiguration);

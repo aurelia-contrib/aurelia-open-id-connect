@@ -37,13 +37,7 @@ export default class OpenIdConnectNavigationStrategies {
   public silentSignInCallback(instruction: NavigationInstruction): Promise<any> {
 
     const callbackHandler = async () => {
-      // The url must be null;
-      // otherwise, IFrameWindow.notifyParent will not work,
-      // And we will receive one of two errors:
-      // 'No matching state found in storage' or
-      // 'No state in response'
-      const url: string = null;
-      return this.userManager.signinSilentCallback(url);
+      return this.userManager.signinSilentCallback();
     };
 
     const navigationInstruction = () => {

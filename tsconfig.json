@@ -1,25 +1,27 @@
 {
-    "compileOnSave": false,
-    "compilerOptions": {
-        "sourceMap": true,
-        "target": "es5",
-        "experimentalDecorators": true,
-        "noUnusedLocals": true,
-        "noImplicitAny": true,
-        "module": "amd",
-        "declaration": true,
-        "removeComments": true,
-        "emitDecoratorMetadata": true,
-        "moduleResolution": "node",
-        "lib": [
-            "es2017",
-            "dom"
-        ]
-    },
-    "include": [
-        "**/*.ts"
-    ],
-    "exclude": [
-        "node_modules"
+  "compileOnSave": false,
+  "compilerOptions": {
+    "strict": true,
+    "outDir": "bin/",
+    "sourceMap": true,
+    "target": "es5",
+    "experimentalDecorators": true,
+    "noUnusedLocals": true,
+    "noImplicitAny": true,
+    "module": "amd",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "moduleResolution": "node",
+    "lib": [
+      "es2017",
+      "dom"
     ]
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

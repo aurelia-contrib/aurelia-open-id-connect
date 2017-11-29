@@ -34,12 +34,12 @@ describe('open-id-connect', () => {
   context('configure', () => {
     it('should throw when routerConfiguration is undefined', () => {
       // assert
-      assert.throws(() => openIdConnect.configure(undefined));
+      assert.throws(() => openIdConnect.configure(undefined as any));
     });
 
     it('should throw when routerConfiguration is null', () => {
       // assert
-      assert.throws(() => openIdConnect.configure(null));
+      assert.throws(() => openIdConnect.configure(null as any));
     });
 
     it('should flow routerConfiguration to this.openIdConnectRouting.configureRouter', () => {
