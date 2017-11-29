@@ -1,4 +1,4 @@
-import { autoinject } from 'aurelia-framework';
+import { inject } from 'aurelia-framework';
 import { Router, RouterConfiguration } from 'aurelia-router';
 import { User, UserManager, UserManagerEvents } from 'oidc-client';
 import { UserManagerEventHandler, UserManagerEventsAction } from './internal-types';
@@ -7,7 +7,7 @@ import { OpenIdConnectLogger } from './open-id-connect-logger';
 import { OpenIdConnectRouting } from './open-id-connect-routing';
 import { OpenIdConnectUserObserver } from './open-id-connect-user-observer';
 
-@autoinject
+@inject(OpenIdConnectRouting, Router, OpenIdConnectConfigurationManager, OpenIdConnectLogger, UserManager)
 export class OpenIdConnect {
 
     private userObservers: OpenIdConnectUserObserver[] = [];
@@ -19,7 +19,7 @@ export class OpenIdConnect {
         public logger: OpenIdConnectLogger,
         public userManager: UserManager) {
 
-        this.setupUserObservation();
+          this.setupUserObservation();
     }
 
     public configure(routerConfiguration: RouterConfiguration) {

@@ -1,4 +1,4 @@
-import { autoinject } from 'aurelia-framework';
+import { inject } from 'aurelia-framework';
 import {
     NavigationInstruction,
     Next,
@@ -10,7 +10,7 @@ import { OpenIdConnectConfigurationManager } from './open-id-connect-configurati
 import { OpenIdConnectLogger } from './open-id-connect-logger';
 import { OpenIdConnectRoles } from './open-id-connect-roles';
 
-@autoinject
+@inject(UserManager, OpenIdConnectConfigurationManager, OpenIdConnectLogger)
 export class OpenIdConnectAuthorizeStep implements PipelineStep {
 
     constructor(

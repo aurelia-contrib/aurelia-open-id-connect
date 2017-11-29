@@ -1,11 +1,11 @@
-import { autoinject } from 'aurelia-framework';
+import { inject } from 'aurelia-framework';
 import { NavigationInstruction, RouterConfiguration, } from 'aurelia-router';
 import { OpenIdConnectAuthorizeStep } from './open-id-connect-authorize-step';
 import { OpenIdConnectConfigurationManager } from './open-id-connect-configuration-manager';
 import { OpenIdConnectLogger } from './open-id-connect-logger';
 import { OpenIdConnectNavigationStrategies } from './open-id-connect-navigation-strategies';
 
-@autoinject
+@inject(OpenIdConnectConfigurationManager, OpenIdConnectNavigationStrategies, Window, OpenIdConnectLogger)
 export class OpenIdConnectRouting {
 
     constructor(

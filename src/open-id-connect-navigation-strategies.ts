@@ -1,4 +1,4 @@
-import { autoinject } from 'aurelia-framework';
+import { inject } from 'aurelia-framework';
 import { NavigationInstruction } from 'aurelia-router';
 import { UserManager } from 'oidc-client';
 import { OpenIdConnectConfigurationManager } from './open-id-connect-configuration-manager';
@@ -9,7 +9,7 @@ import { OpenIdConnectLogger } from './open-id-connect-logger';
 // The current file, for instance, could define the
 // { name, navigationStrategy, route } object instead of defining only
 // the navigationStrategy implementation.
-@autoinject
+@inject(OpenIdConnectLogger, OpenIdConnectConfigurationManager, UserManager)
 export class OpenIdConnectNavigationStrategies {
 
     constructor(
