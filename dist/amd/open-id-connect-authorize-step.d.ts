@@ -1,8 +1,8 @@
-import { NavigationInstruction, Next, PipelineStep } from 'aurelia-router';
-import { UserManager } from 'oidc-client';
-import { OpenIdConnectConfigurationManager } from './open-id-connect-configuration-manager';
-import { OpenIdConnectLogger } from './open-id-connect-logger';
-export declare class OpenIdConnectAuthorizeStep implements PipelineStep {
+import { NavigationInstruction, Next, PipelineStep } from "aurelia-router";
+import { UserManager } from "oidc-client";
+import OpenIdConnectConfigurationManager from "./open-id-connect-configuration-manager";
+import OpenIdConnectLogger from "./open-id-connect-logger";
+export default class OpenIdConnectAuthorizeStep implements PipelineStep {
     private userManager;
     private configuration;
     private logger;

@@ -6,5 +6,7 @@ define(["require", "exports"], function (require, exports) {
         OpenIdConnectRoles[OpenIdConnectRoles["Everyone"] = 0] = "Everyone";
         OpenIdConnectRoles[OpenIdConnectRoles["Anonymous"] = 1] = "Anonymous";
         OpenIdConnectRoles[OpenIdConnectRoles["Authenticated"] = 2] = "Authenticated";
-    })(OpenIdConnectRoles = exports.OpenIdConnectRoles || (exports.OpenIdConnectRoles = {}));
+    })(OpenIdConnectRoles || (OpenIdConnectRoles = {}));
+    exports.default = OpenIdConnectRoles;
 });
+//# sourceMappingURL=open-id-connect-roles.js.map

@@ -4,6 +4,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -39,10 +42,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "aurelia-framework"], function (require, exports, aurelia_framework_1) {
+define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-client", "./open-id-connect-configuration-manager", "./open-id-connect-logger", "./open-id-connect-routing"], function (require, exports, aurelia_framework_1, aurelia_router_1, oidc_client_1, open_id_connect_configuration_manager_1, open_id_connect_logger_1, open_id_connect_routing_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var OpenIdConnect = /** @class */ (function () {
+    var OpenIdConnect = (function () {
         function OpenIdConnect(openIdConnectRouting, router, configuration, logger, userManager) {
             var _this = this;
             this.openIdConnectRouting = openIdConnectRouting;
@@ -57,8 +60,8 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
             this.setupUserObservation();
         }
         OpenIdConnect.prototype.configure = function (routerConfiguration) {
-            if (typeof routerConfiguration === 'undefined' || routerConfiguration === null) {
-                throw new Error('routerConfiguration parameter must not be undefined or null');
+            if (typeof routerConfiguration === "undefined" || routerConfiguration === null) {
+                throw new Error("routerConfiguration parameter must not be undefined or null");
             }
             this.openIdConnectRouting.configureRouter(routerConfiguration);
         };
@@ -69,10 +72,10 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
                     switch (_a.label) {
                         case 0:
                             args = {};
-                            return [4 /*yield*/, this.userManager.signinRedirect(args)];
+                            return [4, this.userManager.signinRedirect(args)];
                         case 1:
                             _a.sent();
-                            return [2 /*return*/];
+                            return [2];
                     }
                 });
             });
@@ -87,22 +90,22 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
                             _a.label = 1;
                         case 1:
                             _a.trys.push([1, 3, , 4]);
-                            return [4 /*yield*/, this.userManager.signoutRedirect(args)];
+                            return [4, this.userManager.signoutRedirect(args)];
                         case 2:
                             _a.sent();
-                            return [3 /*break*/, 4];
+                            return [3, 4];
                         case 3:
                             err_1 = _a.sent();
-                            if (err_1.message === 'no end session endpoint') {
+                            if (err_1.message === "no end session endpoint") {
                                 this.logger.debug(err_1);
-                                this.logger.debug('The user remains logged in at the authorization server.');
+                                this.logger.debug("The user remains logged in at the authorization server.");
                                 this.router.navigate(this.configuration.logoutRedirectModuleId);
                             }
                             else {
                                 throw err_1;
                             }
-                            return [3 /*break*/, 4];
-                        case 4: return [2 /*return*/];
+                            return [3, 4];
+                        case 4: return [2];
                     }
                 });
             });
@@ -115,10 +118,10 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
             return this.userManager.getUser();
         };
         OpenIdConnect.prototype.addOrRemoveHandler = function (key, handler) {
-            if (!key.startsWith('add') && !key.startsWith('remove')) {
-                var message = 'The \'addOrRemoveHandlers\' method expects a \'key\' argument ';
-                message += 'that starts with either \'add\' or \'remove\'. Instead we ';
-                message += 'recevied ' + key;
+            if (!key.startsWith("add") && !key.startsWith("remove")) {
+                var message = "The 'addOrRemoveHandlers' method expects a 'key' argument ";
+                message += "that starts with either 'add' or 'remove'. Instead we ";
+                message += "recevied " + key;
                 throw new TypeError(message);
             }
             var addOrRemove = this.userManager.events[key];
@@ -132,13 +135,19 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
         };
         OpenIdConnect.prototype.setupUserObservation = function () {
             var _this = this;
-            this.addOrRemoveHandler('addUserLoaded', function () { return _this.getUser().then(_this.notifyUserObservers); });
-            this.addOrRemoveHandler('addUserUnloaded', function () { return _this.getUser().then(_this.notifyUserObservers); });
+            this.addOrRemoveHandler("addUserLoaded", function () { return _this.getUser().then(_this.notifyUserObservers); });
+            this.addOrRemoveHandler("addUserUnloaded", function () { return _this.getUser().then(_this.notifyUserObservers); });
         };
         OpenIdConnect = __decorate([
-            aurelia_framework_1.autoinject
+            aurelia_framework_1.autoinject,
+            __metadata("design:paramtypes", [open_id_connect_routing_1.default,
+                aurelia_router_1.Router,
+                open_id_connect_configuration_manager_1.default,
+                open_id_connect_logger_1.default,
+                oidc_client_1.UserManager])
         ], OpenIdConnect);
         return OpenIdConnect;
     }());
-    exports.OpenIdConnect = OpenIdConnect;
+    exports.default = OpenIdConnect;
 });
+//# sourceMappingURL=open-id-connect.js.map

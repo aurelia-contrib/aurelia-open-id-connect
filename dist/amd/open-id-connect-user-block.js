@@ -4,6 +4,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -39,64 +42,66 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "aurelia-framework"], function (require, exports, aurelia_framework_1) {
+define(["require", "exports", "aurelia-framework", "./open-id-connect"], function (require, exports, aurelia_framework_1, open_id_connect_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var OpenIdConnectUserBlock = /** @class */ (function () {
-        function OpenIdConnectUserBlock(openIdConnect) {
+    var default_1 = (function () {
+        function default_1(openIdConnect) {
             this.openIdConnect = openIdConnect;
             this.user = null;
         }
-        Object.defineProperty(OpenIdConnectUserBlock.prototype, "isLoggedIn", {
+        Object.defineProperty(default_1.prototype, "isLoggedIn", {
             get: function () {
                 return this.user !== null && this.user !== undefined;
             },
             enumerable: true,
             configurable: true
         });
-        OpenIdConnectUserBlock.prototype.attached = function () {
+        default_1.prototype.attached = function () {
             return __awaiter(this, void 0, void 0, function () {
                 var _this = this;
                 var _a;
                 return __generator(this, function (_b) {
                     switch (_b.label) {
                         case 0:
-                            this.openIdConnect.addOrRemoveHandler('addUserUnloaded', function () {
+                            this.openIdConnect.addOrRemoveHandler("addUserUnloaded", function () {
                                 _this.user = null;
                             });
-                            this.openIdConnect.addOrRemoveHandler('addUserLoaded', function () { return __awaiter(_this, void 0, void 0, function () {
+                            this.openIdConnect.addOrRemoveHandler("addUserLoaded", function () { return __awaiter(_this, void 0, void 0, function () {
                                 var _a;
                                 return __generator(this, function (_b) {
                                     switch (_b.label) {
                                         case 0:
                                             _a = this;
-                                            return [4 /*yield*/, this.openIdConnect.getUser()];
+                                            return [4, this.openIdConnect.getUser()];
                                         case 1:
                                             _a.user = _b.sent();
-                                            return [2 /*return*/];
+                                            return [2];
                                     }
                                 });
                             }); });
                             _a = this;
-                            return [4 /*yield*/, this.openIdConnect.getUser()];
+                            return [4, this.openIdConnect.getUser()];
                         case 1:
                             _a.user = _b.sent();
-                            return [2 /*return*/];
+                            return [2];
                     }
                 });
             });
         };
-        OpenIdConnectUserBlock.prototype.login = function () {
+        default_1.prototype.login = function () {
             this.openIdConnect.login();
         };
-        OpenIdConnectUserBlock.prototype.logout = function () {
+        default_1.prototype.logout = function () {
             this.openIdConnect.logout();
         };
-        OpenIdConnectUserBlock = __decorate([
+        default_1 = __decorate([
             aurelia_framework_1.autoinject,
-            aurelia_framework_1.customElement('open-id-connect-user-block')
-        ], OpenIdConnectUserBlock);
-        return OpenIdConnectUserBlock;
+            aurelia_framework_1.customElement("open-id-connect-user-block"),
+            __metadata("design:paramtypes", [open_id_connect_1.default])
+        ], default_1);
+        return default_1;
     }());
-    exports.OpenIdConnectUserBlock = OpenIdConnectUserBlock;
+    exports.default = default_1;
 });
+//# sourceMappingURL=open-id-connect-user-block.js.map

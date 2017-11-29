@@ -1,6 +1,6 @@
-import { UserManagerSettings } from 'oidc-client';
-import { OpenIdConnectConfiguration } from './index';
-export declare class OpenIdConnectConfigurationManager {
+import { UserManagerSettings } from "oidc-client";
+import { OpenIdConnectConfiguration } from "./index";
+export default class  {
     [key: string]: any;
     private _loginRedirectModuleId;
     private _logoutRedirectModuleId;
@@ -12,7 +12,7 @@ export declare class OpenIdConnectConfigurationManager {
     readonly unauthorizedRedirectModuleId: string;
     readonly logLevel: number;
     readonly userManagerSettings: UserManagerSettings;
-    readonly redirectUri: string | undefined;
-    readonly postLogoutRedirectUri: string | undefined;
+    readonly redirectUri: string;
+    readonly postLogoutRedirectUri: string;
     constructor(dto?: OpenIdConnectConfiguration);
 }

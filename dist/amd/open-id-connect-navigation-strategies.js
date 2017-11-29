@@ -4,6 +4,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -39,18 +42,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "aurelia-framework"], function (require, exports, aurelia_framework_1) {
+define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-connect-configuration-manager", "./open-id-connect-logger"], function (require, exports, aurelia_framework_1, oidc_client_1, open_id_connect_configuration_manager_1, open_id_connect_logger_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    // TODO: Move some of the route-definition logic from
-    // the open-id-connect-routing.ts file into this file instead.
-    // The current file, for instance, could define the
-    // { name, navigationStrategy, route } object instead of defining only
-    // the navigationStrategy implementation.
-    var OpenIdConnectNavigationStrategies = /** @class */ (function () {
-        function OpenIdConnectNavigationStrategies(
-            // @ts-ignore
-            logger, openIdConnectConfiguration, userManager) {
+    var OpenIdConnectNavigationStrategies = (function () {
+        function OpenIdConnectNavigationStrategies(logger, openIdConnectConfiguration, userManager) {
             this.logger = logger;
             this.openIdConnectConfiguration = openIdConnectConfiguration;
             this.userManager = userManager;
@@ -64,14 +60,14 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
                         var args;
                         return __generator(this, function (_a) {
                             args = {};
-                            return [2 /*return*/, this.userManager.signinRedirectCallback(args)];
+                            return [2, this.userManager.signinRedirectCallback(args)];
                         });
                     }); };
                     navigationInstruction = function () {
                         instruction.config.redirect =
                             _this.openIdConnectConfiguration.loginRedirectModuleId;
                     };
-                    return [2 /*return*/, this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction)];
+                    return [2, this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction)];
                 });
             });
         };
@@ -80,12 +76,11 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
             var callbackHandler = function () { return __awaiter(_this, void 0, void 0, function () {
                 var url;
                 return __generator(this, function (_a) {
-                    url = undefined;
-                    return [2 /*return*/, this.userManager.signinSilentCallback(url)];
+                    url = null;
+                    return [2, this.userManager.signinSilentCallback(url)];
                 });
             }); };
             var navigationInstruction = function () {
-                // This happens in a child iframe.
                 instruction.config.redirect =
                     _this.openIdConnectConfiguration.loginRedirectModuleId;
             };
@@ -97,7 +92,7 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
                 var args;
                 return __generator(this, function (_a) {
                     args = {};
-                    return [2 /*return*/, this.userManager.signoutRedirectCallback(args)];
+                    return [2, this.userManager.signoutRedirectCallback(args)];
                 });
             }); };
             var navigationInstruction = function () {
@@ -113,27 +108,31 @@ define(["require", "exports", "aurelia-framework"], function (require, exports, 
                     switch (_a.label) {
                         case 0:
                             _a.trys.push([0, 2, , 3]);
-                            this.logger.debug('Handling the response from the Identity Provider');
-                            return [4 /*yield*/, callbackHandler()];
+                            this.logger.debug("Handling the response from the Identity Provider");
+                            return [4, callbackHandler()];
                         case 1:
                             _a.sent();
-                            this.logger.debug('Redirecting on authorization success');
+                            this.logger.debug("Redirecting on authorization success");
                             navigationInstruction();
-                            return [3 /*break*/, 3];
+                            return [3, 3];
                         case 2:
                             err_1 = _a.sent();
-                            this.logger.debug('Redirecting on authorization error');
+                            this.logger.debug("Redirecting on authorization error");
                             navigationInstruction();
                             throw err_1;
-                        case 3: return [2 /*return*/];
+                        case 3: return [2];
                     }
                 });
             });
         };
         OpenIdConnectNavigationStrategies = __decorate([
-            aurelia_framework_1.autoinject
+            aurelia_framework_1.autoinject,
+            __metadata("design:paramtypes", [open_id_connect_logger_1.default,
+                open_id_connect_configuration_manager_1.default,
+                oidc_client_1.UserManager])
         ], OpenIdConnectNavigationStrategies);
         return OpenIdConnectNavigationStrategies;
     }());
-    exports.OpenIdConnectNavigationStrategies = OpenIdConnectNavigationStrategies;
+    exports.default = OpenIdConnectNavigationStrategies;
 });
+//# sourceMappingURL=open-id-connect-navigation-strategies.js.map

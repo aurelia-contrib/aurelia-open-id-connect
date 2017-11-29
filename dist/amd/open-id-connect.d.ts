@@ -1,11 +1,11 @@
-import { Router, RouterConfiguration } from 'aurelia-router';
-import { User, UserManager, UserManagerEvents } from 'oidc-client';
-import { UserManagerEventHandler } from './internal-types';
-import { OpenIdConnectConfigurationManager } from './open-id-connect-configuration-manager';
-import { OpenIdConnectLogger } from './open-id-connect-logger';
-import { OpenIdConnectRouting } from './open-id-connect-routing';
-import { OpenIdConnectUserObserver } from './open-id-connect-user-observer';
-export declare class OpenIdConnect {
+import { Router, RouterConfiguration } from "aurelia-router";
+import { User, UserManager, UserManagerEvents } from "oidc-client";
+import { UserManagerEventHandler } from "./internal-types";
+import OpenIdConnectConfigurationManager from "./open-id-connect-configuration-manager";
+import OpenIdConnectLogger from "./open-id-connect-logger";
+import OpenIdConnectRouting from "./open-id-connect-routing";
+import OpenIdConnectUserObserver from "./open-id-connect-user-observer";
+export default class OpenIdConnect {
     private openIdConnectRouting;
     private router;
     private configuration;

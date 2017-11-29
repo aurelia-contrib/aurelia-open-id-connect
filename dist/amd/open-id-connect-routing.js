@@ -4,13 +4,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-define(["require", "exports", "aurelia-framework", "./open-id-connect-authorize-step"], function (require, exports, aurelia_framework_1, open_id_connect_authorize_step_1) {
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define(["require", "exports", "aurelia-framework", "./open-id-connect-authorize-step", "./open-id-connect-configuration-manager", "./open-id-connect-logger", "./open-id-connect-navigation-strategies"], function (require, exports, aurelia_framework_1, open_id_connect_authorize_step_1, open_id_connect_configuration_manager_1, open_id_connect_logger_1, open_id_connect_navigation_strategies_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var OpenIdConnectRouting = /** @class */ (function () {
-        function OpenIdConnectRouting(openIdConnectConfiguration, openIdConnectNavigationStrategies, $window, 
-            // @ts-ignore
-            logger) {
+    var OpenIdConnectRouting = (function () {
+        function OpenIdConnectRouting(openIdConnectConfiguration, openIdConnectNavigationStrategies, $window, logger) {
             this.openIdConnectConfiguration = openIdConnectConfiguration;
             this.openIdConnectNavigationStrategies = openIdConnectNavigationStrategies;
             this.$window = $window;
@@ -19,12 +20,12 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-authorize-
         OpenIdConnectRouting.prototype.configureRouter = function (routerConfiguration) {
             this.addLoginRedirectRoute(routerConfiguration);
             this.addLogoutRedirectRoute(routerConfiguration);
-            routerConfiguration.addPipelineStep('authorize', open_id_connect_authorize_step_1.OpenIdConnectAuthorizeStep);
+            routerConfiguration.addPipelineStep("authorize", open_id_connect_authorize_step_1.default);
         };
         OpenIdConnectRouting.prototype.addLoginRedirectRoute = function (routerConfiguration) {
             var _this = this;
             routerConfiguration.mapRoute({
-                name: 'logInRedirectCallback',
+                name: "logInRedirectCallback",
                 navigationStrategy: function (instruction) {
                     if (_this.isSilentLogin()) {
                         return _this.openIdConnectNavigationStrategies.silentSignInCallback(instruction);
@@ -39,7 +40,7 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-authorize-
         OpenIdConnectRouting.prototype.addLogoutRedirectRoute = function (routerConfiguration) {
             var _this = this;
             routerConfiguration.mapRoute({
-                name: 'logOutRedirectCallback',
+                name: "logOutRedirectCallback",
                 navigationStrategy: function (instruction) {
                     return _this.openIdConnectNavigationStrategies.signOutRedirectCallback(instruction);
                 },
@@ -58,14 +59,19 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-authorize-
             return this.convertUriToAnchor(uri).pathname;
         };
         OpenIdConnectRouting.prototype.convertUriToAnchor = function (uri) {
-            var anchor = document.createElement('a');
+            var anchor = document.createElement("a");
             anchor.href = uri;
             return anchor;
         };
         OpenIdConnectRouting = __decorate([
-            aurelia_framework_1.autoinject
+            aurelia_framework_1.autoinject,
+            __metadata("design:paramtypes", [open_id_connect_configuration_manager_1.default,
+                open_id_connect_navigation_strategies_1.default,
+                Window,
+                open_id_connect_logger_1.default])
         ], OpenIdConnectRouting);
         return OpenIdConnectRouting;
     }());
-    exports.OpenIdConnectRouting = OpenIdConnectRouting;
+    exports.default = OpenIdConnectRouting;
 });
+//# sourceMappingURL=open-id-connect-routing.js.map

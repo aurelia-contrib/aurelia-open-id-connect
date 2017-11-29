@@ -1,8 +1,8 @@
-import { RouterConfiguration } from 'aurelia-router';
-import { OpenIdConnectConfigurationManager } from './open-id-connect-configuration-manager';
-import { OpenIdConnectLogger } from './open-id-connect-logger';
-import { OpenIdConnectNavigationStrategies } from './open-id-connect-navigation-strategies';
-export declare class OpenIdConnectRouting {
+import { RouterConfiguration } from "aurelia-router";
+import OpenIdConnectConfigurationManager from "./open-id-connect-configuration-manager";
+import OpenIdConnectLogger from "./open-id-connect-logger";
+import OpenIdConnectNavigationStrategies from "./open-id-connect-navigation-strategies";
+export default class OpenIdConnectRouting {
     private openIdConnectConfiguration;
     private openIdConnectNavigationStrategies;
     private $window;
