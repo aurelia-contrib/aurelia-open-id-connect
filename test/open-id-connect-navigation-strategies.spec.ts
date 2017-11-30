@@ -15,11 +15,11 @@ describe('open-id-connect-navigation-strategies', () => {
   const userManager = sinon.createStubInstance(UserManager);
   const instruction = sinon.createStubInstance(NavigationInstruction);
 
-  const loginRedirectModuleId = 'login';
-  sinon.stub(configuration, 'loginRedirectModuleId').get(() => loginRedirectModuleId);
+  const loginRedirectRoute = 'login';
+  sinon.stub(configuration, 'loginRedirectRoute').get(() => loginRedirectRoute);
 
   const logoutRedirectModuleId = 'logout';
-  sinon.stub(configuration, 'logoutRedirectModuleId').get(() => logoutRedirectModuleId);
+  sinon.stub(configuration, 'logoutRedirectRoute').get(() => logoutRedirectModuleId);
 
   instruction.config = { moduleId: '' };
 
@@ -33,7 +33,7 @@ describe('open-id-connect-navigation-strategies', () => {
     {
       method: 'signInRedirectCallback',
       delegatesTo: 'signinRedirectCallback',
-      redirectsTo: loginRedirectModuleId,
+      redirectsTo: loginRedirectRoute,
     },
     {
       method: 'signOutRedirectCallback',
@@ -43,7 +43,7 @@ describe('open-id-connect-navigation-strategies', () => {
     {
       method: 'silentSignInCallback',
       delegatesTo: 'signinSilentCallback',
-      redirectsTo: loginRedirectModuleId,
+      redirectsTo: loginRedirectRoute,
     },
   ].forEach((o) => {
 

@@ -8,11 +8,11 @@ export default class {
   [key: string]: any;
 
   // tslint:disable-next-line:variable-name
-  private _loginRedirectModuleId: string = '/';
+  private _loginRedirectRoute: string = '/';
   // tslint:disable-next-line:variable-name
-  private _logoutRedirectModuleId: string = '/';
+  private _logoutRedirectRoute: string = '/';
   // tslint:disable-next-line:variable-name
-  private _unauthorizedRedirectModuleId: '/';
+  private _unauthorizedRedirectRoute: '/';
   // tslint:disable-next-line:variable-name
   private _logLevel: 0;
   // tslint:disable-next-line:variable-name
@@ -27,16 +27,16 @@ export default class {
     silent_redirect_uri: `${defaultClientUri}/signin-oidc`,
   };
 
-  public get loginRedirectModuleId(): string {
-    return this._loginRedirectModuleId;
+  public get loginRedirectRoute(): string {
+    return this._loginRedirectRoute;
   }
 
-  public get logoutRedirectModuleId(): string {
-    return this._logoutRedirectModuleId;
+  public get logoutRedirectRoute(): string {
+    return this._logoutRedirectRoute;
   }
 
-  public get unauthorizedRedirectModuleId(): string {
-    return this._unauthorizedRedirectModuleId;
+  public get unauthorizedRedirectRoute(): string {
+    return this._unauthorizedRedirectRoute;
   }
 
   public get logLevel(): number {

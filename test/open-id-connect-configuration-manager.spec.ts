@@ -7,8 +7,8 @@ describe('open-id-connect-configuration-manager', () => {
 
   // tslint:disable-next-line:no-object-literal-type-assertion
   const expected = {
-    loginRedirectModuleId: 'loginRedirectModuleId',
-    logoutRedirectModuleId: 'logoutRedirectModuleId',
+    loginRedirectRoute: 'loginRedirectRoute',
+    logoutRedirectRoute: 'logoutRedirectRoute',
     logLevel: 5,
     // tslint:disable-next-line:no-object-literal-type-assertion
     userManagerSettings: {
@@ -66,7 +66,7 @@ describe('open-id-connect-configuration-manager', () => {
       // act
       const actual = new OpenIdConnectConfigurationManager(undefined);
       // assert
-      assert.equal(actual.loginRedirectModuleId, '/');
+      assert.equal(actual.loginRedirectRoute, '/');
       assert.equal(actual.userManagerSettings.scope, 'openid email roles profile');
     });
   });

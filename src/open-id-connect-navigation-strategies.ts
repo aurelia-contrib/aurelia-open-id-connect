@@ -26,7 +26,7 @@ export default class OpenIdConnectNavigationStrategies {
 
     const navigationInstruction = () => {
       instruction.config.redirect =
-        this.openIdConnectConfiguration.loginRedirectModuleId;
+        this.openIdConnectConfiguration.loginRedirectRoute;
     };
 
     return this.runHandlerAndCompleteNavigationInstruction(
@@ -43,7 +43,7 @@ export default class OpenIdConnectNavigationStrategies {
     const navigationInstruction = () => {
       // This happens in a child iframe.
       instruction.config.redirect =
-        this.openIdConnectConfiguration.loginRedirectModuleId;
+        this.openIdConnectConfiguration.loginRedirectRoute;
     };
 
     return this.runHandlerAndCompleteNavigationInstruction(
@@ -60,7 +60,7 @@ export default class OpenIdConnectNavigationStrategies {
 
     const navigationInstruction = () => {
       instruction.config.redirect =
-        this.openIdConnectConfiguration.logoutRedirectModuleId;
+        this.openIdConnectConfiguration.logoutRedirectRoute;
     };
 
     return this.runHandlerAndCompleteNavigationInstruction(
