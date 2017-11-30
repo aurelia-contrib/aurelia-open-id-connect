@@ -14,13 +14,13 @@ import {
 
 describe('open-id-connect-authorize-step', () => {
 
-  const unauthRedirectModuleId = '/you-shall-not-pass!';
+  const unauthRedirectRoute = '/you-shall-not-pass!';
 
   const logger = sinon.createStubInstance(OpenIdConnectLogger);
   const configuration = sinon.createStubInstance(OpenIdConnectConfigurationManager);
   const userManager = sinon.createStubInstance(UserManager);
 
-  sinon.stub(configuration, 'unauthorizedRedirectModuleId').get(() => unauthRedirectModuleId);
+  sinon.stub(configuration, 'unauthorizedRedirectRoute').get(() => unauthRedirectRoute);
 
   const authorizationStep = new OpenIdConnectAuthorizeStep(
     userManager,
@@ -57,16 +57,16 @@ describe('open-id-connect-authorize-step', () => {
 
       (navigationInstruction.getAllInstructions).returns([instruction]);
 
-      it(`should redirect to ${unauthRedirectModuleId} if user is null`, async () => {
+      it(`should redirect to ${unauthRedirectRoute} if user is null`, async () => {
         // arrange
         (userManager.getUser).returns(null);
         // act
         await authorizationStep.run(navigationInstruction, next);
         // assert
-        sinon.assert.calledWith(next.cancel, new Redirect(unauthRedirectModuleId));
+        sinon.assert.calledWith(next.cancel, new Redirect(unauthRedirectRoute));
       });
 
-      it(`should NOT redirect to ${unauthRedirectModuleId} if user is not null`, async () => {
+      it(`should NOT redirect to ${unauthRedirectRoute} if user is not null`, async () => {
         // arrange
         (userManager.getUser).returns({});
         // act

@@ -18,10 +18,10 @@ describe('open-id-connect-navigation-strategies', () => {
   const loginRedirectRoute = 'login';
   sinon.stub(configuration, 'loginRedirectRoute').get(() => loginRedirectRoute);
 
-  const logoutRedirectModuleId = 'logout';
-  sinon.stub(configuration, 'logoutRedirectRoute').get(() => logoutRedirectModuleId);
+  const logoutRedirectRoute = 'logout';
+  sinon.stub(configuration, 'logoutRedirectRoute').get(() => logoutRedirectRoute);
 
-  instruction.config = { moduleId: '' };
+  instruction.config = {};
 
   const strategies = new OpenIdConnectNavigationStrategies(
     logger,
@@ -38,7 +38,7 @@ describe('open-id-connect-navigation-strategies', () => {
     {
       method: 'signOutRedirectCallback',
       delegatesTo: 'signoutRedirectCallback',
-      redirectsTo: logoutRedirectModuleId,
+      redirectsTo: logoutRedirectRoute,
     },
     {
       method: 'silentSignInCallback',
