@@ -7,15 +7,16 @@ export default class {
 
   public createOpenIdConnectConfiguration(dto: OpenIdConnectConfiguration)
     : OpenIdConnectConfigurationManager {
-
     return new OpenIdConnectConfigurationManager(dto);
   }
 
-  public createOpenIdConnectLogger(level: number): OpenIdConnectLogger {
+  public createOpenIdConnectLogger(level: number)
+    : OpenIdConnectLogger {
     return new OpenIdConnectLogger(level);
   }
 
-  public createUserManager(settings: UserManagerSettings): UserManager {
+  public createUserManager(settings: UserManagerSettings)
+    : UserManager {
     return new UserManager(settings);
   }
 }
