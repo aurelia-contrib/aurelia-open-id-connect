@@ -69,9 +69,9 @@ export default class OpenIdConnect {
     addOrRemove.call(this.userManager.events, handler);
   }
 
-  public observeUser(callback: (user: User) => void) {
+  public observeUser(callback: (user: User) => void): Promise<void> {
     this.addOrRemoveHandler('addUserLoaded', () => this.getUser().then(callback));
     this.addOrRemoveHandler('addUserUnloaded', () => this.getUser().then(callback));
-    this.getUser().then(callback);
+    return this.getUser().then(callback);
   }
 }

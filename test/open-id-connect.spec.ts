@@ -18,11 +18,14 @@ describe('open-id-connect', () => {
   const configurationManager = sinon.createStubInstance(OpenIdConnectConfigurationManager);
 
   const events = {
-    addUserLoaded: sinon.spy(),
-    addUserUnloaded: sinon.spy(),
+    addUserLoaded: sinon.stub(),
+    addUserUnloaded: sinon.stub(),
   };
 
   sinon.stub(userManager, 'events').get(() => events);
+
+  const expectedCurrentUser = { id_token: 'id_token' };
+  userManager.getUser.returns(Promise.resolve(expectedCurrentUser));
 
   const openIdConnect = new OpenIdConnect(
     openIdConnectRouting,
@@ -86,17 +89,14 @@ describe('open-id-connect', () => {
 
   context('getUser', () => {
     it('should return result of this.userManager.getUser', async () => {
-      // arrange
-      const expected = Promise.resolve({ id_token: 'id_token' });
-      userManager.getUser.returns(expected);
       // act
-      const actual = openIdConnect.getUser();
+      const actual = await openIdConnect.getUser();
       // assert
-      assert.equal(await actual, await expected);
+      assert.deepEqual(actual, expectedCurrentUser);
     });
   });
 
-  context('handlers', () => {
+  context('addOrRemoveHandler', () => {
     it('should invoke method on underlying events object', async () => {
       // act
       openIdConnect.addOrRemoveHandler('addUserLoaded', () => undefined);
@@ -107,6 +107,41 @@ describe('open-id-connect', () => {
     it('should throw when the key does not start with add/remove', async () => {
       // assert
       assert.throws(() => openIdConnect.addOrRemoveHandler('load', () => undefined));
+    });
+  });
+
+  context('observerUser', () => {
+
+    const callback = sinon.spy();
+    const userLoaded = sinon.stub();
+    const userUnloaded = sinon.stub();
+    events.addUserLoaded.callsFake((cb: any) => userLoaded.callsFake(() => cb()));
+    events.addUserUnloaded.callsFake((cb: any) => userUnloaded.callsFake(() => cb()));
+
+    beforeEach(async () => {
+      // arrange
+      callback.reset();
+      // act
+      await openIdConnect.observeUser(callback);
+    });
+
+    it('should immediately invoke the callback, passing it the current user', async () => {
+      // assert
+      sinon.assert.calledWith(callback, expectedCurrentUser);
+    });
+
+    it('should invoke the callback on user loaded, passing it the current user', () => {
+      // act
+      userLoaded();
+      // assert
+      sinon.assert.calledWith(callback, expectedCurrentUser);
+    });
+
+    it('should invoke the callback on user unloaded, passing it the current user', () => {
+      // act
+      userUnloaded();
+      // assert
+      sinon.assert.calledWith(callback, expectedCurrentUser);
     });
   });
 });
