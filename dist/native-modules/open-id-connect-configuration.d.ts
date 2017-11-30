@@ -1,9 +1,9 @@
 import { UserManagerSettings } from 'oidc-client';
 export default class OpenIdConnectConfiguration {
     [key: string]: any;
-    loginRedirectModuleId: string;
-    logoutRedirectModuleId: string;
-    unauthorizedRedirectModuleId: string;
+    loginRedirectRoute: string;
+    logoutRedirectRoute: string;
+    unauthorizedRedirectRoute: string;
     logLevel: number;
     userManagerSettings: UserManagerSettings;
 }

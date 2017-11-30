@@ -65,7 +65,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                     }); };
                     navigationInstruction = function () {
                         instruction.config.redirect =
-                            _this.openIdConnectConfiguration.loginRedirectModuleId;
+                            _this.openIdConnectConfiguration.loginRedirectRoute;
                     };
                     return [2, this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction)];
                 });
@@ -80,7 +80,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             }); };
             var navigationInstruction = function () {
                 instruction.config.redirect =
-                    _this.openIdConnectConfiguration.loginRedirectModuleId;
+                    _this.openIdConnectConfiguration.loginRedirectRoute;
             };
             return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
         };
@@ -95,7 +95,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             }); };
             var navigationInstruction = function () {
                 instruction.config.redirect =
-                    _this.openIdConnectConfiguration.logoutRedirectModuleId;
+                    _this.openIdConnectConfiguration.logoutRedirectRoute;
             };
             return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
         };

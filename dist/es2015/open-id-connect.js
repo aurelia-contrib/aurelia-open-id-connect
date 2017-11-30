@@ -51,7 +51,7 @@ let OpenIdConnect = class OpenIdConnect {
                 if (err.message === 'no end session endpoint') {
                     this.logger.debug(err);
                     this.logger.debug('The user remains logged in at the authorization server.');
-                    this.router.navigate(this.configuration.logoutRedirectModuleId);
+                    this.router.navigate(this.configuration.logoutRedirectRoute);
                 }
                 else {
                     throw err;

@@ -33,7 +33,7 @@ let OpenIdConnectAuthorizeStep = class OpenIdConnectAuthorizeStep {
             if (this.requiresRole(navigationInstruction, OpenIdConnectRoles.Authenticated)) {
                 if (user === null) {
                     this.logger.debug('Requires authenticated role.');
-                    const redirect = new Redirect(this.configuration.unauthorizedRedirectModuleId);
+                    const redirect = new Redirect(this.configuration.unauthorizedRedirectRoute);
                     return next.cancel(redirect);
                 }
             }

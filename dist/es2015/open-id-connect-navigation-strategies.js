@@ -33,7 +33,7 @@ let OpenIdConnectNavigationStrategies = class OpenIdConnectNavigationStrategies 
             });
             const navigationInstruction = () => {
                 instruction.config.redirect =
-                    this.openIdConnectConfiguration.loginRedirectModuleId;
+                    this.openIdConnectConfiguration.loginRedirectRoute;
             };
             return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
         });
@@ -44,7 +44,7 @@ let OpenIdConnectNavigationStrategies = class OpenIdConnectNavigationStrategies 
         });
         const navigationInstruction = () => {
             instruction.config.redirect =
-                this.openIdConnectConfiguration.loginRedirectModuleId;
+                this.openIdConnectConfiguration.loginRedirectRoute;
         };
         return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
     }
@@ -55,7 +55,7 @@ let OpenIdConnectNavigationStrategies = class OpenIdConnectNavigationStrategies 
         });
         const navigationInstruction = () => {
             instruction.config.redirect =
-                this.openIdConnectConfiguration.logoutRedirectModuleId;
+                this.openIdConnectConfiguration.logoutRedirectRoute;
         };
         return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
     }

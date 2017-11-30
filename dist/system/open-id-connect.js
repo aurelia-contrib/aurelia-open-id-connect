@@ -116,7 +116,7 @@ System.register(["aurelia-framework", "aurelia-router", "oidc-client", "./open-i
                                     if (err_1.message === 'no end session endpoint') {
                                         this.logger.debug(err_1);
                                         this.logger.debug('The user remains logged in at the authorization server.');
-                                        this.router.navigate(this.configuration.logoutRedirectModuleId);
+                                        this.router.navigate(this.configuration.logoutRedirectRoute);
                                     }
                                     else {
                                         throw err_1;

@@ -1,8 +1,8 @@
 const defaultClientUri = 'https://localhost:9000';
 export default class {
     constructor(dto) {
-        this._loginRedirectModuleId = '/';
-        this._logoutRedirectModuleId = '/';
+        this._loginRedirectRoute = '/';
+        this._logoutRedirectRoute = '/';
         this._userManagerSettings = {
             authority: 'https://localhost:5000',
             client_id: 'Aurelia.OpenIdConnect',
@@ -26,14 +26,14 @@ export default class {
             this.userManagerSettings[k] = dto.userManagerSettings[k];
         });
     }
-    get loginRedirectModuleId() {
-        return this._loginRedirectModuleId;
+    get loginRedirectRoute() {
+        return this._loginRedirectRoute;
     }
-    get logoutRedirectModuleId() {
-        return this._logoutRedirectModuleId;
+    get logoutRedirectRoute() {
+        return this._logoutRedirectRoute;
     }
-    get unauthorizedRedirectModuleId() {
-        return this._unauthorizedRedirectModuleId;
+    get unauthorizedRedirectRoute() {
+        return this._unauthorizedRedirectRoute;
     }
     get logLevel() {
         return this._logLevel;

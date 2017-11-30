@@ -5,8 +5,8 @@ define(["require", "exports"], function (require, exports) {
     var default_1 = (function () {
         function default_1(dto) {
             var _this = this;
-            this._loginRedirectModuleId = '/';
-            this._logoutRedirectModuleId = '/';
+            this._loginRedirectRoute = '/';
+            this._logoutRedirectRoute = '/';
             this._userManagerSettings = {
                 authority: 'https://localhost:5000',
                 client_id: 'Aurelia.OpenIdConnect',
@@ -30,23 +30,23 @@ define(["require", "exports"], function (require, exports) {
                 _this.userManagerSettings[k] = dto.userManagerSettings[k];
             });
         }
-        Object.defineProperty(default_1.prototype, "loginRedirectModuleId", {
+        Object.defineProperty(default_1.prototype, "loginRedirectRoute", {
             get: function () {
-                return this._loginRedirectModuleId;
+                return this._loginRedirectRoute;
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(default_1.prototype, "logoutRedirectModuleId", {
+        Object.defineProperty(default_1.prototype, "logoutRedirectRoute", {
             get: function () {
-                return this._logoutRedirectModuleId;
+                return this._logoutRedirectRoute;
             },
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(default_1.prototype, "unauthorizedRedirectModuleId", {
+        Object.defineProperty(default_1.prototype, "unauthorizedRedirectRoute", {
             get: function () {
-                return this._unauthorizedRedirectModuleId;
+                return this._unauthorizedRedirectRoute;
             },
             enumerable: true,
             configurable: true

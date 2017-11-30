@@ -68,7 +68,7 @@ var OpenIdConnectNavigationStrategies = (function () {
                 }); };
                 navigationInstruction = function () {
                     instruction.config.redirect =
-                        _this.openIdConnectConfiguration.loginRedirectModuleId;
+                        _this.openIdConnectConfiguration.loginRedirectRoute;
                 };
                 return [2, this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction)];
             });
@@ -83,7 +83,7 @@ var OpenIdConnectNavigationStrategies = (function () {
         }); };
         var navigationInstruction = function () {
             instruction.config.redirect =
-                _this.openIdConnectConfiguration.loginRedirectModuleId;
+                _this.openIdConnectConfiguration.loginRedirectRoute;
         };
         return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
     };
@@ -98,7 +98,7 @@ var OpenIdConnectNavigationStrategies = (function () {
         }); };
         var navigationInstruction = function () {
             instruction.config.redirect =
-                _this.openIdConnectConfiguration.logoutRedirectModuleId;
+                _this.openIdConnectConfiguration.logoutRedirectRoute;
         };
         return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
     };

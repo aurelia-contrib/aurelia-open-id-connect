@@ -62,7 +62,7 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
                             if (this.requiresRole(navigationInstruction, open_id_connect_roles_1.default.Authenticated)) {
                                 if (user === null) {
                                     this.logger.debug('Requires authenticated role.');
-                                    redirect = new aurelia_router_1.Redirect(this.configuration.unauthorizedRedirectModuleId);
+                                    redirect = new aurelia_router_1.Redirect(this.configuration.unauthorizedRedirectRoute);
                                     return [2, next.cancel(redirect)];
                                 }
                             }
