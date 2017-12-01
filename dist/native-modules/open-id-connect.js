@@ -128,7 +128,7 @@ var OpenIdConnect = (function () {
         var _this = this;
         this.addOrRemoveHandler('addUserLoaded', function () { return _this.getUser().then(callback); });
         this.addOrRemoveHandler('addUserUnloaded', function () { return _this.getUser().then(callback); });
-        this.getUser().then(callback);
+        return this.getUser().then(callback);
     };
     OpenIdConnect = __decorate([
         autoinject,

@@ -17,8 +17,10 @@ var default_1 = (function () {
         if (!dto) {
             return;
         }
-        Object.keys(dto).forEach(function (k) {
-            _this['_' + k] = dto[k];
+        Object.keys(dto)
+            .filter(function (key) { return dto[key] !== undefined && dto[key] !== null; })
+            .forEach(function (key) {
+            _this['_' + key] = dto[key];
         });
         if (!dto.userManagerSettings) {
             return;
@@ -64,22 +66,14 @@ var default_1 = (function () {
     });
     Object.defineProperty(default_1.prototype, "redirectUri", {
         get: function () {
-            var value = this._userManagerSettings.redirect_uri;
-            if (!value) {
-                throw new Error('The UserManagerSettings.redirect_uri is required.');
-            }
-            return value;
+            return this._userManagerSettings.redirect_uri;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(default_1.prototype, "postLogoutRedirectUri", {
         get: function () {
-            var value = this._userManagerSettings.post_logout_redirect_uri;
-            if (!value) {
-                throw new Error('The UserManagerSettings.post_logout_redirect_uri is required.');
-            }
-            return value;
+            return this._userManagerSettings.post_logout_redirect_uri;
         },
         enumerable: true,
         configurable: true

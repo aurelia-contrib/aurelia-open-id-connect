@@ -125,7 +125,7 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
             var _this = this;
             this.addOrRemoveHandler('addUserLoaded', function () { return _this.getUser().then(callback); });
             this.addOrRemoveHandler('addUserUnloaded', function () { return _this.getUser().then(callback); });
-            this.getUser().then(callback);
+            return this.getUser().then(callback);
         };
         OpenIdConnect = __decorate([
             aurelia_framework_1.autoinject,

@@ -16,8 +16,10 @@ export default class {
         if (!dto) {
             return;
         }
-        Object.keys(dto).forEach((k) => {
-            this['_' + k] = dto[k];
+        Object.keys(dto)
+            .filter((key) => dto[key] !== undefined && dto[key] !== null)
+            .forEach((key) => {
+            this['_' + key] = dto[key];
         });
         if (!dto.userManagerSettings) {
             return;
@@ -42,18 +44,10 @@ export default class {
         return this._userManagerSettings;
     }
     get redirectUri() {
-        const value = this._userManagerSettings.redirect_uri;
-        if (!value) {
-            throw new Error('The UserManagerSettings.redirect_uri is required.');
-        }
-        return value;
+        return this._userManagerSettings.redirect_uri;
     }
     get postLogoutRedirectUri() {
-        const value = this._userManagerSettings.post_logout_redirect_uri;
-        if (!value) {
-            throw new Error('The UserManagerSettings.post_logout_redirect_uri is required.');
-        }
-        return value;
+        return this._userManagerSettings.post_logout_redirect_uri;
     }
 }
 //# sourceMappingURL=open-id-connect-configuration-manager.js.map

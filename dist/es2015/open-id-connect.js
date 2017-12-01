@@ -79,7 +79,7 @@ let OpenIdConnect = class OpenIdConnect {
     observeUser(callback) {
         this.addOrRemoveHandler('addUserLoaded', () => this.getUser().then(callback));
         this.addOrRemoveHandler('addUserUnloaded', () => this.getUser().then(callback));
-        this.getUser().then(callback);
+        return this.getUser().then(callback);
     }
 };
 OpenIdConnect = __decorate([
