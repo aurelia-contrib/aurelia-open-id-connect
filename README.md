@@ -2,12 +2,6 @@
 
 This plugin adapts `oidc-client-js` to the Aurelia router. While it is possible to use the `oidc-client-js` on its own, you will find yourself writing a fair amount of code to handling the routing within Aurelia.
 
-# Alpha
-
-This is [Alpha software][alpha-software]: it is complete enough for *internal* testing.
-
-If the most recent `aurelia-open-id-connect` release does not work, try an [earlier or later one][0] such as `0.11.2`.
-
 # Demo Projects
 
 The demos have an example of how to configure everything. 
