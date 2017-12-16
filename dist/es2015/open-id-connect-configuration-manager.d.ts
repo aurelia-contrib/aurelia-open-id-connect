@@ -7,6 +7,7 @@ export default class  {
     private _unauthorizedRedirectRoute;
     private _logLevel;
     private _userManagerSettings;
+    private ensureSlash(s);
     readonly loginRedirectRoute: string;
     readonly logoutRedirectRoute: string;
     readonly unauthorizedRedirectRoute: string;

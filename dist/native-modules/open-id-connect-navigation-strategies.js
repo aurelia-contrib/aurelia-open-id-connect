@@ -65,8 +65,7 @@ var OpenIdConnectNavigationStrategies = (function () {
                     });
                 }); };
                 navigationInstruction = function () {
-                    instruction.config.redirect =
-                        _this.openIdConnectConfiguration.loginRedirectRoute;
+                    window.location.assign(_this.openIdConnectConfiguration.loginRedirectRoute);
                 };
                 return [2, this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction)];
             });
@@ -95,8 +94,7 @@ var OpenIdConnectNavigationStrategies = (function () {
             });
         }); };
         var navigationInstruction = function () {
-            instruction.config.redirect =
-                _this.openIdConnectConfiguration.logoutRedirectRoute;
+            window.location.assign(_this.openIdConnectConfiguration.logoutRedirectRoute);
         };
         return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
     };

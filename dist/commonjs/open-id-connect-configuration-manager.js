@@ -31,23 +31,26 @@ var default_1 = (function () {
             _this.userManagerSettings[k] = dto.userManagerSettings[k];
         });
     }
+    default_1.prototype.ensureSlash = function (s) {
+        return s.charAt(0) === "/" ? s : "/" + s;
+    };
     Object.defineProperty(default_1.prototype, "loginRedirectRoute", {
         get: function () {
-            return this._loginRedirectRoute;
+            return this.ensureSlash(this._loginRedirectRoute);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(default_1.prototype, "logoutRedirectRoute", {
         get: function () {
-            return this._logoutRedirectRoute;
+            return this.ensureSlash(this._logoutRedirectRoute);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(default_1.prototype, "unauthorizedRedirectRoute", {
         get: function () {
-            return this._unauthorizedRedirectRoute;
+            return this.ensureSlash(this._unauthorizedRedirectRoute);
         },
         enumerable: true,
         configurable: true
@@ -68,14 +71,14 @@ var default_1 = (function () {
     });
     Object.defineProperty(default_1.prototype, "redirectUri", {
         get: function () {
-            return this._userManagerSettings.redirect_uri;
+            return this.ensureSlash(this._userManagerSettings.redirect_uri);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(default_1.prototype, "postLogoutRedirectUri", {
         get: function () {
-            return this._userManagerSettings.post_logout_redirect_uri;
+            return this.ensureSlash(this._userManagerSettings.post_logout_redirect_uri);
         },
         enumerable: true,
         configurable: true

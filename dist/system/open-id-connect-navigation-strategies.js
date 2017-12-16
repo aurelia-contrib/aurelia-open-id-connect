@@ -81,8 +81,7 @@ System.register(["aurelia-framework", "oidc-client", "./open-id-connect-configur
                                 });
                             }); };
                             navigationInstruction = function () {
-                                instruction.config.redirect =
-                                    _this.openIdConnectConfiguration.loginRedirectRoute;
+                                window.location.assign(_this.openIdConnectConfiguration.loginRedirectRoute);
                             };
                             return [2, this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction)];
                         });
@@ -111,8 +110,7 @@ System.register(["aurelia-framework", "oidc-client", "./open-id-connect-configur
                         });
                     }); };
                     var navigationInstruction = function () {
-                        instruction.config.redirect =
-                            _this.openIdConnectConfiguration.logoutRedirectRoute;
+                        window.location.assign(_this.openIdConnectConfiguration.logoutRedirectRoute);
                     };
                     return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
                 };

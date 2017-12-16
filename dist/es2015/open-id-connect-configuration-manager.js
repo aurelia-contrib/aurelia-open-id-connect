@@ -28,14 +28,17 @@ export default class {
             this.userManagerSettings[k] = dto.userManagerSettings[k];
         });
     }
+    ensureSlash(s) {
+        return s.charAt(0) === "/" ? s : "/" + s;
+    }
     get loginRedirectRoute() {
-        return this._loginRedirectRoute;
+        return this.ensureSlash(this._loginRedirectRoute);
     }
     get logoutRedirectRoute() {
-        return this._logoutRedirectRoute;
+        return this.ensureSlash(this._logoutRedirectRoute);
     }
     get unauthorizedRedirectRoute() {
-        return this._unauthorizedRedirectRoute;
+        return this.ensureSlash(this._unauthorizedRedirectRoute);
     }
     get logLevel() {
         return this._logLevel;
@@ -44,10 +47,10 @@ export default class {
         return this._userManagerSettings;
     }
     get redirectUri() {
-        return this._userManagerSettings.redirect_uri;
+        return this.ensureSlash(this._userManagerSettings.redirect_uri);
     }
     get postLogoutRedirectUri() {
-        return this._userManagerSettings.post_logout_redirect_uri;
+        return this.ensureSlash(this._userManagerSettings.post_logout_redirect_uri);
     }
 }
 //# sourceMappingURL=open-id-connect-configuration-manager.js.map

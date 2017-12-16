@@ -32,8 +32,7 @@ let OpenIdConnectNavigationStrategies = class OpenIdConnectNavigationStrategies 
                 return this.userManager.signinRedirectCallback(args);
             });
             const navigationInstruction = () => {
-                instruction.config.redirect =
-                    this.openIdConnectConfiguration.loginRedirectRoute;
+                window.location.assign(this.openIdConnectConfiguration.loginRedirectRoute);
             };
             return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
         });
@@ -54,8 +53,7 @@ let OpenIdConnectNavigationStrategies = class OpenIdConnectNavigationStrategies 
             return this.userManager.signoutRedirectCallback(args);
         });
         const navigationInstruction = () => {
-            instruction.config.redirect =
-                this.openIdConnectConfiguration.logoutRedirectRoute;
+            window.location.assign(this.openIdConnectConfiguration.logoutRedirectRoute);
         };
         return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
     }
