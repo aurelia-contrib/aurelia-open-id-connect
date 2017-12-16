@@ -45,7 +45,7 @@
   },
   "scripts-comments": {
     "publish:step:01": "npm run release",
-    "publish:step:02": "npm version <major | minor | patch>",
+    "publish:step:02": "npm version <major | minor | patch> -m <some message>",
     "publish:step:03": "npm publish .",
     "publish:step:04": "git push --follow-tags"
   },
