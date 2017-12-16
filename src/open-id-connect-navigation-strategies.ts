@@ -25,8 +25,11 @@ export default class OpenIdConnectNavigationStrategies {
     };
 
     const navigationInstruction = () => {
-      instruction.config.redirect =
-        this.openIdConnectConfiguration.loginRedirectRoute;
+      // Use location.assign not instruction.config.redirect,
+      // because the former adds the route to the web browser's history, 
+      // and that controls what will load on a page refresh. 
+      // See https://github.com/shaunluttin/aurelia-open-id-connect/issues/46
+      window.location.assign(this.openIdConnectConfiguration.loginRedirectRoute);
     };
 
     return this.runHandlerAndCompleteNavigationInstruction(
@@ -59,8 +62,7 @@ export default class OpenIdConnectNavigationStrategies {
     };
 
     const navigationInstruction = () => {
-      instruction.config.redirect =
-        this.openIdConnectConfiguration.logoutRedirectRoute;
+      window.location.assign(this.openIdConnectConfiguration.logoutRedirectRoute);
     };
 
     return this.runHandlerAndCompleteNavigationInstruction(
