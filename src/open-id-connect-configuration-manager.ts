@@ -27,6 +27,7 @@ export default class {
     silent_redirect_uri: `${defaultClientUri}/signin-oidc`,
   };
 
+  // Ensure that relative paths (routes) start with a forward slash.
   private ensureSlash(s: string) 
   {
     // Alternatively, we could throw an error in the case of a missing slash.
@@ -55,12 +56,12 @@ export default class {
 
   // This convenience property adheres to the Law of Demeter.
   public get redirectUri(): string {
-    return this.ensureSlash(this._userManagerSettings.redirect_uri as string);
+    return this._userManagerSettings.redirect_uri as string;
   }
 
   // This convenience property adheres to the Law of Demeter.
   public get postLogoutRedirectUri(): string {
-    return this.ensureSlash(this._userManagerSettings.post_logout_redirect_uri as string);
+    return this._userManagerSettings.post_logout_redirect_uri as string;
   }
 
   constructor(dto?: OpenIdConnectConfiguration) {
