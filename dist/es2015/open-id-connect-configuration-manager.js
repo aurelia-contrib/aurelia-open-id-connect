@@ -47,10 +47,10 @@ export default class {
         return this._userManagerSettings;
     }
     get redirectUri() {
-        return this.ensureSlash(this._userManagerSettings.redirect_uri);
+        return this._userManagerSettings.redirect_uri;
     }
     get postLogoutRedirectUri() {
-        return this.ensureSlash(this._userManagerSettings.post_logout_redirect_uri);
+        return this._userManagerSettings.post_logout_redirect_uri;
     }
 }
 //# sourceMappingURL=open-id-connect-configuration-manager.js.map

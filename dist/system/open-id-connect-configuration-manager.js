@@ -76,14 +76,14 @@ System.register([], function (exports_1, context_1) {
                 });
                 Object.defineProperty(default_1.prototype, "redirectUri", {
                     get: function () {
-                        return this.ensureSlash(this._userManagerSettings.redirect_uri);
+                        return this._userManagerSettings.redirect_uri;
                     },
                     enumerable: true,
                     configurable: true
                 });
                 Object.defineProperty(default_1.prototype, "postLogoutRedirectUri", {
                     get: function () {
-                        return this.ensureSlash(this._userManagerSettings.post_logout_redirect_uri);
+                        return this._userManagerSettings.post_logout_redirect_uri;
                     },
                     enumerable: true,
                     configurable: true
