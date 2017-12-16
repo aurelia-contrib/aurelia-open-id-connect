@@ -27,16 +27,22 @@ export default class {
     silent_redirect_uri: `${defaultClientUri}/signin-oidc`,
   };
 
+  private ensureSlash(s: string) 
+  {
+    // Alternatively, we could throw an error in the case of a missing slash.
+    return s.charAt(0) === "/" ? s : "/" + s;
+  }
+
   public get loginRedirectRoute(): string {
-    return this._loginRedirectRoute;
+    return this.ensureSlash(this._loginRedirectRoute);
   }
 
   public get logoutRedirectRoute(): string {
-    return this._logoutRedirectRoute;
+    return this.ensureSlash(this._logoutRedirectRoute);
   }
 
   public get unauthorizedRedirectRoute(): string {
-    return this._unauthorizedRedirectRoute;
+    return this.ensureSlash(this._unauthorizedRedirectRoute);
   }
 
   public get logLevel(): number {
@@ -49,12 +55,12 @@ export default class {
 
   // This convenience property adheres to the Law of Demeter.
   public get redirectUri(): string {
-    return this._userManagerSettings.redirect_uri as string;
+    return this.ensureSlash(this._userManagerSettings.redirect_uri as string);
   }
 
   // This convenience property adheres to the Law of Demeter.
   public get postLogoutRedirectUri(): string {
-    return this._userManagerSettings.post_logout_redirect_uri as string;
+    return this.ensureSlash(this._userManagerSettings.post_logout_redirect_uri as string);
   }
 
   constructor(dto?: OpenIdConnectConfiguration) {
