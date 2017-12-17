@@ -22,7 +22,7 @@ We use the [Aurelia CLI][aurelia-cli].
 
     au new
 
-We use TypeScript and RequireJS. After creating the app, enter its directory and build.
+After creating the app, enter its directory and build.
 
     cd aurelia-app
     au build
