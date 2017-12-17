@@ -8,9 +8,9 @@ describe('open-id-connect-configuration-manager', () => {
   // tslint:disable-next-line:no-object-literal-type-assertion
   const expected = {
     logLevel: 5,
-    loginRedirectRoute: 'loginRedirectRoute',
-    logoutRedirectRoute: 'logoutRedirectRoute',
-    unauthorizedRedirectRoute: 'unauthorizedRedirectRoute',
+    loginRedirectRoute: '/loginRedirectRoute',
+    logoutRedirectRoute: '/logoutRedirectRoute',
+    unauthorizedRedirectRoute: '/unauthorizedRedirectRoute',
     // tslint:disable-next-line:no-object-literal-type-assertion
     userManagerSettings: {
       accessTokenExpiringNotificationTime: 1111111111111111,
@@ -34,13 +34,13 @@ describe('open-id-connect-configuration-manager', () => {
   } as OpenIdConnectConfiguration;
 
   let configManager: OpenIdConnectConfigurationManager;
-  before(() => {
-    configManager = new OpenIdConnectConfigurationManager(expected);
-  });
-
   context('constructor', () => {
-
     context('when user values are defined', () => {
+
+      before(() => {
+        configManager = new OpenIdConnectConfigurationManager(expected);
+      });
+
       Object.keys(expected).forEach((key) => {
         if (key === 'userManagerSettings') {
           return;
@@ -60,6 +60,20 @@ describe('open-id-connect-configuration-manager', () => {
           assert.equal(
             (configManager as any).userManagerSettings[key],
             (expected as any).userManagerSettings[key]);
+        });
+      });
+
+      context('convenience properties that wrap UseManagerSettings properties', () => {
+        it('redirectUri should return underlying redirect_uri', () => {
+          // assert
+          assert.equal(configManager.redirectUri, expected.userManagerSettings.redirect_uri);
+        });
+
+        it('postLogoutRedirectUri should return underlying post_logout_redirect_uri', () => {
+          // assert
+          assert.equal(
+            configManager.postLogoutRedirectUri,
+            expected.userManagerSettings.post_logout_redirect_uri);
         });
       });
     });
@@ -90,17 +104,21 @@ describe('open-id-connect-configuration-manager', () => {
       });
     });
 
-    context('convenience properties that wrap UseManagerSettings properties', () => {
-      it('redirectUri should return underlying redirect_uri', () => {
-        // assert
-        assert.equal(configManager.redirectUri, expected.userManagerSettings.redirect_uri);
-      });
+    context('when user route values do not start with a slash', () => {
 
-      it('postLogoutRedirectUri should return underlying post_logout_redirect_uri', () => {
-        // assert
-        assert.equal(
-          configManager.postLogoutRedirectUri,
-          expected.userManagerSettings.post_logout_redirect_uri);
+      ['loginRedirectRoute', 'logoutRedirectRoute', 'unauthorizedRedirectRoute'].forEach((key) => {
+
+        it(`should throw when ${key} does not start with a forward slash`, () => {
+          // arrange
+          const config = {} as any;
+          config[key] = 'this/path/does/not/start/with/a/slash';
+          // act
+          // assert
+          assert.throws(
+            () => new OpenIdConnectConfigurationManager(config),
+            RangeError,
+            `The configured "${key}" must begin with a slash`);
+        });
       });
     });
   });

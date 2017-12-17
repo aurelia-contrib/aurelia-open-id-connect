@@ -28,15 +28,15 @@ export default class {
   };
 
   public get loginRedirectRoute(): string {
-    return this.ensureSlash(this._loginRedirectRoute);
+    return this._loginRedirectRoute;
   }
 
   public get logoutRedirectRoute(): string {
-    return this.ensureSlash(this._logoutRedirectRoute);
+    return this._logoutRedirectRoute;
   }
 
   public get unauthorizedRedirectRoute(): string {
-    return this.ensureSlash(this._unauthorizedRedirectRoute);
+    return this._unauthorizedRedirectRoute;
   }
 
   public get logLevel(): number {
@@ -59,6 +59,7 @@ export default class {
 
   constructor(dto?: OpenIdConnectConfiguration) {
 
+    // populate top level fields
     if (!dto) {
       return;
     }
@@ -66,9 +67,13 @@ export default class {
     Object.keys(dto)
       .filter((key) => dto[key] !== undefined && dto[key] !== null)
       .forEach((key) => {
+
+        this.ensureRouteValueBeginsWithSlash(key, dto[key]);
+
         this['_' + key] = dto[key];
       });
 
+    // populate user manager properties
     if (!dto.userManagerSettings) {
       return;
     }
@@ -81,9 +86,10 @@ export default class {
   }
 
   // Ensure that relative paths (routes) start with a forward slash.
-  private ensureSlash(s: string) {
-    // Alternatively, we could throw an error in the case of a missing slash.
-    return s.charAt(0) === '/' ? s : '/' + s;
+  private ensureRouteValueBeginsWithSlash(key: string, val: string) {
+    if (key.endsWith('Route') && !val.startsWith('/')) {
+      const message = `The configured "${key}" must begin with a slash`;
+      throw new RangeError(message);
+    }
   }
-
 }
