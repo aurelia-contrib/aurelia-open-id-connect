@@ -7,10 +7,10 @@ describe('open-id-connect-configuration-manager', () => {
 
   // tslint:disable-next-line:no-object-literal-type-assertion
   const expected = {
+    logLevel: 5,
     loginRedirectRoute: 'loginRedirectRoute',
     logoutRedirectRoute: 'logoutRedirectRoute',
     unauthorizedRedirectRoute: 'unauthorizedRedirectRoute',
-    logLevel: 5,
     // tslint:disable-next-line:no-object-literal-type-assertion
     userManagerSettings: {
       accessTokenExpiringNotificationTime: 1111111111111111,

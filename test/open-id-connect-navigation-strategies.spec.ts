@@ -31,18 +31,18 @@ describe('open-id-connect-navigation-strategies', () => {
 
   [
     {
-      method: 'signInRedirectCallback',
       delegatesTo: 'signinRedirectCallback',
+      method: 'signInRedirectCallback',
       redirectsTo: loginRedirectRoute,
     },
     {
-      method: 'signOutRedirectCallback',
       delegatesTo: 'signoutRedirectCallback',
+      method: 'signOutRedirectCallback',
       redirectsTo: logoutRedirectRoute,
     },
     {
-      method: 'silentSignInCallback',
       delegatesTo: 'signinSilentCallback',
+      method: 'silentSignInCallback',
       redirectsTo: loginRedirectRoute,
     },
   ].forEach((o) => {

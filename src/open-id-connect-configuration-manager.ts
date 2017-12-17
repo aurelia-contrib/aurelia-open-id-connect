@@ -27,13 +27,6 @@ export default class {
     silent_redirect_uri: `${defaultClientUri}/signin-oidc`,
   };
 
-  // Ensure that relative paths (routes) start with a forward slash.
-  private ensureSlash(s: string) 
-  {
-    // Alternatively, we could throw an error in the case of a missing slash.
-    return s.charAt(0) === "/" ? s : "/" + s;
-  }
-
   public get loginRedirectRoute(): string {
     return this.ensureSlash(this._loginRedirectRoute);
   }
@@ -86,4 +79,11 @@ export default class {
       (this.userManagerSettings as any)[k] = (dto.userManagerSettings as any)[k];
     });
   }
+
+  // Ensure that relative paths (routes) start with a forward slash.
+  private ensureSlash(s: string) {
+    // Alternatively, we could throw an error in the case of a missing slash.
+    return s.charAt(0) === '/' ? s : '/' + s;
+  }
+
 }
