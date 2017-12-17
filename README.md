@@ -18,7 +18,7 @@ See it LIVE here: https://zamboni-app.azurewebsites.net
 
 ### Create an Aurelia application
 
-We use the [Aurelia CLI][aurelia-cli].
+We use the [Aurelia CLI][aurelia-cli] (we generally choose TypeScript and RequireJS).
 
     au new
 
