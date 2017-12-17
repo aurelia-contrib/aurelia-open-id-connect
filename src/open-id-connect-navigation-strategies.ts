@@ -16,7 +16,8 @@ export default class OpenIdConnectNavigationStrategies {
     // @ts-ignore
     private logger: OpenIdConnectLogger,
     private openIdConnectConfiguration: OpenIdConnectConfigurationManager,
-    private userManager: UserManager) { }
+    private userManager: UserManager,
+    private $window: Window) { }
 
   public async signInRedirectCallback(instruction: NavigationInstruction): Promise<any> {
     const callbackHandler = async () => {
@@ -29,7 +30,7 @@ export default class OpenIdConnectNavigationStrategies {
       // because the former adds the route to the web browser's history,
       // and that controls what will load on a page refresh.
       // See https://github.com/shaunluttin/aurelia-open-id-connect/issues/46
-      window.location.assign(this.openIdConnectConfiguration.loginRedirectRoute);
+      this.$window.location.assign(this.openIdConnectConfiguration.loginRedirectRoute);
     };
 
     return this.runHandlerAndCompleteNavigationInstruction(
@@ -62,7 +63,7 @@ export default class OpenIdConnectNavigationStrategies {
     };
 
     const navigationInstruction = () => {
-      window.location.assign(this.openIdConnectConfiguration.logoutRedirectRoute);
+      this.$window.location.assign(this.openIdConnectConfiguration.logoutRedirectRoute);
     };
 
     return this.runHandlerAndCompleteNavigationInstruction(

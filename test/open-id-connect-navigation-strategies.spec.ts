@@ -15,6 +15,12 @@ describe('open-id-connect-navigation-strategies', () => {
   const userManager = sinon.createStubInstance(UserManager);
   const instruction = sinon.createStubInstance(NavigationInstruction);
 
+  const $window: any = {
+    location: {
+      assign: sinon.spy(),
+    },
+  };
+
   const loginRedirectRoute = 'login';
   sinon.stub(configuration, 'loginRedirectRoute').get(() => loginRedirectRoute);
 
@@ -27,6 +33,7 @@ describe('open-id-connect-navigation-strategies', () => {
     logger,
     configuration,
     userManager,
+    $window,
   );
 
   [
@@ -60,7 +67,7 @@ describe('open-id-connect-navigation-strategies', () => {
         // act
         await (strategies as any)[o.method](instruction);
         // assert
-        assert.equal(instruction.config.redirect, o.redirectsTo);
+        sinon.assert.calledWith($window.location.assign, o.redirectsTo);
       });
 
       it(`should redirect to ${o.redirectsTo} on error`, async () => {
@@ -77,7 +84,7 @@ describe('open-id-connect-navigation-strategies', () => {
         } finally {
           // assert
           assert.isTrue(threwError);
-          assert.equal(instruction.config.redirect, o.redirectsTo);
+          sinon.assert.calledWith($window.location.assign, o.redirectsTo);
         }
       });
     });
