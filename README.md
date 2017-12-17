@@ -1,6 +1,6 @@
 # Why?
 
-This plugin adapts `oidc-client-js` to the Aurelia router. While it is possible to use the `oidc-client-js` on its own, you will find yourself writing a fair amount of code to handling the routing within Aurelia.
+This plugin adapts `oidc-client-js` to the Aurelia router. While it is possible to use the `oidc-client-js` on its own, you will find yourself writing a fair amount of code to handle the routing within Aurelia.
 
 # Demo Projects
 
@@ -18,11 +18,11 @@ See it LIVE here: https://zamboni-app.azurewebsites.net
 
 ### Create an Aurelia application
 
-We use the [Aurelia CLI][aurelia-cli].
+We use the [Aurelia CLI][aurelia-cli] (we generally choose TypeScript and RequireJS).
 
     au new
 
-We use TypeScript and RequireJS. After creating the app, enter its directory and build.
+After creating the app, enter its directory and build.
 
     cd aurelia-app
     au build
@@ -57,7 +57,7 @@ We use the Aurelia CLI, so we add the following to `aurelia.json` in a bundle.
 
 Create a `src/open-id-connect-configuration.ts` file that specifies the Open ID Connect configuration. There is an [example here](/open-id-connect-configuration.ts.example).
 
-In your `src/main.ts`, import the configuration file, add the plugin, and invoke the callback, returning the imported configuration. 
+In your `src/main.ts`, import the configuration file and `use` the plugin with a callback that returns the imported configuration. 
 
     import oidcConfig from "./open-id-connect-configuration";
 
