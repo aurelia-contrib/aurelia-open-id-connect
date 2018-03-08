@@ -29,7 +29,7 @@ export default class OpenIdConnectNavigationStrategies {
       // Use location.assign not instruction.config.redirect,
       // because the former adds the route to the web browser's history,
       // and that controls what will load on a page refresh.
-      // See https://github.com/shaunluttin/aurelia-open-id-connect/issues/46
+      // See https://github.com/aurelia-contrib/aurelia-open-id-connect/issues/46
       this.$window.location.assign(this.openIdConnectConfiguration.loginRedirectRoute);
     };
 
