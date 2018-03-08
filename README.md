@@ -8,7 +8,7 @@ The demos have an example of how to configure everything.
 
 ### Smaller Demo(s)
 
-https://github.com/shaunluttin/aurelia-open-id-connect-demos
+https://github.com/aurelia-contrib/aurelia-open-id-connect-demos
 
 ### Larger, LIVE Demo
 
@@ -35,7 +35,7 @@ Install from NPM.
 
 Alternatively, install from GitHub [with an optional commit-ish].
 
-    npm install --save shaunluttin/aurelia-open-id-connect[#<commit-ish>]
+    npm install --save aurelia-contrib/aurelia-open-id-connect[#<commit-ish>]
 
 Note: sometimes we need to install UNMET PEER DEPENDENCIES such as `babel-polyfill`.
 
@@ -86,7 +86,7 @@ Why?
 
 > Aurelia was replacing the complete body element's contents, hence the disappearing iframe. The fix was to create a child div element where Aurelia puts its contents. Now everything works! ~ @ErikSchierboom
 
-Thank you @RichiCoder1, @bewl, and @mttmccb for help to find the fix: https://github.com/shaunluttin/aurelia-open-id-connect/issues/4
+Thank you @RichiCoder1, @bewl, and @mttmccb for help to find the fix: https://github.com/aurelia-contrib/aurelia-open-id-connect/issues/4
 
 ### Add the user-block and router view.
 
@@ -184,7 +184,7 @@ The [OpenID Connect Implicit Client Implementer's Guide 1.0][1] contains a subse
 
 It is designed to be easy to read and implement for basic Web-based Relying Parties using the OAuth 2.0 Implicit Flow.
 
-[0]: https://github.com/shaunluttin/aurelia-open-id-connect/releases
+[0]: https://github.com/aurelia-contrib/aurelia-open-id-connect/releases
 [1]: http://openid.net/specs/openid-connect-implicit-1_0.html
 [alpha-software]: https://blog.codinghorror.com/alpha-beta-and-sometimes-gamma/
 [aurelia-cli]: https://www.npmjs.com/package/aurelia-cli
