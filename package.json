@@ -17,7 +17,7 @@
   "types": "dist/amd/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/shaunluttin/aurelia-open-id-connect.git"
+    "url": "https://github.com/aurelia-contrib/aurelia-open-id-connect.git"
   },
   "scripts": {
     "lint": "cross-env tslint --project tsconfig.json",
