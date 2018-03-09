@@ -25,8 +25,8 @@ export default class OpenIdConnect {
     this.openIdConnectRouting.configureRouter(routerConfiguration);
   }
 
-  public async login(): Promise<void> {
-    const args: any = {};
+  public async login(redirectRequestRoute: boolean = false): Promise<void> {
+    const args: any = redirectRequestRoute ? {data: this.router.currentInstruction.fragment} : {};
     await this.userManager.signinRedirect(args);
   }
 
