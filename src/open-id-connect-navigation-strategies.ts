@@ -1,6 +1,6 @@
 import { autoinject } from 'aurelia-framework';
 import { NavigationInstruction } from 'aurelia-router';
-import { User, UserManager } from 'oidc-client';
+import { UserManager } from 'oidc-client';
 import OpenIdConnectConfigurationManager from './open-id-connect-configuration-manager';
 import OpenIdConnectLogger from './open-id-connect-logger';
 
@@ -19,7 +19,7 @@ export default class OpenIdConnectNavigationStrategies {
     private userManager: UserManager,
     private $window: Window) { }
 
-  public async signInRedirectCallback(instruction: NavigationInstruction): Promise<User> {
+  public async signInRedirectCallback(instruction: NavigationInstruction): Promise<any> {
     const callbackHandler = async () => {
       const args: any = {};
       return this.userManager.signinRedirectCallback(args).then((user) => {
@@ -36,7 +36,7 @@ export default class OpenIdConnectNavigationStrategies {
       // Use location.assign not instruction.config.redirect,
       // because the former adds the route to the web browser's history,
       // and that controls what will load on a page refresh.
-      // See https://github.com/shaunluttin/aurelia-open-id-connect/issues/46
+      // See https://github.com/aurelia-contrib/aurelia-open-id-connect/issues/46
       this.$window.location.assign(this.openIdConnectConfiguration.loginRedirectRoute);
     };
 
