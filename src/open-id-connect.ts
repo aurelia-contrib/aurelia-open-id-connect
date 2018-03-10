@@ -1,5 +1,5 @@
 import { autoinject } from 'aurelia-framework';
-import { Router, RouterConfiguration } from 'aurelia-router';
+import { NavigationInstruction, Router, RouterConfiguration } from 'aurelia-router';
 import { User, UserManager, UserManagerEvents } from 'oidc-client';
 import { UserManagerEventHandler, UserManagerEventsAction } from './internal-types';
 import OpenIdConnectConfigurationManager from './open-id-connect-configuration-manager';
@@ -25,8 +25,11 @@ export default class OpenIdConnect {
     this.openIdConnectRouting.configureRouter(routerConfiguration);
   }
 
-  public async login(redirectRequestRoute: boolean = false): Promise<void> {
-    const args: any = redirectRequestRoute ? {data: this.router.currentInstruction.fragment} : {};
+  public async login(): Promise<void> {
+    const instruction = this.router.currentInstruction;
+    const redirectUrl = instruction.queryParams.loginRedirectRoute || this.getInstructionUrl(instruction);
+
+    const args: any = {data: redirectUrl};
     await this.userManager.signinRedirect(args);
   }
 
@@ -73,5 +76,10 @@ export default class OpenIdConnect {
     this.addOrRemoveHandler('addUserLoaded', () => this.getUser().then(callback));
     this.addOrRemoveHandler('addUserUnloaded', () => this.getUser().then(callback));
     return this.getUser().then(callback);
+  }
+
+  private getInstructionUrl(instruction: NavigationInstruction): string {
+    const queryString = instruction.queryString ? `?${instruction.queryString}` : '';
+    return instruction.fragment + queryString;
   }
 }

@@ -25,10 +25,8 @@ export default class OpenIdConnectNavigationStrategies {
       return this.userManager.signinRedirectCallback(args).then((user) => {
         // The state is not persisted with the rest of the user.
         // The resolve callback is the only place you will be able to capture that state.
-        if (user.state) {
-          // When the state is set, redirect to this request route.
-          this.$window.location.href = user.state;
-        }
+        // When the state is set, redirect to this request route.
+        this.$window.location.assign(user.state || this.openIdConnectConfiguration.loginRedirectRoute);
       });
     };
 
@@ -53,8 +51,7 @@ export default class OpenIdConnectNavigationStrategies {
 
     const navigationInstruction = () => {
       // This happens in a child iframe.
-      instruction.config.redirect =
-        this.openIdConnectConfiguration.loginRedirectRoute;
+      instruction.config.redirect = this.openIdConnectConfiguration.loginRedirectRoute;
     };
 
     return this.runHandlerAndCompleteNavigationInstruction(
@@ -66,7 +63,9 @@ export default class OpenIdConnectNavigationStrategies {
 
     const callbackHandler = async () => {
       const args: any = {};
-      return this.userManager.signoutRedirectCallback(args);
+      return this.userManager.signoutRedirectCallback(args).then(() => {
+        this.$window.location.assign(this.openIdConnectConfiguration.logoutRedirectRoute);
+      });
     };
 
     const navigationInstruction = () => {
@@ -85,8 +84,6 @@ export default class OpenIdConnectNavigationStrategies {
     try {
       this.logger.debug('Handling the response from the Identity Provider');
       await callbackHandler();
-      this.logger.debug('Redirecting on authorization success');
-      navigationInstruction();
     } catch (err) {
       this.logger.debug('Redirecting on authorization error');
       navigationInstruction();

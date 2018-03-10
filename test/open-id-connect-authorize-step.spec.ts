@@ -63,7 +63,7 @@ describe('open-id-connect-authorize-step', () => {
         // act
         await authorizationStep.run(navigationInstruction, next);
         // assert
-        sinon.assert.calledWith(next.cancel, new Redirect(unauthRedirectRoute));
+        sinon.assert.calledWith(next.cancel, new Redirect(unauthRedirectRoute + '?loginRedirectRoute=undefined'));
       });
 
       it(`should NOT redirect to ${unauthRedirectRoute} if user is not null`, async () => {

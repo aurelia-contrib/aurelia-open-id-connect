@@ -28,6 +28,7 @@ describe('open-id-connect-navigation-strategies', () => {
   sinon.stub(configuration, 'logoutRedirectRoute').get(() => logoutRedirectRoute);
 
   userManager.signinRedirectCallback = sinon.stub().resolves({});
+  userManager.signoutRedirectCallback = sinon.stub().resolves();
 
   instruction.config = {};
 

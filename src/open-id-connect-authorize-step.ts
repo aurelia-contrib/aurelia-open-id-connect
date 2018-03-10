@@ -29,7 +29,12 @@ export default class OpenIdConnectAuthorizeStep implements PipelineStep {
     if (this.requiresRole(navigationInstruction, OpenIdConnectRoles.Authenticated)) {
       if (user === null) {
         this.logger.debug('Requires authenticated role.');
-        const redirect = new Redirect(this.configuration.unauthorizedRedirectRoute);
+        // capture the route to which the user was originally navigating (e.g. person/1)
+        const loginRedirectRoute = encodeURIComponent(this.getInstructionUrl(navigationInstruction));
+
+        // store that route in a query string when we redirect to the unauthorizedRedirectRoute
+        const redirect = new Redirect(
+          this.configuration.unauthorizedRedirectRoute + '?loginRedirectRoute=' + loginRedirectRoute);
         return next.cancel(redirect);
       }
     }
@@ -48,5 +53,10 @@ export default class OpenIdConnectAuthorizeStep implements PipelineStep {
       instruction.config.settings !== undefined &&
       instruction.config.settings.roles !== undefined &&
       instruction.config.settings.roles.includes(role));
+  }
+
+  private getInstructionUrl(instruction: NavigationInstruction): string {
+    const queryString = instruction.queryString ? `?${instruction.queryString}` : '';
+    return instruction.fragment + queryString;
   }
 }
