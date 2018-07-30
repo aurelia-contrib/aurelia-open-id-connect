@@ -22,6 +22,13 @@ export default class {
       if (requiredRoles.includes(OpenIdConnectRoles.Authenticated)) {
         return user !== null;
       }
+
+      if (requiredRoles.includes(OpenIdConnectRoles.Anonymous)) {
+        return user == null;
+      }
+
+      // only possibility left is Everyone so return true
+      return true;
     });
   }
 }

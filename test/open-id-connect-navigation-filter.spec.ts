@@ -67,5 +67,72 @@ describe('open-id-connect-navigation-filter', () => {
         assert.equal(result.length, requiresAuthenticated);
       });
     });
+
+    context(`if some navModels require the Anonymous role`, () => {
+
+      // arrange
+      const total = 10;
+      const requiresAnonymous = 5;
+
+      const navModels = createNavModelsWithEmptySettings(total)
+        .map((navModel: NavModel, index: number) => {
+          if (index < requiresAnonymous) {
+            navModel.settings.roles = [OpenIdConnectRoles.Anonymous];
+          }
+          return navModel;
+        });
+
+      it(`should include all navModels when the user is null`, () => {
+        // arrange
+        const user: any = null;
+        // act
+        const result = filter.toView(navModels, user);
+        // assert
+        assert.equal(result.length, total);
+      });
+
+      it(`should filter anonymous navModels when the user is not null`, () => {
+        // arrange
+        const user = {} as any;
+        // act
+        const result = filter.toView(navModels, user);
+        // assert
+        assert.equal(result.length, requiresAnonymous);
+      });
+    });
+
+    context(`if some navModels require the Everyone role`, () => {
+
+      // arrange
+      const total = 10;
+      const requiresEveryone = 5;
+
+      const navModels = createNavModelsWithEmptySettings(total)
+        .map((navModel: NavModel, index: number) => {
+          if (index < requiresEveryone) {
+            navModel.settings.roles = [OpenIdConnectRoles.Everyone];
+          }
+          return navModel;
+        });
+
+      it(`should include all navModels when the user is null`, () => {
+        // arrange
+        const user: any = null;
+        // act
+        const result = filter.toView(navModels, user);
+        // assert
+        assert.equal(result.length, total);
+      });
+
+      it(`should include all navModels when the user is not null`, () => {
+        // arrange
+        const user = {} as any;
+        // act
+        const result = filter.toView(navModels, user);
+        // assert
+        assert.equal(result.length, total);
+      });
+    });
+
   });
 });
