@@ -25,16 +25,13 @@ export default class OpenIdConnect {
     this.openIdConnectRouting.configureRouter(routerConfiguration);
   }
 
-  public async login(): Promise<void> {
+  public async login(args: any = {}): Promise<void> {
     const instruction = this.router.currentInstruction;
     const redirectUrl = instruction.queryParams.loginRedirectRoute || this.getInstructionUrl(instruction);
-
-    const args: any = {data: redirectUrl};
     await this.userManager.signinRedirect(args);
   }
 
-  public async logout(): Promise<void> {
-    const args: any = {};
+  public async logout(args: any = {}): Promise<void> {
     try {
       await this.userManager.signoutRedirect(args);
     } catch (err) {
@@ -48,8 +45,7 @@ export default class OpenIdConnect {
     }
   }
 
-  public loginSilent(): Promise<User> {
-    const args: any = {};
+  public loginSilent(args: any = {}): Promise<User> {
     return this.userManager.signinSilent(args);
   }
 
