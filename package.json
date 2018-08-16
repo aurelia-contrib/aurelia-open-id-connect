@@ -44,7 +44,7 @@
     "release": "npm run build & git add -A & git commit -m \"prepare release\""
   },
   "scripts-comments": {
-    "publish:step:01": "npm run release (TODO: Fix this command; it is throwing an error)",
+    "publish:step:01": "npm run release",
     "publish:step:02": "npm version <major | minor | patch> -m <some message>",
     "publish:step:03": "npm publish .",
     "publish:step:04": "git push --follow-tags"
