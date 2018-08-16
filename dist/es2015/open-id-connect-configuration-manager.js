@@ -19,6 +19,7 @@ export default class {
         Object.keys(dto)
             .filter((key) => dto[key] !== undefined && dto[key] !== null)
             .forEach((key) => {
+            this.ensureRouteValueBeginsWithSlash(key, dto[key]);
             this['_' + key] = dto[key];
         });
         if (!dto.userManagerSettings) {
@@ -28,17 +29,14 @@ export default class {
             this.userManagerSettings[k] = dto.userManagerSettings[k];
         });
     }
-    ensureSlash(s) {
-        return s.charAt(0) === "/" ? s : "/" + s;
-    }
     get loginRedirectRoute() {
-        return this.ensureSlash(this._loginRedirectRoute);
+        return this._loginRedirectRoute;
     }
     get logoutRedirectRoute() {
-        return this.ensureSlash(this._logoutRedirectRoute);
+        return this._logoutRedirectRoute;
     }
     get unauthorizedRedirectRoute() {
-        return this.ensureSlash(this._unauthorizedRedirectRoute);
+        return this._unauthorizedRedirectRoute;
     }
     get logLevel() {
         return this._logLevel;
@@ -51,6 +49,12 @@ export default class {
     }
     get postLogoutRedirectUri() {
         return this._userManagerSettings.post_logout_redirect_uri;
+    }
+    ensureRouteValueBeginsWithSlash(key, val) {
+        if (key.endsWith('Route') && !val.startsWith('/')) {
+            const message = `The configured "${key}" must begin with a slash`;
+            throw new RangeError(message);
+        }
     }
 }
 //# sourceMappingURL=open-id-connect-configuration-manager.js.map

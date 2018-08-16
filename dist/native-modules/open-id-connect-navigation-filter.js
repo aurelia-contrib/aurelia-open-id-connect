@@ -21,6 +21,10 @@ var default_1 = (function () {
             if (requiredRoles.includes(OpenIdConnectRoles.Authenticated)) {
                 return user !== null;
             }
+            if (requiredRoles.includes(OpenIdConnectRoles.Anonymous)) {
+                return user == null;
+            }
+            return true;
         });
     };
     default_1 = __decorate([

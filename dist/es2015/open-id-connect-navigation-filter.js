@@ -19,6 +19,10 @@ let default_1 = class {
             if (requiredRoles.includes(OpenIdConnectRoles.Authenticated)) {
                 return user !== null;
             }
+            if (requiredRoles.includes(OpenIdConnectRoles.Anonymous)) {
+                return user == null;
+            }
+            return true;
         });
     }
 };

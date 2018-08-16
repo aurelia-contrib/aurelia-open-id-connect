@@ -47,10 +47,11 @@ import { UserManager } from 'oidc-client';
 import OpenIdConnectConfigurationManager from './open-id-connect-configuration-manager';
 import OpenIdConnectLogger from './open-id-connect-logger';
 var OpenIdConnectNavigationStrategies = (function () {
-    function OpenIdConnectNavigationStrategies(logger, openIdConnectConfiguration, userManager) {
+    function OpenIdConnectNavigationStrategies(logger, openIdConnectConfiguration, userManager, $window) {
         this.logger = logger;
         this.openIdConnectConfiguration = openIdConnectConfiguration;
         this.userManager = userManager;
+        this.$window = $window;
     }
     OpenIdConnectNavigationStrategies.prototype.signInRedirectCallback = function (instruction) {
         return __awaiter(this, void 0, void 0, function () {
@@ -65,7 +66,7 @@ var OpenIdConnectNavigationStrategies = (function () {
                     });
                 }); };
                 navigationInstruction = function () {
-                    window.location.assign(_this.openIdConnectConfiguration.loginRedirectRoute);
+                    _this.$window.location.assign(_this.openIdConnectConfiguration.loginRedirectRoute);
                 };
                 return [2, this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction)];
             });
@@ -94,7 +95,7 @@ var OpenIdConnectNavigationStrategies = (function () {
             });
         }); };
         var navigationInstruction = function () {
-            window.location.assign(_this.openIdConnectConfiguration.logoutRedirectRoute);
+            _this.$window.location.assign(_this.openIdConnectConfiguration.logoutRedirectRoute);
         };
         return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
     };
@@ -126,7 +127,8 @@ var OpenIdConnectNavigationStrategies = (function () {
         autoinject,
         __metadata("design:paramtypes", [OpenIdConnectLogger,
             OpenIdConnectConfigurationManager,
-            UserManager])
+            UserManager,
+            Window])
     ], OpenIdConnectNavigationStrategies);
     return OpenIdConnectNavigationStrategies;
 }());

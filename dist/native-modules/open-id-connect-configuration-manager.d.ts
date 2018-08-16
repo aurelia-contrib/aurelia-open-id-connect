@@ -7,7 +7,6 @@ export default class  {
     private _unauthorizedRedirectRoute;
     private _logLevel;
     private _userManagerSettings;
-    private ensureSlash(s);
     readonly loginRedirectRoute: string;
     readonly logoutRedirectRoute: string;
     readonly unauthorizedRedirectRoute: string;
@@ -16,4 +15,5 @@ export default class  {
     readonly redirectUri: string;
     readonly postLogoutRedirectUri: string;
     constructor(dto?: OpenIdConnectConfiguration);
+    private ensureRouteValueBeginsWithSlash(key, val);
 }

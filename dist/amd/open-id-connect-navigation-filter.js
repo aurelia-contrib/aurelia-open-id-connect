@@ -22,6 +22,10 @@ define(["require", "exports", "aurelia-framework", "./open-id-connect-roles"], f
                 if (requiredRoles.includes(open_id_connect_roles_1.default.Authenticated)) {
                     return user !== null;
                 }
+                if (requiredRoles.includes(open_id_connect_roles_1.default.Anonymous)) {
+                    return user == null;
+                }
+                return true;
             });
         };
         default_1 = __decorate([

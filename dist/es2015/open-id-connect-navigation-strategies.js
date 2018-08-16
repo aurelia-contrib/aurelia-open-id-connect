@@ -20,10 +20,11 @@ import { UserManager } from 'oidc-client';
 import OpenIdConnectConfigurationManager from './open-id-connect-configuration-manager';
 import OpenIdConnectLogger from './open-id-connect-logger';
 let OpenIdConnectNavigationStrategies = class OpenIdConnectNavigationStrategies {
-    constructor(logger, openIdConnectConfiguration, userManager) {
+    constructor(logger, openIdConnectConfiguration, userManager, $window) {
         this.logger = logger;
         this.openIdConnectConfiguration = openIdConnectConfiguration;
         this.userManager = userManager;
+        this.$window = $window;
     }
     signInRedirectCallback(instruction) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -32,7 +33,7 @@ let OpenIdConnectNavigationStrategies = class OpenIdConnectNavigationStrategies 
                 return this.userManager.signinRedirectCallback(args);
             });
             const navigationInstruction = () => {
-                window.location.assign(this.openIdConnectConfiguration.loginRedirectRoute);
+                this.$window.location.assign(this.openIdConnectConfiguration.loginRedirectRoute);
             };
             return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
         });
@@ -53,7 +54,7 @@ let OpenIdConnectNavigationStrategies = class OpenIdConnectNavigationStrategies 
             return this.userManager.signoutRedirectCallback(args);
         });
         const navigationInstruction = () => {
-            window.location.assign(this.openIdConnectConfiguration.logoutRedirectRoute);
+            this.$window.location.assign(this.openIdConnectConfiguration.logoutRedirectRoute);
         };
         return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
     }
@@ -77,7 +78,8 @@ OpenIdConnectNavigationStrategies = __decorate([
     autoinject,
     __metadata("design:paramtypes", [OpenIdConnectLogger,
         OpenIdConnectConfigurationManager,
-        UserManager])
+        UserManager,
+        Window])
 ], OpenIdConnectNavigationStrategies);
 export default OpenIdConnectNavigationStrategies;
 //# sourceMappingURL=open-id-connect-navigation-strategies.js.map

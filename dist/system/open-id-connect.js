@@ -82,14 +82,12 @@ System.register(["aurelia-framework", "aurelia-router", "oidc-client", "./open-i
                     }
                     this.openIdConnectRouting.configureRouter(routerConfiguration);
                 };
-                OpenIdConnect.prototype.login = function () {
+                OpenIdConnect.prototype.login = function (args) {
+                    if (args === void 0) { args = {}; }
                     return __awaiter(this, void 0, void 0, function () {
-                        var args;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
-                                case 0:
-                                    args = {};
-                                    return [4, this.userManager.signinRedirect(args)];
+                                case 0: return [4, this.userManager.signinRedirect(args)];
                                 case 1:
                                     _a.sent();
                                     return [2];
@@ -97,21 +95,19 @@ System.register(["aurelia-framework", "aurelia-router", "oidc-client", "./open-i
                         });
                     });
                 };
-                OpenIdConnect.prototype.logout = function () {
+                OpenIdConnect.prototype.logout = function (args) {
+                    if (args === void 0) { args = {}; }
                     return __awaiter(this, void 0, void 0, function () {
-                        var args, err_1;
+                        var err_1;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
-                                    args = {};
-                                    _a.label = 1;
-                                case 1:
-                                    _a.trys.push([1, 3, , 4]);
+                                    _a.trys.push([0, 2, , 3]);
                                     return [4, this.userManager.signoutRedirect(args)];
-                                case 2:
+                                case 1:
                                     _a.sent();
-                                    return [3, 4];
-                                case 3:
+                                    return [3, 3];
+                                case 2:
                                     err_1 = _a.sent();
                                     if (err_1.message === 'no end session endpoint') {
                                         this.logger.debug(err_1);
@@ -121,14 +117,14 @@ System.register(["aurelia-framework", "aurelia-router", "oidc-client", "./open-i
                                     else {
                                         throw err_1;
                                     }
-                                    return [3, 4];
-                                case 4: return [2];
+                                    return [3, 3];
+                                case 3: return [2];
                             }
                         });
                     });
                 };
-                OpenIdConnect.prototype.loginSilent = function () {
-                    var args = {};
+                OpenIdConnect.prototype.loginSilent = function (args) {
+                    if (args === void 0) { args = {}; }
                     return this.userManager.signinSilent(args);
                 };
                 OpenIdConnect.prototype.getUser = function () {

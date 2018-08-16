@@ -35,15 +35,13 @@ let OpenIdConnect = class OpenIdConnect {
         }
         this.openIdConnectRouting.configureRouter(routerConfiguration);
     }
-    login() {
+    login(args = {}) {
         return __awaiter(this, void 0, void 0, function* () {
-            const args = {};
             yield this.userManager.signinRedirect(args);
         });
     }
-    logout() {
+    logout(args = {}) {
         return __awaiter(this, void 0, void 0, function* () {
-            const args = {};
             try {
                 yield this.userManager.signoutRedirect(args);
             }
@@ -59,8 +57,7 @@ let OpenIdConnect = class OpenIdConnect {
             }
         });
     }
-    loginSilent() {
-        const args = {};
+    loginSilent(args = {}) {
         return this.userManager.signinSilent(args);
     }
     getUser() {

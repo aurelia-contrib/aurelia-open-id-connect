@@ -6,7 +6,8 @@ export default class OpenIdConnectNavigationStrategies {
     private logger;
     private openIdConnectConfiguration;
     private userManager;
-    constructor(logger: OpenIdConnectLogger, openIdConnectConfiguration: OpenIdConnectConfigurationManager, userManager: UserManager);
+    private $window;
+    constructor(logger: OpenIdConnectLogger, openIdConnectConfiguration: OpenIdConnectConfigurationManager, userManager: UserManager, $window: Window);
     signInRedirectCallback(instruction: NavigationInstruction): Promise<any>;
     silentSignInCallback(instruction: NavigationInstruction): Promise<any>;
     signOutRedirectCallback(instruction: NavigationInstruction): Promise<any>;

@@ -46,10 +46,11 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnectNavigationStrategies = (function () {
-        function OpenIdConnectNavigationStrategies(logger, openIdConnectConfiguration, userManager) {
+        function OpenIdConnectNavigationStrategies(logger, openIdConnectConfiguration, userManager, $window) {
             this.logger = logger;
             this.openIdConnectConfiguration = openIdConnectConfiguration;
             this.userManager = userManager;
+            this.$window = $window;
         }
         OpenIdConnectNavigationStrategies.prototype.signInRedirectCallback = function (instruction) {
             return __awaiter(this, void 0, void 0, function () {
@@ -64,7 +65,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                         });
                     }); };
                     navigationInstruction = function () {
-                        window.location.assign(_this.openIdConnectConfiguration.loginRedirectRoute);
+                        _this.$window.location.assign(_this.openIdConnectConfiguration.loginRedirectRoute);
                     };
                     return [2, this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction)];
                 });
@@ -93,7 +94,7 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
                 });
             }); };
             var navigationInstruction = function () {
-                window.location.assign(_this.openIdConnectConfiguration.logoutRedirectRoute);
+                _this.$window.location.assign(_this.openIdConnectConfiguration.logoutRedirectRoute);
             };
             return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
         };
@@ -125,7 +126,8 @@ define(["require", "exports", "aurelia-framework", "oidc-client", "./open-id-con
             aurelia_framework_1.autoinject,
             __metadata("design:paramtypes", [open_id_connect_logger_1.default,
                 open_id_connect_configuration_manager_1.default,
-                oidc_client_1.UserManager])
+                oidc_client_1.UserManager,
+                Window])
         ], OpenIdConnectNavigationStrategies);
         return OpenIdConnectNavigationStrategies;
     }());

@@ -23,6 +23,7 @@ define(["require", "exports"], function (require, exports) {
             Object.keys(dto)
                 .filter(function (key) { return dto[key] !== undefined && dto[key] !== null; })
                 .forEach(function (key) {
+                _this.ensureRouteValueBeginsWithSlash(key, dto[key]);
                 _this['_' + key] = dto[key];
             });
             if (!dto.userManagerSettings) {
@@ -32,26 +33,23 @@ define(["require", "exports"], function (require, exports) {
                 _this.userManagerSettings[k] = dto.userManagerSettings[k];
             });
         }
-        default_1.prototype.ensureSlash = function (s) {
-            return s.charAt(0) === "/" ? s : "/" + s;
-        };
         Object.defineProperty(default_1.prototype, "loginRedirectRoute", {
             get: function () {
-                return this.ensureSlash(this._loginRedirectRoute);
+                return this._loginRedirectRoute;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(default_1.prototype, "logoutRedirectRoute", {
             get: function () {
-                return this.ensureSlash(this._logoutRedirectRoute);
+                return this._logoutRedirectRoute;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(default_1.prototype, "unauthorizedRedirectRoute", {
             get: function () {
-                return this.ensureSlash(this._unauthorizedRedirectRoute);
+                return this._unauthorizedRedirectRoute;
             },
             enumerable: true,
             configurable: true
@@ -84,6 +82,12 @@ define(["require", "exports"], function (require, exports) {
             enumerable: true,
             configurable: true
         });
+        default_1.prototype.ensureRouteValueBeginsWithSlash = function (key, val) {
+            if (key.endsWith('Route') && !val.startsWith('/')) {
+                var message = "The configured \"" + key + "\" must begin with a slash";
+                throw new RangeError(message);
+            }
+        };
         return default_1;
     }());
     exports.default = default_1;

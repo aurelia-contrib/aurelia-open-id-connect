@@ -12,9 +12,9 @@ export default class OpenIdConnect {
     userManager: UserManager;
     constructor(openIdConnectRouting: OpenIdConnectRouting, router: Router, configuration: OpenIdConnectConfigurationManager, logger: OpenIdConnectLogger, userManager: UserManager);
     configure(routerConfiguration: RouterConfiguration): void;
-    login(): Promise<void>;
-    logout(): Promise<void>;
-    loginSilent(): Promise<User>;
+    login(args?: any): Promise<void>;
+    logout(args?: any): Promise<void>;
+    loginSilent(args?: any): Promise<User>;
     getUser(): Promise<User>;
     addOrRemoveHandler(key: keyof UserManagerEvents, handler: UserManagerEventHandler): void;
     observeUser(callback: (user: User) => void): Promise<void>;
