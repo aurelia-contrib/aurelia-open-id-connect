@@ -1,4 +1,4 @@
-import { NavigationInstruction, Router, RouterConfiguration } from 'aurelia-router';
+import { Router, RouterConfiguration } from 'aurelia-router';
 import { assert } from 'chai';
 import { UserManager } from 'oidc-client';
 import sinon = require('sinon');
@@ -16,9 +16,6 @@ describe('open-id-connect', () => {
   const userManager = sinon.createStubInstance(UserManager);
   const router = sinon.createStubInstance(Router);
   const configurationManager = sinon.createStubInstance(OpenIdConnectConfigurationManager);
-  const navigationInstruction = sinon.createStubInstance(NavigationInstruction);
-  navigationInstruction.queryParams = sinon.stub();
-  router.currentInstruction = navigationInstruction;
 
   const events = {
     addUserLoaded: sinon.stub(),
