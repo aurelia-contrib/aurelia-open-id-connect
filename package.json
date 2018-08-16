@@ -11,6 +11,14 @@
     {
       "name": "Gerben Dekker",
       "url": "https://github.com/gerbendekker"
+    },
+    {
+      "name": "Andrew Camilleri",
+      "url": "https://github.com/Kukks"
+    },
+    {
+      "name": "James McLachlan",
+      "url": "https://github.com/claq2"
     }
   ],
   "main": "dist/amd/index.js",
