@@ -12,9 +12,9 @@ export default class {
   // tslint:disable-next-line:variable-name
   private _logoutRedirectRoute: string = '/';
   // tslint:disable-next-line:variable-name
-  private _unauthorizedRedirectRoute: string = '/';
+  private _unauthorizedRedirectRoute: '/';
   // tslint:disable-next-line:variable-name
-  private _logLevel: number = 0;
+  private _logLevel: 0;
   // tslint:disable-next-line:variable-name
   private _userManagerSettings: UserManagerSettings = {
     authority: 'https://localhost:5000',
