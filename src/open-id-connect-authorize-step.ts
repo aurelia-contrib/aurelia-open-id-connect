@@ -6,6 +6,7 @@ import {
   Redirect,
 } from 'aurelia-router';
 import { UserManager } from 'oidc-client';
+import { getInstructionUrl } from './aurelia-helpers';
 import OpenIdConnectConfigurationManager from './open-id-connect-configuration-manager';
 import OpenIdConnectLogger from './open-id-connect-logger';
 import OpenIdConnectRoles from './open-id-connect-roles';
@@ -30,11 +31,12 @@ export default class OpenIdConnectAuthorizeStep implements PipelineStep {
       if (user === null) {
         this.logger.debug('Requires authenticated role.');
         // capture the route to which the user was originally navigating (e.g. person/1)
-        const loginRedirectRoute = encodeURIComponent(this.getInstructionUrl(navigationInstruction));
+        const loginRedirectRoute = encodeURIComponent(getInstructionUrl(navigationInstruction));
 
         // store that route in a query string when we redirect to the unauthorizedRedirectRoute
         const redirect = new Redirect(
           this.configuration.unauthorizedRedirectRoute + '?loginRedirectRoute=' + loginRedirectRoute);
+
         return next.cancel(redirect);
       }
     }
@@ -53,10 +55,5 @@ export default class OpenIdConnectAuthorizeStep implements PipelineStep {
       instruction.config.settings !== undefined &&
       instruction.config.settings.roles !== undefined &&
       instruction.config.settings.roles.includes(role));
-  }
-
-  private getInstructionUrl(instruction: NavigationInstruction): string {
-    const queryString = instruction.queryString ? `?${instruction.queryString}` : '';
-    return instruction.fragment + queryString;
   }
 }
