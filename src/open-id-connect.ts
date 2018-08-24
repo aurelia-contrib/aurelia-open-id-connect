@@ -1,9 +1,9 @@
 import { autoinject } from 'aurelia-framework';
 import { Router, RouterConfiguration } from 'aurelia-router';
 import { User, UserManager, UserManagerEvents } from 'oidc-client';
-import { getInstructionUrl } from './aurelia-helpers';
 import { UserManagerEventHandler, UserManagerEventsAction } from './internal-types';
 import OpenIdConnectConfigurationManager from './open-id-connect-configuration-manager';
+import { LoginRedirectKey } from './open-id-connect-constants';
 import OpenIdConnectLogger from './open-id-connect-logger';
 import OpenIdConnectRouting from './open-id-connect-routing';
 
@@ -27,17 +27,13 @@ export default class OpenIdConnect {
   }
 
   public async login(args: any = {}): Promise<void> {
-    const instruction = this.router.currentInstruction;
-    const redirectUrl = instruction.queryParams.loginRedirectRoute || getInstructionUrl(instruction);
 
-    if (redirectUrl && args.data) {
-      const message
-        = 'The login method received an args object with an args.data value.'
-        + 'That value will be overwritten by the loginRedirectRoute parameter in the address bar.';
-      this.logger.warn(message);
+    const loginRedirectValue = this.router.currentInstruction.queryParams[LoginRedirectKey];
+    if(loginRedirectValue) {
+      args.data = { ...args.data };
+      args.data[LoginRedirectKey] = loginRedirectValue;
     }
 
-    args.data = redirectUrl;
     await this.userManager.signinRedirect(args);
   }
 

@@ -2,6 +2,7 @@ import { autoinject } from 'aurelia-framework';
 import { NavigationInstruction } from 'aurelia-router';
 import { UserManager } from 'oidc-client';
 import OpenIdConnectConfigurationManager from './open-id-connect-configuration-manager';
+import { LoginRedirectKey } from './open-id-connect-constants';
 import OpenIdConnectLogger from './open-id-connect-logger';
 
 // TODO: Move some of the route-definition logic from
@@ -23,16 +24,14 @@ export default class OpenIdConnectNavigationStrategies {
 
     let redirectRoute = this.openIdConnectConfiguration.loginRedirectRoute;
 
-    // returns the resolved redirectRoute.
     const callbackHandler = async () => {
       const args: any = {};
       const user = await this.userManager.signinRedirectCallback(args);
 
       // The state is not persisted with the rest of the user.
       // This callback is the only place we will be able to capture the state.
-      // If the state is set, it contains the redirect route.
-      if (user.state) {
-        redirectRoute = user.state;
+      if (user.state && user.state[LoginRedirectKey]) {
+        redirectRoute = user.state[LoginRedirectKey];
       }
     };
 
