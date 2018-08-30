@@ -45,6 +45,7 @@ describe('open-id-connect-routing', () => {
     logger);
 
   context('configureRouter', () => {
+    let navigationStrategy: any;
 
     const getMapRouteArgument = (route: string) => (routerConfiguration.mapRoute as sinon.SinonStub)
       .getCalls()
@@ -56,8 +57,6 @@ describe('open-id-connect-routing', () => {
     });
 
     context('redirect_uri', () => {
-
-      let navigationStrategy: any;
 
       before(() => {
         const arg = getMapRouteArgument(signInPath);
@@ -113,11 +112,29 @@ describe('open-id-connect-routing', () => {
     });
 
     context('post_logout_redirect_uri', () => {
+
+      before(() => {
+        const arg = getMapRouteArgument(signOutPath);
+        navigationStrategy = arg.navigationStrategy;
+      });
+
       it('should map route for the configured path', () => {
         // assert
         sinon.assert.calledWith(
           routerConfiguration.mapRoute,
           sinon.match.has('route', signOutPath));
+      });
+
+      it('should use signout redirect strategy', () => {
+        // arrange
+        openIdConnectNavigationStrategies.signOutRedirectCallback.reset();
+
+        // act
+        navigationStrategy({});
+
+        // assert
+        sinon.assert.calledOnce(
+          openIdConnectNavigationStrategies.signOutRedirectCallback);
       });
     });
   });
