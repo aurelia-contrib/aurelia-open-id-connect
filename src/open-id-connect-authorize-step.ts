@@ -7,6 +7,7 @@ import {
 } from 'aurelia-router';
 import { UserManager } from 'oidc-client';
 import OpenIdConnectConfigurationManager from './open-id-connect-configuration-manager';
+import { LoginRedirectKey } from './open-id-connect-constants';
 import OpenIdConnectLogger from './open-id-connect-logger';
 import OpenIdConnectRoles from './open-id-connect-roles';
 
@@ -16,7 +17,8 @@ export default class OpenIdConnectAuthorizeStep implements PipelineStep {
   constructor(
     private userManager: UserManager,
     private configuration: OpenIdConnectConfigurationManager,
-    private logger: OpenIdConnectLogger) { }
+    private logger: OpenIdConnectLogger,
+    private $window: Window) { }
 
   public async run(
     navigationInstruction: NavigationInstruction,
@@ -29,7 +31,14 @@ export default class OpenIdConnectAuthorizeStep implements PipelineStep {
     if (this.requiresRole(navigationInstruction, OpenIdConnectRoles.Authenticated)) {
       if (user === null) {
         this.logger.debug('Requires authenticated role.');
-        const redirect = new Redirect(this.configuration.unauthorizedRedirectRoute);
+
+        // capture the URL to which the user was originally navigating
+        // include that URL in a query string parameter on the redirect
+        const loginRedirect = this.$window.location.href;
+        const loginRedirectValue = encodeURIComponent(loginRedirect);
+        const queryString = `?${LoginRedirectKey}=${loginRedirectValue}`;
+        const redirect = new Redirect(this.configuration.unauthorizedRedirectRoute + queryString);
+
         return next.cancel(redirect);
       }
     }

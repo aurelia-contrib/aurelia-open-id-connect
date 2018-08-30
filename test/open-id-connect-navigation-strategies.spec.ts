@@ -27,6 +27,9 @@ describe('open-id-connect-navigation-strategies', () => {
   const logoutRedirectRoute = 'logout';
   sinon.stub(configuration, 'logoutRedirectRoute').get(() => logoutRedirectRoute);
 
+  userManager.signinRedirectCallback = sinon.stub().resolves({});
+  userManager.signoutRedirectCallback = sinon.stub().resolves();
+
   instruction.config = {};
 
   const strategies = new OpenIdConnectNavigationStrategies(
@@ -87,6 +90,28 @@ describe('open-id-connect-navigation-strategies', () => {
           sinon.assert.calledWith($window.location.assign, o.redirectsTo);
         }
       });
+    });
+  });
+
+  context('when user state contains loginRedirect', () => {
+    afterEach(() => {
+      userManager.signinRedirectCallback.reset();
+    });
+
+    it('should assign loginRedirect to window.location', async () => {
+      // arrange
+      const expected = 'some-login-redirect-value';
+      userManager.signinRedirectCallback.resolves({
+        state: {
+          loginRedirect: expected,
+        },
+      });
+
+      // act
+      await strategies.signInRedirectCallback(instruction);
+
+      // assert
+      sinon.assert.calledWith($window.location.assign, expected);
     });
   });
 });

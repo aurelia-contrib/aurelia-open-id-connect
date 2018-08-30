@@ -17,6 +17,24 @@ describe('open-id-connect-navigation-filter', () => {
   const filter = new OpenIdConnectNavigationFilter();
 
   context('toView', () => {
+    [undefined, null].forEach((settingsValue) => {
+      it(`should include all navModels that have ${settingsValue} settings `, () => {
+        // arrange
+        const user = {} as any;
+        const total = 5;
+        const navModels = createNavModelsWithEmptySettings(total)
+          .map((navModel: NavModel, index: number) => {
+            navModel.settings = settingsValue;
+            return navModel;
+          });
+
+        // act
+        const result = filter.toView(navModels, user);
+        // assert
+        assert.equal(result.length, total);
+      });
+    });
+
     [undefined, null].forEach((rolesValue) => {
       it(`should include all navModels that have ${rolesValue} roles `, () => {
         // arrange

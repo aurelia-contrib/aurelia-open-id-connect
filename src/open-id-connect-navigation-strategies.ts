@@ -2,6 +2,7 @@ import { autoinject } from 'aurelia-framework';
 import { NavigationInstruction } from 'aurelia-router';
 import { UserManager } from 'oidc-client';
 import OpenIdConnectConfigurationManager from './open-id-connect-configuration-manager';
+import { LoginRedirectKey } from './open-id-connect-constants';
 import OpenIdConnectLogger from './open-id-connect-logger';
 
 // TODO: Move some of the route-definition logic from
@@ -20,9 +21,18 @@ export default class OpenIdConnectNavigationStrategies {
     private $window: Window) { }
 
   public async signInRedirectCallback(instruction: NavigationInstruction): Promise<any> {
+
+    let redirectRoute = this.openIdConnectConfiguration.loginRedirectRoute;
+
     const callbackHandler = async () => {
       const args: any = {};
-      return this.userManager.signinRedirectCallback(args);
+      const user = await this.userManager.signinRedirectCallback(args);
+
+      // The state is not persisted with the rest of the user.
+      // This callback is the only place we will be able to capture the state.
+      if (user.state && user.state[LoginRedirectKey]) {
+        redirectRoute = user.state[LoginRedirectKey];
+      }
     };
 
     const navigationInstruction = () => {
@@ -30,7 +40,7 @@ export default class OpenIdConnectNavigationStrategies {
       // because the former adds the route to the web browser's history,
       // and that controls what will load on a page refresh.
       // See https://github.com/aurelia-contrib/aurelia-open-id-connect/issues/46
-      this.$window.location.assign(this.openIdConnectConfiguration.loginRedirectRoute);
+      this.$window.location.assign(redirectRoute);
     };
 
     return this.runHandlerAndCompleteNavigationInstruction(
@@ -46,8 +56,10 @@ export default class OpenIdConnectNavigationStrategies {
 
     const navigationInstruction = () => {
       // This happens in a child iframe.
-      instruction.config.redirect =
-        this.openIdConnectConfiguration.loginRedirectRoute;
+      instruction.config.redirect = this.openIdConnectConfiguration.loginRedirectRoute;
+
+      // TODO: Consider redirecting the parent window
+      // to the loginRedirectRoute when the silent sign in completes.
     };
 
     return this.runHandlerAndCompleteNavigationInstruction(

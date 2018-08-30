@@ -3,6 +3,7 @@ import { Router, RouterConfiguration } from 'aurelia-router';
 import { User, UserManager, UserManagerEvents } from 'oidc-client';
 import { UserManagerEventHandler, UserManagerEventsAction } from './internal-types';
 import OpenIdConnectConfigurationManager from './open-id-connect-configuration-manager';
+import { LoginRedirectKey } from './open-id-connect-constants';
 import OpenIdConnectLogger from './open-id-connect-logger';
 import OpenIdConnectRouting from './open-id-connect-routing';
 
@@ -26,6 +27,13 @@ export default class OpenIdConnect {
   }
 
   public async login(args: any = {}): Promise<void> {
+
+    const loginRedirectValue = this.router.currentInstruction.queryParams[LoginRedirectKey];
+    if (loginRedirectValue) {
+      args.data = { ...args.data };
+      args.data[LoginRedirectKey] = loginRedirectValue;
+    }
+
     await this.userManager.signinRedirect(args);
   }
 

@@ -1,12 +1,51 @@
 import { assert } from 'chai';
+import { User } from 'oidc-client';
 import sinon = require('sinon');
 import { OpenIdConnect } from '../src';
 import { OpenIdConnectUserBlock } from '../src/index-internal';
 
 describe('open-id-connect-user-block', () => {
 
+  const user: User = {} as any;
+  const handlers: any = {};
   const openIdConnect = sinon.createStubInstance(OpenIdConnect);
+  openIdConnect.getUser = sinon.stub().returns(user);
+  openIdConnect.addOrRemoveHandler = sinon.stub().callsFake(
+    (key: string, value: () => void) => handlers[key] = value);
+
   const userBlock = new OpenIdConnectUserBlock(openIdConnect);
+
+  context('attached', () => {
+    ['addUserUnloaded', 'addUserLoaded'].forEach((handlerName) => {
+      it(`should add ${handlerName} to this.openIdConnect handler collection`, async () => {
+        // act
+        await userBlock.attached();
+
+        // assert
+        sinon.assert.calledWith(openIdConnect.addOrRemoveHandler, handlerName);
+      });
+
+      it(`should set user when addUserLoaded handler is called`, async () => {
+        // arrange
+        userBlock.user = null;
+        // act
+        await userBlock.attached();
+        handlers.addUserLoaded();
+        // assert
+        assert.equal(userBlock.user, user);
+      });
+
+      it(`should clear user when addUserUnloaded handler is called`, async () => {
+        // arrange
+        userBlock.user = user;
+        // act
+        await userBlock.attached();
+        handlers.addUserUnloaded();
+        // assert
+        assert.isNull(userBlock.user);
+      });
+    });
+  });
 
   context('isLoggedIn', () => {
     [null, undefined].forEach((val) => {
