@@ -67,14 +67,64 @@ describe('open-id-connect', () => {
       // assert
       sinon.assert.calledOnce(userManager.signinRedirect);
     });
+
+    it('should pass data.loginRedirect to this.userManager.signinRedirect if instruction has queryParam', async () => {
+      // arrange
+      const expected = 'the-login-redirect-data-query-param-value';
+      router.currentInstruction.queryParams.loginRedirect = expected;
+      // act
+      await openIdConnect.login();
+      // assert
+      sinon.assert.calledWith(userManager.signinRedirect, {
+        data: {
+          loginRedirect: expected,
+        },
+      });
+    });
   });
 
   context('logout', () => {
+
+    beforeEach(() => {
+      userManager.signoutRedirect.reset();
+    });
+
     it('should call this.userManager.signoutRedirect', async () => {
       // act
       await openIdConnect.logout();
       // assert
       sinon.assert.calledOnce(userManager.signoutRedirect);
+    });
+
+    const noEndSessionMsg = 'no end session endpoint';
+    it(`should not rethrow if this.userManager.signoutRedirect throws a ${noEndSessionMsg} error`, async () => {
+      // arrange
+      const expected = new Error(noEndSessionMsg);
+      userManager.signoutRedirect.throwsException(expected);
+
+      // act
+      await openIdConnect.logout();
+
+      // assert
+      sinon.assert.calledOnce(userManager.signoutRedirect);
+    });
+
+    it('should rethrow if this.userManager.signoutRedirect throws an error', async () => {
+      // arrange
+      const expected = new Error('expected error');
+      userManager.signoutRedirect.throwsException(expected);
+
+      // act
+      try {
+        await openIdConnect.logout();
+      } catch (ex) {
+        if (ex === expected) {
+          return;
+        }
+      }
+
+      // assert
+      assert.fail('should have thrown');
     });
   });
 
