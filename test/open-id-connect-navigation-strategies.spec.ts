@@ -92,4 +92,26 @@ describe('open-id-connect-navigation-strategies', () => {
       });
     });
   });
+
+  context('when user state contains loginRedirect', () => {
+    afterEach(() => {
+      userManager.signinRedirectCallback.reset();
+    });
+
+    it('should assign loginRedirect to window.location', async () => {
+      // arrange
+      const expected = 'some-login-redirect-value';
+      userManager.signinRedirectCallback.resolves({
+        state: {
+          loginRedirect: expected,
+        },
+      });
+
+      // act
+      await strategies.signInRedirectCallback(instruction);
+
+      // assert
+      sinon.assert.calledWith($window.location.assign, expected);
+    });
+  });
 });
