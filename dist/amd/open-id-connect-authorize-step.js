@@ -42,18 +42,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-client", "./open-id-connect-configuration-manager", "./open-id-connect-logger", "./open-id-connect-roles"], function (require, exports, aurelia_framework_1, aurelia_router_1, oidc_client_1, open_id_connect_configuration_manager_1, open_id_connect_logger_1, open_id_connect_roles_1) {
+define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-client", "./open-id-connect-configuration-manager", "./open-id-connect-constants", "./open-id-connect-logger", "./open-id-connect-roles"], function (require, exports, aurelia_framework_1, aurelia_router_1, oidc_client_1, open_id_connect_configuration_manager_1, open_id_connect_constants_1, open_id_connect_logger_1, open_id_connect_roles_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnectAuthorizeStep = (function () {
-        function OpenIdConnectAuthorizeStep(userManager, configuration, logger) {
+        function OpenIdConnectAuthorizeStep(userManager, configuration, logger, $window) {
             this.userManager = userManager;
             this.configuration = configuration;
             this.logger = logger;
+            this.$window = $window;
         }
         OpenIdConnectAuthorizeStep.prototype.run = function (navigationInstruction, next) {
             return __awaiter(this, void 0, void 0, function () {
-                var user, redirect;
+                var user, loginRedirect, loginRedirectValue, queryString, redirect;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0: return [4, this.userManager.getUser()];
@@ -62,7 +63,10 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
                             if (this.requiresRole(navigationInstruction, open_id_connect_roles_1.default.Authenticated)) {
                                 if (user === null) {
                                     this.logger.debug('Requires authenticated role.');
-                                    redirect = new aurelia_router_1.Redirect(this.configuration.unauthorizedRedirectRoute);
+                                    loginRedirect = this.$window.location.href;
+                                    loginRedirectValue = encodeURIComponent(loginRedirect);
+                                    queryString = "?" + open_id_connect_constants_1.LoginRedirectKey + "=" + loginRedirectValue;
+                                    redirect = new aurelia_router_1.Redirect(this.configuration.unauthorizedRedirectRoute + queryString);
                                     return [2, next.cancel(redirect)];
                                 }
                             }
@@ -85,7 +89,8 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
             aurelia_framework_1.autoinject,
             __metadata("design:paramtypes", [oidc_client_1.UserManager,
                 open_id_connect_configuration_manager_1.default,
-                open_id_connect_logger_1.default])
+                open_id_connect_logger_1.default,
+                Window])
         ], OpenIdConnectAuthorizeStep);
         return OpenIdConnectAuthorizeStep;
     }());

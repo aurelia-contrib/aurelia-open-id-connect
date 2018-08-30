@@ -19,13 +19,15 @@ import { autoinject } from 'aurelia-framework';
 import { Redirect, } from 'aurelia-router';
 import { UserManager } from 'oidc-client';
 import OpenIdConnectConfigurationManager from './open-id-connect-configuration-manager';
+import { LoginRedirectKey } from './open-id-connect-constants';
 import OpenIdConnectLogger from './open-id-connect-logger';
 import OpenIdConnectRoles from './open-id-connect-roles';
 let OpenIdConnectAuthorizeStep = class OpenIdConnectAuthorizeStep {
-    constructor(userManager, configuration, logger) {
+    constructor(userManager, configuration, logger, $window) {
         this.userManager = userManager;
         this.configuration = configuration;
         this.logger = logger;
+        this.$window = $window;
     }
     run(navigationInstruction, next) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -33,7 +35,10 @@ let OpenIdConnectAuthorizeStep = class OpenIdConnectAuthorizeStep {
             if (this.requiresRole(navigationInstruction, OpenIdConnectRoles.Authenticated)) {
                 if (user === null) {
                     this.logger.debug('Requires authenticated role.');
-                    const redirect = new Redirect(this.configuration.unauthorizedRedirectRoute);
+                    const loginRedirect = this.$window.location.href;
+                    const loginRedirectValue = encodeURIComponent(loginRedirect);
+                    const queryString = `?${LoginRedirectKey}=${loginRedirectValue}`;
+                    const redirect = new Redirect(this.configuration.unauthorizedRedirectRoute + queryString);
                     return next.cancel(redirect);
                 }
             }
@@ -53,7 +58,8 @@ OpenIdConnectAuthorizeStep = __decorate([
     autoinject,
     __metadata("design:paramtypes", [UserManager,
         OpenIdConnectConfigurationManager,
-        OpenIdConnectLogger])
+        OpenIdConnectLogger,
+        Window])
 ], OpenIdConnectAuthorizeStep);
 export default OpenIdConnectAuthorizeStep;
 //# sourceMappingURL=open-id-connect-authorize-step.js.map

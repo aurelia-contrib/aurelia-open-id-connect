@@ -3,6 +3,8 @@ export default class {
     constructor(dto) {
         this._loginRedirectRoute = '/';
         this._logoutRedirectRoute = '/';
+        this._unauthorizedRedirectRoute = '/';
+        this._logLevel = 0;
         this._userManagerSettings = {
             authority: 'https://localhost:5000',
             client_id: 'Aurelia.OpenIdConnect',

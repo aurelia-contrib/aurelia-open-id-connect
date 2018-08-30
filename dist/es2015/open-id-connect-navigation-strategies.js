@@ -18,6 +18,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { autoinject } from 'aurelia-framework';
 import { UserManager } from 'oidc-client';
 import OpenIdConnectConfigurationManager from './open-id-connect-configuration-manager';
+import { LoginRedirectKey } from './open-id-connect-constants';
 import OpenIdConnectLogger from './open-id-connect-logger';
 let OpenIdConnectNavigationStrategies = class OpenIdConnectNavigationStrategies {
     constructor(logger, openIdConnectConfiguration, userManager, $window) {
@@ -28,12 +29,16 @@ let OpenIdConnectNavigationStrategies = class OpenIdConnectNavigationStrategies 
     }
     signInRedirectCallback(instruction) {
         return __awaiter(this, void 0, void 0, function* () {
+            let redirectRoute = this.openIdConnectConfiguration.loginRedirectRoute;
             const callbackHandler = () => __awaiter(this, void 0, void 0, function* () {
                 const args = {};
-                return this.userManager.signinRedirectCallback(args);
+                const user = yield this.userManager.signinRedirectCallback(args);
+                if (user.state && user.state[LoginRedirectKey]) {
+                    redirectRoute = user.state[LoginRedirectKey];
+                }
             });
             const navigationInstruction = () => {
-                this.$window.location.assign(this.openIdConnectConfiguration.loginRedirectRoute);
+                this.$window.location.assign(redirectRoute);
             };
             return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
         });
@@ -43,8 +48,7 @@ let OpenIdConnectNavigationStrategies = class OpenIdConnectNavigationStrategies 
             return this.userManager.signinSilentCallback();
         });
         const navigationInstruction = () => {
-            instruction.config.redirect =
-                this.openIdConnectConfiguration.loginRedirectRoute;
+            instruction.config.redirect = this.openIdConnectConfiguration.loginRedirectRoute;
         };
         return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
     }

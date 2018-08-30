@@ -1,3 +1,11 @@
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -42,7 +50,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-client", "./open-id-connect-configuration-manager", "./open-id-connect-logger", "./open-id-connect-routing"], function (require, exports, aurelia_framework_1, aurelia_router_1, oidc_client_1, open_id_connect_configuration_manager_1, open_id_connect_logger_1, open_id_connect_routing_1) {
+define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-client", "./open-id-connect-configuration-manager", "./open-id-connect-constants", "./open-id-connect-logger", "./open-id-connect-routing"], function (require, exports, aurelia_framework_1, aurelia_router_1, oidc_client_1, open_id_connect_configuration_manager_1, open_id_connect_constants_1, open_id_connect_logger_1, open_id_connect_routing_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var OpenIdConnect = (function () {
@@ -62,9 +70,16 @@ define(["require", "exports", "aurelia-framework", "aurelia-router", "oidc-clien
         OpenIdConnect.prototype.login = function (args) {
             if (args === void 0) { args = {}; }
             return __awaiter(this, void 0, void 0, function () {
+                var loginRedirectValue;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0: return [4, this.userManager.signinRedirect(args)];
+                        case 0:
+                            loginRedirectValue = this.router.currentInstruction.queryParams[open_id_connect_constants_1.LoginRedirectKey];
+                            if (loginRedirectValue) {
+                                args.data = __assign({}, args.data);
+                                args.data[open_id_connect_constants_1.LoginRedirectKey] = loginRedirectValue;
+                            }
+                            return [4, this.userManager.signinRedirect(args)];
                         case 1:
                             _a.sent();
                             return [2];

@@ -19,6 +19,7 @@ import { autoinject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { UserManager } from 'oidc-client';
 import OpenIdConnectConfigurationManager from './open-id-connect-configuration-manager';
+import { LoginRedirectKey } from './open-id-connect-constants';
 import OpenIdConnectLogger from './open-id-connect-logger';
 import OpenIdConnectRouting from './open-id-connect-routing';
 let OpenIdConnect = class OpenIdConnect {
@@ -37,6 +38,11 @@ let OpenIdConnect = class OpenIdConnect {
     }
     login(args = {}) {
         return __awaiter(this, void 0, void 0, function* () {
+            const loginRedirectValue = this.router.currentInstruction.queryParams[LoginRedirectKey];
+            if (loginRedirectValue) {
+                args.data = Object.assign({}, args.data);
+                args.data[LoginRedirectKey] = loginRedirectValue;
+            }
             yield this.userManager.signinRedirect(args);
         });
     }

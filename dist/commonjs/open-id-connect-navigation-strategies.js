@@ -47,6 +47,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = require("aurelia-framework");
 var oidc_client_1 = require("oidc-client");
 var open_id_connect_configuration_manager_1 = require("./open-id-connect-configuration-manager");
+var open_id_connect_constants_1 = require("./open-id-connect-constants");
 var open_id_connect_logger_1 = require("./open-id-connect-logger");
 var OpenIdConnectNavigationStrategies = (function () {
     function OpenIdConnectNavigationStrategies(logger, openIdConnectConfiguration, userManager, $window) {
@@ -58,17 +59,27 @@ var OpenIdConnectNavigationStrategies = (function () {
     OpenIdConnectNavigationStrategies.prototype.signInRedirectCallback = function (instruction) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
-            var callbackHandler, navigationInstruction;
+            var redirectRoute, callbackHandler, navigationInstruction;
             return __generator(this, function (_a) {
+                redirectRoute = this.openIdConnectConfiguration.loginRedirectRoute;
                 callbackHandler = function () { return __awaiter(_this, void 0, void 0, function () {
-                    var args;
+                    var args, user;
                     return __generator(this, function (_a) {
-                        args = {};
-                        return [2, this.userManager.signinRedirectCallback(args)];
+                        switch (_a.label) {
+                            case 0:
+                                args = {};
+                                return [4, this.userManager.signinRedirectCallback(args)];
+                            case 1:
+                                user = _a.sent();
+                                if (user.state && user.state[open_id_connect_constants_1.LoginRedirectKey]) {
+                                    redirectRoute = user.state[open_id_connect_constants_1.LoginRedirectKey];
+                                }
+                                return [2];
+                        }
                     });
                 }); };
                 navigationInstruction = function () {
-                    _this.$window.location.assign(_this.openIdConnectConfiguration.loginRedirectRoute);
+                    _this.$window.location.assign(redirectRoute);
                 };
                 return [2, this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction)];
             });
@@ -82,8 +93,7 @@ var OpenIdConnectNavigationStrategies = (function () {
             });
         }); };
         var navigationInstruction = function () {
-            instruction.config.redirect =
-                _this.openIdConnectConfiguration.loginRedirectRoute;
+            instruction.config.redirect = _this.openIdConnectConfiguration.loginRedirectRoute;
         };
         return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
     };

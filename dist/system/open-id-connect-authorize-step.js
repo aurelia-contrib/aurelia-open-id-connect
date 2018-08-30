@@ -1,4 +1,4 @@
-System.register(["aurelia-framework", "aurelia-router", "oidc-client", "./open-id-connect-configuration-manager", "./open-id-connect-logger", "./open-id-connect-roles"], function (exports_1, context_1) {
+System.register(["aurelia-framework", "aurelia-router", "oidc-client", "./open-id-connect-configuration-manager", "./open-id-connect-constants", "./open-id-connect-logger", "./open-id-connect-roles"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -45,7 +45,7 @@ System.register(["aurelia-framework", "aurelia-router", "oidc-client", "./open-i
         }
     };
     var __moduleName = context_1 && context_1.id;
-    var aurelia_framework_1, aurelia_router_1, oidc_client_1, open_id_connect_configuration_manager_1, open_id_connect_logger_1, open_id_connect_roles_1, OpenIdConnectAuthorizeStep;
+    var aurelia_framework_1, aurelia_router_1, oidc_client_1, open_id_connect_configuration_manager_1, open_id_connect_constants_1, open_id_connect_logger_1, open_id_connect_roles_1, OpenIdConnectAuthorizeStep;
     return {
         setters: [
             function (aurelia_framework_1_1) {
@@ -60,6 +60,9 @@ System.register(["aurelia-framework", "aurelia-router", "oidc-client", "./open-i
             function (open_id_connect_configuration_manager_1_1) {
                 open_id_connect_configuration_manager_1 = open_id_connect_configuration_manager_1_1;
             },
+            function (open_id_connect_constants_1_1) {
+                open_id_connect_constants_1 = open_id_connect_constants_1_1;
+            },
             function (open_id_connect_logger_1_1) {
                 open_id_connect_logger_1 = open_id_connect_logger_1_1;
             },
@@ -69,14 +72,15 @@ System.register(["aurelia-framework", "aurelia-router", "oidc-client", "./open-i
         ],
         execute: function () {
             OpenIdConnectAuthorizeStep = (function () {
-                function OpenIdConnectAuthorizeStep(userManager, configuration, logger) {
+                function OpenIdConnectAuthorizeStep(userManager, configuration, logger, $window) {
                     this.userManager = userManager;
                     this.configuration = configuration;
                     this.logger = logger;
+                    this.$window = $window;
                 }
                 OpenIdConnectAuthorizeStep.prototype.run = function (navigationInstruction, next) {
                     return __awaiter(this, void 0, void 0, function () {
-                        var user, redirect;
+                        var user, loginRedirect, loginRedirectValue, queryString, redirect;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0: return [4, this.userManager.getUser()];
@@ -85,7 +89,10 @@ System.register(["aurelia-framework", "aurelia-router", "oidc-client", "./open-i
                                     if (this.requiresRole(navigationInstruction, open_id_connect_roles_1.default.Authenticated)) {
                                         if (user === null) {
                                             this.logger.debug('Requires authenticated role.');
-                                            redirect = new aurelia_router_1.Redirect(this.configuration.unauthorizedRedirectRoute);
+                                            loginRedirect = this.$window.location.href;
+                                            loginRedirectValue = encodeURIComponent(loginRedirect);
+                                            queryString = "?" + open_id_connect_constants_1.LoginRedirectKey + "=" + loginRedirectValue;
+                                            redirect = new aurelia_router_1.Redirect(this.configuration.unauthorizedRedirectRoute + queryString);
                                             return [2, next.cancel(redirect)];
                                         }
                                     }
@@ -108,7 +115,8 @@ System.register(["aurelia-framework", "aurelia-router", "oidc-client", "./open-i
                     aurelia_framework_1.autoinject,
                     __metadata("design:paramtypes", [oidc_client_1.UserManager,
                         open_id_connect_configuration_manager_1.default,
-                        open_id_connect_logger_1.default])
+                        open_id_connect_logger_1.default,
+                        Window])
                 ], OpenIdConnectAuthorizeStep);
                 return OpenIdConnectAuthorizeStep;
             }());

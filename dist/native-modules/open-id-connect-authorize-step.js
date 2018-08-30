@@ -46,17 +46,19 @@ import { autoinject } from 'aurelia-framework';
 import { Redirect, } from 'aurelia-router';
 import { UserManager } from 'oidc-client';
 import OpenIdConnectConfigurationManager from './open-id-connect-configuration-manager';
+import { LoginRedirectKey } from './open-id-connect-constants';
 import OpenIdConnectLogger from './open-id-connect-logger';
 import OpenIdConnectRoles from './open-id-connect-roles';
 var OpenIdConnectAuthorizeStep = (function () {
-    function OpenIdConnectAuthorizeStep(userManager, configuration, logger) {
+    function OpenIdConnectAuthorizeStep(userManager, configuration, logger, $window) {
         this.userManager = userManager;
         this.configuration = configuration;
         this.logger = logger;
+        this.$window = $window;
     }
     OpenIdConnectAuthorizeStep.prototype.run = function (navigationInstruction, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var user, redirect;
+            var user, loginRedirect, loginRedirectValue, queryString, redirect;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4, this.userManager.getUser()];
@@ -65,7 +67,10 @@ var OpenIdConnectAuthorizeStep = (function () {
                         if (this.requiresRole(navigationInstruction, OpenIdConnectRoles.Authenticated)) {
                             if (user === null) {
                                 this.logger.debug('Requires authenticated role.');
-                                redirect = new Redirect(this.configuration.unauthorizedRedirectRoute);
+                                loginRedirect = this.$window.location.href;
+                                loginRedirectValue = encodeURIComponent(loginRedirect);
+                                queryString = "?" + LoginRedirectKey + "=" + loginRedirectValue;
+                                redirect = new Redirect(this.configuration.unauthorizedRedirectRoute + queryString);
                                 return [2, next.cancel(redirect)];
                             }
                         }
@@ -88,7 +93,8 @@ var OpenIdConnectAuthorizeStep = (function () {
         autoinject,
         __metadata("design:paramtypes", [UserManager,
             OpenIdConnectConfigurationManager,
-            OpenIdConnectLogger])
+            OpenIdConnectLogger,
+            Window])
     ], OpenIdConnectAuthorizeStep);
     return OpenIdConnectAuthorizeStep;
 }());
