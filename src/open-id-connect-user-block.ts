@@ -6,7 +6,7 @@ import OpenIdConnect from './open-id-connect';
 @customElement('open-id-connect-user-block')
 export default class {
 
-  protected user: User | null = null;
+  public user: User | null = null;
 
   public get isLoggedIn(): boolean {
     return this.user !== null && this.user !== undefined;
