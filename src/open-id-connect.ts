@@ -29,7 +29,7 @@ export default class OpenIdConnect {
   public async login(args: any = {}): Promise<void> {
 
     const loginRedirectValue = this.router.currentInstruction.queryParams[LoginRedirectKey];
-    if(loginRedirectValue) {
+    if (loginRedirectValue) {
       args.data = { ...args.data };
       args.data[LoginRedirectKey] = loginRedirectValue;
     }

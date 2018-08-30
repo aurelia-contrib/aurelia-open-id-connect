@@ -1,3 +1,3 @@
-// Consider using typescript type annotations 
+// Consider using typescript type annotations
 // instead of constant values for object property access.
-export const LoginRedirectKey = "loginRedirect";
+export const LoginRedirectKey = 'loginRedirect';

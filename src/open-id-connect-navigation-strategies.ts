@@ -58,7 +58,7 @@ export default class OpenIdConnectNavigationStrategies {
       // This happens in a child iframe.
       instruction.config.redirect = this.openIdConnectConfiguration.loginRedirectRoute;
 
-      // TODO: Consider redirecting the parent window 
+      // TODO: Consider redirecting the parent window
       // to the loginRedirectRoute when the silent sign in completes.
     };
 
