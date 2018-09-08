@@ -29,7 +29,7 @@ export default class OpenIdConnectAuthorizeStep implements PipelineStep {
     // TODO: Make this open for extension,
     // so that user-land can configure multiple, arbitrary roles.
     if (this.requiresRole(navigationInstruction, OpenIdConnectRoles.Authenticated)) {
-      if (user === null) {
+      if (user === null || user.expired) {
         this.logger.debug('Requires authenticated role.');
 
         // capture the URL to which the user was originally navigating
