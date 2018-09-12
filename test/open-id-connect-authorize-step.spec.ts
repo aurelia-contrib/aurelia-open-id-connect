@@ -75,6 +75,15 @@ describe('open-id-connect-authorize-step', () => {
         sinon.assert.calledWithMatch(next.cancel, sinon.match.instanceOf(Redirect));
       });
 
+      it(`should redirect to ${unauthRedirectRoute} if user is expired`, async () => {
+        // arrange
+        (userManager.getUser).returns({ expired: true });
+        // act
+        await authorizationStep.run(navigationInstruction, next);
+        // assert
+        sinon.assert.calledWithMatch(next.cancel, sinon.match.instanceOf(Redirect));
+      });
+
       it(`redirect should be to the unauthorized route with original URL as LoginRedirect parameter`, async () => {
         // arrange
         (userManager.getUser).returns(null);
@@ -84,7 +93,7 @@ describe('open-id-connect-authorize-step', () => {
         sinon.assert.calledWith(next.cancel, new Redirect(expectedRedirect));
       });
 
-      it(`should NOT redirect to ${unauthRedirectRoute} if user is not null`, async () => {
+      it(`should NOT redirect to ${unauthRedirectRoute} if user is not null and not expired`, async () => {
         // arrange
         (userManager.getUser).returns({});
         // act
