@@ -38,10 +38,12 @@ let OpenIdConnect = class OpenIdConnect {
     }
     login(args = {}) {
         return __awaiter(this, void 0, void 0, function* () {
-            const loginRedirectValue = this.router.currentInstruction.queryParams[LoginRedirectKey];
-            if (loginRedirectValue) {
-                args.data = Object.assign({}, args.data);
-                args.data[LoginRedirectKey] = loginRedirectValue;
+            if (this.router.currentInstruction) {
+                const loginRedirectValue = this.router.currentInstruction.queryParams[LoginRedirectKey];
+                if (loginRedirectValue) {
+                    args.data = Object.assign({}, args.data);
+                    args.data[LoginRedirectKey] = loginRedirectValue;
+                }
             }
             yield this.userManager.signinRedirect(args);
         });

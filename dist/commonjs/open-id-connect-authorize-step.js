@@ -67,7 +67,7 @@ var OpenIdConnectAuthorizeStep = (function () {
                     case 1:
                         user = _a.sent();
                         if (this.requiresRole(navigationInstruction, open_id_connect_roles_1.default.Authenticated)) {
-                            if (user === null) {
+                            if (user === null || user.expired) {
                                 this.logger.debug('Requires authenticated role.');
                                 loginRedirect = this.$window.location.href;
                                 loginRedirectValue = encodeURIComponent(loginRedirect);

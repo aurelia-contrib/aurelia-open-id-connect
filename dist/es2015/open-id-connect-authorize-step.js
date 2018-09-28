@@ -33,7 +33,7 @@ let OpenIdConnectAuthorizeStep = class OpenIdConnectAuthorizeStep {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield this.userManager.getUser();
             if (this.requiresRole(navigationInstruction, OpenIdConnectRoles.Authenticated)) {
-                if (user === null) {
+                if (user === null || user.expired) {
                     this.logger.debug('Requires authenticated role.');
                     const loginRedirect = this.$window.location.href;
                     const loginRedirectValue = encodeURIComponent(loginRedirect);

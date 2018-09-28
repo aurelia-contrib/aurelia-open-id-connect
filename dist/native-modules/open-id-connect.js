@@ -78,10 +78,12 @@ var OpenIdConnect = (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        loginRedirectValue = this.router.currentInstruction.queryParams[LoginRedirectKey];
-                        if (loginRedirectValue) {
-                            args.data = __assign({}, args.data);
-                            args.data[LoginRedirectKey] = loginRedirectValue;
+                        if (this.router.currentInstruction) {
+                            loginRedirectValue = this.router.currentInstruction.queryParams[LoginRedirectKey];
+                            if (loginRedirectValue) {
+                                args.data = __assign({}, args.data);
+                                args.data[LoginRedirectKey] = loginRedirectValue;
+                            }
                         }
                         return [4, this.userManager.signinRedirect(args)];
                     case 1:
