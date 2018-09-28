@@ -19,6 +19,10 @@
     {
       "name": "James McLachlan",
       "url": "https://github.com/claq2"
+    }, 
+    {
+      "name": "Koen",
+      "url": "https://github.com/kbekkenutte"
     }
   ],
   "main": "dist/amd/index.js",
