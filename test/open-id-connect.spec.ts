@@ -81,6 +81,15 @@ describe('open-id-connect', () => {
         },
       });
     });
+
+    it('should not care if currentInstruction is not yet available', async () => {
+      // arrange
+      router.currentInstruction = null;
+      // act
+      await openIdConnect.login();
+      // assert
+      sinon.assert.calledWith(userManager.signinRedirect, { });
+    });
   });
 
   context('logout', () => {
