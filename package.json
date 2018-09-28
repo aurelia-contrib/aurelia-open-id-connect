@@ -1,7 +1,7 @@
 {
   "name": "aurelia-open-id-connect",
   "description": "An Aurelia adapter for the IdentityModel/oidc-client-js.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": {
     "name": "Shaun Luttin",
     "email": "shaun@bigfont.ca",
@@ -19,7 +19,7 @@
     {
       "name": "James McLachlan",
       "url": "https://github.com/claq2"
-    }, 
+    },
     {
       "name": "Koen",
       "url": "https://github.com/kbekkenutte"
