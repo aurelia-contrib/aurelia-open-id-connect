@@ -34,7 +34,8 @@ export default class OpenIdConnectRouting {
           return this.openIdConnectNavigationStrategies.signInRedirectCallback(instruction);
         }
       },
-      route: this.getPath(this.openIdConnectConfiguration.redirectUri),
+      route: this.getPath(this.openIdConnectConfiguration.redirectUri)
+        .replace(routerConfiguration.options.root || '/', '/'),
     });
   }
 
@@ -44,7 +45,8 @@ export default class OpenIdConnectRouting {
       navigationStrategy: (instruction: NavigationInstruction) => {
         return this.openIdConnectNavigationStrategies.signOutRedirectCallback(instruction);
       },
-      route: this.getPath(this.openIdConnectConfiguration.postLogoutRedirectUri),
+      route: this.getPath(this.openIdConnectConfiguration.postLogoutRedirectUri)
+        .replace(routerConfiguration.options.root || '/', '/'),
     });
   }
 
