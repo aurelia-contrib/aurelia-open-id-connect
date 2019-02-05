@@ -17,8 +17,7 @@ export default class OpenIdConnectAuthorizeStep implements PipelineStep {
   constructor(
     private userManager: UserManager,
     private configuration: OpenIdConnectConfigurationManager,
-    private logger: OpenIdConnectLogger,
-    private $window: Window) { }
+    private logger: OpenIdConnectLogger) { }
 
   public async run(
     navigationInstruction: NavigationInstruction,
@@ -34,7 +33,10 @@ export default class OpenIdConnectAuthorizeStep implements PipelineStep {
 
         // capture the URL to which the user was originally navigating
         // include that URL in a query string parameter on the redirect
-        const loginRedirect = this.$window.location.href;
+        let loginRedirect = navigationInstruction.fragment;
+        if (navigationInstruction.queryString && navigationInstruction.queryString.length) {
+          loginRedirect += `?${navigationInstruction.queryString}`;
+        }
         const loginRedirectValue = encodeURIComponent(loginRedirect);
         const queryString = `?${LoginRedirectKey}=${loginRedirectValue}`;
         const redirect = new Redirect(this.configuration.unauthorizedRedirectRoute + queryString);
