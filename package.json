@@ -23,6 +23,10 @@
     {
       "name": "Koen",
       "url": "https://github.com/kbekkenutte"
+    },
+    {
+      "name": "Rasmus Melchior Jacobsen",
+      "url": "https://github.com/rmja"
     }
   ],
   "main": "dist/amd/index.js",
