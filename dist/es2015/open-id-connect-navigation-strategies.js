@@ -37,9 +37,7 @@ let OpenIdConnectNavigationStrategies = class OpenIdConnectNavigationStrategies 
                     redirectRoute = user.state[LoginRedirectKey];
                 }
             });
-            const navigationInstruction = () => {
-                this.$window.location.assign(redirectRoute);
-            };
+            const navigationInstruction = () => this.redirectAfterCallback(instruction, redirectRoute);
             return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
         });
     }
@@ -57,10 +55,12 @@ let OpenIdConnectNavigationStrategies = class OpenIdConnectNavigationStrategies 
             const args = {};
             return this.userManager.signoutRedirectCallback(args);
         });
-        const navigationInstruction = () => {
-            this.$window.location.assign(this.openIdConnectConfiguration.logoutRedirectRoute);
-        };
+        const navigationInstruction = () => this.redirectAfterCallback(instruction, this.openIdConnectConfiguration.logoutRedirectRoute);
         return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
+    }
+    redirectAfterCallback(instruction, route) {
+        this.$window.history.pushState({}, '', route);
+        instruction.config.redirect = route;
     }
     runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction) {
         return __awaiter(this, void 0, void 0, function* () {

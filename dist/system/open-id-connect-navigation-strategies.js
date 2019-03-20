@@ -95,7 +95,7 @@ System.register(["aurelia-framework", "oidc-client", "./open-id-connect-configur
                                 });
                             }); };
                             navigationInstruction = function () {
-                                _this.$window.location.assign(redirectRoute);
+                                return _this.redirectAfterCallback(instruction, redirectRoute);
                             };
                             return [2, this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction)];
                         });
@@ -123,9 +123,13 @@ System.register(["aurelia-framework", "oidc-client", "./open-id-connect-configur
                         });
                     }); };
                     var navigationInstruction = function () {
-                        _this.$window.location.assign(_this.openIdConnectConfiguration.logoutRedirectRoute);
+                        return _this.redirectAfterCallback(instruction, _this.openIdConnectConfiguration.logoutRedirectRoute);
                     };
                     return this.runHandlerAndCompleteNavigationInstruction(callbackHandler, navigationInstruction);
+                };
+                OpenIdConnectNavigationStrategies.prototype.redirectAfterCallback = function (instruction, route) {
+                    this.$window.history.pushState({}, '', route);
+                    instruction.config.redirect = route;
                 };
                 OpenIdConnectNavigationStrategies.prototype.runHandlerAndCompleteNavigationInstruction = function (callbackHandler, navigationInstruction) {
                     return __awaiter(this, void 0, void 0, function () {
