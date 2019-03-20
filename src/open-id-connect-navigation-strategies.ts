@@ -35,13 +35,8 @@ export default class OpenIdConnectNavigationStrategies {
       }
     };
 
-    const navigationInstruction = () => {
-      // Use location.assign not instruction.config.redirect,
-      // because the former adds the route to the web browser's history,
-      // and that controls what will load on a page refresh.
-      // See https://github.com/aurelia-contrib/aurelia-open-id-connect/issues/46
-      this.$window.location.assign(redirectRoute);
-    };
+    const navigationInstruction = () =>
+      this.redirectAfterCallback(instruction, redirectRoute);
 
     return this.runHandlerAndCompleteNavigationInstruction(
       callbackHandler,
@@ -74,13 +69,21 @@ export default class OpenIdConnectNavigationStrategies {
       return this.userManager.signoutRedirectCallback(args);
     };
 
-    const navigationInstruction = () => {
-      this.$window.location.assign(this.openIdConnectConfiguration.logoutRedirectRoute);
-    };
+    const navigationInstruction = () =>
+      this.redirectAfterCallback(instruction, this.openIdConnectConfiguration.logoutRedirectRoute);
 
     return this.runHandlerAndCompleteNavigationInstruction(
       callbackHandler,
       navigationInstruction);
+  }
+
+  // Redirect to the specified route AND ensure that a page refresh does not
+  // load the OIDC redirect callback url.
+  // See https://github.com/aurelia-contrib/aurelia-open-id-connect/issues/46
+  // See https://github.com/aurelia-contrib/aurelia-open-id-connect/issues/47
+  private redirectAfterCallback(instruction: NavigationInstruction, route: string) {
+    this.$window.history.pushState({}, '', route);
+    instruction.config.redirect = route;
   }
 
   private async runHandlerAndCompleteNavigationInstruction(

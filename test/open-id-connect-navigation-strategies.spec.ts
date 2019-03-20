@@ -16,8 +16,8 @@ describe('open-id-connect-navigation-strategies', () => {
   const instruction = sinon.createStubInstance(NavigationInstruction);
 
   const $window: any = {
-    location: {
-      assign: sinon.spy(),
+    history: {
+      pushState: sinon.spy(),
     },
   };
 
@@ -70,7 +70,8 @@ describe('open-id-connect-navigation-strategies', () => {
         // act
         await (strategies as any)[o.method](instruction);
         // assert
-        sinon.assert.calledWith($window.location.assign, o.redirectsTo);
+        sinon.assert.calledWith($window.history.pushState, {}, '', o.redirectsTo);
+        assert.equal(instruction.config.redirect, o.redirectsTo);
       });
 
       it(`should redirect to ${o.redirectsTo} on error`, async () => {
@@ -87,7 +88,8 @@ describe('open-id-connect-navigation-strategies', () => {
         } finally {
           // assert
           assert.isTrue(threwError);
-          sinon.assert.calledWith($window.location.assign, o.redirectsTo);
+          sinon.assert.calledWith($window.history.pushState, {}, '', o.redirectsTo);
+          assert.equal(instruction.config.redirect, o.redirectsTo);
         }
       });
     });
@@ -111,7 +113,8 @@ describe('open-id-connect-navigation-strategies', () => {
       await strategies.signInRedirectCallback(instruction);
 
       // assert
-      sinon.assert.calledWith($window.location.assign, expected);
+      sinon.assert.calledWith($window.history.pushState, {}, '', expected);
+      assert.equal(instruction.config.redirect, expected);
     });
   });
 });
