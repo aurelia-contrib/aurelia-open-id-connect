@@ -10,10 +10,6 @@ The demos have an example of how to configure everything.
 
 https://github.com/aurelia-contrib/aurelia-open-id-connect-demos
 
-### Larger, LIVE Demo
-
-https://zamboni-app.azurewebsites.net
-
 # Installation 
 
     yarn add aurelia-open-id-connect --save
