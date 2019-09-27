@@ -50,11 +50,10 @@ import { LoginRedirectKey } from './open-id-connect-constants';
 import OpenIdConnectLogger from './open-id-connect-logger';
 import OpenIdConnectRoles from './open-id-connect-roles';
 var OpenIdConnectAuthorizeStep = (function () {
-    function OpenIdConnectAuthorizeStep(userManager, configuration, logger, $window) {
+    function OpenIdConnectAuthorizeStep(userManager, configuration, logger) {
         this.userManager = userManager;
         this.configuration = configuration;
         this.logger = logger;
-        this.$window = $window;
     }
     OpenIdConnectAuthorizeStep.prototype.run = function (navigationInstruction, next) {
         return __awaiter(this, void 0, void 0, function () {
@@ -67,7 +66,10 @@ var OpenIdConnectAuthorizeStep = (function () {
                         if (this.requiresRole(navigationInstruction, OpenIdConnectRoles.Authenticated)) {
                             if (user === null || user.expired) {
                                 this.logger.debug('Requires authenticated role.');
-                                loginRedirect = this.$window.location.href;
+                                loginRedirect = navigationInstruction.fragment;
+                                if (navigationInstruction.queryString && navigationInstruction.queryString.length) {
+                                    loginRedirect += "?" + navigationInstruction.queryString;
+                                }
                                 loginRedirectValue = encodeURIComponent(loginRedirect);
                                 queryString = "?" + LoginRedirectKey + "=" + loginRedirectValue;
                                 redirect = new Redirect(this.configuration.unauthorizedRedirectRoute + queryString);
@@ -93,8 +95,7 @@ var OpenIdConnectAuthorizeStep = (function () {
         autoinject,
         __metadata("design:paramtypes", [UserManager,
             OpenIdConnectConfigurationManager,
-            OpenIdConnectLogger,
-            Window])
+            OpenIdConnectLogger])
     ], OpenIdConnectAuthorizeStep);
     return OpenIdConnectAuthorizeStep;
 }());

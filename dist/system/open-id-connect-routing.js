@@ -54,7 +54,8 @@ System.register(["aurelia-framework", "./open-id-connect-authorize-step", "./ope
                                 return _this.openIdConnectNavigationStrategies.signInRedirectCallback(instruction);
                             }
                         },
-                        route: this.getPath(this.openIdConnectConfiguration.redirectUri),
+                        route: this.getPath(this.openIdConnectConfiguration.redirectUri)
+                            .replace(routerConfiguration.options.root || '/', '/'),
                     });
                 };
                 OpenIdConnectRouting.prototype.addLogoutRedirectRoute = function (routerConfiguration) {
@@ -64,7 +65,8 @@ System.register(["aurelia-framework", "./open-id-connect-authorize-step", "./ope
                         navigationStrategy: function (instruction) {
                             return _this.openIdConnectNavigationStrategies.signOutRedirectCallback(instruction);
                         },
-                        route: this.getPath(this.openIdConnectConfiguration.postLogoutRedirectUri),
+                        route: this.getPath(this.openIdConnectConfiguration.postLogoutRedirectUri)
+                            .replace(routerConfiguration.options.root || '/', '/'),
                     });
                 };
                 OpenIdConnectRouting.prototype.isSilentLogin = function () {

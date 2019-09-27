@@ -35,7 +35,8 @@ let OpenIdConnectRouting = class OpenIdConnectRouting {
                     return this.openIdConnectNavigationStrategies.signInRedirectCallback(instruction);
                 }
             },
-            route: this.getPath(this.openIdConnectConfiguration.redirectUri),
+            route: this.getPath(this.openIdConnectConfiguration.redirectUri)
+                .replace(routerConfiguration.options.root || '/', '/'),
         });
     }
     addLogoutRedirectRoute(routerConfiguration) {
@@ -44,7 +45,8 @@ let OpenIdConnectRouting = class OpenIdConnectRouting {
             navigationStrategy: (instruction) => {
                 return this.openIdConnectNavigationStrategies.signOutRedirectCallback(instruction);
             },
-            route: this.getPath(this.openIdConnectConfiguration.postLogoutRedirectUri),
+            route: this.getPath(this.openIdConnectConfiguration.postLogoutRedirectUri)
+                .replace(routerConfiguration.options.root || '/', '/'),
         });
     }
     isSilentLogin() {

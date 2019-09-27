@@ -23,11 +23,10 @@ import { LoginRedirectKey } from './open-id-connect-constants';
 import OpenIdConnectLogger from './open-id-connect-logger';
 import OpenIdConnectRoles from './open-id-connect-roles';
 let OpenIdConnectAuthorizeStep = class OpenIdConnectAuthorizeStep {
-    constructor(userManager, configuration, logger, $window) {
+    constructor(userManager, configuration, logger) {
         this.userManager = userManager;
         this.configuration = configuration;
         this.logger = logger;
-        this.$window = $window;
     }
     run(navigationInstruction, next) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -35,7 +34,10 @@ let OpenIdConnectAuthorizeStep = class OpenIdConnectAuthorizeStep {
             if (this.requiresRole(navigationInstruction, OpenIdConnectRoles.Authenticated)) {
                 if (user === null || user.expired) {
                     this.logger.debug('Requires authenticated role.');
-                    const loginRedirect = this.$window.location.href;
+                    let loginRedirect = navigationInstruction.fragment;
+                    if (navigationInstruction.queryString && navigationInstruction.queryString.length) {
+                        loginRedirect += `?${navigationInstruction.queryString}`;
+                    }
                     const loginRedirectValue = encodeURIComponent(loginRedirect);
                     const queryString = `?${LoginRedirectKey}=${loginRedirectValue}`;
                     const redirect = new Redirect(this.configuration.unauthorizedRedirectRoute + queryString);
@@ -58,8 +60,7 @@ OpenIdConnectAuthorizeStep = __decorate([
     autoinject,
     __metadata("design:paramtypes", [UserManager,
         OpenIdConnectConfigurationManager,
-        OpenIdConnectLogger,
-        Window])
+        OpenIdConnectLogger])
 ], OpenIdConnectAuthorizeStep);
 export default OpenIdConnectAuthorizeStep;
 //# sourceMappingURL=open-id-connect-authorize-step.js.map

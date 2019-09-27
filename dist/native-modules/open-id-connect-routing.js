@@ -36,7 +36,8 @@ var OpenIdConnectRouting = (function () {
                     return _this.openIdConnectNavigationStrategies.signInRedirectCallback(instruction);
                 }
             },
-            route: this.getPath(this.openIdConnectConfiguration.redirectUri),
+            route: this.getPath(this.openIdConnectConfiguration.redirectUri)
+                .replace(routerConfiguration.options.root || '/', '/'),
         });
     };
     OpenIdConnectRouting.prototype.addLogoutRedirectRoute = function (routerConfiguration) {
@@ -46,7 +47,8 @@ var OpenIdConnectRouting = (function () {
             navigationStrategy: function (instruction) {
                 return _this.openIdConnectNavigationStrategies.signOutRedirectCallback(instruction);
             },
-            route: this.getPath(this.openIdConnectConfiguration.postLogoutRedirectUri),
+            route: this.getPath(this.openIdConnectConfiguration.postLogoutRedirectUri)
+                .replace(routerConfiguration.options.root || '/', '/'),
         });
     };
     OpenIdConnectRouting.prototype.isSilentLogin = function () {

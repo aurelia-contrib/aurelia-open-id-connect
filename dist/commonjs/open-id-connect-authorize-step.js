@@ -52,11 +52,10 @@ var open_id_connect_constants_1 = require("./open-id-connect-constants");
 var open_id_connect_logger_1 = require("./open-id-connect-logger");
 var open_id_connect_roles_1 = require("./open-id-connect-roles");
 var OpenIdConnectAuthorizeStep = (function () {
-    function OpenIdConnectAuthorizeStep(userManager, configuration, logger, $window) {
+    function OpenIdConnectAuthorizeStep(userManager, configuration, logger) {
         this.userManager = userManager;
         this.configuration = configuration;
         this.logger = logger;
-        this.$window = $window;
     }
     OpenIdConnectAuthorizeStep.prototype.run = function (navigationInstruction, next) {
         return __awaiter(this, void 0, void 0, function () {
@@ -69,7 +68,10 @@ var OpenIdConnectAuthorizeStep = (function () {
                         if (this.requiresRole(navigationInstruction, open_id_connect_roles_1.default.Authenticated)) {
                             if (user === null || user.expired) {
                                 this.logger.debug('Requires authenticated role.');
-                                loginRedirect = this.$window.location.href;
+                                loginRedirect = navigationInstruction.fragment;
+                                if (navigationInstruction.queryString && navigationInstruction.queryString.length) {
+                                    loginRedirect += "?" + navigationInstruction.queryString;
+                                }
                                 loginRedirectValue = encodeURIComponent(loginRedirect);
                                 queryString = "?" + open_id_connect_constants_1.LoginRedirectKey + "=" + loginRedirectValue;
                                 redirect = new aurelia_router_1.Redirect(this.configuration.unauthorizedRedirectRoute + queryString);
@@ -95,8 +97,7 @@ var OpenIdConnectAuthorizeStep = (function () {
         aurelia_framework_1.autoinject,
         __metadata("design:paramtypes", [oidc_client_1.UserManager,
             open_id_connect_configuration_manager_1.default,
-            open_id_connect_logger_1.default,
-            Window])
+            open_id_connect_logger_1.default])
     ], OpenIdConnectAuthorizeStep);
     return OpenIdConnectAuthorizeStep;
 }());
